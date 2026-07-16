@@ -14,6 +14,8 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 ```
 .venv\Scripts\python.exe -m audit "<dataset-path>" [--no-open]   # audit d'une livraison
 .venv\Scripts\python.exe tests\test_audit.py                     # auto-test complet
+.venv\Scripts\python.exe tools\dispatch_roboflow.py <attr.json> <zips> <staging>  # cf. /dispatch-roboflow
+.venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 
@@ -48,6 +50,33 @@ audit (Python) → classification interactive des inconnus (l'utilisateur valide
 mapping) → append aliases + entités candidates → relancer l'audit. Le tout via
 `/audit-dataset <chemin>`. Historique des décisions = provenance dans aliases.yaml +
 git log ; pas de fichier de log séparé.
+
+## Stockage Drive — data_regions_v2
+
+Racine : `G:\Mon Drive\Archeologia\Archeologia_Shared\data\data_regions_v2`.
+L'ancien `data_regions` (même parent) est **GELÉ** : lecture seule, ne jamais y écrire.
+Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-bf8e-7c853b3bfb03
+
+- Par zone `<region>/<dept>_<site>[_<annee>]` (snake_case ASCII) : `manifest.yaml` +
+  `raw/` (livraison brute **immuable**) + `transformed/vecteurs/` (GPKG nettoyés,
+  EPSG:2154) + `transformed/roboflow/` (payloads d'upload + `upload_manifest.yaml`)
+  + `docs/`.
+- Tags Roboflow par image : `<zone_id>` + `<region>`. Sous-classes : `<entite>_<site>`
+  (ex. charbonniere_vosges). L'export Roboflow ne préserve PAS les tags : les
+  `upload_manifest.yaml` locaux font foi.
+- `index.html` à la racine v2 = tableau de bord ; le régénérer (`tools/build_v2_index.py`)
+  après toute évolution du dossier.
+- Interdits absolus : supprimer/déplacer sans décision humaine explicite ; éditer un
+  fichier en place sur G: (copie locale puis re-dépôt) ; écrire dans data_regions v1.
+- Écritures massives vers G: : toujours staging local puis `robocopy /E /MT:16`.
+- Workflows : `/dispatch-roboflow` (ranger des exports), `/audit-dataset` (auditer
+  une livraison vecteur).
+- Arbitrages pendants (ne pas trancher seul) : `data_aude` (SOLiDAR 41 vs dépt 11) ;
+  réaffectations de régions 77→IdF et 70→BFC à confirmer ; données perdues à réclamer
+  (Verdun : .shp/.dbf + rasters 2013 ; dept 44 : digitalisation absente).
+- Décisions actées 2026-07-16 : `verdun_3_classes` classe `abri`→`cratere` à la
+  recréation ; base de recréation formes linéaires = `formes_lineaires_rmin10`
+  (paramétrisation LD actuelle), `rmin20` = archive.
 
 ## Langue
 

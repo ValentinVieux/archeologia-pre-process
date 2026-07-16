@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>data_regions_v2 — index des zones</title>
+<style>
+  :root {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E; --faint: #98968A;
+    --accent: #5A6B3C; --accent-ink: #42502B; --bar: #7A8C55;
+    --line: #DDDCD4;
+    --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+    --info-bg: #E5E9DB; --info-ink: #42502B;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395; --faint: #7A786C;
+    --accent: #9DB16E; --accent-ink: #B5C68C; --bar: #7A8C55;
+    --line: #3A3D33;
+    --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+    --info-bg: #2E3524; --info-ink: #B5C68C;
+  } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14.5px/1.55 system-ui, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 40px 22px 80px; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
+  h1 { font-size: 27px; margin: 6px 0 4px; font-weight: 600; }
+  h2 { font-size: 20px; margin: 0 0 10px; font-weight: 600; }
+  h3 { font-size: 16px; margin: 0 0 4px; font-weight: 600; }
+  .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+             color: var(--accent-ink); font-weight: 600; }
+  section > .eyebrow { display: block; border-top: 2px solid var(--accent);
+                       padding-top: 10px; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 13px; }
+  section { margin-top: 40px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+           gap: 10px; margin-top: 22px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+          padding: 11px 13px; }
+  .stat .n { font-size: 21px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase;
+             letter-spacing: 0.5px; margin-top: 1px; }
+  .chip { display: inline-block; border-radius: 3px; padding: 1px 8px; font-size: 11.5px;
+          font-weight: 600; margin: 1px 4px 1px 0; }
+  .chip.tag  { background: var(--info-bg); color: var(--info-ink); font-family: Consolas, monospace; }
+  .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .chip.ok   { background: var(--ok-bg); color: var(--ok-ink); }
+  .region-h { font-family: Georgia, serif; font-size: 17px; font-weight: 600;
+              margin: 26px 0 10px; color: var(--accent-ink); }
+  .zone { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+          padding: 16px 20px; margin: 12px 0; }
+  .zone-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+  .zone-head .mono { color: var(--muted); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+          gap: 14px; margin-top: 12px; }
+  .box { background: var(--panel2); border-radius: 6px; padding: 10px 14px; }
+  .box .bt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+             color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+  mark.na { background: none; color: var(--faint); font-style: italic; }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; }
+  code { background: var(--panel2); border-radius: 3px; padding: 1px 5px; }
+  .bar-row { display: grid; grid-template-columns: minmax(120px, 210px) 1fr 70px;
+             align-items: center; gap: 8px; margin: 3px 0; font-size: 12.5px; }
+  .bar-row .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+                  font-family: Consolas, monospace; }
+  .bar-track { background: var(--panel2); border-radius: 3px; height: 12px; }
+  .zone .bar-track { background: var(--bg); }
+  .bar-fill { background: var(--bar); border-radius: 3px; height: 12px; min-width: 2px; }
+  .bar-row .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .splits { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px;
+            color: var(--muted); margin: 4px 0 8px; }
+  .splits b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: var(--accent-ink); font-size: 13px; }
+  details ul { margin: 6px 0 2px; padding-left: 20px; }
+  details li { margin: 4px 0; font-size: 13px; max-width: 90ch; }
+  .tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line);
+         border-radius: 6px; margin-top: 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 12px; border-top: 1px solid var(--line); }
+  thead th { border-top: none; font-size: 10.5px; text-transform: uppercase;
+             letter-spacing: 0.5px; color: var(--muted); white-space: nowrap; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .rules { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+           padding: 14px 20px; font-size: 13.5px; }
+  .rules ul { margin: 4px 0; padding-left: 20px; }
+  .rules li { margin: 4px 0; }
+  .foot { margin-top: 52px; border-top: 1px solid var(--line); padding-top: 12px;
+          font-size: 12.5px; color: var(--faint); }
+  .foot code { font-size: 11.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Archéolog'IA · stockage structuré des zones</span>
+    <h1>data_regions_v2 — index des zones</h1>
+    <div class="sub" id="subtitle"></div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <span class="eyebrow">Conventions</span>
+    <div class="rules">
+      <ul>
+        <li><b>Par zone</b> : <code>manifest.yaml</code> + <code>raw/</code> (livraison brute <b>immuable</b>) + <code>transformed/vecteurs/</code> (GPKG nettoyés, EPSG:2154) + <code>transformed/roboflow/</code> (payloads d'upload + <code>upload_manifest.yaml</code>) + <code>docs/</code>.</li>
+        <li><b>Tags Roboflow</b> par image : <code>&lt;zone_id&gt;</code> + <code>&lt;region&gt;</code> — l'export Roboflow ne préserve pas les tags, les <code>upload_manifest.yaml</code> locaux font foi. Sous-classes : <code>&lt;entite&gt;_&lt;site&gt;</code>.</li>
+        <li>On n'édite <b>jamais</b> un fichier en place sur le Drive (pas d'ArcGIS/QGIS sur G:). Ne rien supprimer sans décision humaine explicite.</li>
+        <li><code>_archives_roboflow/</code> = exports zip intacts · <code>_a_trier/</code> = images inattribuables à une zone (à trier ou abandonner à la recréation).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Zones</span>
+    <h2 style="margin-bottom:0">Les zones et leur contenu</h2>
+    <div id="zones"></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Transverse</span>
+    <h2>Vue par dataset</h2>
+    <p class="sub">Répartition de chaque export Roboflow historique entre les zones (images / annotations).</p>
+    <div id="datasets"></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Quarantaine</span>
+    <h2>_a_trier — images inattribuables</h2>
+    <p class="sub">Tuiles génériques (<span class="mono">tile_XXXX_YYYY</span>) sans géoréférence dans le nom : impossible de les rattacher à une zone depuis l'export. À trier manuellement ou à abandonner lors de la recréation des datasets.</p>
+    <div id="atrier"></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Archives</span>
+    <h2>_archives_roboflow — exports intacts</h2>
+    <div class="tbl"><table id="archives"></table></div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script id="v2-data" type="application/json">__V2_JSON__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("v2-data").textContent);
+const esc = s => String(s).replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fi = n => (n == null) ? "–" : n.toLocaleString("fr-FR");
+const fs = b => b >= 1e9 ? (b/1e9).toFixed(2)+" Go" : b >= 1e6 ? (b/1e6).toFixed(1)+" Mo"
+             : b >= 1e3 ? (b/1e3).toFixed(0)+" ko" : b+" o";
+const sum = a => a.reduce((x, y) => x + y, 0);
+const dsImages = d => sum(Object.values(d.splits).map(s => s.images));
+const dsAnnots = d => sum(Object.values(d.splits).map(s => s.annotations));
+
+document.getElementById("subtitle").textContent =
+  D.root + " — généré le " + D.generated + " (relancer tools/build_v2_index.py après toute évolution)";
+
+const T = D.totals;
+document.getElementById("stats").innerHTML = [
+  [fi(T.zones), "zones"], [fi(T.regions), "régions"],
+  [fi(T.images), "images annotées"], [fi(T.annotations), "annotations"],
+  [fi(T.raw_files) + ` <small style="font-size:12px">(${fs(T.raw_size)})</small>`, "fichiers raw (vérité terrain)"],
+  [fi(T.a_trier_images), "images en quarantaine"],
+].map(([n, l]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+
+/* ------------------------------- barres de classes ------------------------------- */
+function bars(classes) {
+  const entries = Object.entries(classes).sort((a, b) => b[1] - a[1]);
+  if (!entries.length) return "";
+  const max = entries[0][1];
+  return entries.map(([cls, n]) =>
+    `<div class="bar-row"><span class="lbl" title="${esc(cls)}">${esc(cls)}</span>` +
+    `<span class="bar-track"><span class="bar-fill" style="width:${Math.max(2, n/max*100)}%"></span></span>` +
+    `<span class="val">${fi(n)}</span></div>`).join("");
+}
+const splitsLine = d => `<div class="splits">` +
+  Object.entries(d.splits).map(([s, r]) =>
+    `<span>${esc(s)} : <b>${fi(r.images)}</b> img · ${fi(r.annotations)} annots</span>`).join("") +
+  `</div>`;
+
+/* ------------------------------------- zones ------------------------------------- */
+const byRegion = {};
+D.zones.forEach(z => (byRegion[z.region] = byRegion[z.region] || []).push(z));
+document.getElementById("zones").innerHTML = Object.keys(byRegion).sort().map(region => {
+  const zones = byRegion[region].map(z => {
+    const m = z.manifest || {};
+    const tags = ((m.roboflow || {}).tags || []).map(t => `<span class="chip tag">${esc(t)}</span>`).join("");
+    const notes = (m.notes || []);
+    const src = m.source || {};
+    const contact = src.contact ? esc(src.contact) : `<mark class="na">à compléter</mark>`;
+    const licence = src.licence ? esc(src.licence) : `<mark class="na">à compléter</mark>`;
+
+    const rawBox = z.raw ? `<div class="box"><div class="bt">raw / vérité terrain</div>
+        <b>${fi(z.raw.n_files)}</b> fichiers · ${fs(z.raw.size)}
+        ${z.raw.subdirs.length ? `<div class="sub mono">${z.raw.subdirs.map(esc).join(" · ")}</div>` : ""}
+        <div class="sub">${Object.entries(z.raw.exts).map(([e, n]) => `${esc(e)}×${n}`).join(", ")}</div>
+      </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><mark class="na">vide — livraison brute encore dans data_regions (v1)</mark></div>`;
+
+    const dsBoxes = z.datasets.map(d => {
+      const meth = (d.manifest || {}).attribution_methods || {};
+      const methTxt = Object.entries(meth).map(([k, v]) => `${esc(k)}×${v}`).join(", ");
+      return `<div class="box"><div class="bt">dataset · ${esc(d.name)}</div>
+        <b>${fi(dsImages(d))}</b> images · ${fi(dsAnnots(d))} annotations
+        ${splitsLine(d)}${bars(d.classes)}
+        ${methTxt ? `<div class="sub" style="margin-top:6px">attribution : ${methTxt}</div>` : ""}
+      </div>`;
+    }).join("");
+
+    const vecBox = z.vecteurs ? `<div class="box"><div class="bt">transformed / vecteurs</div>
+        <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}</div>` : "";
+
+    return `<div class="zone">
+      <div class="zone-head"><h3>${esc(z.zone_id)}</h3>
+        <span class="mono">dépt ${esc(String(m.departement ?? "?"))}</span>${tags}
+        <span class="sub" style="margin-left:auto">contact : ${contact} · licence : ${licence}</span>
+      </div>
+      <div class="cols">${rawBox}${vecBox}${dsBoxes}</div>
+      ${notes.length ? `<details><summary>Notes &amp; décisions (${notes.length})</summary>
+        <ul>${notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></details>` : ""}
+    </div>`;
+  }).join("");
+  return `<div class="region-h">${esc(region)} <span class="sub">(${byRegion[region].length} zone${byRegion[region].length > 1 ? "s" : ""})</span></div>${zones}`;
+}).join("");
+
+/* ------------------------------- vue par dataset ------------------------------- */
+const dsIndex = {};
+D.zones.forEach(z => z.datasets.forEach(d => {
+  const e = dsIndex[d.name] = dsIndex[d.name] || { zones: [], classes: {} };
+  e.zones.push({ zone: z.zone_id, region: z.region, images: dsImages(d), annots: dsAnnots(d) });
+  Object.entries(d.classes).forEach(([c, n]) => e.classes[c] = (e.classes[c] || 0) + n);
+}));
+D.a_trier.forEach(d => {
+  const e = dsIndex[d.name] = dsIndex[d.name] || { zones: [], classes: {} };
+  e.zones.push({ zone: "_a_trier", region: "—", images: dsImages(d), annots: dsAnnots(d) });
+});
+document.getElementById("datasets").innerHTML = Object.keys(dsIndex).sort().map(name => {
+  const e = dsIndex[name];
+  const rows = e.zones.sort((a, b) => b.images - a.images).map(r =>
+    `<tr><td class="mono">${esc(r.zone)}</td><td>${esc(r.region)}</td>` +
+    `<td class="num">${fi(r.images)}</td><td class="num">${fi(r.annots)}</td></tr>`).join("");
+  const tot = `<tr><td><b>total</b></td><td></td>` +
+    `<td class="num"><b>${fi(sum(e.zones.map(r => r.images)))}</b></td>` +
+    `<td class="num"><b>${fi(sum(e.zones.map(r => r.annots)))}</b></td></tr>`;
+  return `<div class="zone"><h3 class="mono">${esc(name)}</h3>
+    <div class="cols">
+      <div class="box"><div class="bt">répartition par zone</div>
+        <div class="tbl" style="margin:0"><table>
+          <thead><tr><th>zone</th><th>région</th><th class="num">images</th><th class="num">annots</th></tr></thead>
+          <tbody>${rows}${tot}</tbody></table></div></div>
+      <div class="box"><div class="bt">classes (zones attribuées)</div>${bars(e.classes) || '<mark class="na">—</mark>'}</div>
+    </div></div>`;
+}).join("");
+
+/* --------------------------------- quarantaine --------------------------------- */
+document.getElementById("atrier").innerHTML = D.a_trier.length ? D.a_trier.map(d =>
+  `<div class="zone"><h3 class="mono">_a_trier / ${esc(d.name)}</h3>
+     <b>${fi(dsImages(d))}</b> images · ${fi(dsAnnots(d))} annotations
+     ${splitsLine(d)}${bars(d.classes)}</div>`).join("")
+  : `<div class="zone"><mark class="na">Quarantaine vide.</mark></div>`;
+
+/* ----------------------------------- archives ----------------------------------- */
+document.getElementById("archives").innerHTML =
+  `<thead><tr><th>export</th><th class="num">taille</th></tr></thead><tbody>` +
+  D.archives.map(a => `<tr><td class="mono">${esc(a.name)}</td><td class="num">${fs(a.size)}</td></tr>`).join("") +
+  `<tr><td><b>total</b></td><td class="num"><b>${fs(sum(D.archives.map(a => a.size)))}</b></td></tr></tbody>`;
+
+document.getElementById("foot").innerHTML =
+  `Régénérer cet index : <code>.venv\\Scripts\\python.exe tools\\build_v2_index.py "&lt;chemin data_regions_v2&gt;"</code> ` +
+  `(repo <a href="https://github.com/ValentinVieux/archeologia-pre-process">archeologia-pre-process</a>) · ` +
+  `rapport d'audit fondateur : <a href="https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-bf8e-7c853b3bfb03">artifact</a> · généré le ${esc(D.generated)}.`;
+</script>
+</body>
+</html>

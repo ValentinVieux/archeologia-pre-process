@@ -4,7 +4,8 @@
       "Bash(.venv/Scripts/python.exe *)",
       "PowerShell(.venv\\Scripts\\python.exe *)",
       "Read(//c/projets/Archeologia/data/**)",
-      "Read(//d/data_regions/**)"
+      "Read(//d/data_regions/**)",
+      "Read(//g/Mon Drive/Archeologia/**)"
     ]
   }
 }
