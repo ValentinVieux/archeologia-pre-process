@@ -75,8 +75,8 @@ Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-b
 - Écritures massives vers G: : toujours staging local puis `robocopy /E /MT:16`.
 - Workflows : `/dispatch-roboflow` (ranger des exports), `/audit-dataset` (auditer
   une livraison vecteur).
-- Arbitrages pendants (ne pas trancher seul) : dept 44 : digitalisation absente, à réclamer
-  auprès du contact de la zone (cf. Notion). Vosges saônoises : résolu 2026-07-16 —
+- Arbitrages pendants : aucun. Dept 44 (digitalisation jamais livrée) : relance envoyée par
+  mail le 2026-07-16, en attente de re-dépôt. Vosges saônoises : résolu 2026-07-16 —
   Bourgogne-Franche-Comté confirmée par l'utilisateur (Mélisey 70270, Haute-Saône).
 - Résolus le 2026-07-16 (base Notion + disque local) : `data_aude` = prénom du contact de
   la zone Blois (dépt 41 confirmé, cf. manifest sur le Drive) ; bataille de la Marne =
