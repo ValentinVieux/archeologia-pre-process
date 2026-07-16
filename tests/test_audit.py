@@ -37,7 +37,8 @@ def main() -> None:
     assert cand["charbonnière"]["match"]["entity_id"] == "charbonniere"
     assert cand["tumulus"]["match"]["entity_id"] == "tumulus"
     assert cand["fossé"]["match"]["entity_id"] == "talus_fosse", cand["fossé"]
-    assert cand["indéterminé"]["match"] is None
+    # « indéterminé » a été ignoré lors de l'audit data_bretagne_1 (aliases.yaml ignored:)
+    assert cand["indéterminé"]["match"]["status"] == "ignored", cand["indéterminé"]
     assert cand["Fours à chaux"]["match"] is None
 
     # DBF utf-8 sans .cpg : accents intacts (pas de mojibake cp1252) et matchés

@@ -29,6 +29,15 @@ aliases:
     source_dataset: data_bretagne_1
     context: "anomalie_lidar_bretagne.shp, champ 'type'"
     decided: "2026-07-16"
+  # couches Haye_Shp — mappings validés lors du traitement transformed/vecteurs (v2 = canonique)
+  - { raw: "Haye_lidar_chaussee", entity_id: chaussee, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_depression", entity_id: circular_depression, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_fossébutte", entity_id: talus_fosse, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_parcellaire_v1", entity_id: parcellaire, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_parcellaire_v2", entity_id: parcellaire, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_rempart", entity_id: rempart, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_tas", entity_id: tas, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  - { raw: "Haye_lidar_tranchee_chasse", entity_id: tranchee_chasse, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
 ignored:
   # champ 'type' — fourre-tout et objets sans signature LiDAR
   - { raw: "dépôt", source_dataset: data_bretagne_1, decided: "2026-07-16" }
