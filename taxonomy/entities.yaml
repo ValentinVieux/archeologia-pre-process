@@ -1,0 +1,205 @@
+# Taxonomie maîtresse des entités archéologiques.
+# Règles (voir CLAUDE.md § Taxonomie) :
+#   - id : snake_case ASCII, regex ^[a-z][a-z0-9_]*$ (contrat du plugin archeologia-pipeline)
+#   - morphology : circulaire | lineaire | zone
+#   - status : canonical | candidate  (Claude ne crée QUE des candidate)
+#   - plugin_entity_id : id dans entities_catalog.json du plugin QGIS, ou null
+#   - roboflow_classes : noms de classes Roboflow VERBATIM (accents/typos conservés)
+# Ne JAMAIS renommer un id canonical sans vérifier le plugin (_ENTITY_ID_RENAMES) et Roboflow.
+schema_version: 1
+entities:
+  # ---- Entités canoniques du plugin QGIS (entities_catalog.json, schema_version 2) ----
+  - id: cratere
+    label_fr: Cratères
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: cratere
+    roboflow_classes: ["trou d'obus"]
+  - id: tranchees_et_boyaux
+    label_fr: Tranchées et boyaux
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: tranchees_et_boyaux
+    roboflow_classes: ["tranchée"]
+  - id: abri
+    label_fr: Abris
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: abri
+    roboflow_classes: ["abri"]
+  - id: chemin_creux
+    label_fr: Chemins creux
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: chemin_creux
+    roboflow_classes: ["chemin creux"]
+  - id: parcellaire
+    label_fr: Parcellaire
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: parcellaire
+    roboflow_classes: ["parcellaires"]
+  - id: talus_fosse
+    label_fr: Talus et fossés
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: talus_fosse
+    roboflow_classes: ["fossé", "fossébutte"]
+  - id: charbonniere
+    label_fr: Charbonnières
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: charbonniere
+    roboflow_classes: ["charbonnières"]
+  - id: four
+    label_fr: Fours
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: four
+    roboflow_classes: ["fours"]
+  - id: circular_depression
+    label_fr: Dépressions circulaires
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: circular_depression
+    roboflow_classes: ["dépressions circulaires"]
+  - id: regroupement_crateres
+    label_fr: Regroupement de cratères
+    morphology: zone
+    status: canonical
+    plugin_entity_id: regroupement_crateres
+    roboflow_classes: []
+
+  # ---- Répertoire Roboflow sans équivalent plugin (morphologies proposées, à ajuster) ----
+  - id: tas
+    label_fr: Tas
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["tas"]
+  - id: tranchee_chasse
+    label_fr: Tranchées de chasse
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["tranchee chasse"]
+  - id: rempart
+    label_fr: Remparts
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["rempart"]
+  - id: chaussee
+    label_fr: Chaussées
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["chaussee"]
+  - id: structure
+    label_fr: Structures
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["structure"]
+  - id: butte
+    label_fr: Buttes
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["butte"]
+  - id: voie
+    label_fr: Voies
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["voie"]
+  - id: amenagement_militaire
+    label_fr: Aménagements militaires
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["aménagement militaire"]
+  - id: anomalie_topographique
+    label_fr: Anomalies topographiques
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["anomalie topographique"]
+  - id: extraction
+    label_fr: Extractions
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["extraction"]
+  - id: enclos
+    label_fr: Enclos
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["enclos"]
+  - id: anomalie_relief
+    label_fr: Anomalies de relief
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["anomalie de reilef"]  # typo Roboflow conservée verbatim
+  - id: batiment
+    label_fr: Bâtiments
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["bâtiment"]
+  - id: tumulus
+    label_fr: Tumulus
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["tumulus"]
+  - id: enceinte
+    label_fr: Enceintes
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["enceinte"]
+  - id: motte
+    label_fr: Mottes
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["motte"]
+  - id: dolmen
+    label_fr: Dolmens
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["dolmen"]
+  - id: eperon_barre
+    label_fr: Éperons barrés
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["éperon barré"]
+  - id: gisement_de_surface
+    label_fr: Gisements de surface
+    morphology: zone
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["gisement de surface"]
+  - id: menhir
+    label_fr: Menhirs
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["menhir"]
+  - id: mur
+    label_fr: Murs
+    morphology: lineaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["mur"]
+  - id: megalithe
+    label_fr: Mégalithes
+    morphology: circulaire
+    status: canonical
+    plugin_entity_id: null
+    roboflow_classes: ["megalithe"]

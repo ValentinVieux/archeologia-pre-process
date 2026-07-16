@@ -1,0 +1,7 @@
+# Dictionnaire d'alias : nom brut rencontré dans les livraisons -> entité de la taxonomie.
+# APPEND-ONLY : ne jamais réécrire ni supprimer une entrée existante.
+# Entrée alias  : {raw, entity_id, source_dataset, context (optionnel), decided}
+# Entrée ignored: {raw, source_dataset, decided}  (chaînes qui ne sont pas des entités)
+schema_version: 1
+aliases: []
+ignored: []

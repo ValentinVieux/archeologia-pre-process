@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+datasets/
+audits/
+tests/fixture_dataset/
+.claude/settings.local.json

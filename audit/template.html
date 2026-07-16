@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit dataset</title>
+<style>
+  :root {
+    --ink: #1f2937; --muted: #6b7280; --faint: #9ca3af;
+    --bg: #f6f7f9; --surface: #fff; --border: #e5e7eb;
+    --accent: #2563eb;
+    --good-bg: #dcfce7; --good-ink: #166534;
+    --warn-bg: #fef3c7; --warn-ink: #92400e;
+    --bad-bg: #fee2e2; --bad-ink: #991b1b;
+    --neutral-bg: #e5e7eb; --neutral-ink: #374151;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.5 system-ui, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px; }
+  header h1 { font-size: 20px; margin: 0 0 2px; }
+  header .sub { color: var(--muted); font-size: 12px; margin-bottom: 20px; word-break: break-all; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .card .num { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .card .num small { font-size: 13px; font-weight: 500; }
+  .card .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+  .card.alert .num { color: var(--bad-ink); }
+  section { margin-bottom: 32px; }
+  section > h2 { font-size: 15px; margin: 0 0 8px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .chip { border: 1px solid var(--border); background: var(--surface); color: var(--ink);
+          border-radius: 20px; padding: 3px 12px; font-size: 12px; cursor: pointer; }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tblwrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+  thead th { border-top: none; background: var(--surface); color: var(--muted); font-size: 11px;
+             text-transform: uppercase; letter-spacing: 0.4px; cursor: pointer; white-space: nowrap;
+             user-select: none; position: sticky; top: 0; }
+  thead th .arrow { color: var(--accent); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; border-radius: 10px; padding: 1px 9px; font-size: 12px; white-space: nowrap; }
+  .badge.known   { background: var(--good-bg); color: var(--good-ink); }
+  .badge.unknown { background: var(--bad-bg); color: var(--bad-ink); }
+  .badge.ignored { background: var(--neutral-bg); color: var(--neutral-ink); }
+  .badge.warn    { background: var(--warn-bg); color: var(--warn-ink); }
+  .mono { font-family: Consolas, monospace; font-size: 12px; }
+  .muted { color: var(--muted); }
+  .src { color: var(--muted); font-size: 12px; }
+  details.fields { margin: 2px 0; }
+  details.fields summary { cursor: pointer; color: var(--accent); font-size: 12px; }
+  details.fields ul { margin: 6px 0 2px; padding-left: 18px; }
+  details.fields li { margin-bottom: 2px; font-size: 12px; }
+  .empty { padding: 14px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title"></h1>
+    <div class="sub" id="subtitle"></div>
+  </header>
+  <div class="cards" id="cards"></div>
+
+  <section>
+    <h2>Noms candidats d'entités</h2>
+    <div class="toolbar" id="cand-filters"></div>
+    <div class="tblwrap"><table id="tbl-cand"></table></div>
+  </section>
+
+  <section>
+    <h2>Couches vecteur</h2>
+    <div class="tblwrap"><table id="tbl-layers"></table></div>
+  </section>
+
+  <section>
+    <h2>Inventaire des fichiers</h2>
+    <div class="toolbar" id="file-filters"></div>
+    <div class="tblwrap"><table id="tbl-files"></table></div>
+  </section>
+
+  <section>
+    <h2>Anomalies</h2>
+    <div class="tblwrap"><table id="tbl-anom"></table></div>
+  </section>
+
+  <section>
+    <h2>Erreurs de lecture</h2>
+    <div class="tblwrap"><table id="tbl-err"></table></div>
+  </section>
+</div>
+
+<script id="audit-data" type="application/json">__AUDIT_JSON__</script>
+<script>
+"use strict";
+const AUDIT = JSON.parse(document.getElementById("audit-data").textContent);
+
+const esc = s => String(s).replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtInt = n => n == null ? "–" : n.toLocaleString("fr-FR");
+const fmtSize = b => b >= 1e9 ? (b/1e9).toFixed(1)+" Go" : b >= 1e6 ? (b/1e6).toFixed(1)+" Mo"
+                   : b >= 1e3 ? (b/1e3).toFixed(0)+" ko" : b+" o";
+const KIND_FR = {filename:"nom de fichier", layername:"nom de couche",
+                 field_value:"valeur de champ", qgis_project:"projet QGIS"};
+const status = c => c.match ? c.match.status : "unknown";
+
+/* ---------- table générique : colonnes + lignes re-rendues à chaque tri ---------- */
+function makeTable(el, columns, rows, emptyMsg) {
+  let sortKey = null, dir = 1;
+  function render() {
+    const data = [...rows];
+    if (sortKey !== null) {
+      const col = columns[sortKey];
+      data.sort((a, b) => {
+        const va = col.sort(a), vb = col.sort(b);
+        return (va > vb ? 1 : va < vb ? -1 : 0) * dir;
+      });
+    }
+    const head = "<thead><tr>" + columns.map((c, i) =>
+      `<th class="${c.num ? "num" : ""}" data-i="${i}">${c.label}` +
+      (i === sortKey ? `<span class="arrow"> ${dir > 0 ? "▲" : "▼"}</span>` : "") + "</th>"
+    ).join("") + "</tr></thead>";
+    const body = data.length
+      ? "<tbody>" + data.map(r => "<tr>" + columns.map(c =>
+          `<td class="${c.num ? "num" : ""}">${c.html(r)}</td>`).join("") + "</tr>").join("") + "</tbody>"
+      : `<tbody><tr><td colspan="${columns.length}"><div class="empty">${emptyMsg}</div></td></tr></tbody>`;
+    el.innerHTML = head + body;
+    el.querySelectorAll("thead th").forEach(th => th.onclick = () => {
+      const i = +th.dataset.i;
+      dir = (i === sortKey) ? -dir : 1; sortKey = i; render();
+    });
+  }
+  render();
+  return { setRows(r) { rows = r; render(); } };
+}
+
+function makeChips(el, options, onPick) {
+  let active = options[0].key;
+  function render() {
+    el.innerHTML = options.map(o =>
+      `<button class="chip ${o.key === active ? "active" : ""}" data-k="${o.key}">${o.label}</button>`).join("");
+    el.querySelectorAll(".chip").forEach(b => b.onclick = () => { active = b.dataset.k; render(); onPick(active); });
+  }
+  render();
+}
+
+/* ---------------------------------- entête + cartes ---------------------------------- */
+document.title = "Audit — " + AUDIT.dataset.name;
+document.getElementById("title").textContent = "Audit du dataset « " + AUDIT.dataset.name + " »";
+document.getElementById("subtitle").textContent =
+  AUDIT.dataset.path + " — généré le " + AUDIT.generated_at + " — schéma v" + AUDIT.schema_version;
+
+const cands = AUDIT.name_candidates;
+// Erreurs globales + erreurs portées par chaque couche (contrat : layers[].errors = {stage, error})
+const allErrors = AUDIT.errors.concat(AUDIT.layers.flatMap(
+  l => l.errors.map(e => ({ file: l.file, layer: l.layer, stage: e.stage, error: e.error }))));
+const nUnknown = cands.filter(c => status(c) === "unknown").length;
+const totFeatures = AUDIT.layers.reduce((s, l) => s + (l.feature_count || 0), 0);
+const crsKeys = Object.keys(AUDIT.crs_census);
+const crsBad = crsKeys.some(k => k !== "EPSG:2154");
+const cards = [
+  { lbl: "Fichiers", num: fmtInt(AUDIT.dataset.n_files) + ` <small class="muted">(${fmtSize(AUDIT.dataset.total_size_bytes)})</small>` },
+  { lbl: "Couches vecteur", num: fmtInt(AUDIT.layers.length) },
+  { lbl: "Entités (features)", num: fmtInt(totFeatures) },
+  { lbl: "CRS", num: crsKeys.map(esc).join(", ") || "–", alert: crsBad },
+  { lbl: "Noms candidats", num: fmtInt(cands.length) + (nUnknown ? ` <small>dont ${nUnknown} inconnus</small>` : ""), alert: nUnknown > 0 },
+  { lbl: "Anomalies / erreurs", num: fmtInt(AUDIT.anomalies.length) + " / " + fmtInt(allErrors.length), alert: allErrors.length > 0 },
+];
+document.getElementById("cards").innerHTML = cards.map(c =>
+  `<div class="card ${c.alert ? "alert" : ""}"><div class="num">${c.num}</div><div class="lbl">${c.lbl}</div></div>`).join("");
+
+/* ------------------------------- candidats de noms ------------------------------- */
+const srcCell = c => c.sources.map(s => {
+  let where = s.file;
+  if (s.field) where += ` · champ « ${s.field} »`;
+  else if (s.layer && s.kind === "layername") where = s.file;
+  return `${KIND_FR[s.kind] || s.kind} <span class="mono">(${esc(where)})</span> ×${fmtInt(s.count)}`;
+}).join("<br>");
+
+const badgeCell = c => {
+  const st = status(c);
+  if (st === "known") return `<span class="badge known">${esc(c.match.entity_id)}</span>` +
+    (c.match.via === "normalized" ? ` <span class="muted" title="via ${esc(c.match.matched_on)}">≈</span>` : "");
+  if (st === "ignored") return `<span class="badge ignored">ignoré</span>`;
+  return `<span class="badge unknown">inconnu</span>`;
+};
+
+const candCols = [
+  { label: "Nom brut", html: c => `<strong>${esc(c.raw)}</strong>`, sort: c => c.raw.toLowerCase() },
+  { label: "Normalisé", html: c => `<span class="mono muted">${esc(c.normalized)}</span>`, sort: c => c.normalized },
+  { label: "Statut", html: badgeCell, sort: c => status(c) },
+  { label: "Occurrences", num: true, html: c => fmtInt(c.total_count), sort: c => c.total_count },
+  { label: "Sources", html: c => `<span class="src">${srcCell(c)}</span>`, sort: c => c.sources.length },
+];
+const candTable = makeTable(document.getElementById("tbl-cand"), candCols, cands, "Aucun nom candidat.");
+const count = st => cands.filter(c => status(c) === st).length;
+makeChips(document.getElementById("cand-filters"), [
+  { key: "all", label: `Tous (${cands.length})` },
+  { key: "unknown", label: `Inconnus (${count("unknown")})` },
+  { key: "known", label: `Connus (${count("known")})` },
+  { key: "ignored", label: `Ignorés (${count("ignored")})` },
+], k => candTable.setRows(k === "all" ? cands : cands.filter(c => status(c) === k)));
+
+/* ------------------------------------ couches ------------------------------------ */
+const geomCell = l => {
+  const g = l.sampled && l.sampled.geometry;
+  const sampled = g ? Object.entries(g.types).map(([t, n]) => `${t} ×${fmtInt(n)}`).join(", ") : "–";
+  const decl = l.declared_geometry_type || "–";
+  return `${esc(sampled)} <span class="muted">(déclaré : ${esc(decl)})</span>`;
+};
+const crsCell = l => (!l.crs.raw && !l.crs.missing) ? `<span class="muted">–</span>`
+  : l.crs.missing ? `<span class="badge warn">manquant</span>`
+  : l.crs.epsg ? (l.crs.epsg === 2154 ? "EPSG:2154" : `<span class="badge warn">EPSG:${l.crs.epsg}</span>`)
+  : `<span class="badge warn" title="${esc(l.crs.raw || "")}">non-EPSG</span>`;
+const qualCell = l => {
+  const g = l.sampled && l.sampled.geometry;
+  const bits = [];
+  if (g && g.invalid) bits.push(`<span class="badge warn">${fmtInt(g.invalid)} invalide(s)</span>`);
+  if (g && g.empty) bits.push(`<span class="badge warn">${fmtInt(g.empty)} vide(s)</span>`);
+  if (l.errors.length) bits.push(`<span class="badge unknown">${l.errors.length} erreur(s)</span>`);
+  return bits.join(" ") || (g ? "ok" : "–");
+};
+const fieldsCell = l => {
+  if (!l.fields.length) return `<span class="muted">aucun champ</span>`;
+  const items = l.fields.map(f => {
+    let v = `<strong>${esc(f.name)}</strong> <span class="muted">(${esc(f.dtype)})</span>`;
+    if (f.string_stats) {
+      const top = f.string_stats.top_values.slice(0, 10)
+        .map(([val, n]) => `${esc(val)} ×${fmtInt(n)}`).join(", ");
+      const more = f.string_stats.n_distinct_sampled - Math.min(10, f.string_stats.top_values.length);
+      v += ` : ${top}${more > 0 ? ` <span class="muted">+${more} autres</span>` : ""}`;
+    }
+    return `<li>${v}</li>`;
+  }).join("");
+  return `<details class="fields"><summary>${l.fields.length} champ(s)</summary><ul>${items}</ul></details>`;
+};
+makeTable(document.getElementById("tbl-layers"), [
+  { label: "Fichier", html: l => `<span class="mono">${esc(l.file)}</span>`, sort: l => l.file },
+  { label: "Couche", html: l => esc(l.layer), sort: l => l.layer.toLowerCase() },
+  { label: "CRS", html: crsCell, sort: l => l.crs.epsg || 0 },
+  { label: "Géométries (échantillon)", html: geomCell, sort: l => l.declared_geometry_type || "" },
+  { label: "Entités", num: true, html: l => fmtInt(l.feature_count) +
+      (l.sampled && l.sampled.is_partial ? ` <span class="badge warn">échant. ${fmtInt(l.sampled.rows_read)}</span>` : ""),
+    sort: l => l.feature_count || 0 },
+  { label: "Qualité", html: qualCell, sort: l => (l.errors.length ? 2 : 0) },
+  { label: "Champs", html: fieldsCell, sort: l => l.fields.length },
+], AUDIT.layers, "Aucune couche vecteur lue.");
+
+/* ------------------------------------ fichiers ------------------------------------ */
+const fileCols = [
+  { label: "Chemin", html: f => `<span class="mono">${esc(f.path)}</span>`, sort: f => f.path },
+  { label: "Catégorie", html: f => esc(f.category), sort: f => f.category },
+  { label: "Extension", html: f => `<span class="mono">${esc(f.extension)}</span>`, sort: f => f.extension },
+  { label: "Taille", num: true, html: f => fmtSize(f.size_bytes), sort: f => f.size_bytes },
+];
+const fileTable = makeTable(document.getElementById("tbl-files"), fileCols, AUDIT.files, "Aucun fichier.");
+const catCounts = {};
+AUDIT.files.forEach(f => catCounts[f.category] = (catCounts[f.category] || 0) + 1);
+makeChips(document.getElementById("file-filters"),
+  [{ key: "all", label: `Tous (${AUDIT.files.length})` },
+   ...Object.keys(catCounts).sort().map(c => ({ key: c, label: `${c} (${catCounts[c]})` }))],
+  k => fileTable.setRows(k === "all" ? AUDIT.files : AUDIT.files.filter(f => f.category === k)));
+
+/* ------------------------------- anomalies / erreurs ------------------------------- */
+makeTable(document.getElementById("tbl-anom"), [
+  { label: "Type", html: a => `<span class="badge warn">${esc(a.kind)}</span>`, sort: a => a.kind },
+  { label: "Fichier", html: a => `<span class="mono">${esc(a.file)}</span>`, sort: a => a.file },
+  { label: "Couche", html: a => a.layer ? esc(a.layer) : "–", sort: a => a.layer || "" },
+  { label: "Détail", html: a => a.detail ? esc(a.detail) : "–", sort: a => a.detail || "" },
+], AUDIT.anomalies, "Aucune anomalie détectée.");
+
+makeTable(document.getElementById("tbl-err"), [
+  { label: "Fichier", html: e => `<span class="mono">${esc(e.file)}</span>`, sort: e => e.file },
+  { label: "Couche", html: e => e.layer ? esc(e.layer) : "–", sort: e => e.layer || "" },
+  { label: "Étape", html: e => `<span class="mono">${esc(e.stage)}</span>`, sort: e => e.stage },
+  { label: "Erreur", html: e => esc(e.error), sort: e => e.error },
+], allErrors, "Aucune erreur de lecture.");
+</script>
+</body>
+</html>
