@@ -54,6 +54,12 @@ def make() -> Path:
     (vec / "no_prj.prj").unlink()
     (vec / "no_prj.cpg").unlink(missing_ok=True)
 
+    # Shapefile UTF-8 sans .cpg (le cas Bretagne : utf-8 doit être tenté avant cp1252)
+    gpd.GeoDataFrame({"type_site": ["mégalithe", "éperon barré"]},
+                     geometry=[Point(3, 3), Point(4, 4)], crs="EPSG:2154") \
+        .to_file(vec / "utf8_no_cpg.shp", encoding="utf-8")
+    (vec / "utf8_no_cpg.cpg").unlink(missing_ok=True)
+
     # GeoJSON hors CRS de référence
     gpd.GeoDataFrame({"cat": ["tumulus"]}, geometry=[Point(2.3, 48.8)], crs="EPSG:4326") \
         .to_file(FIXTURE / "features.geojson", driver="GeoJSON")

@@ -40,6 +40,16 @@ def main() -> None:
     assert cand["indéterminé"]["match"] is None
     assert cand["Fours à chaux"]["match"] is None
 
+    # DBF utf-8 sans .cpg : accents intacts (pas de mojibake cp1252) et matchés
+    assert cand["mégalithe"]["match"]["entity_id"] == "megalithe", cand.keys()
+    assert cand["éperon barré"]["match"]["entity_id"] == "eperon_barre"
+    utf8_layer = next(l for l in audit["layers"] if l["layer"] == "utf8_no_cpg")
+    assert utf8_layer["encoding_used"] == "utf-8", utf8_layer["encoding_used"]
+
+    # DBF cp1252 sans .cpg : le fallback joue après l'échec utf-8
+    noprj = next(l for l in audit["layers"] if l["layer"] == "no_prj")
+    assert noprj["encoding_used"] == "cp1252", noprj["encoding_used"]
+
     kinds = {an["kind"] for an in audit["anomalies"]}
     for expected in ("missing_crs", "non_reference_crs", "archive_not_scanned",
                      "lone_sidecar", "encoding_fallback", "unrecognized_extension"):

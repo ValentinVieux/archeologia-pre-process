@@ -178,14 +178,13 @@ def _read_layer(path: Path, rel: str, layer_name: str, declared_geom, row_cap: i
         "file": rel, "layer": layer_name, "driver": None,
         "crs": {"raw": None, "epsg": None, "missing": True},
         "declared_geometry_type": declared_geom,
-        "feature_count": None, "bbox": None, "encoding_used": shp_encoding,
+        "feature_count": None, "bbox": None, "encoding_used": None,
         "sampled": None, "fields": [], "errors": [],
     }
     anomalies = audit["anomalies"]
 
-    kw = {"encoding": shp_encoding} if shp_encoding else {}
     try:
-        info = pyogrio.read_info(path, layer=layer_name, **kw)
+        info = pyogrio.read_info(path, layer=layer_name)
     except Exception as exc:
         rec["errors"].append({"stage": "read_info", "error": f"{type(exc).__name__}: {exc}"})
         return rec
@@ -209,8 +208,10 @@ def _read_layer(path: Path, rel: str, layer_name: str, declared_geom, row_cap: i
     dtypes += ["object"] * (len(fields) - len(dtypes))  # prudence si dtypes absent
     string_cols = [f for f, d in zip(fields, dtypes) if d == "object"]
 
+    # Shapefile sans .cpg : utf-8 d'abord (auto-validant — des octets cp1252 accentués
+    # le font échouer), puis cp1252 (cas français historique), puis latin-1 (n'échoue jamais).
     df, first_err = None, None
-    for enc in ([shp_encoding, "latin-1"] if shp_encoding else [None, "latin-1"]):
+    for enc in (["utf-8", "cp1252", "latin-1"] if shp_encoding else [None, "latin-1"]):
         try:
             # string_cols or fields[:1] : une table non spatiale sans champ string rendrait
             # sinon un DataFrame à 0 colonne (len 0) et un rows_read faux.
@@ -244,7 +245,8 @@ def _read_layer(path: Path, rel: str, layer_name: str, declared_geom, row_cap: i
             "invalid": int((~g.is_valid & g.notna() & ~g.is_empty).sum()),
             "types": dict(sorted(types.items())),
         }
-        if len(types) > 1:
+        families = {t.removeprefix("Multi") for t in types}
+        if len(families) > 1:  # LineString+MultiLineString = même famille, pas une anomalie
             anomalies.append({"kind": "mixed_geometry", "file": rel, "layer": layer_name,
                               "detail": "+".join(sorted(types)) + " dans l'échantillon"})
     rec["sampled"] = {"rows_read": rows, "is_partial": bool(partial), "geometry": geom_stats}
