@@ -3,7 +3,8 @@
     "allow": [
       "Bash(.venv/Scripts/python.exe *)",
       "PowerShell(.venv\\Scripts\\python.exe *)",
-      "Read(//c/projets/Archeologia/data/**)"
+      "Read(//c/projets/Archeologia/data/**)",
+      "Read(//d/data_regions/**)"
     ]
   }
 }
