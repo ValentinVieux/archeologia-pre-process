@@ -165,6 +165,13 @@
     <div id="datasets-detail"></div>
   </section>
 
+  <section id="modeles">
+    <span class="eyebrow">Production</span>
+    <h2>Modèles entraînés</h2>
+    <p class="sub">Registre <code>modeles.yaml</code> à la racine (source : base Notion) — quel modèle a appris sur quelles zones.</p>
+    <div id="modeles-detail"></div>
+  </section>
+
   <section id="quarantaine">
     <span class="eyebrow">Quarantaine</span>
     <h2>_a_trier — images inattribuables</h2>
@@ -217,6 +224,9 @@ const flagChips = (flags, link) => (flags || []).map(f => {
 }).join("");
 const NOTE_CHIP = { arbitrage: ["ARBITRAGE", "crit"], todo: ["TODO", "warn"],
                     attention: ["ATTENTION", "warn"], decision: ["DÉCISION", "info"] };
+const zoneModels = {};
+(D.modeles || []).forEach(m => (m.zones || []).forEach(z =>
+  (zoneModels[z] = zoneModels[z] || []).push(m)));
 
 /* -------------------------------- entête + nav -------------------------------- */
 const T = D.totals;
@@ -235,7 +245,7 @@ document.getElementById("stats").innerHTML = [
 }).join("");
 document.getElementById("nav").innerHTML = [
   ["#a-traiter", T.actions > 0 ? `À traiter <span class="n-count">(${T.actions})</span>` : "À traiter"],
-  ["#zones", "Zones"], ["#datasets", "Datasets"],
+  ["#zones", "Zones"], ["#datasets", "Datasets"], ["#modeles", "Modèles"],
   ["#quarantaine", `Quarantaine${T.a_trier_images ? ` <span class="n-count">(${fi(T.a_trier_images)})</span>` : ""}`],
   ["#archives", "Archives"], ["#conventions", "Conventions"],
 ].map(([h, l]) => `<a href="${h}">${l}</a>`).join("");
@@ -386,6 +396,9 @@ document.getElementById("zones-detail").innerHTML = Object.keys(byRegion).sort()
         src.date_premier_contact ? `premier contact ${esc(src.date_premier_contact)}` : "",
         m.lien_drive_source ? `<a href="${esc(m.lien_drive_source)}">drive source</a>` : "",
       ].filter(Boolean).join(" · ")}</div>
+      ${(zoneModels[z.zone_id] || []).length ? `<div class="sub" style="margin-top:4px">modèles entraînés dessus :
+        ${zoneModels[z.zone_id].map(mo => `<a class="chip ${mo.statut === "production" ? "ok" : "warn"}"
+          href="#m-${esc(mo.nom)}">${esc(mo.nom)}</a>`).join("")}</div>` : ""}
       ${actionable.length ? `<ul class="todo-list">${actionable.map(n => {
         const [lbl, cls] = NOTE_CHIP[n.type];
         return `<li><span class="chip ${cls}">${lbl}</span>${esc(n.texte)}</li>`;
@@ -428,6 +441,20 @@ document.getElementById("datasets-detail").innerHTML = Object.keys(dsIndex).sort
       <div class="box"><div class="bt">classes (zones attribuées)</div>${bars(e.classes) || '<span class="na">—</span>'}</div>
     </div></div>`;
 }).join("");
+
+/* ----------------------------------- modèles ----------------------------------- */
+document.getElementById("modeles-detail").innerHTML = (D.modeles || []).length
+  ? D.modeles.map(mo => `<div class="zone" id="m-${esc(mo.nom)}">
+      <div class="zone-head"><h4 class="mono">${esc(mo.nom)}</h4>
+        <span class="chip ${mo.statut === "production" ? "ok" : "warn"}">${esc(mo.statut)}</span>
+        <span class="sub">${esc(mo.architecture || "")} · ${esc(mo.tache || "")}</span>
+      </div>
+      <div class="sub" style="margin-top:4px">entités : ${esc(mo.entites || "—")}</div>
+      <div style="margin-top:6px">zones d'entraînement :
+        ${(mo.zones || []).map(z => `<a class="chip tag" href="#z-${esc(z)}">${esc(z)}</a>`).join("")}</div>
+      ${mo.notes ? `<div class="sub" style="margin-top:4px">${esc(mo.notes)}</div>` : ""}
+    </div>`).join("")
+  : `<div class="card"><span class="na">Aucun modèle enregistré (modeles.yaml absent).</span></div>`;
 
 /* --------------------------------- quarantaine --------------------------------- */
 document.getElementById("atrier").innerHTML = D.a_trier.length ? D.a_trier.map(d =>

@@ -183,6 +183,12 @@ def build(root: Path) -> dict:
         for dsdir in sorted(p for p in atrier.iterdir() if p.is_dir()):
             data["a_trier"].append(read_dataset(dsdir))
 
+    modeles = root / "modeles.yaml"
+    if modeles.exists():
+        data["modeles"] = (yaml.safe_load(modeles.read_text(encoding="utf-8")) or {}).get("modeles", [])
+    else:
+        data["modeles"] = []
+
     arch = root / "_archives_roboflow"
     if arch.is_dir():
         for f in sorted(arch.iterdir()):
