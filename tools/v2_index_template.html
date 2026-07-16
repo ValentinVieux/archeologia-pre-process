@@ -354,11 +354,14 @@ document.getElementById("zones-detail").innerHTML = Object.keys(byRegion).sort()
     const actionable = z.notes.filter(n => ["arbitrage", "todo", "attention"].includes(n.type));
     const rest = z.notes.filter(n => !["arbitrage", "todo", "attention"].includes(n.type));
 
+    const annonce = m.donnees_annoncees
+      ? `<div class="sub" style="margin-top:4px">annoncé : ${esc(m.donnees_annoncees)}</div>` : "";
     const rawBox = z.raw ? `<div class="box"><div class="bt">raw / vérité terrain</div>
         <b>${fi(z.raw.n_files)}</b> fichiers · ${fs(z.raw.size)}
         ${z.raw.subdirs.length ? `<div class="sub mono">${z.raw.subdirs.map(esc).join(" · ")}</div>` : ""}
         <div class="sub">${Object.entries(z.raw.exts).map(([e, n]) => `${esc(e)}×${n}`).join(", ")}${z.raw.exts_autres ? ` +${z.raw.exts_autres} autres` : ""}</div>
-      </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><span class="na">vide — livraison brute encore dans data_regions (v1)</span></div>`;
+        ${annonce}
+      </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><span class="na">vide — livraison brute encore dans data_regions (v1)</span>${annonce}</div>`;
     const vecBox = z.vecteurs ? `<div class="box"><div class="bt">transformed / vecteurs</div>
         <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}</div>` : "";
     const dsBoxes = z.datasets.map(d => {
@@ -377,6 +380,12 @@ document.getElementById("zones-detail").innerHTML = Object.keys(byRegion).sort()
         ${flagChips(z.flags)}
         <span class="meta">contact : ${contact} · licence : ${licence}</span>
       </div>
+      <div class="sub" style="margin-top:2px">${[
+        m.localisation ? esc(m.localisation) : "",
+        m.surface_km2 ? `${esc(String(m.surface_km2))} km²` : "",
+        src.date_premier_contact ? `premier contact ${esc(src.date_premier_contact)}` : "",
+        m.lien_drive_source ? `<a href="${esc(m.lien_drive_source)}">drive source</a>` : "",
+      ].filter(Boolean).join(" · ")}</div>
       ${actionable.length ? `<ul class="todo-list">${actionable.map(n => {
         const [lbl, cls] = NOTE_CHIP[n.type];
         return `<li><span class="chip ${cls}">${lbl}</span>${esc(n.texte)}</li>`;

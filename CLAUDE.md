@@ -75,9 +75,16 @@ Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-b
 - Écritures massives vers G: : toujours staging local puis `robocopy /E /MT:16`.
 - Workflows : `/dispatch-roboflow` (ranger des exports), `/audit-dataset` (auditer
   une livraison vecteur).
-- Arbitrages pendants (ne pas trancher seul) : `data_aude` (SOLiDAR 41 vs dépt 11) ;
-  réaffectations de régions 77→IdF et 70→BFC à confirmer ; données perdues à réclamer
-  (Verdun : .shp/.dbf + rasters 2013 ; dept 44 : digitalisation absente).
+- Arbitrages pendants (ne pas trancher seul) : région des Vosges saônoises (la base Notion
+  dit Grand-Est mais localise en Haute-Saône 70270 = BFC — trancher avec le contact de la
+  zone, cf. manifest) ; dept 44 : digitalisation absente, à réclamer auprès du contact.
+- Résolus le 2026-07-16 (base Notion + disque local) : `data_aude` = prénom du contact de
+  la zone Blois (dépt 41 confirmé, cf. manifest sur le Drive) ; bataille de la Marne =
+  Hauts-de-France confirmé (Ermenonville, Oise — l'hypothèse 77→IdF de l'audit était
+  fausse) ; données Verdun retrouvées dans D:\data_regions\Verdun et restaurées dans v2
+  (shapefiles complets + rasters 2013 + couche_regroupee.gpkg).
+- Les données personnelles (noms/contacts des archéologues, issues de Notion) vivent dans
+  les manifest.yaml du Drive privé — ne JAMAIS les committer dans ce repo public.
 - Décisions actées 2026-07-16 : `verdun_3_classes` classe `abri`→`cratere` à la
   recréation ; base de recréation formes linéaires = `formes_lineaires_rmin10`
   (paramétrisation LD actuelle), `rmin20` = archive.
