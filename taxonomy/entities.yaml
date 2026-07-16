@@ -203,3 +203,11 @@ entities:
     status: canonical
     plugin_entity_id: null
     roboflow_classes: ["megalithe"]
+
+  # ---- Entités candidates (créées via /audit-dataset, promotion manuelle) ----
+  - id: douve
+    label_fr: Douves
+    morphology: lineaire
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []

@@ -3,5 +3,61 @@
 # Entrée alias  : {raw, entity_id, source_dataset, context (optionnel), decided}
 # Entrée ignored: {raw, source_dataset, decided}  (chaînes qui ne sont pas des entités)
 schema_version: 1
-aliases: []
-ignored: []
+aliases:
+  - raw: "voie/chemin"
+    entity_id: voie
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type'"
+    decided: "2026-07-16"
+  - raw: "enclos funéraire"
+    entity_id: enclos
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type'"
+    decided: "2026-07-16"
+  - raw: "mégalithe (hors menhir)"
+    entity_id: megalithe
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type'"
+    decided: "2026-07-16"
+  - raw: "douve"
+    entity_id: douve
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type'"
+    decided: "2026-07-16"
+  - raw: "mine"
+    entity_id: extraction
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type'"
+    decided: "2026-07-16"
+ignored:
+  # champ 'type' — fourre-tout et objets sans signature LiDAR
+  - { raw: "dépôt", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "autres/divers", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "autres", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  # champs booléens / mesures
+  - { raw: "oui", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "non", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: ">3", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "3<", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  # champs 'chrono deb' / 'chrono_fin' — périodes chronologiques, pas des entités
+  - { raw: "antiquité", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "antique", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "néolithique", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "âge du fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "age du fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "premier âge du fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "premier age du fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "second âge du fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "second âge du Fer", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "haut moyen âge", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "premier moyen âge", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "second moyen age", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "moyen âge classique", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "Moyen-Âge", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "moyen-âge", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "époque médiévale", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "époque moderne", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "époque indéterminée", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "indéterminé", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  # nom de fichier/couche générique
+  - { raw: "anomalie_lidar_bretagne", source_dataset: data_bretagne_1, decided: "2026-07-16" }
