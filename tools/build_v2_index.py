@@ -8,6 +8,13 @@ Scanne la racine (manifest.yaml des zones, upload_manifest.yaml des datasets,
 _annotations.coco.json, raw/, _a_trier/, _archives_roboflow/) et écrit
 <racine>/index.html : page statique, CSS/JS inline, ouvrable en file://.
 À relancer après chaque évolution du dossier.
+
+Convention de notes typées dans manifest.yaml (voir CLAUDE.md § Stockage Drive) :
+    ARBITRAGE: ...        -> bloquant, remonte en tête de page
+    TODO: ...             -> action à mener
+    ATTENTION: ...        -> alerte non bloquante
+    DÉCISION <date>: ...  -> actée, informatif
+    (sans préfixe)        -> info
 """
 from __future__ import annotations
 
@@ -15,6 +22,8 @@ import argparse
 import collections
 import json
 import os
+import re
+import unicodedata
 from datetime import date
 from pathlib import Path
 
@@ -22,6 +31,32 @@ import yaml
 
 TEMPLATE = Path(__file__).with_name("v2_index_template.html")
 IGNORE = {"desktop.ini", "thumbs.db", "index.html"}
+SPLIT_ORDER = {"train": 0, "valid": 1, "test": 2}
+
+NOTE_RE = re.compile(
+    r"^\s*(ARBITRAGE(?:\s+PENDANT)?|TODO|ATTENTION|D[ÉE]CISION[^:]*)\s*:\s*(.*)$",
+    re.IGNORECASE | re.DOTALL)
+NOTE_TYPE = {"arbitrage": "arbitrage", "arbitrage pendant": "arbitrage",
+             "todo": "todo", "attention": "attention"}
+
+
+def norm(s: str) -> str:
+    """minuscules sans accents (haystack de recherche) — même esprit que audit.scan.normalize."""
+    s = unicodedata.normalize("NFKD", str(s))
+    return "".join(c for c in s if not unicodedata.combining(c)).lower()
+
+
+def parse_note(txt: str) -> dict:
+    m = NOTE_RE.match(txt)
+    if m:
+        head = norm(m.group(1)).strip()
+        typ = NOTE_TYPE.get(head, "decision" if head.startswith("decision") else None)
+        if typ:
+            return {"type": typ, "texte": m.group(2).strip()}
+    first = txt.strip().split(":", 1)[0].split()[0] if txt.strip() else ""
+    if first.isupper() and len(first) > 2 and first not in ("CRS", "EPSG", "MNT", "RVT"):
+        print(f"  [note?] préfixe non reconnu « {first} » : {txt[:70]}...")
+    return {"type": "info", "texte": txt.strip()}
 
 
 def dir_stats(root: Path) -> dict:
@@ -31,13 +66,14 @@ def dir_stats(root: Path) -> dict:
             if f.lower() in IGNORE:
                 continue
             n += 1
-            ext = os.path.splitext(f)[1].lower() or "(sans ext)"
-            exts[ext] += 1
+            exts[os.path.splitext(f)[1].lower() or "(sans ext)"] += 1
             try:
                 size += os.path.getsize(os.path.join(dp, f))
             except OSError:
                 pass
-    return {"n_files": n, "size": size, "exts": dict(exts.most_common(8))}
+    top = exts.most_common(8)
+    return {"n_files": n, "size": size, "exts": dict(top),
+            "exts_autres": n - sum(c for _, c in top)}
 
 
 def read_dataset(dsdir: Path) -> dict:
@@ -49,7 +85,9 @@ def read_dataset(dsdir: Path) -> dict:
         out["manifest"] = {k: m.get(k) for k in
                            ("source_export", "dispatched", "zone", "region", "tags",
                             "attribution_methods")}
-    for split_dir in sorted(p for p in dsdir.iterdir() if p.is_dir()):
+    split_dirs = sorted((p for p in dsdir.iterdir() if p.is_dir()),
+                        key=lambda p: (SPLIT_ORDER.get(p.name, 9), p.name))
+    for split_dir in split_dirs:
         ann = split_dir / "_annotations.coco.json"
         n_img = sum(1 for f in split_dir.iterdir()
                     if f.suffix.lower() in (".jpg", ".jpeg", ".png"))
@@ -61,15 +99,32 @@ def read_dataset(dsdir: Path) -> dict:
                                       for a in coco.get("annotations", []))
             rec["annotations"] = sum(per.values())
             for cls, cnt in per.items():
-                if cls in cats.values() and per[cls]:
+                if cnt:
                     out["classes"][cls] = out["classes"].get(cls, 0) + cnt
         out["splits"][split_dir.name] = rec
     return out
 
 
+FLAG_ORDER = {"arbitrage": 0, "todo": 1, "attention": 2, "source": 3, "raw": 4}
+
+
+def zone_flags(zone: dict) -> list[str]:
+    flags = set()
+    for n in zone["notes"]:
+        if n["type"] in ("arbitrage", "todo", "attention"):
+            flags.add(n["type"])
+    src = (zone["manifest"] or {}).get("source") or {}
+    if not src.get("contact") or not src.get("licence"):
+        flags.add("source")
+    if zone["raw"] is None:
+        flags.add("raw")
+    return sorted(flags, key=lambda f: FLAG_ORDER.get(f, 9))
+
+
 def build(root: Path) -> dict:
     data = {"generated": str(date.today()), "root": str(root),
-            "zones": [], "a_trier": [], "archives": [], "totals": {}}
+            "zones": [], "a_trier": [], "archives": [], "totals": {},
+            "actions": [], "actions_source": {"contact": [], "licence": []}}
 
     for region_dir in sorted(p for p in root.iterdir()
                              if p.is_dir() and not p.name.startswith("_")):
@@ -77,8 +132,10 @@ def build(root: Path) -> dict:
             zone = {"zone_id": zone_dir.name, "region": region_dir.name,
                     "manifest": None, "raw": None, "datasets": [], "vecteurs": None}
             mf = zone_dir / "manifest.yaml"
+            raw_notes = []
             if mf.exists():
                 zone["manifest"] = yaml.safe_load(mf.read_text(encoding="utf-8"))
+                raw_notes = zone["manifest"].pop("notes", []) or []
             raw = zone_dir / "raw"
             if raw.is_dir():
                 zone["raw"] = dir_stats(raw)
@@ -90,7 +147,36 @@ def build(root: Path) -> dict:
             if rf.is_dir():
                 for dsdir in sorted(p for p in rf.iterdir() if p.is_dir()):
                     zone["datasets"].append(read_dataset(dsdir))
+
+            zone["notes"] = [parse_note(n) for n in raw_notes]
+            zone["stats"] = {
+                "images": sum(s["images"] for d in zone["datasets"]
+                              for s in d["splits"].values()),
+                "annotations": sum(s["annotations"] for d in zone["datasets"]
+                                   for s in d["splits"].values()),
+                "n_datasets": len(zone["datasets"]),
+                "n_classes": len({c for d in zone["datasets"] for c in d["classes"]}),
+            }
+            zone["flags"] = zone_flags(zone)
+            zone["search"] = norm(" ".join(
+                [zone["zone_id"], zone["region"],
+                 str((zone["manifest"] or {}).get("departement", ""))]
+                + [d["name"] for d in zone["datasets"]]
+                + [c for d in zone["datasets"] for c in d["classes"]]))
             data["zones"].append(zone)
+
+            for n in zone["notes"]:
+                if n["type"] in ("arbitrage", "todo", "attention"):
+                    data["actions"].append({"zone_id": zone["zone_id"],
+                                            "region": zone["region"],
+                                            "type": n["type"], "texte": n["texte"]})
+            src = (zone["manifest"] or {}).get("source") or {}
+            if not src.get("contact"):
+                data["actions_source"]["contact"].append(zone["zone_id"])
+            if not src.get("licence"):
+                data["actions_source"]["licence"].append(zone["zone_id"])
+
+    data["actions"].sort(key=lambda a: (FLAG_ORDER.get(a["type"], 9), a["zone_id"]))
 
     atrier = root / "_a_trier"
     if atrier.is_dir():
@@ -106,14 +192,16 @@ def build(root: Path) -> dict:
     tz = data["totals"]
     tz["zones"] = len(data["zones"])
     tz["regions"] = len({z["region"] for z in data["zones"]})
-    tz["images"] = sum(s["images"] for z in data["zones"] for d in z["datasets"]
-                       for s in d["splits"].values())
-    tz["annotations"] = sum(s["annotations"] for z in data["zones"] for d in z["datasets"]
-                            for s in d["splits"].values())
+    tz["images"] = sum(z["stats"]["images"] for z in data["zones"])
+    tz["annotations"] = sum(z["stats"]["annotations"] for z in data["zones"])
     tz["a_trier_images"] = sum(s["images"] for d in data["a_trier"]
                                for s in d["splits"].values())
     tz["raw_files"] = sum((z["raw"] or {}).get("n_files", 0) for z in data["zones"])
     tz["raw_size"] = sum((z["raw"] or {}).get("size", 0) for z in data["zones"])
+    tz["actions"] = (len(data["actions"])
+                     + (1 if data["actions_source"]["contact"] else 0)
+                     + (1 if data["actions_source"]["licence"] else 0)
+                     + (1 if tz["a_trier_images"] else 0))
     return data
 
 
@@ -129,8 +217,9 @@ def main() -> None:
     out = Path(a.out) if a.out else root / "index.html"
     out.write_text(html, encoding="utf-8")
     print(f"index : {out}")
-    print(f"  {data['totals']['zones']} zones, {data['totals']['images']:,} images annotées, "
-          f"{data['totals']['annotations']:,} annotations, quarantaine {data['totals']['a_trier_images']:,}")
+    print(f"  {data['totals']['zones']} zones, {data['totals']['images']:,} images, "
+          f"{data['totals']['annotations']:,} annotations, "
+          f"{data['totals']['actions']} action(s) en attente")
 
 
 if __name__ == "__main__":

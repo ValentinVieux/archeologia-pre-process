@@ -6,19 +6,22 @@
 <title>data_regions_v2 — index des zones</title>
 <style>
   :root {
+    color-scheme: light dark;
     --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
-    --ink: #26251F; --muted: #6B695E; --faint: #98968A;
+    --ink: #26251F; --muted: #6B695E;
     --accent: #5A6B3C; --accent-ink: #42502B; --bar: #7A8C55;
     --line: #DDDCD4;
+    --crit-bg: #F6E4E1; --crit-ink: #A83226;
     --warn-bg: #F4EAD3; --warn-ink: #8F6212;
     --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
     --info-bg: #E5E9DB; --info-ink: #42502B;
   }
   @media (prefers-color-scheme: dark) { :root {
     --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
-    --ink: #E8E6DD; --muted: #A5A395; --faint: #7A786C;
+    --ink: #E8E6DD; --muted: #A5A395;
     --accent: #9DB16E; --accent-ink: #B5C68C; --bar: #7A8C55;
     --line: #3A3D33;
+    --crit-bg: #46261F; --crit-ink: #E89A8C;
     --warn-bg: #423414; --warn-ink: #DBB562;
     --ok-bg: #24382A; --ok-ink: #8FC79D;
     --info-bg: #2E3524; --info-ink: #B5C68C;
@@ -26,43 +29,64 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink);
          font: 14.5px/1.55 system-ui, "Segoe UI", sans-serif; }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 40px 22px 80px; }
-  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 36px 22px 80px; }
+  h1, h2, h3, h4 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
   h1 { font-size: 27px; margin: 6px 0 4px; font-weight: 600; }
   h2 { font-size: 20px; margin: 0 0 10px; font-weight: 600; }
-  h3 { font-size: 16px; margin: 0 0 4px; font-weight: 600; }
+  h3.region-h { font-size: 17px; font-weight: 600; margin: 26px 0 10px; color: var(--accent-ink); }
+  h4 { font-size: 16px; margin: 0 0 4px; font-weight: 600; }
   .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
              color: var(--accent-ink); font-weight: 600; }
   section > .eyebrow { display: block; border-top: 2px solid var(--accent);
                        padding-top: 10px; margin-bottom: 8px; }
   .sub { color: var(--muted); font-size: 13px; }
   section { margin-top: 40px; }
+  [id] { scroll-margin-top: 58px; }
+  /* ---- nav sticky ---- */
+  .nav { position: sticky; top: 0; z-index: 10; background: var(--bg);
+         border-bottom: 1px solid var(--line); margin: 22px -22px 0;
+         padding: 8px 22px; font-size: 13px; display: flex; flex-wrap: wrap;
+         gap: 4px 18px; }
+  .nav a { color: var(--accent-ink); text-decoration: none; font-weight: 600; }
+  .nav a:hover, .nav a:focus-visible { text-decoration: underline; }
+  .nav .n-count { color: var(--warn-ink); }
+  /* ---- tuiles ---- */
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
            gap: 10px; margin-top: 22px; }
   .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-          padding: 11px 13px; }
+          padding: 11px 13px; display: block; color: inherit; text-decoration: none; }
   .stat .n { font-size: 21px; font-weight: 650; font-variant-numeric: tabular-nums; }
   .stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase;
              letter-spacing: 0.5px; margin-top: 1px; }
+  .stat.warn .n { color: var(--warn-ink); }
+  .stat.ok .n { color: var(--ok-ink); }
+  /* ---- chips ---- */
   .chip { display: inline-block; border-radius: 3px; padding: 1px 8px; font-size: 11.5px;
-          font-weight: 600; margin: 1px 4px 1px 0; }
+          font-weight: 600; margin: 1px 4px 1px 0; text-decoration: none; }
   .chip.tag  { background: var(--info-bg); color: var(--info-ink); font-family: Consolas, monospace; }
+  .chip.crit { background: var(--crit-bg); color: var(--crit-ink); }
   .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
   .chip.ok   { background: var(--ok-bg); color: var(--ok-ink); }
-  .region-h { font-family: Georgia, serif; font-size: 17px; font-weight: 600;
-              margin: 26px 0 10px; color: var(--accent-ink); }
-  .zone { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  .chip.info { background: var(--panel2); color: var(--muted); }
+  a.chip:hover, a.chip:focus-visible { outline: 1px solid currentColor; }
+  /* ---- cartes / boxes ---- */
+  .zone, .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
           padding: 16px 20px; margin: 12px 0; }
-  .zone-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
-  .zone-head .mono { color: var(--muted); }
+  .zone-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 10px; }
+  .zone-head .meta { color: var(--muted); font-size: 13px; margin-left: auto; }
   .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
           gap: 14px; margin-top: 12px; }
   .box { background: var(--panel2); border-radius: 6px; padding: 10px 14px; }
   .box .bt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
              color: var(--muted); margin-bottom: 6px; font-weight: 600; }
-  mark.na { background: none; color: var(--faint); font-style: italic; }
+  .box .bt a { color: var(--accent-ink); }
+  .na { color: var(--muted); font-style: italic; }
   code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; }
   code { background: var(--panel2); border-radius: 3px; padding: 1px 5px; }
+  /* ---- notes actionnables visibles ---- */
+  .todo-list { margin: 10px 0 0; padding: 0; list-style: none; }
+  .todo-list li { margin: 6px 0; font-size: 13.5px; max-width: 92ch; }
+  /* ---- barres de classes ---- */
   .bar-row { display: grid; grid-template-columns: minmax(120px, 210px) 1fr 70px;
              align-items: center; gap: 8px; margin: 3px 0; font-size: 12.5px; }
   .bar-row .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -78,20 +102,30 @@
   summary { cursor: pointer; color: var(--accent-ink); font-size: 13px; }
   details ul { margin: 6px 0 2px; padding-left: 20px; }
   details li { margin: 4px 0; font-size: 13px; max-width: 90ch; }
+  /* ---- tables ---- */
   .tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line);
          border-radius: 6px; margin-top: 10px; }
   table { border-collapse: collapse; width: 100%; font-size: 13px; }
   th, td { text-align: left; padding: 7px 12px; border-top: 1px solid var(--line); }
   thead th { border-top: none; font-size: 10.5px; text-transform: uppercase;
              letter-spacing: 0.5px; color: var(--muted); white-space: nowrap; }
+  #tbl-zones thead th { cursor: pointer; user-select: none; }
+  #tbl-zones thead th .arrow { color: var(--accent-ink); }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td a { color: var(--accent-ink); }
+  .filterbar { display: flex; align-items: center; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+  .filterbar input { flex: 1 1 260px; max-width: 420px; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 6px; color: var(--ink);
+      font: inherit; padding: 6px 12px; }
+  .filterbar input:focus-visible { outline: 2px solid var(--accent); }
   .rules { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
            padding: 14px 20px; font-size: 13.5px; }
   .rules ul { margin: 4px 0; padding-left: 20px; }
   .rules li { margin: 4px 0; }
   .foot { margin-top: 52px; border-top: 1px solid var(--line); padding-top: 12px;
-          font-size: 12.5px; color: var(--faint); }
+          font-size: 12.5px; color: var(--muted); }
   .foot code { font-size: 11.5px; }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -103,42 +137,58 @@
     <div class="stats" id="stats"></div>
   </header>
 
-  <section>
-    <span class="eyebrow">Conventions</span>
+  <nav class="nav" id="nav" aria-label="Sections"></nav>
+
+  <section id="a-traiter">
+    <span class="eyebrow">Triage</span>
+    <h2>À traiter</h2>
+    <div id="actions"></div>
+  </section>
+
+  <section id="zones">
+    <span class="eyebrow">Zones</span>
+    <h2>Vue d'ensemble</h2>
+    <div class="filterbar">
+      <input id="filter" type="search" placeholder="filtrer : zone, région, dépt, dataset, classe…"
+             aria-label="Filtrer les zones">
+      <span class="sub" id="filter-count"></span>
+    </div>
+    <div class="tbl"><table id="tbl-zones"></table></div>
+    <h2 style="margin-top:32px">Détail par zone</h2>
+    <div id="zones-detail"></div>
+  </section>
+
+  <section id="datasets">
+    <span class="eyebrow">Transverse</span>
+    <h2>Vue par dataset</h2>
+    <p class="sub">Répartition de chaque export Roboflow historique entre les zones — base de la recréation des datasets.</p>
+    <div id="datasets-detail"></div>
+  </section>
+
+  <section id="quarantaine">
+    <span class="eyebrow">Quarantaine</span>
+    <h2>_a_trier — images inattribuables</h2>
+    <div id="atrier"></div>
+  </section>
+
+  <section id="archives">
+    <span class="eyebrow">Archives</span>
+    <h2>_archives_roboflow — exports intacts</h2>
+    <div id="archives-list"></div>
+  </section>
+
+  <section id="conventions">
+    <span class="eyebrow">Référence</span>
+    <h2>Conventions</h2>
     <div class="rules">
       <ul>
         <li><b>Par zone</b> : <code>manifest.yaml</code> + <code>raw/</code> (livraison brute <b>immuable</b>) + <code>transformed/vecteurs/</code> (GPKG nettoyés, EPSG:2154) + <code>transformed/roboflow/</code> (payloads d'upload + <code>upload_manifest.yaml</code>) + <code>docs/</code>.</li>
         <li><b>Tags Roboflow</b> par image : <code>&lt;zone_id&gt;</code> + <code>&lt;region&gt;</code> — l'export Roboflow ne préserve pas les tags, les <code>upload_manifest.yaml</code> locaux font foi. Sous-classes : <code>&lt;entite&gt;_&lt;site&gt;</code>.</li>
+        <li><b>Notes typées</b> dans manifest.yaml : <code>ARBITRAGE:</code> (bloquant), <code>TODO:</code> (action), <code>ATTENTION:</code> (alerte), <code>DÉCISION &lt;date&gt;:</code> (actée) — elles alimentent la section « À traiter ».</li>
         <li>On n'édite <b>jamais</b> un fichier en place sur le Drive (pas d'ArcGIS/QGIS sur G:). Ne rien supprimer sans décision humaine explicite.</li>
         <li><code>_archives_roboflow/</code> = exports zip intacts · <code>_a_trier/</code> = images inattribuables à une zone (à trier ou abandonner à la recréation).</li>
       </ul>
     </div>
-  </section>
-
-  <section>
-    <span class="eyebrow">Zones</span>
-    <h2 style="margin-bottom:0">Les zones et leur contenu</h2>
-    <div id="zones"></div>
-  </section>
-
-  <section>
-    <span class="eyebrow">Transverse</span>
-    <h2>Vue par dataset</h2>
-    <p class="sub">Répartition de chaque export Roboflow historique entre les zones (images / annotations).</p>
-    <div id="datasets"></div>
-  </section>
-
-  <section>
-    <span class="eyebrow">Quarantaine</span>
-    <h2>_a_trier — images inattribuables</h2>
-    <p class="sub">Tuiles génériques (<span class="mono">tile_XXXX_YYYY</span>) sans géoréférence dans le nom : impossible de les rattacher à une zone depuis l'export. À trier manuellement ou à abandonner lors de la recréation des datasets.</p>
-    <div id="atrier"></div>
-  </section>
-
-  <section>
-    <span class="eyebrow">Archives</span>
-    <h2>_archives_roboflow — exports intacts</h2>
-    <div class="tbl"><table id="archives"></table></div>
   </section>
 
   <div class="foot" id="foot"></div>
@@ -156,20 +206,129 @@ const fs = b => b >= 1e9 ? (b/1e9).toFixed(2)+" Go" : b >= 1e6 ? (b/1e6).toFixed
 const sum = a => a.reduce((x, y) => x + y, 0);
 const dsImages = d => sum(Object.values(d.splits).map(s => s.images));
 const dsAnnots = d => sum(Object.values(d.splits).map(s => s.annotations));
+const FLAG = {
+  arbitrage: ["arbitrage", "crit"], todo: ["à faire", "warn"],
+  attention: ["attention", "warn"], source: ["source ?", "warn"], raw: ["raw en v1", "info"],
+};
+const flagChips = (flags, link) => (flags || []).map(f => {
+  const [lbl, cls] = FLAG[f] || [f, "info"];
+  return link ? `<a class="chip ${cls}" href="${link}">${esc(lbl)}</a>`
+              : `<span class="chip ${cls}">${esc(lbl)}</span>`;
+}).join("");
+const NOTE_CHIP = { arbitrage: ["ARBITRAGE", "crit"], todo: ["TODO", "warn"],
+                    attention: ["ATTENTION", "warn"], decision: ["DÉCISION", "info"] };
 
-document.getElementById("subtitle").textContent =
-  D.root + " — généré le " + D.generated + " (relancer tools/build_v2_index.py après toute évolution)";
-
+/* -------------------------------- entête + nav -------------------------------- */
 const T = D.totals;
+document.getElementById("subtitle").textContent =
+  D.root + " — généré le " + D.generated;
 document.getElementById("stats").innerHTML = [
-  [fi(T.zones), "zones"], [fi(T.regions), "régions"],
-  [fi(T.images), "images annotées"], [fi(T.annotations), "annotations"],
-  [fi(T.raw_files) + ` <small style="font-size:12px">(${fs(T.raw_size)})</small>`, "fichiers raw (vérité terrain)"],
-  [fi(T.a_trier_images), "images en quarantaine"],
-].map(([n, l]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+  [fi(T.zones), "zones", "", "#zones"], [fi(T.regions), "régions", "", ""],
+  [fi(T.images), "images (tous datasets)", "", "#datasets"],
+  [fi(T.annotations), "annotations", "", ""],
+  [fi(T.raw_files) + ` <small style="font-size:12px">(${fs(T.raw_size)})</small>`, "fichiers raw (vérité terrain)", "", ""],
+  [fi(T.actions), "actions en attente", T.actions > 0 ? "warn" : "ok", "#a-traiter"],
+].map(([n, l, cls, href]) => {
+  const inner = `<div class="n">${n}</div><div class="l">${l}</div>`;
+  return href ? `<a class="stat ${cls}" href="${href}">${inner}</a>`
+              : `<div class="stat ${cls}">${inner}</div>`;
+}).join("");
+document.getElementById("nav").innerHTML = [
+  ["#a-traiter", T.actions > 0 ? `À traiter <span class="n-count">(${T.actions})</span>` : "À traiter"],
+  ["#zones", "Zones"], ["#datasets", "Datasets"],
+  ["#quarantaine", `Quarantaine${T.a_trier_images ? ` <span class="n-count">(${fi(T.a_trier_images)})</span>` : ""}`],
+  ["#archives", "Archives"], ["#conventions", "Conventions"],
+].map(([h, l]) => `<a href="${h}">${l}</a>`).join("");
 
-/* ------------------------------- barres de classes ------------------------------- */
-function bars(classes) {
+/* ---------------------------------- à traiter ---------------------------------- */
+(() => {
+  const el = document.getElementById("actions");
+  const blocks = [];
+  const arb = D.actions.filter(a => a.type === "arbitrage");
+  const todos = D.actions.filter(a => a.type !== "arbitrage");
+  const li = a => `<li>${flagChips([a.type === "arbitrage" ? "arbitrage" : a.type])}` +
+    `<a class="mono" href="#z-${esc(a.zone_id)}">${esc(a.zone_id)}</a> — ${esc(a.texte)}</li>`;
+  if (arb.length) blocks.push(`<div class="card"><h4>Arbitrages — ne pas trancher seul</h4>
+      <ul class="todo-list">${arb.map(li).join("")}</ul></div>`);
+  if (todos.length) blocks.push(`<div class="card"><h4>Actions & alertes</h4>
+      <ul class="todo-list">${todos.map(li).join("")}</ul></div>`);
+  if (T.a_trier_images) blocks.push(`<div class="card"><h4>Quarantaine</h4>
+      <ul class="todo-list"><li>${flagChips(["todo"])}<a href="#quarantaine">${fi(T.a_trier_images)} images</a> à trier ou abandonner à la recréation.</li></ul></div>`);
+  const srcLines = [];
+  for (const [field, zones] of Object.entries(D.actions_source)) {
+    if (zones.length) srcLines.push(`<li>${esc(field)} à renseigner : <b>${zones.length}</b> zone${zones.length > 1 ? "s" : ""} —
+      ${zones.map(z => `<a class="chip tag" href="#z-${esc(z)}">${esc(z)}</a>`).join("")}</li>`);
+  }
+  if (srcLines.length) blocks.push(`<div class="card"><h4>Métadonnées de source</h4>
+      <ul class="todo-list">${srcLines.join("")}</ul></div>`);
+  el.innerHTML = blocks.length ? blocks.join("")
+    : `<div class="card"><span class="chip ok">Rien à traiter</span></div>`;
+})();
+
+/* -------------------------- table de synthèse des zones -------------------------- */
+const ZCOLS = [
+  { l: "Zone", v: z => z.zone_id, html: z => `<a class="mono" href="#z-${esc(z.zone_id)}">${esc(z.zone_id)}</a>` },
+  { l: "Région", v: z => z.region, html: z => esc(z.region) },
+  { l: "Dépt", v: z => String((z.manifest || {}).departement ?? ""), html: z => esc(String((z.manifest || {}).departement ?? "?")) },
+  { l: "Raw", num: true, v: z => z.raw ? z.raw.size : -1,
+    html: z => z.raw ? `${fi(z.raw.n_files)} · ${fs(z.raw.size)}` : `<span class="na">—</span>` },
+  { l: "Vecteurs", num: true, v: z => z.vecteurs ? z.vecteurs.n_files : -1,
+    html: z => z.vecteurs ? fi(z.vecteurs.n_files) : `<span class="na">—</span>` },
+  { l: "Datasets", num: true, v: z => z.stats.n_datasets, html: z => fi(z.stats.n_datasets) },
+  { l: "Images", num: true, v: z => z.stats.images, html: z => fi(z.stats.images) },
+  { l: "Annots", num: true, v: z => z.stats.annotations, html: z => fi(z.stats.annotations) },
+  { l: "À traiter", v: z => z.flags.length, html: z => flagChips(z.flags) || `<span class="chip ok">ok</span>` },
+];
+let zsort = { i: -1, dir: 1 };
+function renderZoneTable() {
+  const t = document.getElementById("tbl-zones");
+  const rows = [...D.zones];
+  if (zsort.i >= 0) {
+    const c = ZCOLS[zsort.i];
+    rows.sort((a, b) => (c.v(a) > c.v(b) ? 1 : c.v(a) < c.v(b) ? -1 : 0) * zsort.dir);
+  } else {
+    rows.sort((a, b) => (a.region + a.zone_id).localeCompare(b.region + b.zone_id));
+  }
+  t.innerHTML = "<thead><tr>" + ZCOLS.map((c, i) =>
+    `<th class="${c.num ? "num" : ""}" data-i="${i}">${c.l}` +
+    (i === zsort.i ? `<span class="arrow"> ${zsort.dir > 0 ? "▲" : "▼"}</span>` : "") + "</th>"
+  ).join("") + "</tr></thead><tbody>" + rows.map(z =>
+    `<tr data-search="${esc(z.search)}">` + ZCOLS.map(c =>
+      `<td class="${c.num ? "num" : ""}">${c.html(z)}</td>`).join("") + "</tr>"
+  ).join("") + "</tbody>";
+  t.querySelectorAll("thead th").forEach(th => th.onclick = () => {
+    const i = +th.dataset.i;
+    zsort = { i, dir: i === zsort.i ? -zsort.dir : 1 };
+    renderZoneTable(); applyFilter();
+  });
+}
+renderZoneTable();
+
+/* ------------------------------------ filtre ------------------------------------ */
+const normJS = s => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function applyFilter() {
+  const q = normJS(document.getElementById("filter").value.trim());
+  let visible = 0;
+  document.querySelectorAll("[data-search]").forEach(el => {
+    const show = !q || el.dataset.search.includes(q);
+    el.hidden = !show;
+    if (show && el.tagName === "TR") visible++;
+  });
+  document.getElementById("filter-count").textContent = `${visible}/${D.zones.length} zones`;
+  // masquer les titres de région dont toutes les zones sont cachées
+  document.querySelectorAll(".region-h").forEach(h => {
+    let sib = h.nextElementSibling, any = false;
+    while (sib && !sib.classList.contains("region-h")) {
+      if (sib.classList.contains("zone") && !sib.hidden) any = true;
+      sib = sib.nextElementSibling;
+    }
+    h.hidden = !any;
+  });
+}
+document.getElementById("filter").addEventListener("input", applyFilter);
+
+/* ------------------------------- détail des zones ------------------------------- */
+const bars = classes => {
   const entries = Object.entries(classes).sort((a, b) => b[1] - a[1]);
   if (!entries.length) return "";
   const max = entries[0][1];
@@ -177,102 +336,110 @@ function bars(classes) {
     `<div class="bar-row"><span class="lbl" title="${esc(cls)}">${esc(cls)}</span>` +
     `<span class="bar-track"><span class="bar-fill" style="width:${Math.max(2, n/max*100)}%"></span></span>` +
     `<span class="val">${fi(n)}</span></div>`).join("");
-}
+};
 const splitsLine = d => `<div class="splits">` +
   Object.entries(d.splits).map(([s, r]) =>
     `<span>${esc(s)} : <b>${fi(r.images)}</b> img · ${fi(r.annotations)} annots</span>`).join("") +
   `</div>`;
 
-/* ------------------------------------- zones ------------------------------------- */
 const byRegion = {};
 D.zones.forEach(z => (byRegion[z.region] = byRegion[z.region] || []).push(z));
-document.getElementById("zones").innerHTML = Object.keys(byRegion).sort().map(region => {
-  const zones = byRegion[region].map(z => {
+document.getElementById("zones-detail").innerHTML = Object.keys(byRegion).sort().map(region =>
+  `<h3 class="region-h">${esc(region)} <span class="sub">(${byRegion[region].length} zone${byRegion[region].length > 1 ? "s" : ""})</span></h3>` +
+  byRegion[region].map(z => {
     const m = z.manifest || {};
-    const tags = ((m.roboflow || {}).tags || []).map(t => `<span class="chip tag">${esc(t)}</span>`).join("");
-    const notes = (m.notes || []);
     const src = m.source || {};
-    const contact = src.contact ? esc(src.contact) : `<mark class="na">à compléter</mark>`;
-    const licence = src.licence ? esc(src.licence) : `<mark class="na">à compléter</mark>`;
+    const contact = src.contact ? esc(src.contact) : `<span class="na">à compléter</span>`;
+    const licence = src.licence ? esc(src.licence) : `<span class="na">à compléter</span>`;
+    const actionable = z.notes.filter(n => ["arbitrage", "todo", "attention"].includes(n.type));
+    const rest = z.notes.filter(n => !["arbitrage", "todo", "attention"].includes(n.type));
 
     const rawBox = z.raw ? `<div class="box"><div class="bt">raw / vérité terrain</div>
         <b>${fi(z.raw.n_files)}</b> fichiers · ${fs(z.raw.size)}
         ${z.raw.subdirs.length ? `<div class="sub mono">${z.raw.subdirs.map(esc).join(" · ")}</div>` : ""}
-        <div class="sub">${Object.entries(z.raw.exts).map(([e, n]) => `${esc(e)}×${n}`).join(", ")}</div>
-      </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><mark class="na">vide — livraison brute encore dans data_regions (v1)</mark></div>`;
-
+        <div class="sub">${Object.entries(z.raw.exts).map(([e, n]) => `${esc(e)}×${n}`).join(", ")}${z.raw.exts_autres ? ` +${z.raw.exts_autres} autres` : ""}</div>
+      </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><span class="na">vide — livraison brute encore dans data_regions (v1)</span></div>`;
+    const vecBox = z.vecteurs ? `<div class="box"><div class="bt">transformed / vecteurs</div>
+        <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}</div>` : "";
     const dsBoxes = z.datasets.map(d => {
       const meth = (d.manifest || {}).attribution_methods || {};
       const methTxt = Object.entries(meth).map(([k, v]) => `${esc(k)}×${v}`).join(", ");
-      return `<div class="box"><div class="bt">dataset · ${esc(d.name)}</div>
+      return `<div class="box"><div class="bt">dataset · <a href="#d-${esc(d.name)}">${esc(d.name)}</a></div>
         <b>${fi(dsImages(d))}</b> images · ${fi(dsAnnots(d))} annotations
         ${splitsLine(d)}${bars(d.classes)}
         ${methTxt ? `<div class="sub" style="margin-top:6px">attribution : ${methTxt}</div>` : ""}
       </div>`;
     }).join("");
 
-    const vecBox = z.vecteurs ? `<div class="box"><div class="bt">transformed / vecteurs</div>
-        <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}</div>` : "";
-
-    return `<div class="zone">
-      <div class="zone-head"><h3>${esc(z.zone_id)}</h3>
-        <span class="mono">dépt ${esc(String(m.departement ?? "?"))}</span>${tags}
-        <span class="sub" style="margin-left:auto">contact : ${contact} · licence : ${licence}</span>
+    return `<div class="zone" id="z-${esc(z.zone_id)}" data-search="${esc(z.search)}">
+      <div class="zone-head"><h4>${esc(z.zone_id)}</h4>
+        <span class="mono sub">dépt ${esc(String(m.departement ?? "?"))}</span>
+        ${flagChips(z.flags)}
+        <span class="meta">contact : ${contact} · licence : ${licence}</span>
       </div>
+      ${actionable.length ? `<ul class="todo-list">${actionable.map(n => {
+        const [lbl, cls] = NOTE_CHIP[n.type];
+        return `<li><span class="chip ${cls}">${lbl}</span>${esc(n.texte)}</li>`;
+      }).join("")}</ul>` : ""}
       <div class="cols">${rawBox}${vecBox}${dsBoxes}</div>
-      ${notes.length ? `<details><summary>Notes &amp; décisions (${notes.length})</summary>
-        <ul>${notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></details>` : ""}
+      ${rest.length ? `<details><summary>Notes &amp; décisions (${rest.length})</summary>
+        <ul>${rest.map(n => {
+          const c = NOTE_CHIP[n.type];
+          return `<li>${c ? `<span class="chip ${c[1]}">${c[0]}</span> ` : ""}${esc(n.texte)}</li>`;
+        }).join("")}</ul></details>` : ""}
     </div>`;
-  }).join("");
-  return `<div class="region-h">${esc(region)} <span class="sub">(${byRegion[region].length} zone${byRegion[region].length > 1 ? "s" : ""})</span></div>${zones}`;
-}).join("");
+  }).join("")
+).join("");
 
 /* ------------------------------- vue par dataset ------------------------------- */
 const dsIndex = {};
 D.zones.forEach(z => z.datasets.forEach(d => {
   const e = dsIndex[d.name] = dsIndex[d.name] || { zones: [], classes: {} };
-  e.zones.push({ zone: z.zone_id, region: z.region, images: dsImages(d), annots: dsAnnots(d) });
+  e.zones.push({ zone: z.zone_id, region: z.region, images: dsImages(d), annots: dsAnnots(d), link: true });
   Object.entries(d.classes).forEach(([c, n]) => e.classes[c] = (e.classes[c] || 0) + n);
 }));
 D.a_trier.forEach(d => {
   const e = dsIndex[d.name] = dsIndex[d.name] || { zones: [], classes: {} };
-  e.zones.push({ zone: "_a_trier", region: "—", images: dsImages(d), annots: dsAnnots(d) });
+  e.zones.push({ zone: "_a_trier", region: "—", images: dsImages(d), annots: dsAnnots(d), link: false });
 });
-document.getElementById("datasets").innerHTML = Object.keys(dsIndex).sort().map(name => {
+document.getElementById("datasets-detail").innerHTML = Object.keys(dsIndex).sort().map(name => {
   const e = dsIndex[name];
   const rows = e.zones.sort((a, b) => b.images - a.images).map(r =>
-    `<tr><td class="mono">${esc(r.zone)}</td><td>${esc(r.region)}</td>` +
-    `<td class="num">${fi(r.images)}</td><td class="num">${fi(r.annots)}</td></tr>`).join("");
+    `<tr><td class="mono">${r.link ? `<a href="#z-${esc(r.zone)}">${esc(r.zone)}</a>` : esc(r.zone)}</td>` +
+    `<td>${esc(r.region)}</td><td class="num">${fi(r.images)}</td><td class="num">${fi(r.annots)}</td></tr>`).join("");
   const tot = `<tr><td><b>total</b></td><td></td>` +
     `<td class="num"><b>${fi(sum(e.zones.map(r => r.images)))}</b></td>` +
     `<td class="num"><b>${fi(sum(e.zones.map(r => r.annots)))}</b></td></tr>`;
-  return `<div class="zone"><h3 class="mono">${esc(name)}</h3>
+  return `<div class="zone" id="d-${esc(name)}"><h4 class="mono">${esc(name)}</h4>
     <div class="cols">
       <div class="box"><div class="bt">répartition par zone</div>
         <div class="tbl" style="margin:0"><table>
           <thead><tr><th>zone</th><th>région</th><th class="num">images</th><th class="num">annots</th></tr></thead>
           <tbody>${rows}${tot}</tbody></table></div></div>
-      <div class="box"><div class="bt">classes (zones attribuées)</div>${bars(e.classes) || '<mark class="na">—</mark>'}</div>
+      <div class="box"><div class="bt">classes (zones attribuées)</div>${bars(e.classes) || '<span class="na">—</span>'}</div>
     </div></div>`;
 }).join("");
 
 /* --------------------------------- quarantaine --------------------------------- */
 document.getElementById("atrier").innerHTML = D.a_trier.length ? D.a_trier.map(d =>
-  `<div class="zone"><h3 class="mono">_a_trier / ${esc(d.name)}</h3>
+  `<div class="zone"><h4 class="mono">_a_trier / ${esc(d.name)}</h4>
      <b>${fi(dsImages(d))}</b> images · ${fi(dsAnnots(d))} annotations
      ${splitsLine(d)}${bars(d.classes)}</div>`).join("")
-  : `<div class="zone"><mark class="na">Quarantaine vide.</mark></div>`;
+  : `<div class="card"><span class="chip ok">Quarantaine vide</span> <span class="sub">— toutes les images des exports sont attribuées à une zone.</span></div>`;
 
 /* ----------------------------------- archives ----------------------------------- */
-document.getElementById("archives").innerHTML =
-  `<thead><tr><th>export</th><th class="num">taille</th></tr></thead><tbody>` +
-  D.archives.map(a => `<tr><td class="mono">${esc(a.name)}</td><td class="num">${fs(a.size)}</td></tr>`).join("") +
-  `<tr><td><b>total</b></td><td class="num"><b>${fs(sum(D.archives.map(a => a.size)))}</b></td></tr></tbody>`;
+document.getElementById("archives-list").innerHTML = D.archives.length
+  ? `<details><summary>${D.archives.length} export${D.archives.length > 1 ? "s" : ""} zip · ${fs(sum(D.archives.map(a => a.size)))} — état Roboflow avant recréation, ne pas modifier</summary>
+     <div class="tbl"><table><thead><tr><th>export</th><th class="num">taille</th></tr></thead><tbody>` +
+    D.archives.map(a => `<tr><td class="mono">${esc(a.name)}</td><td class="num">${fs(a.size)}</td></tr>`).join("") +
+    `</tbody></table></div></details>`
+  : `<div class="card"><span class="na">Aucune archive.</span></div>`;
 
 document.getElementById("foot").innerHTML =
   `Régénérer cet index : <code>.venv\\Scripts\\python.exe tools\\build_v2_index.py "&lt;chemin data_regions_v2&gt;"</code> ` +
-  `(repo <a href="https://github.com/ValentinVieux/archeologia-pre-process">archeologia-pre-process</a>) · ` +
-  `rapport d'audit fondateur : <a href="https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-bf8e-7c853b3bfb03">artifact</a> · généré le ${esc(D.generated)}.`;
+  `(repo <a href="https://github.com/ValentinVieux/archeologia-pre-process">archeologia-pre-process</a>).`;
+
+applyFilter();
 </script>
 </body>
 </html>

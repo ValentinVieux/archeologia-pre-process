@@ -44,6 +44,9 @@ Pour toute zone nouvelle : créer `<region>/<zone_id>/manifest.yaml` (zone_id,
 region, departement, source à compléter, roboflow.tags = [zone_id, region], notes).
 Pour une zone existante : ajouter les notes utiles (décisions, méthodes
 d'attribution) sans réécrire l'existant.
+Les notes suivent la convention de préfixes de CLAUDE.md § Stockage Drive :
+`ARBITRAGE:` / `TODO:` / `ATTENTION:` / `DÉCISION <date>:` / sans préfixe = info —
+elles alimentent la section « À traiter » de l'index.
 
 ## Étape 5 — Pousser vers le Drive
 `robocopy <staging> <racine v2> /E /MT:16 /R:3 /W:10` (arrière-plan). Archiver les

@@ -66,6 +66,10 @@ Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-b
   `upload_manifest.yaml` locaux font foi.
 - `index.html` à la racine v2 = tableau de bord ; le régénérer (`tools/build_v2_index.py`)
   après toute évolution du dossier.
+- **Notes typées** dans les `manifest.yaml` (alimentent la section « À traiter » de l'index) :
+  `ARBITRAGE:` (bloquant, décision humaine), `TODO:` (action à mener), `ATTENTION:` (alerte
+  non bloquante), `DÉCISION <date>:` (actée, informative), sans préfixe = info. Toujours
+  écrire les nouvelles notes avec ces préfixes.
 - Interdits absolus : supprimer/déplacer sans décision humaine explicite ; éditer un
   fichier en place sur G: (copie locale puis re-dépôt) ; écrire dans data_regions v1.
 - Écritures massives vers G: : toujours staging local puis `robocopy /E /MT:16`.
