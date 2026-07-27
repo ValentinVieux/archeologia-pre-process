@@ -65,11 +65,14 @@ def affecter_splits(annos_par_bloc, cibles, seed):
     """Affectation gloutonne des blocs aux splits, équilibrée par classe.
 
     Blocs triés par richesse (total annotations) décroissante, départage par mélange
-    seedé ; chaque bloc va au split de plus grand déficit pondéré
-    Σ_c (1/total_c) * (part_cible_s * total_c - deja_alloue[s][c]).
-    Les classes rares pèsent ainsi autant que les abondantes. Les blocs sans
-    annotation ne sont pas affectés (ils restent hors split ; les tuiles vides des
-    blocs affectés servent de vivier de négatifs).
+    seedé ; chaque bloc va au split de plus grand besoin RELATIF
+    Σ_c (part_cible_s - deja_alloue[s][c]/total_c) / part_cible_s.
+    La normalisation par la part cible est essentielle : en déficit absolu, train
+    (cible 70 %) partirait avec un besoin triple de valid et accaparerait ~95 % des
+    annotations avant de céder un bloc (observé sur les données réelles de Haye).
+    Les classes rares pèsent autant que les abondantes (fractions, pas comptes).
+    Les blocs sans annotation ne sont pas affectés (ils restent hors split ; les
+    tuiles vides des blocs affectés servent de vivier de négatifs).
     """
     parts = {s: cibles[s] / sum(cibles.values()) for s in cibles}
     total_par_classe = Counter()
@@ -84,14 +87,14 @@ def affecter_splits(annos_par_bloc, cibles, seed):
     alloue = {s: Counter() for s in cibles}
     affectation = {}
     for b in blocs:
-        deficits = {}
+        besoins = {}
         for s in cibles:
-            deficits[s] = sum(
-                (parts[s] * total_par_classe[c] - alloue[s][c]) / total_par_classe[c]
+            besoins[s] = sum(
+                (parts[s] - alloue[s][c] / total_par_classe[c]) / parts[s]
                 for c in total_par_classe
             )
-        meilleur = max(sorted(deficits, key=lambda s: ORDRE_SPLITS.index(s)),
-                       key=lambda s: deficits[s])
+        meilleur = max(sorted(besoins, key=lambda s: ORDRE_SPLITS.index(s)),
+                       key=lambda s: besoins[s])
         affectation[b] = meilleur
         alloue[meilleur].update(annos_par_bloc[b])
     return affectation
@@ -190,8 +193,9 @@ def charger_config(chemin):
         sys.exit(f"config invalide : champs manquants {manquants}")
     for cle, valeur in DEFAUTS.items():
         cfg.setdefault(cle, valeur)
-    if set(cfg["split"]) != set(ORDRE_SPLITS) or sum(cfg["split"].values()) != 100:
-        sys.exit("config invalide : split doit définir train/valid/test et sommer à 100")
+    if set(cfg["split"]) != set(ORDRE_SPLITS) or sum(cfg["split"].values()) != 100 \
+            or any(v <= 0 for v in cfg["split"].values()):
+        sys.exit("config invalide : split doit définir train/valid/test > 0 et sommer à 100")
     if not (isinstance(cfg["tuile_px"], int) and cfg["tuile_px"] > 0):
         sys.exit("config invalide : tuile_px doit être un entier > 0")
     for cle in ("raster", "gpkg"):
@@ -294,6 +298,10 @@ def run_slicing(cfg, out_dir, seed=42):
         for t in gardees:
             annos_par_bloc.setdefault(t["bloc"], Counter()).update(
                 a["classe"] for a in t["annos"])
+        tuiles_par_bloc = Counter(t["bloc"] for t in gardees)
+        for b, cpt in annos_par_bloc.items():
+            if cpt:  # bloc annoté : équilibrer aussi le volume de tuiles, pas
+                cpt["__tuiles__"] = tuiles_par_bloc[b]  # seulement les annotations
         affectation = affecter_splits(annos_par_bloc, cfg["split"], seed)
 
         annotees = [t for t in gardees if t["annos"] and t["bloc"] in affectation]
@@ -399,7 +407,7 @@ def _ecrire_carte_controle(out_dir, cfg, affectation, annos_par_bloc, comptes, s
         x = (b[0] - min(bxs)) * cote + 1
         y = (max(bys) - b[1]) * cote + 1  # nord en haut
         couleur = COULEURS_SPLIT.get(affectation.get(b), "#B7B5AA")
-        n = sum(annos_par_bloc[b].values())
+        n = sum(v for k, v in annos_par_bloc[b].items() if k != "__tuiles__")
         rects.append(
             f'<rect x="{x}" y="{y}" width="{cote - 1}" height="{cote - 1}" '
             f'fill="{couleur}" opacity="0.75"><title>bloc {b} : '

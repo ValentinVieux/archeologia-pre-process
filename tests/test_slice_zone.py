@@ -52,6 +52,24 @@ assert "train" in splits_rare and len(splits_rare) >= 2, f"rare mal réparti : {
 # déterminisme
 assert aff == affecter_splits(annos, cibles, seed=42)
 
+# --- équilibre sur un parc réaliste : beaucoup de blocs, classes très déséquilibrées
+# (régression : l'ancienne formule non normalisée mettait ~95 % des annos en train)
+annos_reels = {}
+for i in range(40):
+    annos_reels[(i, 0)] = Counter(parcellaire=200 - 4 * i, __tuiles__=25 - (i % 7))
+    if 30 <= i < 36:  # classe rare concentrée dans des PETITS blocs (traités tard)
+        annos_reels[(i, 0)]["rare"] = 5
+aff_r = affecter_splits(annos_reels, cibles, seed=42)
+alloc = {s: Counter() for s in cibles}
+for b, s in aff_r.items():
+    alloc[s].update(annos_reels[b])
+for classe in ("parcellaire", "rare", "__tuiles__"):
+    total_c = sum(alloc[s][classe] for s in cibles)
+    for s, cible_pct in cibles.items():
+        part = alloc[s][classe] / total_c
+        assert abs(part - cible_pct / 100) <= 0.12, \
+            f"{classe}/{s} : {part:.1%} pour une cible de {cible_pct}%"
+
 print("noyau géométrique : OK")
 
 # ---------------------------------------------------------------------------
