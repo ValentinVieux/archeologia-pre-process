@@ -92,6 +92,9 @@ Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-b
 - Décisions actées 2026-07-27 (54_foret_de_haye, fusion parcellaire v1/v2) : quand deux
   versions d'une même entité coexistent, **garder toujours le tracé le plus long** ; sortir
   de l'emprise de la version la plus récente n'est pas disqualifiant.
+- Décision actée 2026-07-27 : **split talus/fosse** — deux entités distinctes `talus` et
+  `fosse` pour toute source qui les distingue (Fontainebleau) ; `talus_fosse` reste réservé
+  aux sources fusionnées indissociables (Haye `fossébutte`) et au contrat plugin.
 - Résolus le 2026-07-16 (base Notion + disque local) : `data_aude` = prénom du contact de
   la zone Blois (dépt 41 confirmé, cf. manifest sur le Drive) ; bataille de la Marne =
   Hauts-de-France confirmé (Ermenonville, Oise — l'hypothèse 77→IdF de l'audit était

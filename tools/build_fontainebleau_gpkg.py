@@ -22,8 +22,11 @@ from shapely import make_valid
 MAPPINGS = {
     "Digit_Ligne.shp": {
         "parcellaire": "parcellaire",
-        "fosse": "talus_fosse",
-        "talus": "talus_fosse",
+        # split talus/fosse (décision utilisateur 2026-07-27) : deux classes
+        # distinctes, la fusion talus_fosse ne vaut que pour les sources qui ne
+        # distinguent pas (Haye fossébutte)
+        "fosse": "fosse",
+        "talus": "talus",
         "cheminement": "chemin_creux",
         "tranchee": "tranchees_et_boyaux",
     },

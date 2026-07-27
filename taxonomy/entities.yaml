@@ -39,12 +39,28 @@ entities:
     status: canonical
     plugin_entity_id: parcellaire
     roboflow_classes: ["parcellaires"]
+  # DÉCISION utilisateur 2026-07-27 : fin de la fusion talus/fossé — deux classes
+  # distinctes `talus` et `fosse` pour toute source qui les distingue (Fontainebleau).
+  # `talus_fosse` est CONSERVÉ pour les sources fusionnées indissociables (Haye
+  # fossébutte) et le contrat plugin (plugin_entity_id) — ne pas supprimer.
   - id: talus_fosse
     label_fr: Talus et fossés
     morphology: lineaire
     status: canonical
     plugin_entity_id: talus_fosse
     roboflow_classes: ["fossé", "fossébutte"]
+  - id: talus
+    label_fr: Talus
+    morphology: lineaire
+    status: canonical  # décision utilisateur 2026-07-27 (split talus/fosse)
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: fosse
+    label_fr: Fossés
+    morphology: lineaire
+    status: canonical  # décision utilisateur 2026-07-27 (split talus/fosse)
+    plugin_entity_id: null
+    roboflow_classes: []
   - id: charbonniere
     label_fr: Charbonnières
     morphology: circulaire
