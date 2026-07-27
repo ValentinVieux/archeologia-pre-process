@@ -1,0 +1,34 @@
+# Mapping GPKG entités — 78_rambouillet (audit du 2026-07-27, aliases.yaml fait foi).
+# talus-fosse (label mixte de l'archéologue) -> talus_fosse : l'entité fusionnée est
+# réservée aux labels indistincts (règle du split 2026-07-27) ; talus et fosse purs
+# gardent leurs entités. Couches de gestion/prospection exclues (gestion, mobilier,
+# patates [EPSG:4326, note manifest], photos, prospection) : pas des entités.
+gpkg_nom: rambouillet_entites_l93.gpkg
+crs: 2154
+sources:
+  digit_lignes2.shp:
+    champ: INTERP
+    valeurs:
+      parcellaire: parcellaire
+      talus-fosse: talus_fosse
+      chemin creux: chemin_creux
+      voie ancienne: voie
+      talus: talus
+      amenagement militaire: amenagement_militaire
+      fosse: fosse
+  digit_points.shp:
+    champ: INTERP
+    valeurs:
+      charbonniere: charbonniere
+      depression: circular_depression
+      structure: structure
+      trou de bombe: cratere
+      butte: butte
+  digit_poly.shp:
+    champ: INTERP
+    valeurs:
+      depression: circular_depression
+      extraction: extraction
+      anomalie topographique: anomalie_topographique
+      enclos: enclos
+      blaireautiere: blaireautiere
