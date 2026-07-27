@@ -9,13 +9,14 @@ raster: <copie locale>\haye_ld\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
 gpkg: <copie locale>\haye_entites_l93.gpkg
 couches:
   # buffer_m = largeur TOTALE, centrée sur l'axe (buffer_m/2 de chaque côté).
-  # 4 m validé visuellement sur le lot de test Roboflow du 2026-07-27 (2 m trop fin).
-  parcellaire:  {classe: parcellaire,  buffer_m: 4.0}
-  talus_fosse:  {classe: talus_fosse,  buffer_m: 4.0}
+  # Calé visuellement sur les lots de test Roboflow du 2026-07-27 : 2 m trop fin,
+  # 4 m encore un peu juste, 4,8 m (+20 %) acté — soit 9,6 px à 0,5 m/px.
+  parcellaire:  {classe: parcellaire,  buffer_m: 4.8}
+  talus_fosse:  {classe: talus_fosse,  buffer_m: 4.8}
   # DÉCISION 2026-07-27 : rempart non entraîné (choix utilisateur). `ignorer` retire la
   # classe SANS libérer ses tuiles pour les négatifs — un rempart ressemble à un talus,
   # l'exporter comme « fond » apprendrait au modèle à ignorer les levées linéaires.
-  rempart:      {ignorer: true,        buffer_m: 4.0}
+  rempart:      {ignorer: true,        buffer_m: 4.8}
 tuile_px: 648
 bloc_m: 2000
 split: {train: 70, valid: 20, test: 10}

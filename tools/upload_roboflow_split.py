@@ -25,6 +25,7 @@ import json
 import os
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 import yaml
@@ -104,6 +105,21 @@ def coco_mono_image(im, suffixe):
             "categories": categories}
 
 
+def annotation_fichier(im, suffixe):
+    """Fichier d'annotation à joindre : COCO pour une tuile annotée, VOC XML sans
+    objet pour un négatif — le parseur refuse un COCO à zéro annotation, mais le VOC
+    vide est accepté et vaut annotation NULL (image de fond assumée, vérifié le
+    2026-07-27). Retourne (contenu, suffixe_de_fichier)."""
+    if im["annotations"]:
+        return (json.dumps(coco_mono_image(im, suffixe), ensure_ascii=False),
+                ".coco.json")
+    voc = (f"<annotation><filename>{im['filename']}</filename>"
+           f"<size><width>{im['image_coco']['width']}</width>"
+           f"<height>{im['image_coco']['height']}</height><depth>3</depth></size>"
+           "<segmented>0</segmented></annotation>")
+    return voc, ".xml"
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("dataset", help="dossier local du dataset (sortie de slice_zone)")
@@ -115,7 +131,17 @@ def main():
                    help="suffixe de site pour les classes Roboflow (ex. haye -> parcellaire_haye)")
     p.add_argument("--test", action="store_true", help="petit lot représentatif 5/3/2")
     p.add_argument("--dry-run", action="store_true")
-    p.add_argument("--batch", default=None)
+    p.add_argument("--batch", default=None,
+                   help="ATTENTION : un batch détourne les images annotées vers la file "
+                        "Annotate au lieu du dataset — ne l'utiliser que pour une "
+                        "relecture humaine voulue (constat plateforme du 2026-07-27)")
+    p.add_argument("--sans-verification", action="store_true",
+                   help="saute la vérification API post-upload (déconseillé)")
+    p.add_argument("--eviter", default=None,
+                   help="fichier texte (un nom d'image par ligne) à exclure — la "
+                        "plateforme déduplique par CONTENU corbeille comprise : "
+                        "re-uploader une image déjà envoyée puis supprimée ressuscite "
+                        "son fantôme (constat du 2026-07-27)")
     args = p.parse_args()
 
     if chemin_sur_drive(args.dataset):
@@ -124,9 +150,14 @@ def main():
     manifeste, images, zone_id, region = charger_dataset(dossier)
     dataset_nom = manifeste["dataset"]
 
+    if args.eviter:
+        exclus = {l.strip() for l in Path(args.eviter).read_text(encoding="utf-8")
+                  .splitlines() if l.strip()}
+        images = [i for i in images if i["filename"] not in exclus]
+        print(f"  {len(exclus)} nom(s) exclus via --eviter")
     if args.test:
         images = echantillon_test(images)
-    batch = args.batch or (f"test_{dataset_nom}" if args.test else dataset_nom)
+    batch = args.batch  # None par défaut : les images annotées vont DIRECTEMENT au dataset
     suivi_path = dossier / ("upload_manifest_test.yaml" if args.test
                             else "upload_manifest.yaml")
     suivi = (yaml.safe_load(suivi_path.read_text(encoding="utf-8"))
@@ -135,6 +166,18 @@ def main():
         "workspace": args.workspace, "projet": args.projet,
         "suffixe_classes": args.suffixe_classes, "batch": batch,
         "tags": [zone_id, region], "images": []}
+    if not args.test:
+        # le run complet hérite du lot de test : ces images sont déjà sur la
+        # plateforme, vérifiées conformes — ne pas les re-envoyer
+        test_path = dossier / "upload_manifest_test.yaml"
+        if test_path.exists():
+            deja_test = yaml.safe_load(test_path.read_text(encoding="utf-8"))
+            noms_suivi = {s["filename"] for s in suivi["images"]}
+            herites = [s for s in deja_test.get("images", [])
+                       if s["filename"] not in noms_suivi]
+            suivi["images"].extend(herites)
+            if herites:
+                print(f"  {len(herites)} image(s) héritées du lot de test")
     deja = {i["filename"] for i in suivi["images"]}
     a_envoyer = [i for i in images if i["filename"] not in deja]
 
@@ -168,27 +211,66 @@ def main():
         projet = ws.create_project(args.projet, "instance-segmentation",
                                    "private", "structure")
 
-    envoyees = 0
+    envoyees, echecs = 0, []
     try:
         for i in a_envoyer:
-            annotation_path = None
-            if i["annotations"]:
-                tmp = tempfile.NamedTemporaryFile("w", suffix=".coco.json",
-                                                  delete=False, encoding="utf-8")
-                json.dump(coco_mono_image(i, args.suffixe_classes), tmp,
-                          ensure_ascii=False)
-                tmp.close()
-                annotation_path = tmp.name
-            projet.single_upload(
-                image_path=str(i["chemin"]),
-                annotation_path=annotation_path,
-                split=i["split"],                 # le split est IMPOSÉ, jamais tiré
-                batch_name=batch,
-                tag_names=[zone_id, region],
-                num_retry_uploads=3,
-            )
+            # les négatifs reçoivent AUSSI une annotation (VOC vide = null) : sans
+            # annotation jointe, la plateforme les met en file Annotate « à
+            # étiqueter » au lieu du dataset
+            contenu, suffixe_fichier = annotation_fichier(i, args.suffixe_classes)
+            tmp = tempfile.NamedTemporaryFile("w", suffix=suffixe_fichier,
+                                              delete=False, encoding="utf-8")
+            tmp.write(contenu)
+            tmp.close()
+            annotation_path = tmp.name
+            # la réponse est CONTRÔLÉE : un échec de sauvegarde d'annotation laissait
+            # l'image nue dans le dataset sans aucun signal (constat du 2026-07-27 :
+            # 4 images sur 10 avaient perdu leurs polygones en silence)
+            erreur = None
+            for essai in range(3):
+                try:
+                    reponse = projet.single_upload(
+                        image_path=str(i["chemin"]),
+                        annotation_path=annotation_path,
+                        split=i["split"],             # le split est IMPOSÉ, jamais tiré
+                        batch_name=batch,
+                        tag_names=[zone_id, region],
+                        num_retry_uploads=3,
+                    )
+                    img = (reponse or {}).get("image", {}) or {}
+                    annot = (reponse or {}).get("annotation") or {}
+                    if bool(img.get("id") or img.get("success")) and \
+                            bool(annot.get("success") or annot.get("id")):
+                        erreur = None
+                        break
+                    if img.get("id"):
+                        # image présente (ou fantôme dédupliqué ressuscité avec son
+                        # ancien id) mais annotation non enregistrée : écrasement
+                        # direct via l'API — parade vérifiée le 2026-07-27
+                        contenu, suffixe_fichier = annotation_fichier(
+                            i, args.suffixe_classes)
+                        nom_fichier = i["filename"].rsplit(".", 1)[0] + suffixe_fichier
+                        import requests
+                        ra = requests.post(
+                            f"https://api.roboflow.com/dataset/{args.projet}"
+                            f"/annotate/{img['id']}?api_key={cle}"
+                            f"&name={nom_fichier}&overwrite=true",
+                            data=contenu.encode("utf-8"),
+                            headers={"Content-Type": "text/plain"}, timeout=60)
+                        if ra.ok and ra.json().get("success"):
+                            erreur = None
+                            break
+                        erreur = f"annotate overwrite refusé : {ra.status_code} {ra.text[:120]}"
+                    else:
+                        erreur = f"réponse incomplète : {reponse}"
+                except Exception as exc:  # noqa: BLE001 — on retente puis on rapporte
+                    erreur = str(exc)
             if annotation_path:
                 os.unlink(annotation_path)
+            if erreur:
+                echecs.append((i["filename"], erreur))
+                print(f"  ÉCHEC {i['filename']} : {erreur[:120]}")
+                continue
             suivi["images"].append({"filename": i["filename"], "split": i["split"],
                                     "annotations": len(i["annotations"])})
             envoyees += 1
@@ -198,8 +280,73 @@ def main():
         suivi["derniere_mise_a_jour"] = datetime.datetime.now().isoformat(timespec="seconds")
         suivi_path.write_text(yaml.safe_dump(suivi, allow_unicode=True, sort_keys=False),
                               encoding="utf-8")
-    print(f"terminé : {envoyees} envoyées. Suivi : {suivi_path}")
+    print(f"terminé : {envoyees} envoyées, {len(echecs)} échec(s). Suivi : {suivi_path}")
+
+    if not args.sans_verification:
+        # toutes les images du suivi (pas seulement la passe courante : une relance
+        # doit pouvoir re-vérifier un état déjà envoyé), avec reprises espacées —
+        # l'ingestion des annotations côté plateforme est asynchrone
+        attendu = {s["filename"]: (s["split"], s["annotations"])
+                   for s in suivi["images"]}
+        divergences = []
+        for attente in (0, 30, 60, 120):
+            if attente:
+                print(f"  divergences restantes : {len(divergences)} — "
+                      f"nouvel essai dans {attente} s (ingestion asynchrone)")
+                time.sleep(attente)
+            divergences = verifier_plateforme(cle, args.workspace, args.projet, attendu)
+            if not divergences:
+                break
+        if divergences:
+            for d in divergences:
+                print(f"  DIVERGENCE : {d}")
+            sys.exit(f"vérification post-upload : {len(divergences)} divergence(s) — "
+                     "ne PAS lancer d'entraînement sur cet état.")
+        print(f"vérification post-upload : {len(attendu)} images conformes sur la "
+              "plateforme (dataset, split, annotations présentes).")
+    if echecs:
+        sys.exit(f"{len(echecs)} image(s) en échec — relancer la même commande "
+                 "(reprise idempotente) puis investiguer si ça persiste.")
     print(f"Sorties : {suivi_path}")
+
+
+def verifier_plateforme(cle, workspace, projet, attendu):
+    """Boucle de vérification post-upload : l'état API doit refléter ce qu'on a envoyé.
+
+    Vérifie pour chaque image envoyée : présence dans le DATASET (pas la file
+    Annotate), split imposé respecté, annotations non vides quand on en a envoyé.
+    """
+    import requests
+
+    base = f"https://api.roboflow.com/{workspace}/{projet}"
+    sur_plateforme, offset = {}, 0
+    while True:
+        # le témoin fiable est le champ `annotations` ({count, classes}) — `labels`
+        # est toujours vide, il avait produit de faux diagnostics le 2026-07-27
+        r = requests.post(f"{base}/search?api_key={cle}", json={
+            "limit": 200, "offset": offset, "in_dataset": True,
+            "fields": ["name", "split", "annotations"]}, timeout=60)
+        r.raise_for_status()
+        resultats = r.json().get("results", [])
+        for res in resultats:
+            annos = res.get("annotations") or {}
+            n = annos.get("count", 0) if isinstance(annos, dict) else 0
+            sur_plateforme[res["name"]] = (res.get("split"), n)
+        if len(resultats) < 200:
+            break
+        offset += 200
+    divergences = []
+    for nom, (split, n_annos) in sorted(attendu.items()):
+        if nom not in sur_plateforme:
+            divergences.append(f"{nom} : absente du dataset (file Annotate ?)")
+            continue
+        split_plat, n_plat = sur_plateforme[nom]
+        if split_plat != split:
+            divergences.append(f"{nom} : split {split_plat} au lieu de {split}")
+        if n_plat != n_annos:
+            divergences.append(f"{nom} : {n_annos} annotations envoyées, "
+                               f"{n_plat} sur la plateforme")
+    return divergences
 
 
 if __name__ == "__main__":
