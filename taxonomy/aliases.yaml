@@ -38,6 +38,24 @@ aliases:
   - { raw: "Haye_lidar_rempart", entity_id: rempart, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
   - { raw: "Haye_lidar_tas", entity_id: tas, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
   - { raw: "Haye_lidar_tranchee_chasse", entity_id: tranchee_chasse, source_dataset: 54_foret_de_haye, decided: "2026-07-16" }
+  # Fontainebleau — Digit_Ligne, champ 'Type' (déjà en EPSG:2154)
+  - raw: "talus"
+    entity_id: talus_fosse
+    source_dataset: 77_fontainebleau
+    context: "Digit_Ligne.shp, champ 'Type'"
+    decided: "2026-07-22"
+  # Fontainebleau — audit complet Digitalisation (Digit_Ligne/Point/Polygone), validé 2026-07-27
+  - { raw: "cheminement", entity_id: chemin_creux, source_dataset: 77_fontainebleau, context: "Digit_Ligne.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "depression", entity_id: circular_depression, source_dataset: 77_fontainebleau, context: "Digit_Point.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "Trous d'obus", entity_id: cratere, source_dataset: 77_fontainebleau, context: "Digit_Point.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "mare", entity_id: mare, source_dataset: 77_fontainebleau, context: "Digit_Point.shp + Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "zone extraction", entity_id: extraction, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "chaos rocheux", entity_id: chaos_rocheux, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type' (geologique)", decided: "2026-07-27" }
+  - { raw: "sable", entity_id: zone_sableuse, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type' (geologique)", decided: "2026-07-27" }
+  - { raw: "zone perturbee", entity_id: zone_perturbee, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "indice archeo", entity_id: indice_archeo, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "forage", entity_id: forage, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  - { raw: "parquet", entity_id: parquet, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
 ignored:
   # champ 'type' — fourre-tout et objets sans signature LiDAR
   - { raw: "dépôt", source_dataset: data_bretagne_1, decided: "2026-07-16" }
@@ -70,3 +88,40 @@ ignored:
   - { raw: "indéterminé", source_dataset: data_bretagne_1, decided: "2026-07-16" }
   # nom de fichier/couche générique
   - { raw: "anomalie_lidar_bretagne", source_dataset: data_bretagne_1, decided: "2026-07-16" }
+  - { raw: "Digit_Ligne", source_dataset: 77_fontainebleau, decided: "2026-07-22" }  # nom de couche, pas une entité
+  # Fontainebleau — audit complet 2026-07-27 : noms de couches
+  - { raw: "Digit_Point", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Digit_Polygone", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  # champ 'Typo 2' — qualificatifs, pas des entités
+  - { raw: "anthropique", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "geologique", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  # champ 'Chrono' — périodes chronologiques (pattern data_bretagne_1)
+  - { raw: "Moderne", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Préhistoire", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Age du Bronze", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "?", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  # champ 'Descriptio' — descriptions libres, pas des entités
+  - { raw: "Armes et filex", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Enceinte taludé rectangulaire, près de la MF du Petit Barbeau", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Exploitation d'argile", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Fouille du XIXe s, mob néo et bronze moyen", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Grotte artificielle creuse dans la sommet calcaire, fonction inconnue", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Hameau médiéval, reliefs encore visibles", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Les Fraillons, céram, haches polies, foyers, silexe.", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "P801-804, parmi d'autres indices, cartes anciennes jusqu'en 1726 ferme à proximité du carrefour du Pin", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Pas visible en surface", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Relais de poste mentionné dans carte ancienne, grande partie détruit, quelques fondations", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Relais de poste mentionné sur carte ancienne, fondations encore visible", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Reste d'un bâtiment conservé sur plusieurs assises", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Vestiges d'un hameau de carriers, premières assises conservées", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Vestiges d'une agglom‚ration secondaire, install‚e sur la portion de la voie qui se rapproche le plus de la Seine", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Vestiges récents, d'origine indéterminée", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "Vestinges d'un village, occupation de l'Antiquité jusqu'au 18e siècle", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "ancienne ferme, détruite, pas retrouvée en 2008", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "dépôt d'objet lors de travaux forestiers", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "habitat antique, fouillé en partie, mare des ligueurs", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "mob tardenoisien (paleo sup, méso), pas visible", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "mobilier et structure, pas retrouvé en 2008", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "p4, agglo secondaire romaine, vestiges massifs, structure bâtie dont un fanum découverte de la fin de 19e siècle, puis années 1950-60", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "vestiges d'un village de l'Antiquité au 18e siècle", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  - { raw: "vestiges récents?", source_dataset: 77_fontainebleau, decided: "2026-07-27" }

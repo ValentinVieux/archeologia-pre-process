@@ -211,3 +211,45 @@ entities:
     status: candidate
     plugin_entity_id: null
     roboflow_classes: []
+  - id: mare
+    label_fr: Mares
+    morphology: circulaire
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: chaos_rocheux
+    label_fr: Chaos rocheux
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: zone_sableuse
+    label_fr: Zones sableuses
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: zone_perturbee
+    label_fr: Zones perturbées
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: indice_archeo
+    label_fr: Indices archéologiques
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: forage
+    label_fr: Forages
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: parquet
+    label_fr: Parquets forestiers
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
