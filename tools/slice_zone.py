@@ -8,12 +8,24 @@ tracé dans split_manifest.yaml.
 Usage :
     .venv\\Scripts\\python.exe tools\\slice_zone.py <dataset_config.yaml> [--out D] [--seed N]
 """
+import argparse
+import datetime
+import hashlib
+import json
 import math
 import random
+import sys
 from collections import Counter
+from pathlib import Path
 
+import geopandas as gpd
+import numpy as np
+import rasterio
+import yaml
+from PIL import Image
+from rasterio.crs import CRS
 from rasterio.windows import Window, bounds as fenetre_bounds
-from shapely import make_valid
+from shapely import STRtree, make_valid
 from shapely.geometry import box as boite
 
 ORDRE_SPLITS = ("train", "valid", "test")  # ordre de départage des égalités
@@ -157,3 +169,292 @@ def annotations_tuile(polys_par_classe, bounds, tuile_px):
                     "aire_px": round(m.area * sx * sy, 2),
                 })
     return annos
+
+
+# ---------------------------------------------------------------------------
+# Config
+# ---------------------------------------------------------------------------
+
+CHAMPS_REQUIS = ("dataset", "zone", "raster", "gpkg", "couches", "tuile_px",
+                 "bloc_m", "split")
+DEFAUTS = {"negatifs_pct": 10, "min_couverture_valide": 0.5,
+           "min_visibilite_annotation": 0.5, "assign_crs": None,
+           "nodata_supplementaire": None}
+
+
+def charger_config(chemin):
+    """Charge et valide la config YAML d'un dataset (cf. spec)."""
+    cfg = yaml.safe_load(Path(chemin).read_text(encoding="utf-8"))
+    manquants = [c for c in CHAMPS_REQUIS if c not in cfg]
+    if manquants:
+        sys.exit(f"config invalide : champs manquants {manquants}")
+    for cle, valeur in DEFAUTS.items():
+        cfg.setdefault(cle, valeur)
+    if set(cfg["split"]) != set(ORDRE_SPLITS) or sum(cfg["split"].values()) != 100:
+        sys.exit("config invalide : split doit définir train/valid/test et sommer à 100")
+    if not (isinstance(cfg["tuile_px"], int) and cfg["tuile_px"] > 0):
+        sys.exit("config invalide : tuile_px doit être un entier > 0")
+    for cle in ("raster", "gpkg"):
+        if str(cfg[cle]).strip().lower().startswith("g:"):
+            sys.exit(f"{cle} est sur G: — copie locale d'abord (règle Drive, cf. CLAUDE.md)")
+    for nom, spec in cfg["couches"].items():
+        if not isinstance(spec, dict) or "classe" not in spec:
+            sys.exit(f"config invalide : couche {nom} sans champ 'classe'")
+        spec.setdefault("buffer_m", None)
+    return cfg
+
+
+# ---------------------------------------------------------------------------
+# Pipeline
+# ---------------------------------------------------------------------------
+
+def _masque_valide(donnees, nodatas):
+    """Masque booléen des pixels valides (True = valide)."""
+    valide = np.ones(donnees.shape, dtype=bool)
+    for nd in nodatas:
+        valide &= donnees != nd
+    if np.issubdtype(donnees.dtype, np.floating):
+        valide &= ~np.isnan(donnees)
+    return valide
+
+
+def _visibilite_bbox(bbox_px, masque, tuile_px):
+    """Fraction valide de l'emprise (bbox) d'une annotation dans la tuile."""
+    x, y, w, h = bbox_px
+    x0 = max(0, int(x)); y0 = max(0, int(y))
+    x1 = min(tuile_px, int(math.ceil(x + w))); y1 = min(tuile_px, int(math.ceil(y + h)))
+    if x1 <= x0 or y1 <= y0:
+        return 0.0
+    return float(masque[y0:y1, x0:x1].mean())
+
+
+def run_slicing(cfg, out_dir, seed=42):
+    """Orchestration complète : grille -> validité -> annotations -> split -> sorties."""
+    out_dir = Path(out_dir)
+    tuile_px = cfg["tuile_px"]
+    zone_id = str(cfg["zone"]).replace("\\", "/").rstrip("/").split("/")[-1]
+
+    with rasterio.open(cfg["raster"]) as src:
+        crs_raster = src.crs
+        if crs_raster is None:
+            if not cfg["assign_crs"]:
+                sys.exit("raster sans CRS : renseigner assign_crs dans la config")
+            crs_raster = CRS.from_user_input(cfg["assign_crs"])
+        if src.dtypes[0] != "uint8":
+            sys.exit(f"raster {src.dtypes[0]} : un indice 8 bits (Byte) est attendu — "
+                     "les MNT bruts ne sont pas des images d'entraînement")
+        nodatas = set()
+        if cfg["nodata_supplementaire"] is not None:
+            nodatas.add(cfg["nodata_supplementaire"])
+        if src.nodata is not None:
+            if math.isnan(src.nodata):
+                print("avertissement : nodata déclaré NaN sur bande Byte — ignoré "
+                      "(incohérence connue des chaînes LHD)")
+            else:
+                nodatas.add(src.nodata)
+
+        # --- entités : buffers, reprojection éventuelle, index spatial global
+        polys, classes_polys = [], []
+        classes_ordre = []
+        for nom_couche, spec in cfg["couches"].items():
+            gdf = gpd.read_file(cfg["gpkg"], layer=nom_couche)
+            if gdf.crs is not None and crs_raster is not None and gdf.crs != crs_raster:
+                gdf = gdf.to_crs(crs_raster)
+            prepares = preparer_entites(gdf, spec["buffer_m"])
+            polys.extend(prepares)
+            classes_polys.extend([spec["classe"]] * len(prepares))
+            if spec["classe"] not in classes_ordre:
+                classes_ordre.append(spec["classe"])
+        index_spatial = STRtree(polys) if polys else None
+
+        # --- passe 1 : validité + annotations par tuile (sans garder les pixels)
+        tuiles = grille_tuiles(src.transform, src.width, src.height, tuile_px)
+        gardees = []   # dicts tuile + annos + bloc
+        for t in tuiles:
+            donnees = src.read(1, window=t["fenetre"])
+            masque = _masque_valide(donnees, nodatas)
+            couverture = float(masque.mean())
+            if couverture < cfg["min_couverture_valide"]:
+                continue
+            annos = []
+            if index_spatial is not None:
+                candidats = index_spatial.query(boite(*t["bounds"]))
+                par_classe = {}
+                for i in sorted(candidats):
+                    par_classe.setdefault(classes_polys[i], []).append(polys[i])
+                # l'ordre des classes suit la config (déterminisme du COCO)
+                par_classe = {c: par_classe[c] for c in classes_ordre if c in par_classe}
+                annos = [a for a in annotations_tuile(par_classe, t["bounds"], tuile_px)
+                         if _visibilite_bbox(a["bbox_px"], masque, tuile_px)
+                         >= cfg["min_visibilite_annotation"]]
+            gardees.append({**t, "annos": annos, "bloc": bloc_de(t["bounds"], cfg["bloc_m"])})
+
+        # --- split par blocs
+        annos_par_bloc = {}
+        for t in gardees:
+            annos_par_bloc.setdefault(t["bloc"], Counter()).update(
+                a["classe"] for a in t["annos"])
+        affectation = affecter_splits(annos_par_bloc, cfg["split"], seed)
+
+        annotees = [t for t in gardees if t["annos"] and t["bloc"] in affectation]
+        vivier_neg = sorted((t for t in gardees
+                             if not t["annos"] and t["bloc"] in affectation),
+                            key=lambda t: (t["row"], t["col"]))
+        n_neg = min(round(cfg["negatifs_pct"] / 100 * len(annotees)), len(vivier_neg))
+        negatives = random.Random(seed).sample(vivier_neg, n_neg) if n_neg else []
+        selection = sorted(annotees + negatives, key=lambda t: (t["row"], t["col"]))
+        for t in selection:
+            t["split"] = affectation[t["bloc"]]
+            t["nom"] = f"{zone_id}_r{t['row']:04d}_c{t['col']:04d}.png"
+
+        # --- passe 2 : écriture des images + COCO par split
+        categories = [{"id": i + 1, "name": c} for i, c in enumerate(classes_ordre)]
+        cat_ids = {c["name"]: c["id"] for c in categories}
+        cocos = {s: {"images": [], "annotations": [], "categories": categories}
+                 for s in ORDRE_SPLITS}
+        compteur_annos = {s: 0 for s in ORDRE_SPLITS}
+        for s in ORDRE_SPLITS:
+            (out_dir / s).mkdir(parents=True, exist_ok=True)
+        for t in selection:
+            donnees = src.read(1, window=t["fenetre"])
+            Image.fromarray(np.stack([donnees] * 3, axis=-1), mode="RGB").save(
+                out_dir / t["split"] / t["nom"], "PNG")
+            coco = cocos[t["split"]]
+            image_id = len(coco["images"]) + 1
+            coco["images"].append({"id": image_id, "file_name": t["nom"],
+                                   "width": tuile_px, "height": tuile_px})
+            for a in t["annos"]:
+                compteur_annos[t["split"]] += 1
+                coco["annotations"].append({
+                    "id": compteur_annos[t["split"]], "image_id": image_id,
+                    "category_id": cat_ids[a["classe"]],
+                    "segmentation": a["segmentation"], "bbox": a["bbox_px"],
+                    "area": a["aire_px"], "iscrowd": 0,
+                })
+        for s in ORDRE_SPLITS:
+            (out_dir / s / "_annotations.coco.json").write_text(
+                json.dumps(cocos[s], ensure_ascii=False), encoding="utf-8")
+
+        gsd = (abs(src.transform.a), abs(src.transform.e))
+        grille_info = {"origine": [src.transform.c, src.transform.f],
+                       "gsd_m_px": list(gsd), "tuile_px": tuile_px,
+                       "crs": str(crs_raster)}
+
+    # --- manifeste + carte de contrôle + récap
+    comptes = {s: Counter() for s in ORDRE_SPLITS}
+    for t in selection:
+        comptes[t["split"]].update(a["classe"] for a in t["annos"])
+    hashes = {}
+    for s in ORDRE_SPLITS:
+        noms = sorted(t["nom"] for t in selection if t["split"] == s)
+        hashes[s] = hashlib.sha1("\n".join(noms).encode("utf-8")).hexdigest()
+    manifeste = {
+        "dataset": cfg["dataset"], "zone": cfg["zone"], "seed": seed,
+        "genere_le": datetime.date.today().isoformat(),
+        "config": {k: cfg[k] for k in sorted(cfg)},
+        "grille": grille_info,
+        "comptes": {s: dict(sorted(comptes[s].items())) for s in ORDRE_SPLITS},
+        "hashes_sha1": hashes,
+        "tuiles": [{"nom": t["nom"], "row": t["row"], "col": t["col"],
+                    "bloc": list(t["bloc"]), "split": t["split"],
+                    "bounds": [round(v, 3) for v in t["bounds"]],
+                    "n_annotations": len(t["annos"]),
+                    "classes": sorted({a["classe"] for a in t["annos"]})}
+                   for t in selection],
+    }
+    (out_dir / "split_manifest.yaml").write_text(
+        yaml.safe_dump(manifeste, allow_unicode=True, sort_keys=False, width=120),
+        encoding="utf-8")
+    _ecrire_carte_controle(out_dir, cfg, affectation, annos_par_bloc, comptes, selection)
+
+    stats = {"tuiles": len(selection), "annotees": len(annotees),
+             "negatives": len(negatives), "ecartees_nodata": len(tuiles) - len(gardees),
+             "vides_non_retenues": len(vivier_neg) - len(negatives),
+             "par_split": {s: sum(1 for t in selection if t["split"] == s)
+                           for s in ORDRE_SPLITS}}
+    return stats
+
+
+# ---------------------------------------------------------------------------
+# Carte de contrôle
+# ---------------------------------------------------------------------------
+
+COULEURS_SPLIT = {"train": "#7A8C55", "valid": "#5E7F9E", "test": "#C08A3E"}
+
+
+def _ecrire_carte_controle(out_dir, cfg, affectation, annos_par_bloc, comptes, selection):
+    """Carte SVG autonome des blocs (palette du doc fuite_spatiale_train_test.html)."""
+    bloc_m = cfg["bloc_m"]
+    blocs = sorted(annos_par_bloc)
+    if not blocs:
+        return
+    bxs = [b[0] for b in blocs]
+    bys = [b[1] for b in blocs]
+    nx = max(bxs) - min(bxs) + 1
+    ny = max(bys) - min(bys) + 1
+    cote = max(12, min(48, 720 // max(nx, ny)))
+    largeur, hauteur = nx * cote + 2, ny * cote + 2
+    rects = []
+    for b in blocs:
+        x = (b[0] - min(bxs)) * cote + 1
+        y = (max(bys) - b[1]) * cote + 1  # nord en haut
+        couleur = COULEURS_SPLIT.get(affectation.get(b), "#B7B5AA")
+        n = sum(annos_par_bloc[b].values())
+        rects.append(
+            f'<rect x="{x}" y="{y}" width="{cote - 1}" height="{cote - 1}" '
+            f'fill="{couleur}" opacity="0.75"><title>bloc {b} : '
+            f'{affectation.get(b, "non affecté")}, {n} annotations</title></rect>')
+    lignes_tbl = []
+    classes = sorted({c for cpt in comptes.values() for c in cpt})
+    for c in classes:
+        tot = sum(comptes[s].get(c, 0) for s in ORDRE_SPLITS) or 1
+        cellules = "".join(
+            f"<td>{comptes[s].get(c, 0)} ({comptes[s].get(c, 0) / tot:.0%})</td>"
+            for s in ORDRE_SPLITS)
+        lignes_tbl.append(f"<tr><td>{c}</td>{cellules}</tr>")
+    n_par_split = {s: sum(1 for t in selection if t["split"] == s) for s in ORDRE_SPLITS}
+    html = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Contrôle des blocs — {cfg["dataset"]}</title>
+<style>body{{font:14px/1.5 system-ui;margin:24px;color:#26251F;background:#F4F4F1}}
+table{{border-collapse:collapse;margin-top:14px}}td,th{{border:1px solid #DDDCD4;padding:4px 10px}}
+.leg span{{display:inline-block;width:12px;height:12px;margin:0 4px 0 12px}}</style></head><body>
+<h1>{cfg["dataset"]} — split spatial par blocs de {bloc_m} m</h1>
+<p class="leg">tuiles par split :
+<span style="background:#7A8C55"></span>train {n_par_split["train"]}
+<span style="background:#5E7F9E"></span>valid {n_par_split["valid"]}
+<span style="background:#C08A3E"></span>test {n_par_split["test"]}
+<span style="background:#B7B5AA"></span>bloc sans annotation (non affecté)</p>
+<svg viewBox="0 0 {largeur} {hauteur}" width="{min(largeur * 2, 900)}">{"".join(rects)}</svg>
+<table><tr><th>classe</th><th>train</th><th>valid</th><th>test</th></tr>
+{"".join(lignes_tbl)}</table></body></html>"""
+    (out_dir / "controle_blocs.html").write_text(html, encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+def main():
+    parseur = argparse.ArgumentParser(description=__doc__)
+    parseur.add_argument("config", help="dataset_config.yaml (cf. spec)")
+    parseur.add_argument("--out", default=None,
+                         help="dossier de sortie (défaut : datasets\\<dataset>)")
+    parseur.add_argument("--seed", type=int, default=42)
+    args = parseur.parse_args()
+
+    cfg = charger_config(args.config)
+    out_dir = Path(args.out) if args.out else (
+        Path(__file__).resolve().parents[1] / "datasets" / cfg["dataset"])
+    stats = run_slicing(cfg, out_dir, seed=args.seed)
+
+    print(f"\n{cfg['dataset']} — {stats['tuiles']} tuiles "
+          f"({stats['annotees']} annotées + {stats['negatives']} négatives), "
+          f"répartition {stats['par_split']}")
+    print(f"écartées : {stats['ecartees_nodata']} sous couverture valide, "
+          f"{stats['vides_non_retenues']} vides non retenues")
+    print(f"contrôle visuel : {out_dir / 'controle_blocs.html'}")
+    print(f"Sorties : {out_dir}")
+
+
+if __name__ == "__main__":
+    main()
