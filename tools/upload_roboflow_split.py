@@ -324,7 +324,7 @@ def main():
             divergences = verifier_plateforme(
                 cle, args.workspace, args.projet, attendu,
                 dict(splits_attendus), dict(classes_attendues),
-                dict(images_par_classe))
+                dict(images_par_classe), zone_tag=zone_id)
             if not divergences:
                 break
         if divergences:
@@ -342,7 +342,8 @@ def main():
 
 
 def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
-                        classes_attendues, images_par_classe_attendues=None):
+                        classes_attendues, images_par_classe_attendues=None,
+                        zone_tag=None):
     """Vérification post-upload : agrégats du projet + échantillon par image.
 
     L'endpoint search PLAFONNE à 250 résultats avec un ordre instable entre pages
@@ -358,26 +359,34 @@ def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
     divergences = []
     images_par_classe_attendues = images_par_classe_attendues or {}
 
-    r = requests.get(f"{base}?api_key={cle}", timeout=60)
-    r.raise_for_status()
-    projet_meta = r.json().get("project", {})
-    if projet_meta.get("images") != len(attendu):
-        divergences.append(f"total images : {projet_meta.get('images')} sur la "
-                           f"plateforme, {len(attendu)} attendues")
-    splits_plat = projet_meta.get("splits") or {}
-    for s, n in sorted(splits_attendus.items()):
-        if splits_plat.get(s) != n:
-            divergences.append(f"split {s} : {splits_plat.get(s)} images sur la "
-                               f"plateforme, {n} attendues")
-    # le compteur d'annotations par classe du projet est un CACHE parfois périmé
-    # (constaté 2026-07-27 : état par image parfait, compteur en retard) — simple
-    # avertissement ; le signal fiable est le nombre d'IMAGES par classe (search
-    # class_name, exact et immédiat), vérifié juste après
-    classes_plat = {k: v for k, v in (projet_meta.get("classes") or {}).items()}
-    for c in sorted(set(classes_attendues) | set(classes_plat)):
-        if classes_plat.get(c, 0) != classes_attendues.get(c, 0):
-            print(f"  avertissement (cache) : classe {c} — compteur plateforme "
-                  f"{classes_plat.get(c, 0)} vs {classes_attendues.get(c, 0)} envoyées")
+    # Un projet peut héberger PLUSIEURS zones (corpus multi-zones) : toutes les
+    # requêtes sont scopées par le tag de zone. Sans tag, les agrégats projet
+    # (images/splits) sont comparés — valable seulement en mono-zone.
+    filtre_zone = {"tag": zone_tag} if zone_tag else {}
+    if zone_tag:
+        rt = requests.post(f"{base}/search?api_key={cle}", json={
+            "limit": 1, "in_dataset": True, **filtre_zone,
+            "fields": ["id"]}, timeout=60)
+        rt.raise_for_status()
+        total_zone = rt.json().get("total", 0)
+        if total_zone != len(attendu):
+            divergences.append(f"total images de la zone {zone_tag} : {total_zone} "
+                               f"sur la plateforme, {len(attendu)} attendues")
+    else:
+        r = requests.get(f"{base}?api_key={cle}", timeout=60)
+        r.raise_for_status()
+        projet_meta = r.json().get("project", {})
+        if projet_meta.get("images") != len(attendu):
+            divergences.append(f"total images : {projet_meta.get('images')} sur la "
+                               f"plateforme, {len(attendu)} attendues")
+        splits_plat = projet_meta.get("splits") or {}
+        for s, n in sorted(splits_attendus.items()):
+            if splits_plat.get(s) != n:
+                divergences.append(f"split {s} : {splits_plat.get(s)} images sur la "
+                                   f"plateforme, {n} attendues")
+    # nombre d'IMAGES par classe (exact et immédiat) — les classes étant suffixées
+    # par site, elles sont propres à la zone ; le compteur d'ANNOTATIONS par classe
+    # du projet est un cache parfois périmé (a affiché -5) : jamais bloquant
     for c, n_imgs in sorted(images_par_classe_attendues.items()):
         rc = requests.post(f"{base}/search?api_key={cle}", json={
             "limit": 1, "in_dataset": True, "class_name": c,
@@ -389,7 +398,7 @@ def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
                                f"{n_imgs} attendues")
 
     rs = requests.post(f"{base}/search?api_key={cle}", json={
-        "limit": 250, "in_dataset": True,
+        "limit": 250, "in_dataset": True, **filtre_zone,
         "fields": ["name", "split", "annotations"]}, timeout=60)
     rs.raise_for_status()
     for res in rs.json().get("results", []):

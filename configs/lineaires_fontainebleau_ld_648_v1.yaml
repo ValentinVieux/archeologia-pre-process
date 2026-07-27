@@ -1,0 +1,25 @@
+# Dataset v2 — structures linéaires de Fontainebleau sur indice LD (run IGN 0,5 m/px).
+# Mêmes paramètres éprouvés que Haye (tuiles 648 px, blocs 2 km, buffer 4,8 m validé
+# visuellement, split spatial 70/20/10). Split talus/fosse (décision 2026-07-27) :
+# deux classes distinctes. tranchees_et_boyaux en `ignorer` (même logique que le
+# rempart de Haye : linéaire visuellement proche, non entraîné, bloque les négatifs).
+# Chemins : COPIES LOCALES obligatoires (le script refuse G:).
+dataset: lineaires_fontainebleau_ld_648_v1
+zone: ile_de_france/77_fontainebleau
+raster: <copie locale>\indices\LD_A15_Rmin10_Rmax20_H1p7_V1\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+gpkg: <copie locale>\fontainebleau_entites_l93.gpkg
+couches:
+  parcellaire:          {classe: parcellaire,   buffer_m: 4.8}
+  talus:                {classe: talus,         buffer_m: 4.8}
+  fosse:                {classe: fosse,         buffer_m: 4.8}
+  chemin_creux:         {classe: chemin_creux,  buffer_m: 4.8}
+  tranchees_et_boyaux:  {ignorer: true,         buffer_m: 4.8}
+tuile_px: 648
+bloc_m: 2000
+split: {train: 70, valid: 20, test: 10}
+negatifs_pct: 10
+min_couverture_valide: 0.5
+# fraction VALIDE (hors nodata) de la bbox — ne filtre PAS les fragments coupés par la grille
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null   # EPSG:2154 embarqué dans les dalles IGN
