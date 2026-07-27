@@ -106,6 +106,18 @@ nodata_supplementaire: null              # ex. 0 pour les mosaïques à fond imp
   tuiles frontalières) pourra être ajoutée plus tard si un besoin dur apparaît — YAGNI
   pour la v1.
 
+## Boucle de vérification des données (règle utilisateur du 2026-07-27, systématique)
+
+Chaque production de dataset suit la boucle : **produire → vérifier → corriger →
+reproduire → re-vérifier**, jusqu'à zéro défaut confirmé. La vérification porte sur les
+**fichiers produits** (pas sur le code) et est menée par des contrôleurs indépendants :
+intégrité COCO, anti-fuite (unicité des tuiles par split, cohérence manifeste/disque,
+blocs mono-split, hashes), fidélité géométrique aux sources GPKG (IoU sur échantillon,
+enclos non remplis), conformité des images au raster source, pureté des négatifs et
+recomptes par classe/split. Aucune livraison (dépôt Drive, upload Roboflow) avant le
+verdict « conforme ». La future skill `/prepare-zone-training` intègre cette boucle
+comme étape obligatoire, en plus du contrôle visuel humain de `controle_blocs.html`.
+
 ## Tests — `tests/test_slice_zone.py` (TDD, même style que `tests/test_audit.py`)
 
 Raster jouet généré (petit GeoTIFF synthétique avec zone nodata) + GPKG jouet (lignes,
