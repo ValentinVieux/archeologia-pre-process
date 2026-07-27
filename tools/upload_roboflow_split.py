@@ -147,8 +147,13 @@ def main():
     p.add_argument("--renommer", action="append", default=[],
                    help="ancien=nouveau : renomme une classe PLATEFORME (après "
                         "suffixe), répétable — ex. talus_fosse_haye=fosse")
+    p.add_argument("--paralleles", type=int, default=10,
+                   help="uploads concurrents (patron num_workers du SDK : défaut 10, "
+                        "recommandation Roboflow <= 25)")
     args = p.parse_args()
     renommages = dict(r.split("=", 1) for r in args.renommer)
+    if args.paralleles > 25:
+        print("avertissement : Roboflow recommande <= 25 uploads concurrents")
 
     if chemin_sur_drive(args.dataset):
         sys.exit("dataset sur G: — uploader depuis la copie locale (règle Drive)")
@@ -218,24 +223,24 @@ def main():
         projet = ws.create_project(args.projet, "instance-segmentation",
                                    "private", "structure")
 
-    envoyees, echecs = 0, []
-    try:
-        for i in a_envoyer:
-            # les négatifs reçoivent AUSSI une annotation (VOC vide = null) : sans
-            # annotation jointe, la plateforme les met en file Annotate « à
-            # étiqueter » au lieu du dataset
-            contenu, suffixe_fichier = annotation_fichier(i, args.suffixe_classes,
-                                                          renommages)
-            tmp = tempfile.NamedTemporaryFile("w", suffix=suffixe_fichier,
-                                              delete=False, encoding="utf-8")
-            tmp.write(contenu)
-            tmp.close()
-            annotation_path = tmp.name
-            # la réponse est CONTRÔLÉE : un échec de sauvegarde d'annotation laissait
-            # l'image nue dans le dataset sans aucun signal (constat du 2026-07-27 :
-            # 4 images sur 10 avaient perdu leurs polygones en silence)
-            erreur = None
-            for essai in range(3):
+    def _envoyer_image(i):
+        """Upload d'UNE image (thread-safe : aucun état partagé mutable ici).
+
+        Les négatifs reçoivent AUSSI une annotation (VOC vide = null) : sans
+        annotation jointe, la plateforme les met en file Annotate. La réponse est
+        CONTRÔLÉE (des annotations se perdaient en silence, constat 2026-07-27) ;
+        en secours, écrasement direct via /annotate/:id?overwrite=true — gère
+        aussi les fantômes dédupliqués."""
+        contenu, suffixe_fichier = annotation_fichier(i, args.suffixe_classes,
+                                                      renommages)
+        tmp = tempfile.NamedTemporaryFile("w", suffix=suffixe_fichier,
+                                          delete=False, encoding="utf-8")
+        tmp.write(contenu)
+        tmp.close()
+        annotation_path = tmp.name
+        erreur = None
+        try:
+            for _ in range(3):
                 try:
                     reponse = projet.single_upload(
                         image_path=str(i["chemin"]),
@@ -249,14 +254,8 @@ def main():
                     annot = (reponse or {}).get("annotation") or {}
                     if bool(img.get("id") or img.get("success")) and \
                             bool(annot.get("success") or annot.get("id")):
-                        erreur = None
-                        break
+                        return i, None
                     if img.get("id"):
-                        # image présente (ou fantôme dédupliqué ressuscité avec son
-                        # ancien id) mais annotation non enregistrée : écrasement
-                        # direct via l'API — parade vérifiée le 2026-07-27
-                        contenu, suffixe_fichier = annotation_fichier(
-                            i, args.suffixe_classes, renommages)
                         nom_fichier = i["filename"].rsplit(".", 1)[0] + suffixe_fichier
                         import requests
                         ra = requests.post(
@@ -266,28 +265,50 @@ def main():
                             data=contenu.encode("utf-8"),
                             headers={"Content-Type": "text/plain"}, timeout=60)
                         if ra.ok and ra.json().get("success"):
-                            erreur = None
-                            break
-                        erreur = f"annotate overwrite refusé : {ra.status_code} {ra.text[:120]}"
+                            return i, None
+                        erreur = (f"annotate overwrite refusé : {ra.status_code} "
+                                  f"{ra.text[:120]}")
                     else:
                         erreur = f"réponse incomplète : {reponse}"
                 except Exception as exc:  # noqa: BLE001 — on retente puis on rapporte
                     erreur = str(exc)
-            if annotation_path:
-                os.unlink(annotation_path)
-            if erreur:
-                echecs.append((i["filename"], erreur))
-                print(f"  ÉCHEC {i['filename']} : {erreur[:120]}")
-                continue
-            suivi["images"].append({"filename": i["filename"], "split": i["split"],
-                                    "annotations": len(i["annotations"])})
-            envoyees += 1
-            if envoyees % 20 == 0 or envoyees == len(a_envoyer):
-                print(f"  {envoyees}/{len(a_envoyer)}")
+            return i, erreur
+        finally:
+            os.unlink(annotation_path)
+
+    # parallélisation sur le patron num_workers du SDK (upload_dataset : défaut 10,
+    # reco <= 25) — le tracker n'est touché que sous verrou, flush périodique pour
+    # que la reprise idempotente survive à une interruption
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
+    verrou = threading.Lock()
+    envoyees, echecs = 0, []
+
+    def _flush_suivi():
+        suivi["derniere_mise_a_jour"] = datetime.datetime.now().isoformat(
+            timespec="seconds")
+        suivi_path.write_text(yaml.safe_dump(suivi, allow_unicode=True,
+                                             sort_keys=False), encoding="utf-8")
+
+    try:
+        with ThreadPoolExecutor(max_workers=max(1, args.paralleles)) as pool:
+            futurs = [pool.submit(_envoyer_image, i) for i in a_envoyer]
+            for fut in as_completed(futurs):
+                i, erreur = fut.result()
+                with verrou:
+                    if erreur:
+                        echecs.append((i["filename"], erreur))
+                        print(f"  ÉCHEC {i['filename']} : {erreur[:120]}")
+                    else:
+                        suivi["images"].append(
+                            {"filename": i["filename"], "split": i["split"],
+                             "annotations": len(i["annotations"])})
+                        envoyees += 1
+                        if envoyees % 50 == 0 or envoyees == len(a_envoyer):
+                            print(f"  {envoyees}/{len(a_envoyer)}")
+                            _flush_suivi()
     finally:
-        suivi["derniere_mise_a_jour"] = datetime.datetime.now().isoformat(timespec="seconds")
-        suivi_path.write_text(yaml.safe_dump(suivi, allow_unicode=True, sort_keys=False),
-                              encoding="utf-8")
+        _flush_suivi()
     print(f"terminé : {envoyees} envoyées, {len(echecs)} échec(s). Suivi : {suivi_path}")
 
     if not args.sans_verification:

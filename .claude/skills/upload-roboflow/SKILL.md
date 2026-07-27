@@ -38,8 +38,9 @@ persistante — les relire avant toute modification de `upload_roboflow_split.py
   nouveau test sur tuiles vierges (`--eviter`, dédup corbeille).
 
 ## Étape 4 — Upload complet
-- Même commande sans `--test` (hérite du lot de test, ne le renvoie pas). Longue
-  durée : arrière-plan, reprise idempotente. La vérification finale tolère le
+- Même commande sans `--test` (hérite du lot de test, ne le renvoie pas).
+  Parallélisé (`--paralleles`, défaut 10, recommandation Roboflow <= 25) ;
+  arrière-plan, reprise idempotente (flush périodique du suivi). La vérification finale tolère le
   retard d'ingestion (reprises espacées) ; « absente du dataset » massif juste
   après l'envoi = ingestion en cours, re-vérifier avant de conclure.
 
