@@ -304,11 +304,17 @@ def main():
                 noms_cats[a["category_id"]] for a in i["annotations"])
         splits_attendus = Counter(s["split"] for s in suivi["images"])
         classes_attendues = Counter()
+        images_par_classe = Counter()
         for s_im in suivi["images"]:
-            for classe, n in cats_par_fichier.get(s_im["filename"], {}).items():
+            cpt = cats_par_fichier.get(s_im["filename"], {})
+            for classe, n in cpt.items():
                 nom = (f"{classe}_{args.suffixe_classes}"
                        if args.suffixe_classes else classe)
                 classes_attendues[renommages.get(nom, nom)] += n
+            for classe in cpt:
+                nom = (f"{classe}_{args.suffixe_classes}"
+                       if args.suffixe_classes else classe)
+                images_par_classe[renommages.get(nom, nom)] += 1
         divergences = []
         for attente in (0, 60, 120, 180):
             if attente:
@@ -317,7 +323,8 @@ def main():
                 time.sleep(attente)
             divergences = verifier_plateforme(
                 cle, args.workspace, args.projet, attendu,
-                dict(splits_attendus), dict(classes_attendues))
+                dict(splits_attendus), dict(classes_attendues),
+                dict(images_par_classe))
             if not divergences:
                 break
         if divergences:
@@ -335,7 +342,7 @@ def main():
 
 
 def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
-                        classes_attendues):
+                        classes_attendues, images_par_classe_attendues=None):
     """Vérification post-upload : agrégats du projet + échantillon par image.
 
     L'endpoint search PLAFONNE à 250 résultats avec un ordre instable entre pages
@@ -349,6 +356,7 @@ def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
 
     base = f"https://api.roboflow.com/{workspace}/{projet}"
     divergences = []
+    images_par_classe_attendues = images_par_classe_attendues or {}
 
     r = requests.get(f"{base}?api_key={cle}", timeout=60)
     r.raise_for_status()
@@ -361,12 +369,24 @@ def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
         if splits_plat.get(s) != n:
             divergences.append(f"split {s} : {splits_plat.get(s)} images sur la "
                                f"plateforme, {n} attendues")
+    # le compteur d'annotations par classe du projet est un CACHE parfois périmé
+    # (constaté 2026-07-27 : état par image parfait, compteur en retard) — simple
+    # avertissement ; le signal fiable est le nombre d'IMAGES par classe (search
+    # class_name, exact et immédiat), vérifié juste après
     classes_plat = {k: v for k, v in (projet_meta.get("classes") or {}).items()}
     for c in sorted(set(classes_attendues) | set(classes_plat)):
         if classes_plat.get(c, 0) != classes_attendues.get(c, 0):
-            divergences.append(f"classe {c} : {classes_plat.get(c, 0)} annotations "
-                               f"sur la plateforme, {classes_attendues.get(c, 0)} "
-                               "attendues")
+            print(f"  avertissement (cache) : classe {c} — compteur plateforme "
+                  f"{classes_plat.get(c, 0)} vs {classes_attendues.get(c, 0)} envoyées")
+    for c, n_imgs in sorted(images_par_classe_attendues.items()):
+        rc = requests.post(f"{base}/search?api_key={cle}", json={
+            "limit": 1, "in_dataset": True, "class_name": c,
+            "fields": ["id"]}, timeout=60)
+        rc.raise_for_status()
+        total_c = rc.json().get("total", 0)
+        if total_c != n_imgs:
+            divergences.append(f"classe {c} : {total_c} images sur la plateforme, "
+                               f"{n_imgs} attendues")
 
     rs = requests.post(f"{base}/search?api_key={cle}", json={
         "limit": 250, "in_dataset": True,
