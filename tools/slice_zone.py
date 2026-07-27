@@ -302,9 +302,11 @@ def charger_config(chemin):
     for cle in ("raster", "gpkg"):
         _refuser_drive(cfg[cle], cle)
     for nom, spec in cfg["couches"].items():
-        if not isinstance(spec, dict) or "classe" not in spec:
-            sys.exit(f"config invalide : couche {nom} sans champ 'classe'")
+        if not isinstance(spec, dict) or ("classe" not in spec
+                                          and not spec.get("ignorer")):
+            sys.exit(f"config invalide : couche {nom} sans champ 'classe' ni 'ignorer'")
         spec.setdefault("buffer_m", None)
+        spec.setdefault("ignorer", False)
     return cfg
 
 
@@ -365,19 +367,26 @@ def run_slicing(cfg, out_dir, seed=42):
                   "considérées valides (zones sans dalle comprises). Renseigner "
                   "nodata_supplementaire si le raster a un fond implicite (souvent 0).")
 
-        # --- entités : buffers, reprojection éventuelle, index spatial global
-        polys, classes_polys = [], []
+        # --- entités : buffers, reprojection éventuelle, index spatial global.
+        # Une couche `ignorer` (classe non entraînée, ex. rempart) ne produit aucune
+        # annotation mais ses emprises interdisent la tuile aux négatifs : exporter
+        # comme « fond » une structure visible apprendrait au modèle à l'ignorer.
+        polys, classes_polys, polys_ignores = [], [], []
         classes_ordre = []
         for nom_couche, spec in cfg["couches"].items():
             gdf = gpd.read_file(cfg["gpkg"], layer=nom_couche)
             if gdf.crs is not None and crs_raster is not None and gdf.crs != crs_raster:
                 gdf = gdf.to_crs(crs_raster)
             prepares = preparer_entites(gdf, spec["buffer_m"])
+            if spec["ignorer"]:
+                polys_ignores.extend(prepares)
+                continue
             polys.extend(prepares)
             classes_polys.extend([spec["classe"]] * len(prepares))
             if spec["classe"] not in classes_ordre:
                 classes_ordre.append(spec["classe"])
         index_spatial = STRtree(polys) if polys else None
+        index_ignores = STRtree(polys_ignores) if polys_ignores else None
 
         # --- passe 1 : validité + annotations par tuile (sans garder les pixels)
         tuiles = grille_tuiles(src.transform, src.width, src.height, tuile_px)
@@ -401,6 +410,11 @@ def run_slicing(cfg, out_dir, seed=42):
                 annos = [a for a in annos_brutes
                          if _visibilite_bbox(a["bbox_px"], masque, tuile_px)
                          >= cfg["min_visibilite_annotation"]]
+            if not entites_presentes and index_ignores is not None:
+                boite_t = boite(*t["bounds"])
+                entites_presentes = any(
+                    polys_ignores[i].intersects(boite_t)
+                    for i in index_ignores.query(boite_t))
             gardees.append({**t, "annos": annos, "entites_presentes": entites_presentes,
                             "bloc": bloc_de(t["bounds"], cfg["bloc_m"])})
 

@@ -189,9 +189,12 @@ try:
     gpd.GeoDataFrame(geometry=[box(500450, 6799450, 500550, 6799550),
                                box(501000, 6798500, 501150, 6798650)],
                      crs="EPSG:2154").to_file(gpkg, layer="zones", driver="GPKG")
-    gpd.GeoDataFrame(geometry=[Point(500200, 6799000), Point(501100, 6799350),
-                               Point(500900, 6799750)],
+    gpd.GeoDataFrame(geometry=[Point(500200, 6799000), Point(500900, 6799750)],
                      crs="EPSG:2154").to_file(gpkg, layer="points", driver="GPKG")
+    # couche ignorée (classe non entraînée) : seule occupante de la tuile (2,3) —
+    # elle ne doit produire AUCUNE annotation mais interdire cette tuile aux négatifs
+    gpd.GeoDataFrame(geometry=[LineString([(501250, 6799000), (501350, 6799000)])],
+                     crs="EPSG:2154").to_file(gpkg, layer="remparts_jouet", driver="GPKG")
 
     # --- config jouet
     cfg_path = tmp / "config.yaml"
@@ -200,7 +203,8 @@ try:
         "raster": str(raster), "gpkg": str(gpkg),
         "couches": {"lignes": {"classe": "parcellaire", "buffer_m": 2.0},
                     "zones": {"classe": "chaussee"},
-                    "points": {"classe": "tas", "buffer_m": 5.0}},
+                    "points": {"classe": "tas", "buffer_m": 5.0},
+                    "remparts_jouet": {"ignorer": True, "buffer_m": 2.0}},
         "tuile_px": 400, "bloc_m": 800,
         "split": {"train": 70, "valid": 20, "test": 10},
         "negatifs_pct": 50, "nodata_supplementaire": 0,
@@ -254,7 +258,11 @@ try:
     for tm in tuiles_m:
         if tm["n_annotations"] == 0:
             assert not box(*tm["bounds"]).intersects(union_entites), \
-                f"négatif {tm['nom']} contient une entité (filtrée ou non)"
+                f"négatif {tm['nom']} contient une entité (filtrée, ignorée ou non)"
+    # la couche ignorée n'apparaît nulle part : pas de 4e catégorie, et la tuile (2,3)
+    # qu'elle occupe seule est absente du dataset (ni annotée, ni négative)
+    assert not any(tm["nom"].endswith("_r0002_c0003.png") for tm in tuiles_m), \
+        "tuile occupée par une entité ignorée exportée quand même"
 
     # 6. carte de contrôle et récap présents
     assert (out / "controle_blocs.html").exists()

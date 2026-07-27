@@ -43,8 +43,13 @@ gpkg: <chemin local du GPKG>
 couches:                                 # couche GPKG -> classe + rasterisation
   parcellaire:  {classe: parcellaire,  buffer_m: 2.0}   # lignes : buffer largeur totale
   talus_fosse:  {classe: talus_fosse,  buffer_m: 2.0}
-  rempart:      {classe: rempart,      buffer_m: 2.0}
+  rempart:      {ignorer: true,        buffer_m: 2.0}   # classe non entraînée (cf. infra)
   # polygones : buffer_m absent ; points : buffer_m = rayon (ex. tas: 5.0)
+  # `ignorer: true` (décision utilisateur 2026-07-27, retrait des remparts) : la couche
+  # ne produit AUCUNE annotation mais ses emprises bufferisées interdisent leurs tuiles
+  # aux négatifs — exporter comme « fond » une structure visible et visuellement proche
+  # des classes entraînées (rempart ~ talus) apprendrait au modèle à l'ignorer. Une
+  # tuile occupée uniquement par des entités ignorées est absente du dataset.
 tuile_px: 648
 bloc_m: 2000                             # aligné sur les multiples de bloc_m en CRS raster
 split: {train: 70, valid: 20, test: 10}

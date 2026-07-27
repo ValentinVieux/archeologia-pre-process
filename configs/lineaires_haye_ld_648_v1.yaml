@@ -10,7 +10,10 @@ gpkg: <copie locale>\haye_entites_l93.gpkg
 couches:
   parcellaire:  {classe: parcellaire,  buffer_m: 2.0}
   talus_fosse:  {classe: talus_fosse,  buffer_m: 2.0}
-  rempart:      {classe: rempart,      buffer_m: 2.0}
+  # DÉCISION 2026-07-27 : rempart non entraîné (choix utilisateur). `ignorer` retire la
+  # classe SANS libérer ses tuiles pour les négatifs — un rempart ressemble à un talus,
+  # l'exporter comme « fond » apprendrait au modèle à ignorer les levées linéaires.
+  rempart:      {ignorer: true,        buffer_m: 2.0}
 tuile_px: 648
 bloc_m: 2000
 split: {train: 70, valid: 20, test: 10}
