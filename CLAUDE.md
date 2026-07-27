@@ -18,6 +18,9 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
 .venv\Scripts\python.exe tools\build_haye_gpkg.py [--out <dossier>]  # reconstruit le GPKG de 54_foret_de_haye
 .venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N]  # tuiles 648px + split spatial (cf. configs\)
+.venv\Scripts\python.exe tools\build_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> [--out <dossier>]  # GPKG entités depuis livraison auditée
+.venv\Scripts\python.exe tools\verif_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> <gpkg>  # boucle de vérification du GPKG
+.venv\Scripts\python.exe tools\verif_dataset.py <dataset> [--gpkg <chemin>]  # boucle de vérification d'un dataset découpé
 .venv\Scripts\python.exe tools\upload_roboflow_split.py <dataset> --workspace <id> --projet <id> [--test] [--dry-run]  # upload split IMPOSÉ (clé : env ROBOFLOW_API_KEY)
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
@@ -53,6 +56,31 @@ audit (Python) → classification interactive des inconnus (l'utilisateur valide
 mapping) → append aliases + entités candidates → relancer l'audit. Le tout via
 `/audit-dataset <chemin>`. Historique des décisions = provenance dans aliases.yaml +
 git log ; pas de fichier de log séparé.
+
+## Entraînement (datasets v2, modèles RF-DETR segmentation)
+
+- Chaîne par zone : audit (`/audit-dataset`) → GPKG entités (`build_zone_gpkg` +
+  `configs/vecteurs_<zone>.yaml`) → découpe (`slice_zone` + `configs/lineaires_<zone>_*.yaml`)
+  → **boucle de vérification** (`verif_zone_gpkg`, `verif_dataset`) → carte de contrôle
+  validée par l'utilisateur → dépôt Drive → lot de TEST Roboflow (10 img) → inspection
+  humaine des masques → upload complet vérifié. Skills : `/prepare-zone-training`,
+  `/upload-roboflow`.
+- **Jamais de split aléatoire** (cf. docs/fuite_spatiale_train_test.html) : split spatial
+  par blocs de 2 km, tracé dans `split_manifest.yaml`, imposé à l'upload et jamais re-tiré.
+  Tuiles **648 px sans chevauchement** (RF-DETR seg : résolution divisible par 24 ;
+  pin `rfdetr>=1.8.3,<2.0` ; résolution d'entraînement = résolution d'export ONNX).
+- **Boucle de vérification systématique** (règle utilisateur 2026-07-27) : produire →
+  vérifier les FICHIERS produits par contrôleur indépendant → corriger → REproduire →
+  re-vérifier. Aucune livraison (Drive/Roboflow) avant verdict conforme.
+- Talus/fossés : 3 entités — `talus` et `fosse` (sources qui distinguent), `talus_fosse`
+  (labels indistincts, ex. fossébutte Haye). Classes plateforme suffixées `<entite>_<site>` ;
+  buffers de lignes par zone (largeur TOTALE : Haye/Fontainebleau 4,8 m, Rambouillet 5 m) ;
+  couches linéaires non entraînées en `ignorer:` (bloquent les négatifs sans annoter).
+- Roboflow : la **source de vérité est locale** (split_manifest + upload_manifest) ; la
+  plateforme est un miroir de contrôle qualité. Ses pièges connus (dédup corbeille,
+  batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,
+  search plafonné à 250 à l'ordre instable, compteur de classes en cache) sont parés dans
+  `upload_roboflow_split.py` — lire la mémoire persistante avant d'y toucher.
 
 ## Stockage Drive — data_regions_v2
 
