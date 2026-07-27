@@ -50,6 +50,10 @@ aliases:
   - { raw: "cheminement", entity_id: chemin_creux, source_dataset: 77_fontainebleau, context: "Digit_Ligne.shp, champ 'Type'", decided: "2026-07-27" }
   # RÉVISION 2026-07-27 (split talus/fosse) : entity_id passé de talus_fosse à fosse.
   - { raw: "fosse", entity_id: fosse, source_dataset: 77_fontainebleau, context: "Digit_Ligne.shp, champ 'Type'", decided: "2026-07-27" }
+  # Rambouillet — audit 78_Foret-Rambouillet_SHP, champ INTERP, validé 2026-07-27
+  - { raw: "trou de bombe", entity_id: cratere, source_dataset: 78_rambouillet, context: "digit_points.shp, champ 'INTERP'", decided: "2026-07-27" }
+  - { raw: "voie ancienne", entity_id: voie, source_dataset: 78_rambouillet, context: "digit_lignes2.shp, champ 'INTERP'", decided: "2026-07-27" }
+  - { raw: "blaireautiere", entity_id: blaireautiere, source_dataset: 78_rambouillet, context: "digit_poly.shp, champ 'INTERP'", decided: "2026-07-27" }
   - { raw: "depression", entity_id: circular_depression, source_dataset: 77_fontainebleau, context: "Digit_Point.shp, champ 'Type'", decided: "2026-07-27" }
   - { raw: "Trous d'obus", entity_id: cratere, source_dataset: 77_fontainebleau, context: "Digit_Point.shp, champ 'Type'", decided: "2026-07-27" }
   - { raw: "mare", entity_id: mare, source_dataset: 77_fontainebleau, context: "Digit_Point.shp + Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
@@ -129,3 +133,18 @@ ignored:
   - { raw: "p4, agglo secondaire romaine, vestiges massifs, structure bâtie dont un fanum découverte de la fin de 19e siècle, puis années 1950-60", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
   - { raw: "vestiges d'un village de l'Antiquité au 18e siècle", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
   - { raw: "vestiges récents?", source_dataset: 77_fontainebleau, decided: "2026-07-27" }
+  # Rambouillet — audit 2026-07-27 : mobilier de prospection, noms de couches, champs photo
+  - { raw: "Ceramique", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "TCA", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "Autre", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "Scories", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "digit_lignes2", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "digit_points", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "digit_poly", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "gestion", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "mobilier", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "patates", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "photos", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "prospection", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "P1140785", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  - { raw: "S", source_dataset: 78_rambouillet, decided: "2026-07-27" }

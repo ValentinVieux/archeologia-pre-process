@@ -269,3 +269,9 @@ entities:
     status: candidate
     plugin_entity_id: null
     roboflow_classes: []
+  - id: blaireautiere
+    label_fr: Blaireautières
+    morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
