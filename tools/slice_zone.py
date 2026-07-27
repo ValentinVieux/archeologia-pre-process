@@ -14,6 +14,7 @@ import hashlib
 import json
 import math
 import random
+import shutil
 import sys
 from collections import Counter
 from pathlib import Path
@@ -26,7 +27,9 @@ from PIL import Image
 from rasterio.crs import CRS
 from rasterio.windows import Window, bounds as fenetre_bounds
 from shapely import STRtree, make_valid
+from shapely.geometry import LineString, Polygon
 from shapely.geometry import box as boite
+from shapely.ops import split as decouper
 
 ORDRE_SPLITS = ("train", "valid", "test")  # ordre de départage des égalités
 
@@ -111,6 +114,15 @@ def preparer_entites(gdf, buffer_m):
     points, None pour les polygones (inchangés). MultiX explosés, vides écartées,
     invalides réparées (make_valid).
     """
+    def _polygones_recursifs(geom):
+        # make_valid peut produire GEOMETRYCOLLECTION(MULTIPOLYGON(...), LINESTRING) :
+        # une extraction non récursive perdrait silencieusement les polygones imbriqués
+        if geom.geom_type == "Polygon":
+            yield geom
+        elif hasattr(geom, "geoms"):
+            for g in geom.geoms:
+                yield from _polygones_recursifs(g)
+
     polys = []
     for geom in gdf.geometry:
         if geom is None or geom.is_empty:
@@ -120,19 +132,40 @@ def preparer_entites(gdf, buffer_m):
             geom = geom.buffer(rayon)
         if not geom.is_valid:
             geom = make_valid(geom)
-        if geom.geom_type == "Polygon":
-            polys.append(geom)
-        elif geom.geom_type in ("MultiPolygon", "GeometryCollection"):
-            polys.extend(g for g in geom.geoms if g.geom_type == "Polygon")
+        polys.extend(_polygones_recursifs(geom))
     return polys
+
+
+def _sans_trous(poly, max_coupes=16):
+    """Décompose un polygone à trous en morceaux SANS trou (coupes verticales).
+
+    Un enclos parcellaire fermé bufferisé est un anneau : n'émettre que son contour
+    extérieur remplirait tout l'intérieur au moment de la rasterisation COCO
+    (défaut confirmé en revue : 5,5x la surface réelle sur un enclos de 40 m).
+    Chaque trou est éliminé en coupant le polygone par une verticale passant par le
+    centroïde du trou ; les morceaux portent le même id d'instance (une segmentation
+    COCO accepte plusieurs anneaux).
+    """
+    morceaux = [poly]
+    for _ in range(max_coupes):
+        avec_trou = next((m for m in morceaux if m.interiors), None)
+        if avec_trou is None:
+            return morceaux
+        cx = avec_trou.interiors[0].centroid.x
+        minx, miny, maxx, maxy = avec_trou.bounds
+        lame = LineString([(cx, miny - 1), (cx, maxy + 1)])
+        pieces = [g for g in decouper(avec_trou, lame).geoms if g.geom_type == "Polygon"]
+        if not pieces or pieces == [avec_trou]:
+            break  # cas dégénéré : abandon des trous restants ci-dessous
+        morceaux = [m for m in morceaux if m is not avec_trou] + pieces
+    return [Polygon(m.exterior) if m.interiors else m for m in morceaux]
 
 
 def polygone_vers_coco(poly, bounds, tuile_px):
     """Anneau extérieur d'un polygone -> coordonnées pixels COCO [x1,y1,x2,y2,...].
 
     Origine au coin haut-gauche de la tuile, y vers le bas, arrondi 2 décimales.
-    Les anneaux intérieurs (trous) sont ignorés — rarissimes sur nos entités
-    bufferisées, et le format polygone COCO ne les représente pas.
+    Le polygone reçu ne doit plus avoir de trous (cf. _sans_trous).
     """
     minx, _, _, maxy = bounds
     sx = tuile_px / (bounds[2] - bounds[0])
@@ -141,6 +174,10 @@ def polygone_vers_coco(poly, bounds, tuile_px):
     for x, y in list(poly.exterior.coords)[:-1]:
         anneau.extend([round((x - minx) * sx, 2), round((maxy - y) * sy, 2)])
     return [anneau] if len(anneau) >= 6 else []
+
+
+SEUIL_AIRE_PX = 2.0   # un morceau clippé plus petit est un artefact de bord de tuile
+SEUIL_DIM_PX = 0.5    # idem pour un ruban plus fin qu'un demi-pixel (buffer affleurant)
 
 
 def annotations_tuile(polys_par_classe, bounds, tuile_px):
@@ -158,10 +195,16 @@ def annotations_tuile(polys_par_classe, bounds, tuile_px):
                         else [g for g in getattr(clip, "geoms", ())
                               if g.geom_type == "Polygon"])
             for m in morceaux:
-                segmentation = polygone_vers_coco(m, bounds, tuile_px)
+                mnx, mny, mxx, mxy = m.bounds
+                aire_px = m.area * sx * sy
+                if (aire_px < SEUIL_AIRE_PX
+                        or min((mxx - mnx) * sx, (mxy - mny) * sy) < SEUIL_DIM_PX):
+                    continue  # sliver sub-pixel : bruit de label, pas une instance
+                segmentation = []
+                for piece in _sans_trous(m):
+                    segmentation.extend(polygone_vers_coco(piece, bounds, tuile_px))
                 if not segmentation:
                     continue
-                mnx, mny, mxx, mxy = m.bounds
                 annos.append({
                     "classe": classe,
                     "segmentation": segmentation,
@@ -169,7 +212,7 @@ def annotations_tuile(polys_par_classe, bounds, tuile_px):
                                 round((bounds[3] - mxy) * sy, 2),
                                 round((mxx - mnx) * sx, 2),
                                 round((mxy - mny) * sy, 2)],
-                    "aire_px": round(m.area * sx * sy, 2),
+                    "aire_px": round(aire_px, 2),
                 })
     return annos
 
@@ -177,6 +220,24 @@ def annotations_tuile(polys_par_classe, bounds, tuile_px):
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
+
+def chemin_sur_drive(chemin):
+    """Détecte G: sous toutes ses formes (préfixes longs, UNC, URI file)."""
+    c = str(chemin).strip().lower().replace("\\", "/")
+    for prefixe in ("file:///", "file://", "//?/unc/", "//?/", "//./"):
+        if c.startswith(prefixe):
+            c = c[len(prefixe):]
+    if c.startswith("g:"):
+        return True
+    # partage administratif \\hote\g$\...
+    morceaux = [m for m in c.split("/") if m]
+    return len(morceaux) >= 2 and morceaux[1] == "g$"
+
+
+def _refuser_drive(chemin, nom):
+    if chemin_sur_drive(chemin):
+        sys.exit(f"{nom} est sur G: — staging local d'abord (règle Drive, cf. CLAUDE.md)")
+
 
 CHAMPS_REQUIS = ("dataset", "zone", "raster", "gpkg", "couches", "tuile_px",
                  "bloc_m", "split")
@@ -199,8 +260,7 @@ def charger_config(chemin):
     if not (isinstance(cfg["tuile_px"], int) and cfg["tuile_px"] > 0):
         sys.exit("config invalide : tuile_px doit être un entier > 0")
     for cle in ("raster", "gpkg"):
-        if str(cfg[cle]).strip().lower().startswith("g:"):
-            sys.exit(f"{cle} est sur G: — copie locale d'abord (règle Drive, cf. CLAUDE.md)")
+        _refuser_drive(cfg[cle], cle)
     for nom, spec in cfg["couches"].items():
         if not isinstance(spec, dict) or "classe" not in spec:
             sys.exit(f"config invalide : couche {nom} sans champ 'classe'")
@@ -235,6 +295,12 @@ def _visibilite_bbox(bbox_px, masque, tuile_px):
 def run_slicing(cfg, out_dir, seed=42):
     """Orchestration complète : grille -> validité -> annotations -> split -> sorties."""
     out_dir = Path(out_dir)
+    _refuser_drive(out_dir, "--out")
+    if out_dir.exists():
+        # purge complète : sans elle, une relance laisserait les PNG de l'ancienne
+        # affectation dans leur ancien dossier de split — la même image dans train
+        # ET test sur disque, précisément la fuite que cet outil doit empêcher
+        shutil.rmtree(out_dir)
     tuile_px = cfg["tuile_px"]
     zone_id = str(cfg["zone"]).replace("\\", "/").rstrip("/").split("/")[-1]
 
@@ -250,12 +316,14 @@ def run_slicing(cfg, out_dir, seed=42):
         nodatas = set()
         if cfg["nodata_supplementaire"] is not None:
             nodatas.add(cfg["nodata_supplementaire"])
-        if src.nodata is not None:
-            if math.isnan(src.nodata):
-                print("avertissement : nodata déclaré NaN sur bande Byte — ignoré "
-                      "(incohérence connue des chaînes LHD)")
-            else:
-                nodatas.add(src.nodata)
+        # nodata déclaré NaN sur bande Byte (chaînes LHD) : rasterio expose None,
+        # il n'y a donc rien à filtrer côté fichier — seul nodata_supplementaire agit
+        if src.nodata is not None and not math.isnan(src.nodata):
+            nodatas.add(src.nodata)
+        if not nodatas:
+            print("avertissement : aucun nodata effectif — toutes les tuiles seront "
+                  "considérées valides (zones sans dalle comprises). Renseigner "
+                  "nodata_supplementaire si le raster a un fond implicite (souvent 0).")
 
         # --- entités : buffers, reprojection éventuelle, index spatial global
         polys, classes_polys = [], []
@@ -280,7 +348,7 @@ def run_slicing(cfg, out_dir, seed=42):
             couverture = float(masque.mean())
             if couverture < cfg["min_couverture_valide"]:
                 continue
-            annos = []
+            annos, entites_presentes = [], False
             if index_spatial is not None:
                 candidats = index_spatial.query(boite(*t["bounds"]))
                 par_classe = {}
@@ -288,10 +356,13 @@ def run_slicing(cfg, out_dir, seed=42):
                     par_classe.setdefault(classes_polys[i], []).append(polys[i])
                 # l'ordre des classes suit la config (déterminisme du COCO)
                 par_classe = {c: par_classe[c] for c in classes_ordre if c in par_classe}
-                annos = [a for a in annotations_tuile(par_classe, t["bounds"], tuile_px)
+                annos_brutes = annotations_tuile(par_classe, t["bounds"], tuile_px)
+                entites_presentes = bool(annos_brutes)
+                annos = [a for a in annos_brutes
                          if _visibilite_bbox(a["bbox_px"], masque, tuile_px)
                          >= cfg["min_visibilite_annotation"]]
-            gardees.append({**t, "annos": annos, "bloc": bloc_de(t["bounds"], cfg["bloc_m"])})
+            gardees.append({**t, "annos": annos, "entites_presentes": entites_presentes,
+                            "bloc": bloc_de(t["bounds"], cfg["bloc_m"])})
 
         # --- split par blocs
         annos_par_bloc = {}
@@ -305,8 +376,12 @@ def run_slicing(cfg, out_dir, seed=42):
         affectation = affecter_splits(annos_par_bloc, cfg["split"], seed)
 
         annotees = [t for t in gardees if t["annos"] and t["bloc"] in affectation]
+        # négatifs PURS uniquement : une tuile dont les annotations ont été écartées
+        # par le filtre de visibilité contient quand même l'entité — l'exporter comme
+        # fond serait un signal d'entraînement contradictoire
         vivier_neg = sorted((t for t in gardees
-                             if not t["annos"] and t["bloc"] in affectation),
+                             if not t["annos"] and not t["entites_presentes"]
+                             and t["bloc"] in affectation),
                             key=lambda t: (t["row"], t["col"]))
         n_neg = min(round(cfg["negatifs_pct"] / 100 * len(annotees)), len(vivier_neg))
         negatives = random.Random(seed).sample(vivier_neg, n_neg) if n_neg else []
@@ -375,11 +450,17 @@ def run_slicing(cfg, out_dir, seed=42):
         encoding="utf-8")
     _ecrire_carte_controle(out_dir, cfg, affectation, annos_par_bloc, comptes, selection)
 
+    par_split = {s: sum(1 for t in selection if t["split"] == s) for s in ORDRE_SPLITS}
+    for s in ORDRE_SPLITS:
+        if par_split[s] == 0:
+            print(f"AVERTISSEMENT : le split {s} est VIDE (trop peu de blocs annotés "
+                  "pour la taille de bloc demandée) — dataset inutilisable tel quel "
+                  "pour l'évaluation ; réduire bloc_m ou revoir la zone.")
     stats = {"tuiles": len(selection), "annotees": len(annotees),
              "negatives": len(negatives), "ecartees_nodata": len(tuiles) - len(gardees),
              "vides_non_retenues": len(vivier_neg) - len(negatives),
-             "par_split": {s: sum(1 for t in selection if t["split"] == s)
-                           for s in ORDRE_SPLITS}}
+             "par_split": par_split,
+             "comptes": {s: dict(sorted(comptes[s].items())) for s in ORDRE_SPLITS}}
     return stats
 
 
@@ -458,6 +539,15 @@ def main():
     print(f"\n{cfg['dataset']} — {stats['tuiles']} tuiles "
           f"({stats['annotees']} annotées + {stats['negatives']} négatives), "
           f"répartition {stats['par_split']}")
+    totaux = Counter()
+    for c in stats["comptes"].values():
+        totaux.update(c)
+    for classe in sorted(totaux):
+        parts = "  ".join(
+            f"{s} {stats['comptes'][s].get(classe, 0)} "
+            f"({stats['comptes'][s].get(classe, 0) / totaux[classe]:.0%})"
+            for s in ("train", "valid", "test"))
+        print(f"  {classe:20s} {parts}")
     print(f"écartées : {stats['ecartees_nodata']} sous couverture valide, "
           f"{stats['vides_non_retenues']} vides non retenues")
     print(f"contrôle visuel : {out_dir / 'controle_blocs.html'}")

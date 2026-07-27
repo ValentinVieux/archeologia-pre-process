@@ -112,6 +112,39 @@ assert [a["classe"] for a in annos_t] == ["a"]
 assert annos_t[0]["aire_px"] == 2500.0  # 50x50 m visibles = 50x50 px
 x, y, w, h = annos_t[0]["bbox_px"]
 assert (x, y, w, h) == (50.0, 0.0, 50.0, 50.0), annos_t[0]["bbox_px"]
+
+# enclos fermé (boucle bufferisée -> polygone à trou) : le trou ne doit PAS être rempli
+boucle = MultiLineString([[(10, 10), (50, 10)], [(50, 10), (50, 50)],
+                          [(50, 50), (10, 50)], [(10, 50), (10, 10)]])
+(pe,) = preparer_entites(gpd.GeoDataFrame(geometry=[boucle], crs="EPSG:2154"), buffer_m=2.0)
+assert len(pe.interiors) == 1
+(a_enclos,) = annotations_tuile({"parcellaire": [pe]}, (0, 0, 324, 324), 648)
+assert len(a_enclos["segmentation"]) >= 2, "trou non décomposé en morceaux sans trou"
+aire_remplie = sum(Polygon(list(zip(r[0::2], r[1::2]))).area
+                   for r in a_enclos["segmentation"])
+assert abs(aire_remplie - a_enclos["aire_px"]) / a_enclos["aire_px"] < 0.05, \
+    f"segmentation remplie {aire_remplie:.0f} px² vs aire réelle {a_enclos['aire_px']:.0f} px²"
+
+# sliver sub-pixel : buffer qui effleure la tuile voisine -> aucune annotation
+sl = preparer_entites(gpd.GeoDataFrame(
+    geometry=[LineString([(324.95, 100), (324.95, 200)])], crs="EPSG:2154"), buffer_m=2.0)
+assert annotations_tuile({"parcellaire": sl}, (0, 0, 324, 324), 648) == [], \
+    "sliver sub-pixel conservé"
+
+# GeometryCollection avec MultiPolygon imbriqué (sortie possible de make_valid)
+from shapely.geometry import GeometryCollection, MultiPolygon
+gc = GeometryCollection([MultiPolygon([box(0, 0, 2, 2), box(3, 0, 5, 2)]),
+                         LineString([(0, 0), (1, 1)])])
+assert len(preparer_entites(gpd.GeoDataFrame(geometry=[gc], crs="EPSG:2154"),
+                            buffer_m=None)) == 2, "MultiPolygon imbriqué perdu"
+
+# variantes de chemins Drive : toutes détectées
+from slice_zone import chemin_sur_drive
+for mauvais in (r"G:\Mon Drive\x.tif", "g:/mon drive/x.tif", r"\\?\G:\x.tif",
+                "//?/G:/x.tif", r"\\localhost\G$\x.tif", "file:///G:/x.tif"):
+    assert chemin_sur_drive(mauvais), f"non détecté : {mauvais}"
+assert not chemin_sur_drive(r"C:\data\g_truc\x.tif")
+assert not chemin_sur_drive(r"D:\gros.tif")
 print("annotations : OK")
 
 # ---------------------------------------------------------------------------
@@ -148,6 +181,9 @@ try:
         LineString([(500100, 6798900), (500600, 6798650)]),
         LineString([(501650, 6799000), (501900, 6799200)]),   # entièrement en zone nodata
         LineString([(500250, 6799650), (500350, 6799650)]),
+        # bbox majoritairement en nodata (visibilité < 0.5) mais entité partiellement
+        # visible : sa tuile ne doit JAMAIS devenir un négatif
+        LineString([(501440, 6799400), (501640, 6799400)]),
     ]
     gpd.GeoDataFrame(geometry=lignes, crs="EPSG:2154").to_file(gpkg, layer="lignes", driver="GPKG")
     gpd.GeoDataFrame(geometry=[box(500450, 6799450, 500550, 6799550),
@@ -167,11 +203,11 @@ try:
                     "points": {"classe": "tas", "buffer_m": 5.0}},
         "tuile_px": 400, "bloc_m": 800,
         "split": {"train": 70, "valid": 20, "test": 10},
-        "negatifs_pct": 20, "nodata_supplementaire": 0,
+        "negatifs_pct": 50, "nodata_supplementaire": 0,
     }, allow_unicode=True), encoding="utf-8")
 
     cfg = charger_config(cfg_path)
-    assert cfg["min_couverture_valide"] == 0.5 and cfg["negatifs_pct"] == 20  # défauts
+    assert cfg["min_couverture_valide"] == 0.5 and cfg["negatifs_pct"] == 50  # défauts
 
     out = tmp / "out"
     res = run_slicing(cfg, out, seed=42)
@@ -201,12 +237,22 @@ try:
     # 4. tuiles 100 % nodata absentes (donc la ligne en zone nodata n'annote rien)
     assert all(tm["bounds"][0] < 501500 for tm in tuiles_m), "tuile pleine zone nodata conservée"
 
-    # 5. négatifs : présents, bornés, dans des blocs affectés
+    # 5. négatifs : présents, bornés, dans des blocs affectés, et PURS — aucun négatif
+    # ne contient d'entité, même une entité écartée par le filtre de visibilité
     n_annotees = sum(1 for tm in tuiles_m if tm["n_annotations"] > 0)
     n_neg = sum(1 for tm in tuiles_m if tm["n_annotations"] == 0)
-    assert 0 < n_neg <= max(1, round(0.2 * n_annotees) + 1), (n_neg, n_annotees)
+    assert 0 < n_neg <= max(1, round(0.5 * n_annotees) + 1), (n_neg, n_annotees)
     blocs_affectes = set(blocs_splits)
     assert all(tuple(tm["bloc"]) in blocs_affectes for tm in tuiles_m)
+    toutes_entites = []
+    for nom_couche, spec_couche in cfg["couches"].items():
+        toutes_entites += preparer_entites(
+            gpd.read_file(gpkg, layer=nom_couche), spec_couche.get("buffer_m"))
+    union_entites = gpd.GeoSeries(toutes_entites).union_all()
+    for tm in tuiles_m:
+        if tm["n_annotations"] == 0:
+            assert not box(*tm["bounds"]).intersects(union_entites), \
+                f"négatif {tm['nom']} contient une entité (filtrée ou non)"
 
     # 6. carte de contrôle et récap présents
     assert (out / "controle_blocs.html").exists()
@@ -220,7 +266,20 @@ try:
         m.pop("genere_le", None)
     assert manif == m2, "non déterministe"
 
-    # 8. garde-fou G: refusé
+    # 8. relance avec une autre config dans le MÊME dossier : purge complète,
+    # le disque reflète exactement le dernier manifeste (zéro orphelin inter-splits)
+    cfg_sans_neg = dict(cfg)
+    cfg_sans_neg["negatifs_pct"] = 0
+    run_slicing(cfg_sans_neg, out, seed=42)
+    m3 = yaml.safe_load((out / "split_manifest.yaml").read_text(encoding="utf-8"))
+    disque = {s: {p.name for p in (out / s).glob("*.png")}
+              for s in ("train", "valid", "test")}
+    attendu = {s: {tm["nom"] for tm in m3["tuiles"] if tm["split"] == s}
+               for s in ("train", "valid", "test")}
+    assert disque == attendu, "fichiers orphelins après relance (purge absente)"
+    assert all(tm["n_annotations"] > 0 for tm in m3["tuiles"])  # negatifs_pct 0
+
+    # 9. garde-fou G: refusé
     cfg_g = tmp / "config_g.yaml"
     cfg_g.write_text(cfg_path.read_text(encoding="utf-8").replace(
         str(raster).replace("\\", "\\\\"), "G:\\data\\indice.tif").replace(
