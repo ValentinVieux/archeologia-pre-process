@@ -36,7 +36,10 @@ def main() -> None:
     cand = {c["raw"]: c for c in audit["name_candidates"]}
     assert cand["charbonnière"]["match"]["entity_id"] == "charbonniere"
     assert cand["tumulus"]["match"]["entity_id"] == "tumulus"
-    assert cand["fossé"]["match"]["entity_id"] == "talus_fosse", cand["fossé"]
+    # split talus/fosse (2026-07-28) : « fossé » distinctement labellisé -> fosse
+    # (l'alias Fontainebleau prime sur la classe Roboflow historique de talus_fosse,
+    # qui reste réservée aux labels indistincts type fossébutte)
+    assert cand["fossé"]["match"]["entity_id"] == "fosse", cand["fossé"]
     # « indéterminé » a été ignoré lors de l'audit data_bretagne_1 (aliases.yaml ignored:)
     assert cand["indéterminé"]["match"]["status"] == "ignored", cand["indéterminé"]
     assert cand["Fours à chaux"]["match"] is None
