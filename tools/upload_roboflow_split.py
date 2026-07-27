@@ -105,14 +105,16 @@ def coco_mono_image(im, suffixe):
             "categories": categories}
 
 
-def annotation_fichier(im, suffixe):
+def annotation_fichier(im, suffixe, renommages=None):
     """Fichier d'annotation à joindre : COCO pour une tuile annotée, VOC XML sans
     objet pour un négatif — le parseur refuse un COCO à zéro annotation, mais le VOC
     vide est accepté et vaut annotation NULL (image de fond assumée, vérifié le
     2026-07-27). Retourne (contenu, suffixe_de_fichier)."""
     if im["annotations"]:
-        return (json.dumps(coco_mono_image(im, suffixe), ensure_ascii=False),
-                ".coco.json")
+        coco = coco_mono_image(im, suffixe)
+        for c in coco["categories"]:
+            c["name"] = (renommages or {}).get(c["name"], c["name"])
+        return json.dumps(coco, ensure_ascii=False), ".coco.json"
     voc = (f"<annotation><filename>{im['filename']}</filename>"
            f"<size><width>{im['image_coco']['width']}</width>"
            f"<height>{im['image_coco']['height']}</height><depth>3</depth></size>"
@@ -142,12 +144,17 @@ def main():
                         "plateforme déduplique par CONTENU corbeille comprise : "
                         "re-uploader une image déjà envoyée puis supprimée ressuscite "
                         "son fantôme (constat du 2026-07-27)")
+    p.add_argument("--renommer", action="append", default=[],
+                   help="ancien=nouveau : renomme une classe PLATEFORME (après "
+                        "suffixe), répétable — ex. talus_fosse_haye=fosse")
     args = p.parse_args()
+    renommages = dict(r.split("=", 1) for r in args.renommer)
 
     if chemin_sur_drive(args.dataset):
         sys.exit("dataset sur G: — uploader depuis la copie locale (règle Drive)")
     dossier = Path(args.dataset)
     manifeste, images, zone_id, region = charger_dataset(dossier)
+    toutes_images = list(images)  # avant filtres --eviter/--test (pour la vérification)
     dataset_nom = manifeste["dataset"]
 
     if args.eviter:
@@ -217,7 +224,8 @@ def main():
             # les négatifs reçoivent AUSSI une annotation (VOC vide = null) : sans
             # annotation jointe, la plateforme les met en file Annotate « à
             # étiqueter » au lieu du dataset
-            contenu, suffixe_fichier = annotation_fichier(i, args.suffixe_classes)
+            contenu, suffixe_fichier = annotation_fichier(i, args.suffixe_classes,
+                                                          renommages)
             tmp = tempfile.NamedTemporaryFile("w", suffix=suffixe_fichier,
                                               delete=False, encoding="utf-8")
             tmp.write(contenu)
@@ -248,7 +256,7 @@ def main():
                         # ancien id) mais annotation non enregistrée : écrasement
                         # direct via l'API — parade vérifiée le 2026-07-27
                         contenu, suffixe_fichier = annotation_fichier(
-                            i, args.suffixe_classes)
+                            i, args.suffixe_classes, renommages)
                         nom_fichier = i["filename"].rsplit(".", 1)[0] + suffixe_fichier
                         import requests
                         ra = requests.post(
@@ -288,13 +296,28 @@ def main():
         # l'ingestion des annotations côté plateforme est asynchrone
         attendu = {s["filename"]: (s["split"], s["annotations"])
                    for s in suivi["images"]}
+        from collections import Counter
+        cats_par_fichier = {}
+        for i in toutes_images:
+            noms_cats = {c["id"]: c["name"] for c in i["categories"]}
+            cats_par_fichier[i["filename"]] = Counter(
+                noms_cats[a["category_id"]] for a in i["annotations"])
+        splits_attendus = Counter(s["split"] for s in suivi["images"])
+        classes_attendues = Counter()
+        for s_im in suivi["images"]:
+            for classe, n in cats_par_fichier.get(s_im["filename"], {}).items():
+                nom = (f"{classe}_{args.suffixe_classes}"
+                       if args.suffixe_classes else classe)
+                classes_attendues[renommages.get(nom, nom)] += n
         divergences = []
-        for attente in (0, 30, 60, 120):
+        for attente in (0, 60, 120, 180):
             if attente:
                 print(f"  divergences restantes : {len(divergences)} — "
                       f"nouvel essai dans {attente} s (ingestion asynchrone)")
                 time.sleep(attente)
-            divergences = verifier_plateforme(cle, args.workspace, args.projet, attendu)
+            divergences = verifier_plateforme(
+                cle, args.workspace, args.projet, attendu,
+                dict(splits_attendus), dict(classes_attendues))
             if not divergences:
                 break
         if divergences:
@@ -302,47 +325,64 @@ def main():
                 print(f"  DIVERGENCE : {d}")
             sys.exit(f"vérification post-upload : {len(divergences)} divergence(s) — "
                      "ne PAS lancer d'entraînement sur cet état.")
-        print(f"vérification post-upload : {len(attendu)} images conformes sur la "
-              "plateforme (dataset, split, annotations présentes).")
+        print(f"vérification post-upload : agrégats plateforme conformes "
+              f"({len(attendu)} images, splits {dict(splits_attendus)}, "
+              f"classes {dict(classes_attendues)}) + échantillon par image OK.")
     if echecs:
         sys.exit(f"{len(echecs)} image(s) en échec — relancer la même commande "
                  "(reprise idempotente) puis investiguer si ça persiste.")
     print(f"Sorties : {suivi_path}")
 
 
-def verifier_plateforme(cle, workspace, projet, attendu):
-    """Boucle de vérification post-upload : l'état API doit refléter ce qu'on a envoyé.
+def verifier_plateforme(cle, workspace, projet, attendu, splits_attendus,
+                        classes_attendues):
+    """Vérification post-upload : agrégats du projet + échantillon par image.
 
-    Vérifie pour chaque image envoyée : présence dans le DATASET (pas la file
-    Annotate), split imposé respecté, annotations non vides quand on en a envoyé.
+    L'endpoint search PLAFONNE à 250 résultats avec un ordre instable entre pages
+    (constat 2026-07-27 : une pagination par offset « perd » des images) — il ne sert
+    donc que d'échantillon par image. La vérité globale vient des agrégats du projet
+    (GET /:workspace/:projet -> images, splits, classes), exacts et immédiats.
+    Témoin par image : champ `annotations` ({count, classes}) — `labels` est toujours
+    vide et produit de faux diagnostics.
     """
     import requests
 
     base = f"https://api.roboflow.com/{workspace}/{projet}"
-    sur_plateforme, offset = {}, 0
-    while True:
-        # le témoin fiable est le champ `annotations` ({count, classes}) — `labels`
-        # est toujours vide, il avait produit de faux diagnostics le 2026-07-27
-        r = requests.post(f"{base}/search?api_key={cle}", json={
-            "limit": 200, "offset": offset, "in_dataset": True,
-            "fields": ["name", "split", "annotations"]}, timeout=60)
-        r.raise_for_status()
-        resultats = r.json().get("results", [])
-        for res in resultats:
-            annos = res.get("annotations") or {}
-            n = annos.get("count", 0) if isinstance(annos, dict) else 0
-            sur_plateforme[res["name"]] = (res.get("split"), n)
-        if len(resultats) < 200:
-            break
-        offset += 200
     divergences = []
-    for nom, (split, n_annos) in sorted(attendu.items()):
-        if nom not in sur_plateforme:
-            divergences.append(f"{nom} : absente du dataset (file Annotate ?)")
+
+    r = requests.get(f"{base}?api_key={cle}", timeout=60)
+    r.raise_for_status()
+    projet_meta = r.json().get("project", {})
+    if projet_meta.get("images") != len(attendu):
+        divergences.append(f"total images : {projet_meta.get('images')} sur la "
+                           f"plateforme, {len(attendu)} attendues")
+    splits_plat = projet_meta.get("splits") or {}
+    for s, n in sorted(splits_attendus.items()):
+        if splits_plat.get(s) != n:
+            divergences.append(f"split {s} : {splits_plat.get(s)} images sur la "
+                               f"plateforme, {n} attendues")
+    classes_plat = {k: v for k, v in (projet_meta.get("classes") or {}).items()}
+    for c in sorted(set(classes_attendues) | set(classes_plat)):
+        if classes_plat.get(c, 0) != classes_attendues.get(c, 0):
+            divergences.append(f"classe {c} : {classes_plat.get(c, 0)} annotations "
+                               f"sur la plateforme, {classes_attendues.get(c, 0)} "
+                               "attendues")
+
+    rs = requests.post(f"{base}/search?api_key={cle}", json={
+        "limit": 250, "in_dataset": True,
+        "fields": ["name", "split", "annotations"]}, timeout=60)
+    rs.raise_for_status()
+    for res in rs.json().get("results", []):
+        nom = res.get("name")
+        if nom not in attendu:
+            divergences.append(f"{nom} : présente sur la plateforme mais inconnue "
+                               "du suivi")
             continue
-        split_plat, n_plat = sur_plateforme[nom]
-        if split_plat != split:
-            divergences.append(f"{nom} : split {split_plat} au lieu de {split}")
+        split, n_annos = attendu[nom]
+        annos = res.get("annotations") or {}
+        n_plat = annos.get("count", 0) if isinstance(annos, dict) else 0
+        if res.get("split") != split:
+            divergences.append(f"{nom} : split {res.get('split')} au lieu de {split}")
         if n_plat != n_annos:
             divergences.append(f"{nom} : {n_annos} annotations envoyées, "
                                f"{n_plat} sur la plateforme")
