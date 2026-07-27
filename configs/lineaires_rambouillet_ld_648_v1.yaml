@@ -1,0 +1,27 @@
+# Dataset v2 — structures linéaires de Rambouillet sur indice LD (run v1 gelé, dalles
+# 0,5 m/px EPSG:2154). Modèle 3 classes talus/fosse/talus_fosse (décision 2026-07-28) :
+# les trois niveaux de certitude de l'archéologue sont entraînés séparément, + voie
+# (152) désormais viable en corpus multi-zones (293 à Saint-Germain). Buffer 5 m =
+# choix utilisateur, convergent avec le dataset historique (digit_lignes2 buffer 5 m).
+# amenagement_militaire en `ignorer` (linéaire non entraîné, bloque les négatifs).
+dataset: lineaires_rambouillet_ld_648_v1
+zone: ile_de_france/78_rambouillet
+raster: <copie locale>\rambouillet_ld\tif\index.vrt
+gpkg: <copie locale>\rambouillet_entites_l93.gpkg
+couches:
+  parcellaire:            {classe: parcellaire,   buffer_m: 5.0}
+  talus:                  {classe: talus,         buffer_m: 5.0}
+  fosse:                  {classe: fosse,         buffer_m: 5.0}
+  talus_fosse:            {classe: talus_fosse,   buffer_m: 5.0}
+  chemin_creux:           {classe: chemin_creux,  buffer_m: 5.0}
+  voie:                   {classe: voie,          buffer_m: 5.0}
+  amenagement_militaire:  {ignorer: true,         buffer_m: 5.0}
+tuile_px: 648
+bloc_m: 2000
+split: {train: 70, valid: 20, test: 10}
+negatifs_pct: 10
+min_couverture_valide: 0.5
+# fraction VALIDE (hors nodata) de la bbox — ne filtre PAS les fragments coupés par la grille
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null   # EPSG:2154 embarqué
