@@ -5,3 +5,5 @@ pandas
 numpy
 pyproj
 PyYAML
+rasterio
+Pillow
