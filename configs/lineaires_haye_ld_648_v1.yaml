@@ -1,0 +1,21 @@
+# Dataset v2 — structures linéaires de la forêt de Haye sur indice LD (dalles LHD IGN).
+# Décisions D1-D4 du 2026-07-27 : tuiles 648 px (divisible par 24, contrainte RF-DETR
+# seg), mono-indice LD paramétrisation actée A15_Rmin10_Rmax20_H1p7, split spatial par
+# blocs de 2 km. Chemins : COPIES LOCALES obligatoires (le script refuse G:) — adapter
+# raster/gpkg à l'emplacement local avant lancement.
+dataset: lineaires_haye_ld_648_v1
+zone: grand_est/54_foret_de_haye
+raster: <copie locale>\haye_ld\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+gpkg: <copie locale>\haye_entites_l93.gpkg
+couches:
+  parcellaire:  {classe: parcellaire,  buffer_m: 2.0}
+  talus_fosse:  {classe: talus_fosse,  buffer_m: 2.0}
+  rempart:      {classe: rempart,      buffer_m: 2.0}
+tuile_px: 648
+bloc_m: 2000
+split: {train: 70, valid: 20, test: 10}
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null   # CRS EPSG:2154 embarqué dans les dalles — rien à assigner

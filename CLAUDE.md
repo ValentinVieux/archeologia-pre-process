@@ -16,6 +16,8 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tests\test_audit.py                     # auto-test complet
 .venv\Scripts\python.exe tools\dispatch_roboflow.py <attr.json> <zips> <staging>  # cf. /dispatch-roboflow
 .venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
+.venv\Scripts\python.exe tools\build_haye_gpkg.py [--out <dossier>]  # reconstruit le GPKG de 54_foret_de_haye
+.venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N]  # tuiles 648px + split spatial (cf. configs\)
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 
@@ -58,9 +60,17 @@ L'ancien `data_regions` (même parent) est **GELÉ** : lecture seule, ne jamais 
 Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-bf8e-7c853b3bfb03
 
 - Par zone `<region>/<dept>_<site>[_<annee>]` (snake_case ASCII) : `manifest.yaml` +
-  `raw/` (livraison brute **immuable**) + `transformed/vecteurs/` (GPKG nettoyés,
-  EPSG:2154) + `transformed/roboflow/` (payloads d'upload + `upload_manifest.yaml`)
-  + `docs/`.
+  `raw/` (**sources** — données livrées par l'archéologue ET données de base produites par
+  nous : vecteurs labels + `raw/docs/` (rapports/thèses/DRAC) + `raw/MNT/` = MNT de base
+  **et** indices de visualisation (SVF/HS/LD/VAT…) à plat) + `training/vecteurs/` (GPKG
+  nettoyés, EPSG:2154) + `training/roboflow/` (payloads d'upload + `upload_manifest.yaml`).
+  `raw/` n'est plus « immuable » au sens strict (peut contenir des rasters régénérés) mais la
+  règle « ne pas éditer en place sur G:, redéposer » tient. Convention : **le MNT de base et
+  ses indices vont TOUJOURS dans `raw/MNT/`** (même endroit dans chaque zone). Les dalles
+  LiDAR IGN source (`.laz`, ~100-140 Go/zone, re-téléchargeables) ne sont **pas** en cloud
+  (pointeur manifest) ; les prédictions/détections du modèle restent **hors** `data_regions_v2`
+  (pipeline_results local — risque de contamination si mêlées au raw). `transformed/` renommé
+  `training/` le 2026-07-22.
 - Tags Roboflow par image : `<zone_id>` + `<region>`. Sous-classes : `<entite>_<site>`
   (ex. charbonniere_vosges). L'export Roboflow ne préserve PAS les tags : les
   `upload_manifest.yaml` locaux font foi.
@@ -78,6 +88,9 @@ Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-b
 - Arbitrages pendants : aucun. Dept 44 (digitalisation jamais livrée) : relance envoyée par
   mail le 2026-07-16, en attente de re-dépôt. Vosges saônoises : résolu 2026-07-16 —
   Bourgogne-Franche-Comté confirmée par l'utilisateur (Mélisey 70270, Haute-Saône).
+- Décisions actées 2026-07-27 (54_foret_de_haye, fusion parcellaire v1/v2) : quand deux
+  versions d'une même entité coexistent, **garder toujours le tracé le plus long** ; sortir
+  de l'emprise de la version la plus récente n'est pas disqualifiant.
 - Résolus le 2026-07-16 (base Notion + disque local) : `data_aude` = prénom du contact de
   la zone Blois (dépt 41 confirmé, cf. manifest sur le Drive) ; bataille de la Marne =
   Hauts-de-France confirmé (Ermenonville, Oise — l'hypothèse 77→IdF de l'audit était
