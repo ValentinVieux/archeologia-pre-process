@@ -53,3 +53,45 @@ assert "train" in splits_rare and len(splits_rare) >= 2, f"rare mal réparti : {
 assert aff == affecter_splits(annos, cibles, seed=42)
 
 print("noyau géométrique : OK")
+
+# ---------------------------------------------------------------------------
+# Entités -> polygones COCO
+# ---------------------------------------------------------------------------
+import geopandas as gpd
+from shapely.geometry import LineString, MultiLineString, Point, Polygon, box
+
+from slice_zone import annotations_tuile, polygone_vers_coco, preparer_entites
+
+# lignes -> buffer largeur totale 2 m ; points -> rayon
+gl = gpd.GeoDataFrame(geometry=[LineString([(0, 0), (10, 0)])], crs="EPSG:2154")
+(pl,) = preparer_entites(gl, buffer_m=2.0)
+assert abs(pl.area - (10 * 2 + 3.14159)) < 0.5, pl.area  # rectangle + extrémités rondes
+gp = gpd.GeoDataFrame(geometry=[Point(5, 5)], crs="EPSG:2154")
+(pp,) = preparer_entites(gp, buffer_m=5.0)
+assert abs(pp.area - 3.14159 * 25) < 1.0, pp.area
+# MultiLineString explosée en autant de polygones, géométries nulles écartées
+gm = gpd.GeoDataFrame(
+    geometry=[MultiLineString([[(0, 0), (5, 0)], [(0, 10), (5, 10)]]), None],
+    crs="EPSG:2154")
+assert len(preparer_entites(gm, buffer_m=2.0)) == 2
+# polygones : inchangés (buffer_m None)
+gz = gpd.GeoDataFrame(geometry=[box(0, 0, 4, 4)], crs="EPSG:2154")
+(pz,) = preparer_entites(gz, buffer_m=None)
+assert pz.equals(box(0, 0, 4, 4))
+
+# conversion pixels : tuile bounds (100, 100, 200, 200), 100 px -> 1 m/px
+carre = Polygon([(110, 110), (120, 110), (120, 120), (110, 120)])
+(ring,) = polygone_vers_coco(carre, (100, 100, 200, 200), 100)
+xs, ys = ring[0::2], ring[1::2]
+assert min(xs) == 10.0 and max(xs) == 20.0
+assert min(ys) == 80.0 and max(ys) == 90.0, (min(ys), max(ys))  # y inversé
+
+# clip à la tuile : un polygone débordant est tronqué, un disjoint disparaît
+annos_t = annotations_tuile(
+    {"a": [box(150, 150, 300, 300)], "b": [box(900, 900, 910, 910)]},
+    (100, 100, 200, 200), 100)
+assert [a["classe"] for a in annos_t] == ["a"]
+assert annos_t[0]["aire_px"] == 2500.0  # 50x50 m visibles = 50x50 px
+x, y, w, h = annos_t[0]["bbox_px"]
+assert (x, y, w, h) == (50.0, 0.0, 50.0, 50.0), annos_t[0]["bbox_px"]
+print("annotations : OK")

@@ -13,6 +13,8 @@ import random
 from collections import Counter
 
 from rasterio.windows import Window, bounds as fenetre_bounds
+from shapely import make_valid
+from shapely.geometry import box as boite
 
 ORDRE_SPLITS = ("train", "valid", "test")  # ordre de départage des égalités
 
@@ -81,3 +83,77 @@ def affecter_splits(annos_par_bloc, cibles, seed):
         affectation[b] = meilleur
         alloue[meilleur].update(annos_par_bloc[b])
     return affectation
+
+
+# ---------------------------------------------------------------------------
+# Entités -> polygones COCO
+# ---------------------------------------------------------------------------
+
+def preparer_entites(gdf, buffer_m):
+    """Géométries d'une couche -> liste de polygones prêts à rasteriser.
+
+    buffer_m : largeur TOTALE pour les lignes (buffer de buffer_m/2), rayon pour les
+    points, None pour les polygones (inchangés). MultiX explosés, vides écartées,
+    invalides réparées (make_valid).
+    """
+    polys = []
+    for geom in gdf.geometry:
+        if geom is None or geom.is_empty:
+            continue
+        if buffer_m is not None:
+            rayon = buffer_m / 2 if "LineString" in geom.geom_type else buffer_m
+            geom = geom.buffer(rayon)
+        if not geom.is_valid:
+            geom = make_valid(geom)
+        if geom.geom_type == "Polygon":
+            polys.append(geom)
+        elif geom.geom_type in ("MultiPolygon", "GeometryCollection"):
+            polys.extend(g for g in geom.geoms if g.geom_type == "Polygon")
+    return polys
+
+
+def polygone_vers_coco(poly, bounds, tuile_px):
+    """Anneau extérieur d'un polygone -> coordonnées pixels COCO [x1,y1,x2,y2,...].
+
+    Origine au coin haut-gauche de la tuile, y vers le bas, arrondi 2 décimales.
+    Les anneaux intérieurs (trous) sont ignorés — rarissimes sur nos entités
+    bufferisées, et le format polygone COCO ne les représente pas.
+    """
+    minx, _, _, maxy = bounds
+    sx = tuile_px / (bounds[2] - bounds[0])
+    sy = tuile_px / (bounds[3] - bounds[1])
+    anneau = []
+    for x, y in list(poly.exterior.coords)[:-1]:
+        anneau.extend([round((x - minx) * sx, 2), round((maxy - y) * sy, 2)])
+    return [anneau] if len(anneau) >= 6 else []
+
+
+def annotations_tuile(polys_par_classe, bounds, tuile_px):
+    """Clip des polygones à la tuile -> annotations {classe, segmentation, bbox_px, aire_px}."""
+    tuile_geo = boite(*bounds)
+    sx = tuile_px / (bounds[2] - bounds[0])
+    sy = tuile_px / (bounds[3] - bounds[1])
+    annos = []
+    for classe, polys in polys_par_classe.items():
+        for p in polys:
+            if not p.intersects(tuile_geo):
+                continue
+            clip = p.intersection(tuile_geo)
+            morceaux = ([clip] if clip.geom_type == "Polygon"
+                        else [g for g in getattr(clip, "geoms", ())
+                              if g.geom_type == "Polygon"])
+            for m in morceaux:
+                segmentation = polygone_vers_coco(m, bounds, tuile_px)
+                if not segmentation:
+                    continue
+                mnx, mny, mxx, mxy = m.bounds
+                annos.append({
+                    "classe": classe,
+                    "segmentation": segmentation,
+                    "bbox_px": [round((mnx - bounds[0]) * sx, 2),
+                                round((bounds[3] - mxy) * sy, 2),
+                                round((mxx - mnx) * sx, 2),
+                                round((mxy - mny) * sy, 2)],
+                    "aire_px": round(m.area * sx * sy, 2),
+                })
+    return annos
