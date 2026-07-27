@@ -16,6 +16,9 @@ bloc_m: 2000
 split: {train: 70, valid: 20, test: 10}
 negatifs_pct: 10
 min_couverture_valide: 0.5
+# fraction VALIDE (hors nodata) de la bbox d'une annotation — ne filtre PAS les
+# fragments d'entités coupés par la grille : un talus traversant 10 tuiles est
+# annoté dans chacune, c'est voulu (cf. doc fuite spatiale, mécanisme 2)
 min_visibilite_annotation: 0.5
 nodata_supplementaire: 0
 assign_crs: null   # CRS EPSG:2154 embarqué dans les dalles — rien à assigner

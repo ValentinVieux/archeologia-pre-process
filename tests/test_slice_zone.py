@@ -63,11 +63,11 @@ aff_r = affecter_splits(annos_reels, cibles, seed=42)
 alloc = {s: Counter() for s in cibles}
 for b, s in aff_r.items():
     alloc[s].update(annos_reels[b])
-for classe in ("parcellaire", "rare", "__tuiles__"):
+for classe, tol in (("parcellaire", 0.05), ("rare", 0.12), ("__tuiles__", 0.05)):
     total_c = sum(alloc[s][classe] for s in cibles)
     for s, cible_pct in cibles.items():
         part = alloc[s][classe] / total_c
-        assert abs(part - cible_pct / 100) <= 0.12, \
+        assert abs(part - cible_pct / 100) <= tol, \
             f"{classe}/{s} : {part:.1%} pour une cible de {cible_pct}%"
 
 print("noyau géométrique : OK")
@@ -219,6 +219,8 @@ try:
     for tm in tuiles_m:
         blocs_splits.setdefault(tuple(tm["bloc"]), set()).add(tm["split"])
     assert all(len(s) == 1 for s in blocs_splits.values()), "bloc à cheval sur 2 splits"
+    # aucun split vide (l'amélioration locale ne doit jamais sacrifier test)
+    assert {tm["split"] for tm in tuiles_m} == {"train", "valid", "test"}
 
     # 2. zéro partage de pixels : bounds uniques, alignés sur la grille de 400 m
     assert len({tuple(tm["bounds"]) for tm in tuiles_m}) == len(tuiles_m)

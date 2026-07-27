@@ -69,7 +69,12 @@ nodata_supplementaire: null              # ex. 0 pour les mosaïques à fond imp
    avertissement. Tuile gardée si couverture valide ≥ `min_couverture_valide`.
 4. **Annotations** : par tuile, entités intersectantes → buffer selon la couche → clip →
    polygones COCO (pixels, catégories = classes de la config). Annotation dont l'emprise
-   est majoritairement invalide (seuil `min_visibilite_annotation`) écartée.
+   est majoritairement invalide (seuil `min_visibilite_annotation`) écartée. Ce seuil
+   mesure la fraction **valide (hors nodata)** de la bbox — il ne filtre pas les
+   fragments d'entités coupés par la grille, qui sont voulus (un talus traversant
+   10 tuiles est annoté dans chacune). Les polygones à trous (enclos fermés bufferisés)
+   sont décomposés en morceaux sans trou (multi-anneaux d'une même instance) ; les
+   slivers sub-pixel de bord de tuile (aire < 2 px² ou dimension < 0,5 px) sont écartés.
 5. **Blocs** : grille de `bloc_m` alignée sur les multiples de `bloc_m` ; une tuile
    appartient au bloc contenant son **centre**.
 6. **Split par blocs, équilibré par classe** : blocs triés par richesse décroissante,

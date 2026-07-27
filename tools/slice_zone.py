@@ -100,6 +100,46 @@ def affecter_splits(annos_par_bloc, cibles, seed):
                        key=lambda s: besoins[s])
         affectation[b] = meilleur
         alloue[meilleur].update(annos_par_bloc[b])
+
+    # Amélioration locale déterministe : déplacer un bloc tant que l'écart global aux
+    # cibles diminue. Le glouton seul laissait train à 64 % des tuiles (cible 70) sur
+    # Haye alors qu'une meilleure affectation des mêmes blocs existait — constat de la
+    # boucle de vérification. Converge : l'écart décroît strictement à chaque accepté.
+    def _ecart():
+        return sum(abs(alloue[s][c] / total_par_classe[c] - parts[s])
+                   for s in cibles for c in total_par_classe)
+
+    def _deplacer(b, source, destination):
+        for c, n in annos_par_bloc[b].items():
+            alloue[source][c] -= n
+            alloue[destination][c] += n
+
+    courant = _ecart()
+    n_blocs_split = Counter(affectation.values())
+    ameliore = True
+    while ameliore:
+        ameliore = False
+        for b in blocs:
+            s0 = affectation[b]
+            if n_blocs_split[s0] <= 1:
+                continue  # ne jamais vider un split : sur les petites zones l'optimum
+                          # mathématique sacrifierait test (|0-0,1| < |0,25-0,1|)
+            meilleur_s, meilleur_e = s0, courant
+            for s1 in ORDRE_SPLITS:
+                if s1 == s0:
+                    continue
+                _deplacer(b, s0, s1)
+                e = _ecart()
+                if e < meilleur_e - 1e-12:
+                    meilleur_s, meilleur_e = s1, e
+                _deplacer(b, s1, s0)
+            if meilleur_s != s0:
+                _deplacer(b, s0, meilleur_s)
+                affectation[b] = meilleur_s
+                n_blocs_split[s0] -= 1
+                n_blocs_split[meilleur_s] += 1
+                courant = meilleur_e
+                ameliore = True
     return affectation
 
 
