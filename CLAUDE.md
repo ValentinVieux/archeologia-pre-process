@@ -18,6 +18,7 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
 .venv\Scripts\python.exe tools\build_haye_gpkg.py [--out <dossier>]  # reconstruit le GPKG de 54_foret_de_haye
 .venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N]  # tuiles 648px + split spatial (cf. configs\)
+.venv\Scripts\python.exe tools\upload_roboflow_split.py <dataset> --workspace <id> --projet <id> [--test] [--dry-run]  # upload split IMPOSÉ (clé : env ROBOFLOW_API_KEY)
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 
