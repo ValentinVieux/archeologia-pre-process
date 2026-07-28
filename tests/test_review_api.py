@@ -105,6 +105,8 @@ assert voisines["parcellaire_0"]["couche"] == "parcellaire"
 assert abs(voisines["parcellaire_0"]["parts"][0][0][0] - 600012.0) < 1e-6  # éditée
 assert voisines["parcellaire_0"]["decision"] == "editee"
 assert voisines["parcellaire_0"]["origine"][0][0] == [600010.0, 6700050.0]
+assert voisines["parcellaire_0"]["statut"] == "a_revoir"
+assert isinstance(voisines["parcellaire_0"]["echantillon"], bool)
 
 rapport = analyser(decisions, gpkg)
 parc = rapport["couches"]["parcellaire"]

@@ -331,18 +331,43 @@ canvas.addEventListener("wheel", (e) => {
 }, { passive: false });
 
 /* ---------- décisions ---------- */
-async function decider(decision) {
-  const corps = { id: etat.detail.id, decision };
-  if (decision === "editee")
-    corps.geometrie = etat.parts.map((p) => p.map(versMonde));
+async function poster(id, decision, geometrie = null) {
+  const corps = { id, decision };
+  if (geometrie) corps.geometrie = geometrie;
   await fetch("/api/decision", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify(corps),
   });
-  const l = etat.lignes.find((x) => x.id === etat.detail.id);
+  const l = etat.lignes.find((x) => x.id === id);
   if (l) l.decision = decision;
+}
+
+/* voisines du crop encore à traiter (périmètre de revue, sans décision) */
+const voisinesAValider = () => (etat.detail.voisines || []).filter((v) =>
+  !v.decision && (v.statut === "a_revoir" || v.echantillon));
+
+async function decider(decision) {
+  await poster(etat.detail.id, decision,
+               decision === "editee" ? etat.parts.map((p) => p.map(versMonde))
+                                     : null);
   etat.detail.decision = decision;
   etat.dirty = false; // l'édition est actée : plus rien à perdre en naviguant
+  await progression();
+  const suite = voisinesAValider(); // on reste dans l'image tant qu'il en reste
+  if (suite.length) ouvrir(suite[0].id);
+  else suivant(1, true);
+}
+
+/* Shift+Entrée : valide toutes les entités restantes de l'image, puis suivante */
+async function validerImage() {
+  if (!etat.detail.decision)
+    await poster(etat.detail.id, etat.dirty ? "editee" : "recale",
+                 etat.dirty ? etat.parts.map((p) => p.map(versMonde)) : null);
+  for (const v of voisinesAValider()) {
+    await poster(v.id, "recale");
+    v.decision = "recale";
+  }
+  etat.dirty = false;
   await progression();
   suivant(1, true);
 }
@@ -394,7 +419,10 @@ window.addEventListener("keydown", (e) => {
     return;
   }
   switch (e.key) {
-    case "Enter": decider(etat.editee ? "editee" : "recale"); break;
+    case "Enter":
+      if (e.shiftKey) validerImage();
+      else decider(etat.editee ? "editee" : "recale");
+      break;
     case "o": case "O": decider("original"); break;
     case "x": case "X": decider("exclue"); break;
     case "ArrowRight": case "j": suivant(1); break;

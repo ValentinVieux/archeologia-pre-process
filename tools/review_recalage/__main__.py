@@ -123,7 +123,9 @@ def creer_app(gpkg_path, raster_path, decisions_path, zone=None):
                 voisines.append({"id": vid, "couche": lignes[vid]["couche"],
                                  "parts": _parts(g),
                                  "origine": _parts(lignes[vid]["geom_origine"]),
-                                 "decision": decisions.get(vid, {}).get("decision")})
+                                 "decision": decisions.get(vid, {}).get("decision"),
+                                 "statut": lignes[vid]["statut"],
+                                 "echantillon": vid in echantillon})
         return {"id": id_ligne, "couche": l["couche"], "statut": l["statut"],
                 "mesures": l["mesures"],
                 "origine": _parts(l["geom_origine"]), "recale": _parts(l["geom"]),
