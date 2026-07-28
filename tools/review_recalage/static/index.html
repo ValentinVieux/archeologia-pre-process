@@ -22,6 +22,10 @@
       <option value="decidees">décidées</option>
       <option value="toutes">toutes</option>
     </select>
+    <select id="f-tri">
+      <option value="ordre">dans l'ordre</option>
+      <option value="score">pires d'abord</option>
+    </select>
   </div>
   <div id="progression"></div>
   <ul id="liste"></ul>
@@ -57,7 +61,9 @@
     Shift+Entrée accepte le recalé pour tout le reste de l'image.<br>
     <b>Édition :</b> drag sommet · double-clic = insérer · <b>Suppr</b> =
     retirer le sommet · drag corps = translater · <b>Alt+flèches</b> nudge
-    (×10 Shift) · <b>Ctrl+Z</b> annuler · <b>R</b> repartir du recalé
+    (×10 Shift) · <b>Ctrl+Z</b> annuler · <b>R</b> repartir du recalé ·
+    <b>D</b> = dessiner un nouveau tracé (clic : sommets · Entrée/double-clic :
+    terminer · Échap : annuler · Suppr : retirer le dernier point)
   </div>
 </aside>
 <script src="app.js"></script>

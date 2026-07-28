@@ -13,7 +13,7 @@ const etat = {
   vue: { zoom: 1, px: 0, py: 0 },
   parts: null, base: null, editee: false, dirty: false, sel: null,
   undo: [], redo: [], bande: true, masquer: false, voisines: true,
-  corrVoisines: true,
+  corrVoisines: true, dessin: null,
 };
 
 /* une couleur stable par couche (l'active reste verte/jaune, l'origine rouge) */
@@ -61,11 +61,23 @@ async function chargerListe() {
                                                : etat.lignes[0].id);
 }
 
+const cleId = (id) => {
+  const m = id.match(/^(.*)_(\d+)$/);
+  return m ? [m[1], +m[2]] : [id, 0];
+};
+
 const visibles = () => {
   const mode = $("#f-etat").value;
-  if (mode === "a_traiter") return etat.lignes.filter((l) => !l.decision);
-  if (mode === "decidees") return etat.lignes.filter((l) => l.decision);
-  return etat.lignes;
+  let l = etat.lignes;
+  if (mode === "a_traiter") l = l.filter((x) => !x.decision);
+  else if (mode === "decidees") l = l.filter((x) => x.decision);
+  l = [...l];
+  if ($("#f-tri").value === "score") l.sort((a, b) => a.score - b.score);
+  else l.sort((a, b) => { // ordre stable des entités (numérique, pas lexical)
+    const [ca, na] = cleId(a.id), [cb, nb] = cleId(b.id);
+    return ca < cb ? -1 : ca > cb ? 1 : na - nb;
+  });
+  return l;
 };
 
 function rendreListe() {
@@ -125,6 +137,28 @@ function cadrer() {
   etat.vue.py = (canvas.clientHeight - etat.img.height * z) / 2;
 }
 
+/* ---------- mode dessin : re-tracer l'annotation de zéro ---------- */
+function commencerDessin() {
+  etat.dessin = { pts: [], curseur: null };
+  etat.sel = null;
+  rendrePanneau();
+  dessiner();
+}
+
+function terminerDessin() {
+  const pts = (etat.dessin ? etat.dessin.pts : []).filter((p, i, arr) =>
+    !i || Math.hypot(p[0] - arr[i - 1][0], p[1] - arr[i - 1][1]) > 0.5);
+  etat.dessin = null;
+  if (pts.length >= 2) { marquer(); etat.parts = [pts]; muter(); }
+  else { rendrePanneau(); dessiner(); }
+}
+
+function annulerDessin() {
+  etat.dessin = null;
+  rendrePanneau();
+  dessiner();
+}
+
 function rendrePanneau() {
   const d = etat.detail;
   $("#p-id").textContent = d.id;
@@ -135,9 +169,10 @@ function rendrePanneau() {
     ["contraste", m.contraste], ["offset médian", m.offset_median_m + " m"],
     ["offset max", m.offset_max_m + " m"], ["résidu", m.residu_m + " m"],
   ].map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
-  $("#p-decision").textContent = etat.dirty
-    ? "édition en cours — Entrée pour valider"
-    : (d.decision ? "décision : " + d.decision : "");
+  $("#p-decision").textContent = etat.dessin
+    ? "mode dessin — clic : sommet · Entrée : terminer · Échap : annuler"
+    : (etat.dirty ? "édition en cours — Entrée pour valider"
+                  : (d.decision ? "décision : " + d.decision : ""));
 }
 
 /* ---------- dessin ---------- */
@@ -173,21 +208,38 @@ function dessiner() {
                couleurCouche(v.couche, 0.8), 1.5 / zoom);
       }
     }
-    if (etat.bande) { // bande de 7 m : trait continu, extrémités rondes = buffer
-      tracer(active, `rgba(${etat.editee ? "232,201,62" : "79,195,107"},.28)`,
-             7 / etat.gsd, true);
-    }
-    tracer(etat.detail.origine.map((p) => p.map(versPx)), "#e05555", 2 / zoom);
-    if (!etat.editee) tracer(active, "#4fc36b", 2 / zoom);
-    else { tracer(etat.base, "rgba(79,195,107,.5)", 1.5 / zoom);
-           tracer(active, "#e8c93e", 2 / zoom); }
+    if (etat.dessin) { // re-tracé de zéro : l'existant en retrait, dessin jaune
+      tracer(etat.detail.origine.map((p) => p.map(versPx)),
+             "rgba(224,85,85,.5)", 1.5 / zoom);
+      tracer(active, "rgba(79,195,107,.35)", 1.5 / zoom);
+      const pts = etat.dessin.pts;
+      const apercu = (etat.dessin.curseur && pts.length)
+        ? [...pts, etat.dessin.curseur] : pts;
+      if (apercu.length >= 2) {
+        if (etat.bande) tracer([apercu], "rgba(232,201,62,.28)",
+                               7 / etat.gsd, true);
+        tracer([apercu], "#e8c93e", 2 / zoom);
+      }
+      const t = 7 / zoom;
+      ctx.fillStyle = "#e8c93e";
+      pts.forEach(([u, v]) => ctx.fillRect(u - t / 2, v - t / 2, t, t));
+    } else {
+      if (etat.bande) { // bande de 7 m : trait continu, bouts ronds = buffer
+        tracer(active, `rgba(${etat.editee ? "232,201,62" : "79,195,107"},.28)`,
+               7 / etat.gsd, true);
+      }
+      tracer(etat.detail.origine.map((p) => p.map(versPx)), "#e05555", 2 / zoom);
+      if (!etat.editee) tracer(active, "#4fc36b", 2 / zoom);
+      else { tracer(etat.base, "rgba(79,195,107,.5)", 1.5 / zoom);
+             tracer(active, "#e8c93e", 2 / zoom); }
 
-    const taille = 7 / zoom; // poignées
-    active.forEach((part, ip) => part.forEach(([u, v], iv) => {
-      const s = etat.sel && etat.sel.p === ip && etat.sel.v === iv;
-      ctx.fillStyle = s ? "#ffffff" : (etat.editee ? "#e8c93e" : "#4fc36b");
-      ctx.fillRect(u - taille / 2, v - taille / 2, taille, taille);
-    }));
+      const taille = 7 / zoom; // poignées
+      active.forEach((part, ip) => part.forEach(([u, v], iv) => {
+        const s = etat.sel && etat.sel.p === ip && etat.sel.v === iv;
+        ctx.fillStyle = s ? "#ffffff" : (etat.editee ? "#e8c93e" : "#4fc36b");
+        ctx.fillRect(u - taille / 2, v - taille / 2, taille, taille);
+      }));
+    }
     ctx.restore();
   }
   $("#hud").textContent =
@@ -263,6 +315,7 @@ canvas.addEventListener("mousedown", (e) => {
     e.preventDefault();  // émet des wheel pendant le drag (= dézoom parasite)
     drag = { mode: "pan", x: e.offsetX, y: e.offsetY }; return; }
   if (e.button !== 0) return;
+  if (etat.dessin) { etat.dessin.pts.push(pos); dessiner(); return; }
   const s = sommetProche(pos);
   if (s) { etat.sel = s; marquer(); drag = { mode: "sommet" }; dessiner(); return; }
   const seg = segmentProche(pos);
@@ -270,6 +323,11 @@ canvas.addEventListener("mousedown", (e) => {
   drag = { mode: "pan", x: e.offsetX, y: e.offsetY };
 });
 canvas.addEventListener("mousemove", (e) => {
+  if (etat.dessin && !drag) { // aperçu élastique du prochain segment
+    etat.dessin.curseur = depuisEcran([e.offsetX, e.offsetY]);
+    dessiner();
+    return;
+  }
   if (!drag) return;
   if (drag.mode === "pan") {
     etat.vue.px += e.offsetX - drag.x; etat.vue.py += e.offsetY - drag.y;
@@ -309,6 +367,7 @@ function voisineProche(pos) {
 }
 
 canvas.addEventListener("dblclick", (e) => {
+  if (etat.dessin) { terminerDessin(); return; }
   const pos = depuisEcran([e.offsetX, e.offsetY]);
   const seg = segmentProche(pos);
   if (seg) { // sur la ligne active : insertion de sommet
@@ -394,6 +453,18 @@ window.addEventListener("keydown", (e) => {
     if (!e.repeat) { etat.masquer = true; dessiner(); }
     return;
   }
+  if (etat.dessin) { // en mode dessin, le clavier sert au tracé
+    if (e.key === "Enter") { e.preventDefault(); terminerDessin(); }
+    else if (e.key === "Escape") annulerDessin();
+    else if (e.key === "Delete" || e.key === "Backspace") {
+      etat.dessin.pts.pop(); dessiner();
+    } else if ("bB".includes(e.key)) { etat.bande = !etat.bande; dessiner(); }
+    else if ("vV".includes(e.key)) { etat.voisines = !etat.voisines; dessiner(); }
+    else if ("cC".includes(e.key)) { etat.corrVoisines = !etat.corrVoisines; dessiner(); }
+    else if ("tT".includes(e.key)) { etat.masquer = !etat.masquer; dessiner(); }
+    else if ("dD".includes(e.key)) annulerDessin();
+    return;
+  }
   const fleches = { ArrowLeft: [-1, 0], ArrowRight: [1, 0],
                     ArrowUp: [0, -1], ArrowDown: [0, 1] };
   if (e.altKey && fleches[e.key]) { // nudge de la ligne entière (geste Historydex)
@@ -444,6 +515,7 @@ window.addEventListener("keydown", (e) => {
     case "t": case "T": etat.masquer = !etat.masquer; dessiner(); break;
     case "v": case "V": etat.voisines = !etat.voisines; dessiner(); break;
     case "c": case "C": etat.corrVoisines = !etat.corrVoisines; dessiner(); break;
+    case "d": case "D": commencerDessin(); break;
   }
 });
 window.addEventListener("keyup", (e) => {
@@ -453,6 +525,7 @@ window.addEventListener("keyup", (e) => {
 /* ---------- init ---------- */
 for (const id of ["#f-statut", "#f-couche"])
   $(id).addEventListener("change", chargerListe);
-$("#f-etat").addEventListener("change", () => { rendreListe(); });
+for (const id of ["#f-etat", "#f-tri"])
+  $(id).addEventListener("change", () => { rendreListe(); });
 new ResizeObserver(() => dessiner()).observe(canvas);
 chargerListe();
