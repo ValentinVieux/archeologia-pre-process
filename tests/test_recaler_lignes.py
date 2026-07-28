@@ -132,6 +132,53 @@ r2, _ = recaler_ligne(decalee, lecteur, PARAMS)
 assert r2.equals(recalee)
 
 # ---------------------------------------------------------------------------
+# Couloir partagé : deux lignes proches ne doivent pas fusionner sur le même
+# signal — le profil est tronqué à mi-distance de la voisine
+# ---------------------------------------------------------------------------
+from shapely.strtree import STRtree
+from recaler_lignes import bornes_laterales
+
+L2, H2 = 600, 100
+T2 = Affine(0.5, 0, 610000, 0, -0.5, 6710000)
+ys = 6710000 - (np.arange(H2) + 0.5) * 0.5
+d_fort = np.abs(ys - 6709975.0)[:, None] * np.ones((1, L2))   # crête forte
+d_faible = np.abs(ys - 6709983.0)[:, None] * np.ones((1, L2))  # crête faible
+img2 = np.clip(100 + 90 * np.exp(-d_fort**2 / 8) + 40 * np.exp(-d_faible**2 / 8),
+               0, 255).astype("uint8")
+raster2 = tmp / "couloir.tif"
+with rasterio.open(raster2, "w", driver="GTiff", width=L2, height=H2, count=1,
+                   dtype="uint8", crs="EPSG:2154", transform=T2) as dst:
+    dst.write(img2, 1)
+lecteur2 = LecteurRaster(raster2)
+
+ligne_a = LineString([(610020, 6709975.5), (610280, 6709975.5)])  # sur la forte
+ligne_b = LineString([(610020, 6709979.5), (610280, 6709979.5)])  # sienne = faible
+verite_faible = LineString([(610010, 6709983.0), (610290, 6709983.0)])
+parts_v = [ligne_a, ligne_b]
+voisins_b = (STRtree(parts_v), parts_v, [0, 1], 1)
+voisins_a = (STRtree(parts_v), parts_v, [0, 1], 0)
+
+sans, _ = recaler_ligne(ligne_b, lecteur2, PARAMS)  # capture la crête forte
+avec, _ = recaler_ligne(ligne_b, lecteur2, PARAMS, voisins=voisins_b)
+rec_a, _ = recaler_ligne(ligne_a, lecteur2, PARAMS, voisins=voisins_a)
+d_sans = [sans.interpolate(t, normalized=True).distance(verite_faible)
+          for t in np.linspace(0.1, 0.9, 20)]
+d_avec = [avec.interpolate(t, normalized=True).distance(verite_faible)
+          for t in np.linspace(0.1, 0.9, 20)]
+assert float(np.median(d_sans)) > 5.0, "le cas de bug ne se reproduit plus ?"
+assert float(np.median(d_avec)) < 0.6, f"couloir inopérant : {np.median(d_avec):.2f} m"
+assert rec_a.distance(avec) > 5.0  # les deux lignes restent séparées
+d_a = [rec_a.interpolate(t, normalized=True).distance(
+    LineString([(610010, 6709975.0), (610290, 6709975.0)]))
+    for t in np.linspace(0.1, 0.9, 20)]
+assert float(np.median(d_a)) < 0.5  # A reste sur sa crête forte
+
+pts_b, nor_b, _ = densifier(ligne_b, 2.0)
+b_neg, b_pos = bornes_laterales(pts_b, nor_b, 8.0, voisins_b)
+assert np.all(b_pos >= 7.9) or np.all(b_neg >= 7.9)  # côté libre : fenêtre pleine
+assert (np.median(b_neg) < 2.5) or (np.median(b_pos) < 2.5)  # côté voisin : mi-chemin
+
+# ---------------------------------------------------------------------------
 # Nœuds partagés
 # ---------------------------------------------------------------------------
 import geopandas as gpd

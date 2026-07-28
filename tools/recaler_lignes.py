@@ -23,7 +23,8 @@ import pyogrio
 import rasterio
 import yaml
 from scipy.ndimage import map_coordinates
-from shapely.geometry import LineString, MultiLineString
+from shapely.geometry import LineString, MultiLineString, Point
+from shapely.strtree import STRtree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from slice_zone import _refuser_drive
@@ -37,6 +38,33 @@ PARAMS_DEFAUT = {"polarite": "auto", "fenetre_m": 8.0, "pas_m": 2.0,
                  # talus/fossé résolus par ce prior de proximité)
                  "poids_distance": 2.0}
 POIDS_ANCRE = 1e6
+COULOIR_MIN = 2.0  # m de recherche garantis même contre une voisine collée
+
+
+def bornes_laterales(pts, normales, fenetre_m, voisins):
+    """Tronque la fenêtre de recherche à mi-distance des lignes voisines.
+
+    Les annotations se partagent l'espace : une ligne ne va pas chercher un
+    signal au-delà de la moitié du chemin vers sa voisine (retour session 2 :
+    90 paires quasi-fusionnées sur le même signal). voisins = (arbre STRtree,
+    géométries, clés de feature, clé de la ligne courante).
+    Retourne (bornes côté -normale, côté +normale) en mètres.
+    """
+    arbre, geoms, cles, cle_self = voisins
+    n = len(pts)
+    bornes = np.full((n, 2), fenetre_m)
+    for i in range(n):
+        for cote, signe in ((0, -1.0), (1, 1.0)):
+            seg = LineString([pts[i], pts[i] + signe * fenetre_m * normales[i]])
+            for j in arbre.query(seg):
+                if cles[j] == cle_self:
+                    continue
+                inter = seg.intersection(geoms[j])
+                if inter.is_empty:
+                    continue
+                d = inter.distance(Point(pts[i]))
+                bornes[i, cote] = min(bornes[i, cote], max(COULOIR_MIN, d / 2))
+    return bornes[:, 0], bornes[:, 1]
 
 
 class LecteurRaster:
@@ -98,12 +126,16 @@ def extremum_profil(profil, polarite, seuil_contraste, seuil_ambiguite,
     ref = np.nanmedian(s)
     centre_i = (len(s) - 1) / 2.0
     dist_m = np.abs(np.arange(len(s)) - centre_i) * pas_echant_m
-    idx = int(np.nanargmax(s - poids_distance * dist_m))
-    # la pénalité choisit LE pic ; sa position exacte vient du signal brut
-    while 0 < idx and s[idx - 1] > s[idx]:
-        idx -= 1
-    while idx < len(s) - 1 and s[idx + 1] > s[idx]:
-        idx += 1
+    # candidats = maxima locaux INTÉRIEURS : un maximum contre une borne
+    # (couloir ou fenêtre) n'est pas un pic, c'est la pente tronquée d'une
+    # structure voisine — on ne s'y recale jamais
+    fini = np.isfinite(s)
+    cand = np.zeros(len(s), dtype=bool)
+    cand[1:-1] = (fini[1:-1] & fini[:-2] & fini[2:]
+                  & (s[1:-1] >= s[:-2]) & (s[1:-1] >= s[2:]))
+    if not cand.any():
+        return None, 0.0, False
+    idx = int(np.argmax(np.where(cand, s - poids_distance * dist_m, -np.inf)))
     contraste = float(s[idx] - ref)
     if contraste < seuil_contraste:
         return None, contraste, False
@@ -114,11 +146,12 @@ def extremum_profil(profil, polarite, seuil_contraste, seuil_ambiguite,
         if abs(denom) > 1e-9:
             delta = float(np.clip(0.5 * (s[idx - 1] - s[idx + 1]) / denom, -1, 1))
     offset = (idx + delta - centre_i) * pas_echant_m
-    # ambiguïté : second pic net à plus de 3 m de l'extremum
+    # ambiguïté : un AUTRE pic local net à plus de 3 m (les flancs tronqués
+    # aux bornes ne comptent pas — ils appartiennent à la voisine)
     exclu = int(round(3.0 / pas_echant_m))
-    reste = s.copy()
-    reste[max(0, idx - exclu):idx + exclu + 1] = -np.inf
-    second = float(np.nanmax(reste)) if np.isfinite(reste).any() else -np.inf
+    autres = cand.copy()
+    autres[max(0, idx - exclu):idx + exclu + 1] = False
+    second = float(np.max(s[autres])) if autres.any() else -np.inf
     ambigu = (second - ref) >= seuil_ambiguite * contraste
     return offset, contraste, bool(ambigu)
 
@@ -146,11 +179,12 @@ def regulariser(offsets, poids_derivee, ancres):
     return np.linalg.solve(A, w * cible)
 
 
-def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None):
+def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None, voisins=None):
     """Recale une ligne par profils perpendiculaires régularisés.
 
     ancres_noeuds : {0: (x,y), -1: (x,y)} positions imposées des extrémités
-    (nœuds partagés déjà recalés). Retourne (ligne_recalee, mesures).
+    (nœuds partagés déjà recalés) ; voisins : cf. bornes_laterales (couloir
+    partagé). Retourne (ligne_recalee, mesures).
     """
     p = {**PARAMS_DEFAUT, **params}
     pts, normales, _ = densifier(ligne, p["pas_m"])
@@ -166,6 +200,10 @@ def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None):
     ts = np.arange(-p["fenetre_m"], p["fenetre_m"] + 1e-9, p["pas_echant_m"])
     echant = (pts[:, None, :] + normales[:, None, :] * ts[None, :, None]).reshape(-1, 2)
     profils = lecteur.echantillonner(donnees, affine, echant).reshape(n, len(ts))
+    if voisins is not None:  # couloir partagé : mi-distance vers les voisines
+        b_neg, b_pos = bornes_laterales(pts, normales, p["fenetre_m"], voisins)
+        hors = (ts[None, :] < -b_neg[:, None]) | (ts[None, :] > b_pos[:, None])
+        profils = np.where(hors, np.nan, profils)
 
     polarites = ([p["polarite"]] if p["polarite"] != "auto" else ["clair", "sombre"])
     meilleurs = None
@@ -263,7 +301,7 @@ def statut_ligne(mesures):
     return "auto_ok"
 
 
-def _recaler_geom(geom, lecteur, params, ancres_parties=None):
+def _recaler_geom(geom, lecteur, params, ancres_parties=None, voisins=None):
     """Recale une géométrie ligne (Multi ou simple) ; mesures agrégées par longueur.
 
     ancres_parties : {i_partie: {0: (x,y), -1: (x,y)}} — extrémités imposées.
@@ -275,17 +313,21 @@ def _recaler_geom(geom, lecteur, params, ancres_parties=None):
                       "offset_median_m": 0.0, "offset_max_m": 0.0, "residu_m": 0.0,
                       "recale": False}
     if geom.geom_type == "LineString":
-        return recaler_ligne(geom, lecteur, params, ancres_parties.get(0))
+        g, m = recaler_ligne(geom, lecteur, params, ancres_parties.get(0), voisins)
+        m["parties_recalees"] = [bool(m.get("recale"))]
+        return g, m
     parties, mesures_p, poids = [], [], []
     for i_p, partie in enumerate(geom.geoms):
-        g, m = recaler_ligne(partie, lecteur, params, ancres_parties.get(i_p))
+        g, m = recaler_ligne(partie, lecteur, params, ancres_parties.get(i_p),
+                             voisins)
         parties.append(g)
         mesures_p.append(m)
         poids.append(partie.length)
     poids = np.array(poids) / max(sum(poids), 1e-9)
     mesures = {"polarite_retenue": mesures_p[0]["polarite_retenue"],
                "offset_max_m": max(m["offset_max_m"] for m in mesures_p),
-               "recale": any(m.get("recale") for m in mesures_p)}
+               "recale": any(m.get("recale") for m in mesures_p),
+               "parties_recalees": [bool(m.get("recale")) for m in mesures_p]}
     for cle in ("pts_nets_pct", "ambigus_pct", "contraste", "offset_median_m",
                 "residu_m"):
         mesures[cle] = round(float(sum(w * m[cle] for w, m in zip(poids, mesures_p))), 2)
@@ -325,12 +367,30 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
             sys.exit(f"{couche} : CRS {gdf.crs} ≠ raster {lecteur.src.crs}")
         gdfs[couche] = gdf
 
+    # Couloir partagé : arbre de TOUTES les parties d'origine (toutes couches)
+    parts_voisines, cles_voisines = [], []
+    for couche, gdf in gdfs.items():
+        for idx, geom in zip(gdf.index, gdf.geometry):
+            if geom is None or geom.is_empty:
+                continue
+            parties = (geom.geoms if geom.geom_type == "MultiLineString"
+                       else [geom])
+            for partie in parties:
+                parts_voisines.append(partie)
+                cles_voisines.append((couche, idx))
+    arbre_voisines = STRtree(parts_voisines) if parts_voisines else None
+
+    def voisins_de(couche, idx):
+        return ((arbre_voisines, parts_voisines, cles_voisines, (couche, idx))
+                if arbre_voisines is not None else None)
+
     # Passe 1 : recalage sans ancres — détermine quelles lignes ont du signal
     passe1 = {}
     for couche, gdf in gdfs.items():
         for idx, geom in zip(gdf.index, gdf.geometry):
             passe1[(couche, idx)] = _recaler_geom(geom, lecteur,
-                                                  params_couches[couche])
+                                                  params_couches[couche],
+                                                  voisins=voisins_de(couche, idx))
 
     # Nœuds : cible = moyenne des extrémités recalées LIBREMENT (passe 1) des
     # lignes incidentes — cohérente avec le signal, bornée par la régularisation
@@ -341,7 +401,10 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
         if len(membres) < 2:
             continue
         membres_tries = sorted(membres)  # ordre stable -> moyenne déterministe
-        if all(passe1[(c, idx)][1].get("recale") for c, idx, _, _ in membres_tries):
+        # signal exigé par PARTIE incidente (pas par entité) : une partie sans
+        # signal n'applique pas ses ancres, le nœud doit alors rester figé
+        if all(passe1[(c, idx)][1]["parties_recalees"][i_p]
+               for c, idx, i_p, _ in membres_tries):
             props = []
             for c, idx, i_p, ext in membres_tries:
                 g = passe1[(c, idx)][0]
@@ -371,7 +434,8 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
         for idx, geom in zip(gdf.index, gdf.geometry):
             ancres = cibles.get((couche, idx))
             if ancres:  # passe 2 : re-recalage sous contrainte des nœuds
-                g, m = _recaler_geom(geom, lecteur, params, ancres)
+                g, m = _recaler_geom(geom, lecteur, params, ancres,
+                                     voisins=voisins_de(couche, idx))
             else:
                 g, m = passe1[(couche, idx)]
             geoms.append(g)
