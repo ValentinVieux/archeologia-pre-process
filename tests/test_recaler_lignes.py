@@ -175,4 +175,25 @@ assert rapport["parametres"]["couches"]["parcellaire"]["polarite"] == "clair"
 run_recalage(cfg_path, gpkg_path, raster_path, out)  # re-run : écrase, ne plante pas
 parc2 = gpd.read_file(gpkg_out, layer="parcellaire")
 assert parc2[parc2["src"] == "a"].iloc[0].geometry.equals(ligne_ok.geometry)  # déterminisme
-print("noyau + pipeline recalage : OK")
+
+# ---------------------------------------------------------------------------
+# Contrôleur verif_recalage : cas conforme puis cas volontairement cassé
+# ---------------------------------------------------------------------------
+import subprocess
+verif = Path(__file__).resolve().parents[1] / "tools" / "verif_recalage.py"
+args = [sys.executable, str(verif), str(cfg_path), str(gpkg_path)]
+r = subprocess.run(args + [str(gpkg_out), str(raster_path)],
+                   capture_output=True, text=True)
+assert r.returncode == 0 and "CONFORME" in r.stdout, r.stdout + r.stderr
+
+casse = tmp / "casse.gpkg"
+parc_c = gpd.read_file(gpkg_out, layer="parcellaire")
+masque_a = parc_c["src"] == "a"
+parc_c.loc[masque_a, "geometry"] = parc_c[masque_a].geometry.translate(50, 0)
+parc_c.to_file(casse, layer="parcellaire", driver="GPKG")
+gpd.read_file(gpkg_out, layer="talus_fosse").to_file(casse, layer="talus_fosse",
+                                                     driver="GPKG")
+r2 = subprocess.run(args + [str(casse), str(raster_path)],
+                    capture_output=True, text=True)
+assert r2.returncode != 0 and "Hausdorff" in (r2.stdout + r2.stderr), r2.stdout
+print("noyau + pipeline + contrôleur recalage : OK")
