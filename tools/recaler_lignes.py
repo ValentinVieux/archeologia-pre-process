@@ -261,7 +261,15 @@ def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None, voisins=None):
         "residu_m": round(residu, 2),
         "recale": True,
     })
-    return LineString(nouveaux).simplify(0.25), mesures
+    nouvelle = LineString(nouveaux).simplify(0.25)
+    # garde d'instabilité : un déplacement normal-par-normal sur une annotation
+    # en zigzag (normales qui pivotent) détruit la géométrie — dans ce cas on
+    # garde l'origine et on envoie en revue humaine
+    ratio = nouvelle.length / max(ligne.length, 1e-9)
+    if not 0.75 <= ratio <= 1.35:
+        mesures.update({"recale": False, "instable": True})
+        return LineString(ligne), mesures
+    return nouvelle, mesures
 
 
 def noeuds_partages(gdfs, tol=0.5):
@@ -293,6 +301,8 @@ SEUILS_STATUT = {"pts_nets_pct_min": 30.0, "ambigus_pct_max": 40.0,
 
 def statut_ligne(mesures, seuils=None):
     s = seuils or SEUILS_STATUT
+    if mesures.get("instable"):
+        return "a_revoir"  # géométrie d'origine conservée, à trancher à la main
     if not mesures.get("recale"):
         return "sans_signal"
     if (mesures["pts_nets_pct"] < s["pts_nets_pct_min"]
@@ -328,6 +338,7 @@ def _recaler_geom(geom, lecteur, params, ancres_parties=None, voisins=None):
     mesures = {"polarite_retenue": mesures_p[0]["polarite_retenue"],
                "offset_max_m": max(m["offset_max_m"] for m in mesures_p),
                "recale": any(m.get("recale") for m in mesures_p),
+               "instable": any(m.get("instable") for m in mesures_p),
                "parties_recalees": [bool(m.get("recale")) for m in mesures_p]}
     for cle in ("pts_nets_pct", "ambigus_pct", "contraste", "offset_median_m",
                 "residu_m"):

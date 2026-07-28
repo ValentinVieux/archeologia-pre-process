@@ -1,0 +1,19 @@
+# Recalage 41_blois (spec 2026-07-28-recalage-vecteurs-design.md)
+# Usage : .venv\Scripts\python.exe tools\recaler_lignes.py configs\recalage_blois.yaml
+#         <copie locale du GPKG entites> <VRT RVT> --out <dossier>
+# ATTENTION : le raster est un BLEND RVT (pas un LD pur) — parcellaire à signal
+# faible connu (~15 % de profils muets mesurés en amont) : attendre beaucoup de
+# sans_signal, c'est normal ; LD dédié à générer plus tard si besoin.
+zone: 41_blois
+raster_gsd_attendu: 0.5
+couches:
+  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                poids_distance: 2.0}
+  # convention variable par zone (sombre à Haye, mixte en IdF) -> auto
+  talus_fosse: {polarite: auto, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                poids_distance: 2.0}
+  chemin_creux: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                 poids_distance: 2.0}
+lissage: {poids_derivee: 4.0}
+seuil_points_nets: 5
+seuil_ambiguite: 0.7
