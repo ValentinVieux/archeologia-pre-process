@@ -207,21 +207,22 @@ def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None):
 
 
 def noeuds_partages(gdfs, tol=0.5):
-    """Extrémités partagées entre lignes (toutes couches) -> groupes d'incidence.
+    """Extrémités partagées entre lignes (toutes couches, toutes parties).
 
-    Retourne {noeud: {(couche, index, 'debut'|'fin'), ...}} où noeud = coordonnées
-    arrondies à la tolérance.
+    Retourne {noeud: {(couche, index, i_partie, 'debut'|'fin'), ...}} où
+    noeud = coordonnées arrondies à la tolérance.
     """
     noeuds = {}
     for couche, gdf in gdfs.items():
         for idx, geom in zip(gdf.index, gdf.geometry):
             if geom is None or geom.is_empty:
                 continue
-            g = max(geom.geoms, key=lambda x: x.length) \
-                if geom.geom_type == "MultiLineString" else geom
-            for extremite, pt in (("debut", g.coords[0]), ("fin", g.coords[-1])):
-                cle = (round(pt[0] / tol) * tol, round(pt[1] / tol) * tol)
-                noeuds.setdefault(cle, set()).add((couche, idx, extremite))
+            parties = (geom.geoms if geom.geom_type == "MultiLineString"
+                       else [geom])
+            for i_p, g in enumerate(parties):
+                for extremite, pt in (("debut", g.coords[0]), ("fin", g.coords[-1])):
+                    cle = (round(pt[0] / tol) * tol, round(pt[1] / tol) * tol)
+                    noeuds.setdefault(cle, set()).add((couche, idx, i_p, extremite))
     return noeuds
 
 
@@ -239,19 +240,22 @@ def statut_ligne(mesures):
     return "auto_ok"
 
 
-def _recaler_geom(geom, lecteur, params, ancres_noeuds):
-    """Recale une géométrie ligne (Multi ou simple) ; mesures agrégées par longueur."""
+def _recaler_geom(geom, lecteur, params, ancres_parties=None):
+    """Recale une géométrie ligne (Multi ou simple) ; mesures agrégées par longueur.
+
+    ancres_parties : {i_partie: {0: (x,y), -1: (x,y)}} — extrémités imposées.
+    """
+    ancres_parties = ancres_parties or {}
     if geom is None or geom.is_empty:
         return geom, {"polarite_retenue": params.get("polarite", "auto"),
                       "pts_nets_pct": 0.0, "ambigus_pct": 0.0, "contraste": 0.0,
                       "offset_median_m": 0.0, "offset_max_m": 0.0, "residu_m": 0.0,
                       "recale": False}
     if geom.geom_type == "LineString":
-        return recaler_ligne(geom, lecteur, params, ancres_noeuds)
-    # ponytail: multiparts recalées partie par partie, sans ancres de nœuds
+        return recaler_ligne(geom, lecteur, params, ancres_parties.get(0))
     parties, mesures_p, poids = [], [], []
-    for partie in geom.geoms:
-        g, m = recaler_ligne(partie, lecteur, params)
+    for i_p, partie in enumerate(geom.geoms):
+        g, m = recaler_ligne(partie, lecteur, params, ancres_parties.get(i_p))
         parties.append(g)
         mesures_p.append(m)
         poids.append(partie.length)
@@ -298,20 +302,34 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
             sys.exit(f"{couche} : CRS {gdf.crs} ≠ raster {lecteur.src.crs}")
         gdfs[couche] = gdf
 
-    # Nœuds d'abord : recalés une fois si polarité imposée et unique, sinon figés
-    cibles_noeuds = {}  # (couche, idx, extremite) -> (x, y)
+    # Passe 1 : recalage sans ancres — détermine quelles lignes ont du signal
+    passe1 = {}
+    for couche, gdf in gdfs.items():
+        for idx, geom in zip(gdf.index, gdf.geometry):
+            passe1[(couche, idx)] = _recaler_geom(geom, lecteur,
+                                                  params_couches[couche])
+
+    # Nœuds : cible = moyenne des extrémités recalées LIBREMENT (passe 1) des
+    # lignes incidentes — cohérente avec le signal, bornée par la régularisation
+    # de chaque ligne ; figée à l'origine si une incidente est sans signal.
+    # Toutes les lignes incidentes reçoivent la MÊME cible (topologie).
+    cibles = {}  # (couche, idx) -> {i_partie: {0|-1: (x, y)}}
     for pos, membres in noeuds_partages(gdfs).items():
         if len(membres) < 2:
             continue
-        pols = {params_couches[c]["polarite"] for c, _, _ in membres}
-        if len(pols) == 1 and (pol := pols.pop()) != "auto":
-            fen = max(params_couches[c]["fenetre_m"] for c, _, _ in membres)
-            seuil = min(params_couches[c]["seuil_contraste"] for c, _, _ in membres)
-            pos2 = recaler_noeud(pos, lecteur, pol, fen, seuil)
+        membres_tries = sorted(membres)  # ordre stable -> moyenne déterministe
+        if all(passe1[(c, idx)][1].get("recale") for c, idx, _, _ in membres_tries):
+            props = []
+            for c, idx, i_p, ext in membres_tries:
+                g = passe1[(c, idx)][0]
+                partie = g.geoms[i_p] if g.geom_type == "MultiLineString" else g
+                props.append(partie.coords[0 if ext == "debut" else -1])
+            pos2 = tuple(np.mean(np.asarray(props), axis=0))
         else:
-            pos2 = pos  # polarités mixtes/auto : nœud figé, topologie préservée
-        for membre in membres:
-            cibles_noeuds[membre] = pos2
+            pos2 = pos
+        for c, idx, i_p, ext in membres_tries:
+            cibles.setdefault((c, idx), {}).setdefault(i_p, {})[
+                0 if ext == "debut" else -1] = pos2
 
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -327,14 +345,12 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
     for couche, gdf in gdfs.items():
         params = params_couches[couche]
         geoms, lignes_mesures, statuts = [], [], []
-        for i, geom in enumerate(gdf.geometry):
-            ancres = {}
-            if geom is not None and geom.geom_type == "LineString":
-                for cle_ext, extremite in ((0, "debut"), (-1, "fin")):
-                    cible = cibles_noeuds.get((couche, gdf.index[i], extremite))
-                    if cible is not None:
-                        ancres[cle_ext] = cible
-            g, m = _recaler_geom(geom, lecteur, params, ancres or None)
+        for idx, geom in zip(gdf.index, gdf.geometry):
+            ancres = cibles.get((couche, idx))
+            if ancres:  # passe 2 : re-recalage sous contrainte des nœuds
+                g, m = _recaler_geom(geom, lecteur, params, ancres)
+            else:
+                g, m = passe1[(couche, idx)]
             geoms.append(g)
             lignes_mesures.append(m)
             statuts.append(statut_ligne(m))
@@ -387,28 +403,6 @@ def main():
         args.config = chemin_cfg
     out = Path(args.out) if args.out else Path("recalage") / cfg["zone"]
     run_recalage(args.config, args.gpkg, args.raster, out)
-
-
-def recaler_noeud(pos, lecteur, polarite, fenetre_m, seuil_contraste=10.0):
-    """Déplace un nœud vers l'extremum (à la polarité donnée) dans un disque."""
-    donnees, affine = lecteur.fenetre((pos[0], pos[1], pos[0], pos[1]), fenetre_m + 2)
-    if donnees.size == 0:
-        return pos
-    signe = 1.0 if polarite == "clair" else -1.0
-    h, l = donnees.shape
-    cols, rows = np.meshgrid(np.arange(l), np.arange(h))
-    xs = affine.c + (cols + 0.5) * affine.a
-    ys = affine.f + (rows + 0.5) * affine.e
-    dist = np.hypot(xs - pos[0], ys - pos[1])
-    s = signe * donnees
-    s[dist > fenetre_m] = -np.inf
-    if not np.isfinite(s).any():
-        return pos
-    ref = np.nanmedian(signe * donnees)
-    i, j = np.unravel_index(int(np.argmax(s)), s.shape)
-    if s[i, j] - ref < seuil_contraste:
-        return pos
-    return (float(xs[i, j]), float(ys[i, j]))
 
 
 if __name__ == "__main__":

@@ -20,10 +20,9 @@ lecteur = LecteurRaster(raster)
 
 
 def _extremites(geom, tol=0.5):
-    g = max(geom.geoms, key=lambda x: x.length) \
-        if geom.geom_type == "MultiLineString" else geom
+    parties = geom.geoms if geom.geom_type == "MultiLineString" else [geom]
     return {(round(p[0] / tol) * tol, round(p[1] / tol) * tol)
-            for p in (g.coords[0], g.coords[-1])}
+            for g in parties for p in (g.coords[0], g.coords[-1])}
 
 
 def _signe_moyen(geom, polarite):
@@ -57,7 +56,6 @@ for couche in sorted(couches_rec):
 
     params = {**PARAMS_DEFAUT, **(cfg["couches"][couche] or {})}
     borne = params["fenetre_m"] + params["pas_m"]
-    noeuds_src, noeuds_rec = set(), set()
     for (_, ligne), g_src in zip(rec.iterrows(), src.geometry):
         origine = wkt.loads(ligne["geom_origine"])
         assert origine.equals(g_src), \
@@ -73,8 +71,6 @@ for couche in sorted(couches_rec):
         ratio = g.length / max(origine.length, 1e-9)
         assert 0.7 <= ratio <= 1.4, \
             f"{couche}/{ligne['id_recalage']} : ratio longueur {ratio:.2f}"
-        noeuds_src |= _extremites(origine)
-        noeuds_rec |= _extremites(g)
         pol = ligne["polarite_retenue"]
         avant, apres = _signe_moyen(origine, pol), _signe_moyen(g, pol)
         if np.isfinite(avant) and np.isfinite(apres):
