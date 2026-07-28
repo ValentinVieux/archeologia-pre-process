@@ -17,3 +17,8 @@ couches:
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
 seuil_ambiguite: 0.7
+# Résidu plat par tranche (gain +1,7 à +2,5, 90-97 % positif) -> seuil p90.
+# Le drapeau pts_nets<30 reste, lui, LÉGITIME ici (signal parcellaire faible
+# sur blend RVT, médiane 38 % de points nets) : ~750 lignes à signal maigre
+# restent à revoir — c'est le vrai coût du raster non-LD de cette zone.
+seuils_statut: {residu_max_m: 1.8}
