@@ -11,7 +11,7 @@ const etat = {
   lignes: [], couches: [], idx: -1,
   detail: null, img: null, affine: null, gsd: 0.5,
   vue: { zoom: 1, px: 0, py: 0 },
-  parts: null, base: null, editee: false, sel: null,
+  parts: null, base: null, editee: false, dirty: false, sel: null,
   undo: [], redo: [], bande: true, masquer: false, voisines: true,
   corrVoisines: true,
 };
@@ -94,6 +94,9 @@ async function progression() {
 
 /* ---------- ouverture d'une ligne ---------- */
 async function ouvrir(id) {
+  if (etat.dirty && etat.detail && id !== etat.detail.id
+      && !window.confirm(`Édition non validée sur ${etat.detail.id} `
+                         + "(Entrée pour la valider) — l'abandonner ?")) return;
   const [detail, crop] = await Promise.all([
     (await fetch("/api/ligne/" + id)).json(),
     fetch("/api/crop/" + id),
@@ -106,6 +109,7 @@ async function ouvrir(id) {
   etat.parts = detail.editee ? detail.editee.map((p) => p.map(versPx))
                              : clone(etat.base);
   etat.editee = !!detail.editee;
+  etat.dirty = false;
   etat.sel = null; etat.undo = []; etat.redo = [];
   cadrer();
   rendrePanneau();
@@ -131,8 +135,9 @@ function rendrePanneau() {
     ["contraste", m.contraste], ["offset médian", m.offset_median_m + " m"],
     ["offset max", m.offset_max_m + " m"], ["résidu", m.residu_m + " m"],
   ].map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
-  $("#p-decision").textContent = d.decision
-    ? "décision : " + d.decision : (etat.editee ? "édition en cours" : "");
+  $("#p-decision").textContent = etat.dirty
+    ? "édition en cours — Entrée pour valider"
+    : (d.decision ? "décision : " + d.decision : "");
 }
 
 /* ---------- dessin ---------- */
@@ -213,6 +218,7 @@ function marquer() { // à appeler AVANT toute mutation de etat.parts
 
 function muter() {
   etat.editee = true;
+  etat.dirty = true;
   rendrePanneau();
   dessiner();
 }
@@ -336,6 +342,7 @@ async function decider(decision) {
   const l = etat.lignes.find((x) => x.id === etat.detail.id);
   if (l) l.decision = decision;
   etat.detail.decision = decision;
+  etat.dirty = false; // l'édition est actée : plus rien à perdre en naviguant
   await progression();
   suivant(1, true);
 }
@@ -376,6 +383,7 @@ window.addEventListener("keydown", (e) => {
       etat.redo.push(clone(etat.parts));
       etat.parts = etat.undo.pop();
       etat.editee = JSON.stringify(etat.parts) !== JSON.stringify(etat.base);
+      etat.dirty = etat.editee;
       rendrePanneau(); dessiner();
     }
     return;
@@ -400,6 +408,7 @@ window.addEventListener("keydown", (e) => {
     }
     case "r": case "R":
       marquer(); etat.parts = clone(etat.base); etat.editee = false;
+      etat.dirty = false; // reset volontaire : rien à protéger
       rendrePanneau(); dessiner(); break;
     case "b": case "B": etat.bande = !etat.bande; dessiner(); break;
     case "t": case "T": etat.masquer = !etat.masquer; dessiner(); break;
