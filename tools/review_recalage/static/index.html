@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Revue recalage</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="sidebar">
+  <h1>Revue recalage</h1>
+  <div id="filtres">
+    <select id="f-statut">
+      <option value="">périmètre (à revoir + échantillon)</option>
+      <option value="a_revoir">a_revoir</option>
+      <option value="auto_ok">auto_ok</option>
+      <option value="sans_signal">sans_signal</option>
+    </select>
+    <select id="f-couche"><option value="">toutes couches</option></select>
+    <label><input type="checkbox" id="f-restantes" checked> non décidées</label>
+  </div>
+  <div id="progression"></div>
+  <ul id="liste"></ul>
+</aside>
+
+<main id="centre">
+  <canvas id="canvas"></canvas>
+  <div id="hud"></div>
+</main>
+
+<aside id="panneau">
+  <h2 id="p-id"></h2>
+  <table id="p-mesures"></table>
+  <div id="p-decision"></div>
+  <div id="legende">
+    <span class="lg rouge">origine</span>
+    <span class="lg vert">recalé</span>
+    <span class="lg jaune">édité</span>
+    <span class="lg bande">bande 7 m</span>
+  </div>
+  <div id="aide">
+    <b>Entrée</b> accepter (recalé/édité) · <b>O</b> garder l'original ·
+    <b>X</b> exclure · <b>←/→ j/k</b> naviguer · <b>molette</b> zoom ·
+    <b>drag milieu</b> pan · <b>B</b> bande 7 m on/off<br>
+    <b>Édition :</b> drag sommet · double-clic = insérer · <b>Suppr</b> =
+    retirer le sommet · drag corps = translater · <b>Alt+flèches</b> nudge
+    (×10 Shift) · <b>Ctrl+Z</b> annuler · <b>R</b> repartir du recalé
+  </div>
+</aside>
+<script src="app.js"></script>
+</body>
+</html>

@@ -11,3 +11,4 @@ roboflow
 scipy
 fastapi
 uvicorn
+httpx2
