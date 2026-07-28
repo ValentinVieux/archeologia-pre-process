@@ -1,0 +1,25 @@
+# Dataset v2 — structures linéaires de Saint-Germain/Marly sur indice LD (run
+# lidar_HD, dalles 0,5 m/px EPSG:2154). 4 classes (la zone distingue talus et
+# fosse, pas de label mixte ni de chemin creux) ; voie 293 = consolidation de la
+# classe introduite par Rambouillet. Buffer 5 m (décision utilisateur 2026-07-28,
+# cohérence francilienne). amenagement_militaire (polygones) en `ignorer`.
+dataset: lineaires_saint_germain_ld_648_v1
+zone: ile_de_france/78_saint_germain_marly
+raster: <copie locale>\indices\LD_A15_Rmin10_Rmax20_H1p7_V1\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+gpkg: <copie locale>\saint_germain_marly_entites_l93.gpkg
+couches:
+  parcellaire:            {classe: parcellaire,  buffer_m: 5.0}
+  voie:                   {classe: voie,         buffer_m: 5.0}
+  talus:                  {classe: talus,        buffer_m: 5.0}
+  fosse:                  {classe: fosse,        buffer_m: 5.0}
+  amenagement_militaire:  {ignorer: true}
+tuile_px: 648
+bloc_m: 1000  # petite zone : 2000 m laissait fosse (27 entites) sans annotation en test
+split: {train: 70, valid: 20, test: 10}
+negatifs_pct: 10
+min_couverture_valide: 0.5
+# fraction VALIDE (hors nodata) de la bbox — ne filtre PAS les fragments coupés par la grille
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null   # EPSG:2154 embarqué
+
