@@ -85,6 +85,15 @@ git log ; pas de fichier de log séparé.
   Haye/Fontainebleau 4,8 m, Rambouillet/Saint-Germain/Blois 5 m, à régénérer au
   recalage) ; couches linéaires non entraînées en `ignorer:` (bloquent les négatifs
   sans annoter).
+- **Recalage des vecteurs** (2026-07-28, spec `docs/superpowers/specs/2026-07-28-recalage-vecteurs-design.md`,
+  skill `/recalage-zone`) : lignes recalées sur le LD (méthode B — profils perpendiculaires,
+  pénalité de distance, couloir partagé entre voisines) avec revue humaine exhaustive dans
+  `tools/review_recalage` et **calibration de l'algo par les corrections humaines**
+  (géométries éditées = vérité terrain, non-régression sur les acceptées). Polarités :
+  talus/parcellaire clair, fossé/chemin creux sombre, `talus_fosse` fusionné = sombre imposé.
+  Seuils a_revoir surchargeables par zone (`seuils_statut:`, justifiés par mesure). GPKG
+  final v2 déposé avec `geom_origine` + `decision_humaine` ; **pas de re-upload Roboflow
+  avant que toutes les zones soient recalées** (remplacement groupé, re-slice 7 m d'abord).
 - Roboflow : la **source de vérité est locale** (split_manifest + upload_manifest) ; la
   plateforme est un miroir de contrôle qualité. Ses pièges connus (dédup corbeille,
   batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,

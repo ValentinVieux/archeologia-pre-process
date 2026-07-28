@@ -46,6 +46,7 @@ assert couches_rec == set(cfg["couches"]) == couches_src, \
 
 total = 0
 gains = []  # contraste signé recalé - origine, lignes recalées seulement
+toutes_origines, tous_recales = [], []  # pour la stat de quasi-fusions
 for couche in sorted(couches_rec):
     src = gpd.read_file(source, layer=couche)
     rec = gpd.read_file(recale, layer=couche)
@@ -89,11 +90,30 @@ for couche in sorted(couches_rec):
     partages_rec = sum(1 for v in comptes_rec.values() if v >= 2)
     assert partages_rec >= partages_src, \
         f"{couche} : nœuds partagés {partages_src} -> {partages_rec} (topologie cassée)"
+    toutes_origines.extend(src_geoms)
+    tous_recales.extend(rec.geometry)
 
 assert gains, "aucune ligne recalée à contrôler"
 gain_moyen = float(np.mean(gains))
 assert gain_moyen >= 0, \
     f"contraste moyen dégradé par le recalage ({gain_moyen:+.1f}) — signal fui"
 
+# Stat informative : quasi-fusions (deux lignes distinctes recalées l'une sur
+# l'autre) — le symptôme qui a motivé le couloir partagé (session 2 Haye)
+from shapely.strtree import STRtree
+arbre_o = STRtree(toutes_origines)
+quasi = 0
+vues = set()
+for k, g_o in enumerate(toutes_origines):
+    for j in arbre_o.query(g_o.buffer(8.0)):
+        if j == k or (min(k, j), max(k, j)) in vues:
+            continue
+        vues.add((min(k, j), max(k, j)))
+        if (tous_recales[k].distance(tous_recales[j]) < 1.0
+                and g_o.distance(toutes_origines[j]) > 2.5):
+            quasi += 1
+
 print(f"vérification recalage : CONFORME — {len(couches_rec)} couches, {total} lignes, "
-      f"gain de contraste moyen {gain_moyen:+.1f}")
+      f"gain de contraste moyen {gain_moyen:+.1f}, quasi-fusions {quasi}"
+      + (" (ATTENTION : > 1 % des lignes — vérifier le couloir partagé)"
+         if quasi > 0.01 * total else ""))
