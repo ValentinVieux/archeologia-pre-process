@@ -22,6 +22,10 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\verif_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> <gpkg>  # boucle de vérification du GPKG
 .venv\Scripts\python.exe tools\verif_dataset.py <dataset> [--gpkg <chemin>]  # boucle de vérification d'un dataset découpé
 .venv\Scripts\python.exe tools\upload_roboflow_split.py <dataset> --workspace <id> --projet <id> [--test] [--dry-run]  # upload split IMPOSÉ (clé : env ROBOFLOW_API_KEY)
+.venv\Scripts\python.exe tools\recaler_lignes.py configs\recalage_<zone>.yaml <gpkg> <raster> [--out <dossier>]  # recalage des lignes sur le relief (méthode B)
+.venv\Scripts\python.exe tools\verif_recalage.py configs\recalage_<zone>.yaml <gpkg_source> <gpkg_recale> <raster>  # boucle de vérification du recalage
+.venv\Scripts\python.exe -m tools.review_recalage <gpkg_recale> <raster> [--port 5175]  # app locale de revue/édition (décisions YAML, jamais le GPKG)
+.venv\Scripts\python.exe tools\analyse_corrections.py <decisions.yaml> <gpkg_recale>  # typologie des corrections + suggestions de paramètres
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 

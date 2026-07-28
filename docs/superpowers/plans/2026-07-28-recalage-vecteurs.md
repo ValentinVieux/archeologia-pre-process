@@ -42,35 +42,35 @@ geopandas/shapely ; fastapi + uvicorn (à ajouter aux requirements) ; front vani
 - `noeuds_partages(gdfs: {couche: gdf}, tol=0.5) -> {noeud_id: {(couche,idx,extremite)}}`
   + `recaler_noeud(pos, lecteur, polarite, fenetre) -> pos2`.
 
-- [ ] **Step 1:** tests rouges : raster synthétique 1200x800 px (0,5 m/px, EPSG:2154) —
+- [x] **Step 1:** tests rouges : raster synthétique 1200x800 px (0,5 m/px, EPSG:2154) —
   crête gaussienne CLAIRE le long d'une sinusoïde connue + creux SOMBRE le long d'une
   autre ; lignes de test = vérité décalée de +6 m / bruitée / grossière (3 sommets) ;
   asserts : recalage à < 0,5 px de la vérité (médiane des distances), polarité auto
   correcte, ligne hors signal intacte (statut sans_signal), nœud partagé entre 2 lignes
   → déplacé identiquement, déterminisme (2 runs identiques).
-- [ ] **Step 2:** implémenter ; vert ; commit `recalage : noyau methode B (TDD)`.
+- [x] **Step 2:** implémenter ; vert ; commit `recalage : noyau methode B (TDD)`.
 
 ### Task 2: Pipeline CLI + statuts + GPKG + rapport
 
 **Files:** Modify `tools/recaler_lignes.py` ; Create `configs/recalage_haye.yaml`.
 
-- [ ] Étapes : charger config/gpkg/raster (refus G:) ; nœuds d'abord ; recaler chaque
+- [x] Étapes : charger config/gpkg/raster (refus G:) ; nœuds d'abord ; recaler chaque
   ligne (fenêtre par couche, polarité, ancres aux nœuds) ; statuts auto_ok/a_revoir/
   sans_signal selon seuils (pts_nets_pct < 40 % ou ambigus_pct > 35 % ou résidu élevé
   → a_revoir) ; GPKG sortie avec `geom_origine` WKT + mesures ; rapport YAML ; récap
   stdout `Sorties :`. Test intégration dans test_recaler_lignes (mini GPKG 2 couches).
-- [ ] Commit `recalage : pipeline CLI + statuts + rapport`.
+- [x] Commit `recalage : pipeline CLI + statuts + rapport`.
 
 ### Task 3: `tools/verif_recalage.py` (boucle de vérification)
 
-- [ ] Contrôles de la spec §2 (comptes, topologie, Hausdorff borné, sans_signal
+- [x] Contrôles de la spec §2 (comptes, topologie, Hausdorff borné, sans_signal
   intact, contraste moyen amélioré) — pilotés par le rapport + GPKG + sources ;
   test dans test_recaler_lignes (cas conforme + cas volontairement cassé).
-- [ ] Commit.
+- [x] Commit.
 
 ### Task 4: Run réel Haye + vérification
 
-- [ ] `configs/recalage_haye.yaml` (parcellaire clair, talus_fosse auto, fenêtre 8 m) ;
+- [x] `configs/recalage_haye.yaml` (parcellaire clair, talus_fosse auto, fenêtre 8 m) ;
   run sur copie locale (GPKG build4 + VRT haye_ld) ; verif_recalage ; stats présentées
   (répartition des statuts, offsets appliqués) — PAS de dépôt Drive avant revue app.
 
@@ -79,29 +79,29 @@ geopandas/shapely ; fastapi + uvicorn (à ajouter aux requirements) ; front vani
 **Files:** Create `tools/review_recalage/__main__.py` (FastAPI), `static/index.html`,
 `static/app.js`, `static/style.css` ; requirements += fastapi, uvicorn.
 
-- [ ] API : GET /api/lignes (méta + filtres + tri score), GET /api/crop/{couche}/{fid}
+- [x] API : GET /api/lignes (méta + filtres + tri score), GET /api/crop/{couche}/{fid}
   (PNG niveaux de gris via rasterio window + affine json en header), POST /api/decision
   (écriture immédiate YAML), GET /api/progression. Décisions :
   `recalage_decisions_<zone>.yaml`.
-- [ ] Front : layout 3 zones (sidebar liste filtrée / canvas central / panneau
+- [x] Front : layout 3 zones (sidebar liste filtrée / canvas central / panneau
   métriques) ; superpositions origine(rouge)/recalé(vert)/édité(jaune) + bande 7 m
   (lineWidth=14 px, caps ronds, alpha) ; clavier (Entrée valider+suivant, O original,
   X exclure, flèches/j/k, Ctrl+Z, molette zoom, drag-milieu pan) ; ÉDITEUR : poignées
   drag sommets, double-clic insertion, Suppr suppression, drag corps = translation,
   Alt+flèches nudge (×10 Shift) ; conversions px↔monde via l'affine du crop.
-- [ ] Périmètre par défaut : statut=a_revoir + échantillon seedé 100 auto_ok (fourni
+- [x] Périmètre par défaut : statut=a_revoir + échantillon seedé 100 auto_ok (fourni
   par l'API, flag `echantillon: true`).
-- [ ] Test : script `tests/test_review_api.py` (TestClient FastAPI : lignes, crop,
+- [x] Test : script `tests/test_review_api.py` (TestClient FastAPI : lignes, crop,
   décision écrite immédiatement, reprise).
-- [ ] Commit `recalage : app de validation/edition (FastAPI + vanilla)`.
+- [x] Commit `recalage : app de validation/edition (FastAPI + vanilla)`.
 
 ### Task 6: `tools/analyse_corrections.py`
 
-- [ ] Pour chaque décision `editee`/`original`/`exclue` : distance recalé↔édité,
+- [x] Pour chaque décision `editee`/`original`/`exclue` : distance recalé↔édité,
   typologie simple (offset résiduel constant → fenêtre/lissage ; zigzag → voisin
   parallèle ; etc. heuristiques v1) ; sortie rapport YAML + suggestions de paramètres.
   Test minimal sur décisions fabriquées.
-- [ ] Commit.
+- [x] Commit.
 
 ## Self-review
 
