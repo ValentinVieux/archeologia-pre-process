@@ -13,7 +13,7 @@ const etat = {
   vue: { zoom: 1, px: 0, py: 0 },
   parts: null, base: null, editee: false, dirty: false, sel: null,
   undo: [], redo: [], bande: true, masquer: false, voisines: true,
-  corrVoisines: true, dessin: null,
+  corrVoisines: true, dessin: null, historique: [],
 };
 
 /* une couleur stable par couche (l'active reste verte/jaune, l'origine rouge) */
@@ -105,14 +105,19 @@ async function progression() {
 }
 
 /* ---------- ouverture d'une ligne ---------- */
-async function ouvrir(id) {
+async function ouvrir(id, depuisHistorique = false) {
   if (etat.dirty && etat.detail && id !== etat.detail.id
       && !window.confirm(`Édition non validée sur ${etat.detail.id} `
                          + "(Entrée pour la valider) — l'abandonner ?")) return;
+  const precedent = etat.detail && etat.detail.id;
   const [detail, crop] = await Promise.all([
     (await fetch("/api/ligne/" + id)).json(),
     fetch("/api/crop/" + id),
   ]);
+  if (!depuisHistorique && precedent && precedent !== id) {
+    etat.historique.push(precedent); // Échap = revenir en arrière
+    if (etat.historique.length > 50) etat.historique.shift();
+  }
   etat.affine = JSON.parse(crop.headers.get("X-Affine"));
   etat.gsd = parseFloat(crop.headers.get("X-Gsd"));
   etat.img = await createImageBitmap(await crop.blob());
@@ -516,6 +521,12 @@ window.addEventListener("keydown", (e) => {
     case "v": case "V": etat.voisines = !etat.voisines; dessiner(); break;
     case "c": case "C": etat.corrVoisines = !etat.corrVoisines; dessiner(); break;
     case "d": case "D": commencerDessin(); break;
+    case "Escape": { // retour à la dernière entité travaillée
+      let prec = etat.historique.pop();
+      while (prec === etat.detail.id) prec = etat.historique.pop();
+      if (prec) ouvrir(prec, true);
+      break;
+    }
   }
 });
 window.addEventListener("keyup", (e) => {
