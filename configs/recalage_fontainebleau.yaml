@@ -1,0 +1,21 @@
+# Recalage 77_foret_de_fontainebleau (spec 2026-07-28-recalage-vecteurs-design.md)
+# Usage : .venv\Scripts\python.exe tools\recaler_lignes.py configs\recalage_fontainebleau.yaml
+#         <copie locale du GPKG entites> <VRT LD> --out <dossier>
+# tranchees_et_boyaux non recalée (couche ignorée à l'entraînement, copiée
+# verbatim par appliquer_decisions).
+zone: 77_foret_de_fontainebleau
+raster_gsd_attendu: 0.5
+couches:
+  # levées de terre -> extremum CLAIR sur LD ; sources distinguant talus/fosse
+  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                poids_distance: 2.0}
+  talus: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+          poids_distance: 2.0}
+  # creusements -> extremum SOMBRE
+  fosse: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+          poids_distance: 2.0}
+  chemin_creux: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                 poids_distance: 2.0}
+lissage: {poids_derivee: 4.0}
+seuil_points_nets: 5
+seuil_ambiguite: 0.7

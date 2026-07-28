@@ -26,6 +26,8 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\verif_recalage.py configs\recalage_<zone>.yaml <gpkg_source> <gpkg_recale> <raster>  # boucle de vérification du recalage
 .venv\Scripts\python.exe -m tools.review_recalage <gpkg_recale> <raster> [--port 5175]  # app locale de revue/édition (décisions YAML, jamais le GPKG)
 .venv\Scripts\python.exe tools\analyse_corrections.py <decisions.yaml> <gpkg_recale>  # typologie des corrections + suggestions de paramètres
+.venv\Scripts\python.exe tools\appliquer_decisions.py <gpkg_source> <gpkg_recale> <decisions.yaml> [--out <gpkg_final>]  # GPKG final (décisions humaines appliquées)
+.venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final>  # boucle de vérification de l'application
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 
