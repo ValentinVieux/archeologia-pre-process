@@ -74,8 +74,11 @@ git log ; pas de fichier de log séparé.
   re-vérifier. Aucune livraison (Drive/Roboflow) avant verdict conforme.
 - Talus/fossés : 3 entités — `talus` et `fosse` (sources qui distinguent), `talus_fosse`
   (labels indistincts, ex. fossébutte Haye). Classes plateforme suffixées `<entite>_<site>` ;
-  buffers de lignes par zone (largeur TOTALE : Haye/Fontainebleau 4,8 m, Rambouillet 5 m) ;
-  couches linéaires non entraînées en `ignorer:` (bloquent les négatifs sans annoter).
+  buffer de lignes standard pour tout NOUVEAU dataset : **7 m de largeur totale**
+  (décision 2026-07-28 — absorbe les offsets de digitalisation ; datasets existants :
+  Haye/Fontainebleau 4,8 m, Rambouillet/Saint-Germain/Blois 5 m, à régénérer au
+  recalage) ; couches linéaires non entraînées en `ignorer:` (bloquent les négatifs
+  sans annoter).
 - Roboflow : la **source de vérité est locale** (split_manifest + upload_manifest) ; la
   plateforme est un miroir de contrôle qualité. Ses pièges connus (dédup corbeille,
   batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,

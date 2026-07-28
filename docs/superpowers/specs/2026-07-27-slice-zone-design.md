@@ -41,8 +41,11 @@ raster: <chemin local du VRT/TIF indice> # copie locale — le script REFUSE un 
 assign_crs: null                         # ex. EPSG:27572 si le raster n'a pas de CRS
 gpkg: <chemin local du GPKG>
 couches:                                 # couche GPKG -> classe + rasterisation
-  parcellaire:  {classe: parcellaire,  buffer_m: 2.0}   # lignes : buffer largeur totale
-  talus_fosse:  {classe: talus_fosse,  buffer_m: 2.0}
+  # DÉCISION 2026-07-28 : buffer standard des lignes = 7 m de largeur totale pour tout
+  # nouveau dataset (historique : 2 m -> 4,8 m -> 5 m par calages visuels successifs ;
+  # 7 m absorbe les offsets de digitalisation constatés, jusqu'à ±3,5 m).
+  parcellaire:  {classe: parcellaire,  buffer_m: 7.0}   # lignes : buffer largeur totale
+  talus_fosse:  {classe: talus_fosse,  buffer_m: 7.0}
   rempart:      {ignorer: true,        buffer_m: 2.0}   # classe non entraînée (cf. infra)
   # polygones : buffer_m absent ; points : buffer_m = rayon (ex. tas: 5.0)
   # `ignorer: true` (décision utilisateur 2026-07-27, retrait des remparts) : la couche
