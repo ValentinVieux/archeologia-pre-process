@@ -175,7 +175,7 @@ try:
     # --- GPKG jouet : 3 couches réparties sur les 4 blocs valides de 800 m
     gpkg = tmp / "entites.gpkg"
     lignes = [
-        LineString([(500050, 6799750), (501300, 6799750)]),   # traverse 2 blocs (row 0)
+        LineString([(500050, 6799750), (501100, 6799750)]),   # traverse cols 0-2 (row 0)
         LineString([(500100, 6799300), (500700, 6799100)]),
         LineString([(500900, 6798900), (501400, 6798700)]),
         LineString([(500100, 6798900), (500600, 6798650)]),
@@ -184,6 +184,9 @@ try:
         # bbox majoritairement en nodata (visibilité < 0.5) mais entité partiellement
         # visible : sa tuile ne doit JAMAIS devenir un négatif
         LineString([(501440, 6799400), (501640, 6799400)]),
+        # buffer effleurant la tuile voisine (1,2) de 5 cm : le sliver n'y produit
+        # aucune annotation (seuils) mais la tuile ne doit JAMAIS devenir un négatif
+        LineString([(500799.05, 6799250), (500799.05, 6799350)]),
     ]
     gpd.GeoDataFrame(geometry=lignes, crs="EPSG:2154").to_file(gpkg, layer="lignes", driver="GPKG")
     gpd.GeoDataFrame(geometry=[box(500450, 6799450, 500550, 6799550),

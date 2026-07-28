@@ -398,20 +398,24 @@ def run_slicing(cfg, out_dir, seed=42):
             if couverture < cfg["min_couverture_valide"]:
                 continue
             annos, entites_presentes = [], False
+            boite_t = boite(*t["bounds"])
             if index_spatial is not None:
-                candidats = index_spatial.query(boite(*t["bounds"]))
+                candidats = index_spatial.query(boite_t)
+                # présence = intersection GÉOMÉTRIQUE brute, PAS les annotations
+                # post-seuils : un buffer qui effleure la tuile de quelques cm n'y
+                # produit aucune annotation (sliver écarté) mais doit quand même
+                # l'exclure des négatifs (impureté attrapée sur Blois, 2026-07-28)
+                entites_presentes = any(polys[i].intersects(boite_t)
+                                        for i in candidats)
                 par_classe = {}
                 for i in sorted(candidats):
                     par_classe.setdefault(classes_polys[i], []).append(polys[i])
                 # l'ordre des classes suit la config (déterminisme du COCO)
                 par_classe = {c: par_classe[c] for c in classes_ordre if c in par_classe}
-                annos_brutes = annotations_tuile(par_classe, t["bounds"], tuile_px)
-                entites_presentes = bool(annos_brutes)
-                annos = [a for a in annos_brutes
+                annos = [a for a in annotations_tuile(par_classe, t["bounds"], tuile_px)
                          if _visibilite_bbox(a["bbox_px"], masque, tuile_px)
                          >= cfg["min_visibilite_annotation"]]
             if not entites_presentes and index_ignores is not None:
-                boite_t = boite(*t["bounds"])
                 entites_presentes = any(
                     polys_ignores[i].intersects(boite_t)
                     for i in index_ignores.query(boite_t))
