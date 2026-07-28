@@ -28,6 +28,7 @@ from shapely.geometry import LineString, MultiLineString
 
 TAILLE_ECHANTILLON = 100  # auto_ok tirés (seed fixe) en plus des a_revoir
 GRAINE = 42
+MARGE_CROP = 25.0  # m autour de la ligne (fenêtre 8 m + contexte d'édition)
 
 
 def _parts(geom):
@@ -36,7 +37,8 @@ def _parts(geom):
     return [[[float(x), float(y)] for x, y in p.coords] for p in parties]
 
 
-def creer_app(gpkg_path, raster_path, decisions_path):
+def creer_app(gpkg_path, raster_path, decisions_path, zone=None):
+    zone = zone or Path(gpkg_path).stem.replace("_entites_l93_recale", "")
     src = rasterio.open(raster_path)
     lignes = {}  # id_recalage -> dict
     for couche in (n for n, _ in pyogrio.list_layers(str(gpkg_path))):
@@ -57,6 +59,10 @@ def creer_app(gpkg_path, raster_path, decisions_path):
     auto_ok = sorted(i for i, l in lignes.items() if l["statut"] == "auto_ok")
     echantillon = set(random.Random(GRAINE).sample(
         auto_ok, min(TAILLE_ECHANTILLON, len(auto_ok))))
+
+    ids_tous = list(lignes)
+    bornes = (np.array([lignes[i]["geom"].bounds for i in ids_tous])
+              if ids_tous else np.zeros((0, 4)))
 
     decisions_path = Path(decisions_path)
     decisions = (yaml.safe_load(decisions_path.read_text(encoding="utf-8")) or {}
@@ -84,8 +90,19 @@ def creer_app(gpkg_path, raster_path, decisions_path):
                         "decision": decisions.get(i, {}).get("decision"),
                         "offset_median_m": l["mesures"]["offset_median_m"]})
         res.sort(key=lambda x: x["score"])  # pires d'abord
-        return {"lignes": res,
+        return {"lignes": res, "zone": zone,
                 "couches": sorted({l["couche"] for l in lignes.values()})}
+
+    def geom_active(id_l):
+        """Géométrie qui partira réellement au training, décisions incluses."""
+        d = decisions.get(id_l, {})
+        if d.get("decision") == "exclue":
+            return None
+        if d.get("decision") == "editee":
+            return wkt.loads(d["geometrie_editee"])
+        if d.get("decision") == "original":
+            return lignes[id_l]["geom_origine"]
+        return lignes[id_l]["geom"]
 
     @app.get("/api/ligne/{id_ligne}")
     def api_ligne(id_ligne: str):
@@ -93,12 +110,24 @@ def creer_app(gpkg_path, raster_path, decisions_path):
         if l is None:
             raise HTTPException(404, id_ligne)
         d = decisions.get(id_ligne, {})
+        minx, miny, maxx, maxy = l["geom"].union(l["geom_origine"]).bounds
+        m = MARGE_CROP
+        masque = ((bornes[:, 0] <= maxx + m) & (bornes[:, 2] >= minx - m)
+                  & (bornes[:, 1] <= maxy + m) & (bornes[:, 3] >= miny - m))
+        voisines = []
+        for vid, ok in zip(ids_tous, masque):
+            if not ok or vid == id_ligne:
+                continue
+            g = geom_active(vid)
+            if g is not None:
+                voisines.append({"id": vid, "couche": lignes[vid]["couche"],
+                                 "parts": _parts(g)})
         return {"id": id_ligne, "couche": l["couche"], "statut": l["statut"],
                 "mesures": l["mesures"],
                 "origine": _parts(l["geom_origine"]), "recale": _parts(l["geom"]),
                 "editee": (_parts(wkt.loads(d["geometrie_editee"]))
                            if d.get("geometrie_editee") else None),
-                "decision": d.get("decision")}
+                "decision": d.get("decision"), "voisines": voisines}
 
     @app.get("/api/crop/{id_ligne}")
     def api_crop(id_ligne: str):
@@ -106,7 +135,7 @@ def creer_app(gpkg_path, raster_path, decisions_path):
         if l is None:
             raise HTTPException(404, id_ligne)
         minx, miny, maxx, maxy = l["geom"].union(l["geom_origine"]).bounds
-        marge = 25.0  # fenêtre 8 m + contexte d'édition
+        marge = MARGE_CROP
         fen = rasterio.windows.from_bounds(
             minx - marge, miny - marge, maxx + marge, maxy + marge,
             src.transform).round_offsets().round_lengths()

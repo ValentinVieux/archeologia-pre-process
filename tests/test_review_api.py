@@ -49,6 +49,7 @@ client = TestClient(creer_app(gpkg, raster, decisions))
 r = client.get("/api/lignes").json()
 ids = {l["id"] for l in r["lignes"]}
 assert "parcellaire_0" in ids and r["couches"] == ["parcellaire"]
+assert r["zone"] == "jouet"
 assert all(l["echantillon"] for l in r["lignes"] if l["statut"] == "auto_ok")
 scores = [l["score"] for l in r["lignes"]]
 assert scores == sorted(scores)  # pires d'abord
@@ -95,6 +96,14 @@ from analyse_corrections import analyser, typologie_edition
 client2.post("/api/decision", json={"id": "parcellaire_1",
                                     "decision": "original"})
 client2.post("/api/decision", json={"id": "parcellaire_2", "decision": "exclue"})
+
+# Voisines : géométrie ACTIVE (éditée), les exclues disparaissent du contexte
+d1 = client2.get("/api/ligne/parcellaire_1").json()
+voisines = {v["id"]: v for v in d1["voisines"]}
+assert "parcellaire_0" in voisines and "parcellaire_2" not in voisines
+assert voisines["parcellaire_0"]["couche"] == "parcellaire"
+assert abs(voisines["parcellaire_0"]["parts"][0][0][0] - 600012.0) < 1e-6  # éditée
+
 rapport = analyser(decisions, gpkg)
 parc = rapport["couches"]["parcellaire"]
 assert rapport["decisions_total"] == 3

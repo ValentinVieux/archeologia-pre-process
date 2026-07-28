@@ -12,7 +12,15 @@ const etat = {
   detail: null, img: null, affine: null, gsd: 0.5,
   vue: { zoom: 1, px: 0, py: 0 },
   parts: null, base: null, editee: false, sel: null,
-  undo: [], redo: [], bande: true,
+  undo: [], redo: [], bande: true, masquer: false, voisines: true,
+};
+
+/* une couleur stable par couche (l'active reste verte/jaune, l'origine rouge) */
+const PALETTE = [[90, 162, 224], [199, 123, 214], [224, 165, 63],
+                 [86, 214, 200], [159, 214, 90], [214, 90, 126]];
+const couleurCouche = (couche, a) => {
+  const rgb = PALETTE[Math.max(0, etat.couches.indexOf(couche)) % PALETTE.length];
+  return `rgba(${rgb.join(",")},${a})`;
 };
 
 /* ---------- conversions ---------- */
@@ -33,11 +41,17 @@ async function chargerListe() {
   const q = new URLSearchParams({ statut, couche, perimetre: statut ? 0 : 1 });
   const r = await (await fetch("/api/lignes?" + q)).json();
   etat.lignes = r.lignes;
+  etat.couches = r.couches;
+  $("#titre-zone").textContent = r.zone;
+  document.title = `Revue recalage — ${r.zone}`;
   if (!$("#f-couche").options.length || $("#f-couche").options.length === 1) {
     for (const c of r.couches) {
       $("#f-couche").insertAdjacentHTML("beforeend",
         `<option value="${c}">${c}</option>`);
     }
+    $("#lg-couches").innerHTML = r.couches.map((c) =>
+      `<span class="lg"><span class="chip" style="background:${
+        couleurCouche(c, 1)}"></span>${c}</span>`).join("");
   }
   rendreListe();
   await progression();
@@ -132,24 +146,37 @@ function dessiner() {
   ctx.imageSmoothingEnabled = zoom < 1.5;
   ctx.drawImage(etat.img, 0, 0);
 
-  const active = etat.parts;
-  if (etat.bande) { // bande de 7 m : trait continu, extrémités rondes = buffer
-    tracer(active, `rgba(${etat.editee ? "232,201,62" : "79,195,107"},.28)`,
-           7 / etat.gsd, true);
-  }
-  tracer(etat.detail.origine.map((p) => p.map(versPx)), "#e05555", 2 / zoom);
-  if (!etat.editee) tracer(active, "#4fc36b", 2 / zoom);
-  else { tracer(etat.base, "rgba(79,195,107,.5)", 1.5 / zoom);
-         tracer(active, "#e8c93e", 2 / zoom); }
+  if (!etat.masquer) {
+    ctx.save(); // les superpositions restent dans l'emprise du crop
+    ctx.beginPath();
+    ctx.rect(0, 0, etat.img.width, etat.img.height);
+    ctx.clip();
+    const active = etat.parts;
+    if (etat.voisines) { // contexte : les autres lignes du crop, par couche
+      for (const v of etat.detail.voisines || [])
+        tracer(v.parts.map((p) => p.map(versPx)),
+               couleurCouche(v.couche, 0.8), 1.5 / zoom);
+    }
+    if (etat.bande) { // bande de 7 m : trait continu, extrémités rondes = buffer
+      tracer(active, `rgba(${etat.editee ? "232,201,62" : "79,195,107"},.28)`,
+             7 / etat.gsd, true);
+    }
+    tracer(etat.detail.origine.map((p) => p.map(versPx)), "#e05555", 2 / zoom);
+    if (!etat.editee) tracer(active, "#4fc36b", 2 / zoom);
+    else { tracer(etat.base, "rgba(79,195,107,.5)", 1.5 / zoom);
+           tracer(active, "#e8c93e", 2 / zoom); }
 
-  const taille = 7 / zoom; // poignées
-  active.forEach((part, ip) => part.forEach(([u, v], iv) => {
-    const s = etat.sel && etat.sel.p === ip && etat.sel.v === iv;
-    ctx.fillStyle = s ? "#ffffff" : (etat.editee ? "#e8c93e" : "#4fc36b");
-    ctx.fillRect(u - taille / 2, v - taille / 2, taille, taille);
-  }));
+    const taille = 7 / zoom; // poignées
+    active.forEach((part, ip) => part.forEach(([u, v], iv) => {
+      const s = etat.sel && etat.sel.p === ip && etat.sel.v === iv;
+      ctx.fillStyle = s ? "#ffffff" : (etat.editee ? "#e8c93e" : "#4fc36b");
+      ctx.fillRect(u - taille / 2, v - taille / 2, taille, taille);
+    }));
+    ctx.restore();
+  }
   $("#hud").textContent =
-    `${etat.detail.id} — zoom ${(zoom).toFixed(1)}× — ${etat.gsd} m/px`;
+    `${etat.detail.id} — zoom ${(zoom).toFixed(1)}× — ${etat.gsd} m/px` +
+    (etat.masquer ? " — LD à nu" : "");
 }
 
 function tracer(parts, style, largeur, ronde = false) {
@@ -211,7 +238,9 @@ function segmentProche(pos) {
 let drag = null; // {mode: 'pan'|'sommet'|'ligne', ...}
 canvas.addEventListener("mousedown", (e) => {
   const pos = depuisEcran([e.offsetX, e.offsetY]);
-  if (e.button === 1) { drag = { mode: "pan", x: e.offsetX, y: e.offsetY }; return; }
+  if (e.button === 1) { // preventDefault : sinon l'autoscroll du navigateur
+    e.preventDefault();  // émet des wheel pendant le drag (= dézoom parasite)
+    drag = { mode: "pan", x: e.offsetX, y: e.offsetY }; return; }
   if (e.button !== 0) return;
   const s = sommetProche(pos);
   if (s) { etat.sel = s; marquer(); drag = { mode: "sommet" }; dessiner(); return; }
@@ -250,6 +279,7 @@ canvas.addEventListener("dblclick", (e) => {
 });
 canvas.addEventListener("wheel", (e) => {
   e.preventDefault();
+  if (drag) return; // pas de zoom pendant un drag (pan molette compris)
   const f = e.deltaY < 0 ? 1.2 : 1 / 1.2;
   const z2 = Math.min(40, Math.max(0.05, etat.vue.zoom * f));
   etat.vue.px = e.offsetX - (e.offsetX - etat.vue.px) * (z2 / etat.vue.zoom);
@@ -289,6 +319,11 @@ function suivant(sens, nonDecidee = false) {
 /* ---------- clavier ---------- */
 window.addEventListener("keydown", (e) => {
   if (e.target.tagName === "SELECT" || !etat.detail) return;
+  if (e.key === " ") { // maintenu = LD à nu, relâché = tracés de retour
+    e.preventDefault();
+    if (!e.repeat) { etat.masquer = true; dessiner(); }
+    return;
+  }
   const fleches = { ArrowLeft: [-1, 0], ArrowRight: [1, 0],
                     ArrowUp: [0, -1], ArrowDown: [0, 1] };
   if (e.altKey && fleches[e.key]) { // nudge de la ligne entière (geste Historydex)
@@ -331,7 +366,12 @@ window.addEventListener("keydown", (e) => {
       marquer(); etat.parts = clone(etat.base); etat.editee = false;
       rendrePanneau(); dessiner(); break;
     case "b": case "B": etat.bande = !etat.bande; dessiner(); break;
+    case "t": case "T": etat.masquer = !etat.masquer; dessiner(); break;
+    case "v": case "V": etat.voisines = !etat.voisines; dessiner(); break;
   }
+});
+window.addEventListener("keyup", (e) => {
+  if (e.key === " " && etat.masquer) { etat.masquer = false; dessiner(); }
 });
 
 /* ---------- init ---------- */
