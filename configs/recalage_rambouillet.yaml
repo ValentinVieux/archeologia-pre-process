@@ -14,8 +14,10 @@ couches:
           poids_distance: 2.0}
   fosse: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
           poids_distance: 2.0}
-  # fossé+talus indistincts -> convention Haye : le tracé suit le fossé
-  talus_fosse: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+  # fossé+talus indistincts : la convention sombre de Haye NE tient PAS ici —
+  # session 1 (40 décisions talus_fosse) : 23 « garder l'original » dont 17
+  # avec l'annotation côté CLAIR. Polarité variable par ligne -> auto.
+  talus_fosse: {polarite: auto, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
                 poids_distance: 2.0}
   chemin_creux: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
                  poids_distance: 2.0}
