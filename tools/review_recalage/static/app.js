@@ -118,9 +118,10 @@ function rendrePanneau() {
 /* ---------- dessin ---------- */
 function dessiner() {
   const dpr = window.devicePixelRatio || 1;
-  if (canvas.width !== canvas.clientWidth * dpr) {
-    canvas.width = canvas.clientWidth * dpr;
-    canvas.height = canvas.clientHeight * dpr;
+  if (canvas.width !== Math.round(canvas.clientWidth * dpr)
+      || canvas.height !== Math.round(canvas.clientHeight * dpr)) {
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
   }
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.fillStyle = "#0d0e11";

@@ -3,6 +3,8 @@ body {
   display: grid; grid-template-columns: 270px 1fr 250px; height: 100vh;
   font: 13px/1.45 system-ui, sans-serif; background: #16181d; color: #d6d9de;
 }
+/* sans min-height:0, la liste (1772 li) étire la rangée de grille et le canvas */
+#sidebar, #centre, #panneau, #liste { min-height: 0; }
 h1 { font-size: 15px; padding: 10px 12px 6px; }
 h2 { font-size: 13px; word-break: break-all; }
 #sidebar { display: flex; flex-direction: column; border-right: 1px solid #2a2e36; }
