@@ -255,4 +255,43 @@ gpd.read_file(gpkg_out, layer="talus_fosse").to_file(casse, layer="talus_fosse",
 r2 = subprocess.run(args + [str(casse), str(raster_path)],
                     capture_output=True, text=True)
 assert r2.returncode != 0 and "Hausdorff" in (r2.stdout + r2.stderr), r2.stdout
-print("noyau + pipeline + contrôleur recalage : OK")
+
+# ---------------------------------------------------------------------------
+# Application des décisions + contrôleur d'application
+# ---------------------------------------------------------------------------
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+from appliquer_decisions import appliquer
+
+edit_wkt = LineString([(x, courbe_crete(x) + 0.3)
+                       for x in np.arange(600070, 600460, 40.0)]).wkt
+dec_path = tmp / "decisions.yaml"
+dec_path.write_text(yaml.safe_dump({
+    "parcellaire_0": {"id": "parcellaire_0", "couche": "parcellaire",
+                      "decision": "editee", "geometrie_editee": edit_wkt},
+    "parcellaire_1": {"id": "parcellaire_1", "couche": "parcellaire",
+                      "decision": "exclue"},
+    "talus_fosse_0": {"id": "talus_fosse_0", "couche": "talus_fosse",
+                      "decision": "recale"}}), encoding="utf-8")
+gpkg_final, comptes = appliquer(gpkg_path, gpkg_out, dec_path,
+                                tmp / "jouet_final.gpkg")
+fin = gpd.read_file(gpkg_final, layer="parcellaire")
+assert len(fin) == 1 and fin.iloc[0]["decision_humaine"] == "editee"
+assert fin.iloc[0].geometry.equals(wkt.loads(edit_wkt))
+assert wkt.loads(fin.iloc[0]["geom_origine"]).equals(decalee)  # origine gardée
+verif_app = Path(__file__).resolve().parents[1] / "tools" / "verif_application.py"
+r3 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
+                     str(gpkg_out), str(dec_path), str(gpkg_final)],
+                    capture_output=True, text=True)
+assert r3.returncode == 0 and "CONFORME" in r3.stdout, r3.stdout + r3.stderr
+# cas cassé : géométrie éditée altérée dans le final -> détecté
+fin2 = gpd.read_file(gpkg_final, layer="parcellaire")
+fin2.geometry = fin2.geometry.translate(3, 0)
+casse2 = tmp / "final_casse.gpkg"
+fin2.to_file(casse2, layer="parcellaire", driver="GPKG")
+gpd.read_file(gpkg_final, layer="talus_fosse").to_file(
+    casse2, layer="talus_fosse", driver="GPKG")
+r4 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
+                     str(gpkg_out), str(dec_path), str(casse2)],
+                    capture_output=True, text=True)
+assert r4.returncode != 0, "altération non détectée"
+print("noyau + pipeline + contrôleurs recalage + application : OK")
