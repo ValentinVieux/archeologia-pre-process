@@ -1,0 +1,30 @@
+# Mapping GPKG entités — 78_saint_germain_marly (audit du 2026-07-28, aliases.yaml
+# fait foi). La zone distingue talus et fosse (pas de label mixte -> pas de couche
+# talus_fosse ici). Couches ONF (limites, parcellaire moderne, sites — sans .prj)
+# exclues : gestion, pas des entités. "Autre" ignoré par l'audit -> exclure.
+gpkg_nom: saint_germain_marly_entites_l93.gpkg
+crs: 2154
+sources:
+  Digitalisation/Digit_lignes.shp:
+    champ: Interp
+    valeurs:
+      Parcellaire: parcellaire
+      Voie: voie
+      Talus: talus
+      Fosse: fosse
+    exclure: ["Autre"]
+  Digitalisation/Digit_points.shp:
+    champ: Interp
+    valeurs:
+      Trou de bombe: cratere
+      Depression: circular_depression
+      Butte: butte
+  Digitalisation/Digit_poly_2.shp:
+    champ: Interp
+    valeurs:
+      Depression: circular_depression
+      Extraction: extraction
+      Anomalie relief: anomalie_relief
+      Amenagement militaire: amenagement_militaire
+      Enclos: enclos
+    exclure: ["Autre"]

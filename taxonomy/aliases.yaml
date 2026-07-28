@@ -148,3 +148,49 @@ ignored:
   - { raw: "prospection", source_dataset: 78_rambouillet, decided: "2026-07-27" }
   - { raw: "P1140785", source_dataset: 78_rambouillet, decided: "2026-07-27" }
   - { raw: "S", source_dataset: 78_rambouillet, decided: "2026-07-27" }
+  # Saint-Germain-et-Marly — audit 2026-07-28 : champ Relief (attribut descriptif),
+  # codes DRAC, attributs administratifs sites_ONF, noms de couches
+  - { raw: "Negatif", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "Positif", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "Positif et negatif", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "Posititf et negatif", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }  # coquille source
+  - { raw: "N", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "PLA", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "POISSY", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "221434", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "498", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78498", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "AH", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "BON", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "CER", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "ENF", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "HABVLE", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "MOY", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "MUL", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "MULTIPLE", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "QUARTIER DE LA GARE", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "SAINT-GERMAIN-EN-LAYE", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "VERSAILLES", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "VILLE", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "antiquités historiques", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "bonne", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "certain", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "enfoui", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "moyen", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "site", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 007 0002", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 133 0001", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 224 0003", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 233 0001", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 233 0009", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 455 0006", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 551 0006", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 551 0023", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 571 0005", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78 571 0007", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78_ONF_Foret_domaniale_Saint-Germain_limites", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78_ONF_Foret_domaniale_Saint-Germain_parcellaire", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "78_ONF_Foret_domaniale_Saint-Germain_sites_ONF", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "Digit_lignes", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  - { raw: "Digit_poly_2", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }

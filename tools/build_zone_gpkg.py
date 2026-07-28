@@ -14,6 +14,7 @@ Format du YAML de mapping :
       <fichier.shp>:
         champ: <nom du champ de classe>
         valeurs: { "<valeur brute>": <entity_id>, ... }   # aliases.yaml fait foi
+        exclure: ["<valeur ignorée>", ...]                # optionnel (ex. "Autre")
 
 Usage :
     .venv\\Scripts\\python.exe tools\\build_zone_gpkg.py <mapping.yaml> <dossier_source> [--out <dossier>]
@@ -51,7 +52,11 @@ def main():
         if gdf.crs is None or gdf.crs.to_epsg() != cfg["crs"]:
             sys.exit(f"{fichier} : CRS {gdf.crs} inattendu (EPSG:{cfg['crs']} requis)")
         valeurs = set(gdf[spec["champ"]].dropna())
-        inconnues = valeurs - set(spec["valeurs"])
+        exclues = set(spec.get("exclure", []))
+        for v in exclues & valeurs:
+            n = int((gdf[spec["champ"]] == v).sum())
+            print(f"  exclu : {fichier}/{v} — {n} entité(s) (ignorée par l'audit)")
+        inconnues = valeurs - set(spec["valeurs"]) - exclues
         if inconnues:
             sys.exit(f"{fichier} : valeurs non mappées {sorted(inconnues)} — "
                      "compléter le mapping (aliases.yaml fait foi) ou re-auditer")
