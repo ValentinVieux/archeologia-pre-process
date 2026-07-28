@@ -53,11 +53,13 @@ for couche in sorted(couches_src):
             f"{couche}/{l['id_recalage']} : geom_origine modifiée"
         d = decisions.get(l["id_recalage"], {})
         decision = d.get("decision", "auto")
+        if decision == "auto" and l["decision_humaine"] == "auto_original":
+            decision = "auto_original"  # défaut de couche, pas de décision humaine
         assert l["decision_humaine"] == decision, \
             f"{couche}/{l['id_recalage']} : décision {l['decision_humaine']}"
         if decision == "editee":
             attendu = wkt.loads(d["geometrie_editee"])
-        elif decision == "original":
+        elif decision in ("original", "auto_original"):
             attendu = wkt.loads(rec_l["geom_origine"])
         elif decision == "recale" and l["id_recalage"] in reference:
             attendu = reference[l["id_recalage"]]

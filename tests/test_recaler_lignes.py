@@ -323,4 +323,21 @@ r5 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
                      str(gpkg_out), str(dec_path), str(gpkg_final2),
                      str(ref_gpkg)], capture_output=True, text=True)
 assert r5.returncode == 0 and "CONFORME" in r5.stdout, r5.stdout + r5.stderr
+
+# defaut_original : les couches listées reviennent à l'origine si non décidées
+dec_vide = tmp / "decisions_vides.yaml"
+dec_vide.write_text("{}", encoding="utf-8")
+gpkg_final3, _ = appliquer(gpkg_path, gpkg_out, dec_vide,
+                           tmp / "jouet_final3.gpkg",
+                           defaut_original={"parcellaire"})
+p3 = gpd.read_file(gpkg_final3, layer="parcellaire")
+assert (p3["decision_humaine"] == "auto_original").all()
+for _, l in p3.iterrows():
+    assert l.geometry.equals(wkt.loads(l["geom_origine"]))
+t3 = gpd.read_file(gpkg_final3, layer="talus_fosse")
+assert (t3["decision_humaine"] == "auto").all()  # couche non listée : recalé
+r6 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
+                     str(gpkg_out), str(dec_vide), str(gpkg_final3)],
+                    capture_output=True, text=True)
+assert r6.returncode == 0 and "CONFORME" in r6.stdout, r6.stdout + r6.stderr
 print("noyau + pipeline + contrôleurs recalage + application : OK")

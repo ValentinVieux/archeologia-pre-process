@@ -22,10 +22,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from slice_zone import _refuser_drive
 
 
-def appliquer(gpkg_source, gpkg_recale, decisions_path, out, gpkg_reference=None):
+def appliquer(gpkg_source, gpkg_recale, decisions_path, out, gpkg_reference=None,
+              defaut_original=()):
     """gpkg_reference : version du GPKG recalé sur laquelle la revue a été
     faite — les décisions 'recale' y prennent leur géométrie (l'humain a
-    validé CETTE version ; les re-runs d'algo n'engagent que le non décidé)."""
+    validé CETTE version ; les re-runs d'algo n'engagent que le non décidé).
+    defaut_original : couches dont les lignes NON décidées reviennent à la
+    géométrie d'origine (recalage jugé inadapté en revue, ex. voies larges) —
+    marquées decision_humaine='auto_original'."""
     decisions = yaml.safe_load(Path(decisions_path).read_text(encoding="utf-8")) or {}
     couches_recalees = {n for n, _ in pyogrio.list_layers(str(gpkg_recale))}
     reference = {}
@@ -50,7 +54,9 @@ def appliquer(gpkg_source, gpkg_recale, decisions_path, out, gpkg_reference=None
         geoms, decs, garder = [], [], []
         for _, l in gdf.iterrows():
             d = decisions.get(l["id_recalage"], {})
-            decision = d.get("decision", "auto")
+            decision = d.get("decision",
+                             "auto_original" if couche in defaut_original
+                             else "auto")
             if decision == "exclue":
                 garder.append(False)
                 geoms.append(None)
@@ -60,7 +66,7 @@ def appliquer(gpkg_source, gpkg_recale, decisions_path, out, gpkg_reference=None
             decs.append(decision)
             if decision == "editee":
                 geoms.append(wkt.loads(d["geometrie_editee"]))
-            elif decision == "original":
+            elif decision in ("original", "auto_original"):
                 geoms.append(wkt.loads(l["geom_origine"]))
             elif decision == "recale" and l["id_recalage"] in reference:
                 geoms.append(reference[l["id_recalage"]])  # version validée
@@ -86,6 +92,9 @@ def main():
     ap.add_argument("--recale-depuis", default=None, dest="reference",
                     help="GPKG recalé sur lequel la revue a été faite : les "
                          "décisions 'recale' y prennent leur géométrie")
+    ap.add_argument("--defaut-original", default="", dest="defaut_original",
+                    help="couches (séparées par des virgules) dont les lignes "
+                         "NON décidées reviennent à la géométrie d'origine")
     args = ap.parse_args()
     out = args.out or str(Path(args.recale).with_name(
         Path(args.recale).stem.replace("_recale", "_final") + ".gpkg"))
@@ -94,8 +103,9 @@ def main():
         _refuser_drive(chemin, nom)
     if args.reference:
         _refuser_drive(args.reference, "--recale-depuis")
-    out, comptes = appliquer(args.source, args.recale, args.decisions, out,
-                             args.reference)
+    out, comptes = appliquer(
+        args.source, args.recale, args.decisions, out, args.reference,
+        {c for c in args.defaut_original.split(",") if c})
     for couche, c in comptes.items():
         print(f"{couche} : {c}")
     print(f"Sorties :\n  {out}")
