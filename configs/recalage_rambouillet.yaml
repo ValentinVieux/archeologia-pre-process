@@ -25,3 +25,7 @@ couches:
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
 seuil_ambiguite: 0.7
+# Résidu = bruit de terrain ici aussi : gain de contraste plat par tranche
+# (+1,9 à +2,7, 87-92 % positif, 360 lignes échantillonnées). Seuil zone à
+# p90 (1,8 m) -> parcellaire 38 % -> 13 % à revoir.
+seuils_statut: {residu_max_m: 1.8}
