@@ -18,3 +18,6 @@ couches:
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
 seuil_ambiguite: 0.7
+# Résidu = bruit de terrain (gain plat par tranche : +2,7 à +3,9, 95-99 %
+# positif, 300 lignes échantillonnées) -> seuil zone p90.
+seuils_statut: {residu_max_m: 1.8}
