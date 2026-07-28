@@ -50,6 +50,12 @@ aliases:
   - { raw: "cheminement", entity_id: chemin_creux, source_dataset: 77_fontainebleau, context: "Digit_Ligne.shp, champ 'Type'", decided: "2026-07-27" }
   # RÉVISION 2026-07-27 (split talus/fosse) : entity_id passé de talus_fosse à fosse.
   - { raw: "fosse", entity_id: fosse, source_dataset: 77_fontainebleau, context: "Digit_Ligne.shp, champ 'Type'", decided: "2026-07-27" }
+  # Blois — audit data_aude (SOLiDAR), parcellaire.shp champ 'type', validé 2026-07-28
+  # T = tracé parcellaire générique (confirmé utilisateur), TF = talus-fossé indistinct,
+  # CC = chemin creux
+  - { raw: "T", entity_id: parcellaire, source_dataset: 41_blois, context: "parcellaire.shp, champ 'type'", decided: "2026-07-28" }
+  - { raw: "TF", entity_id: talus_fosse, source_dataset: 41_blois, context: "parcellaire.shp, champ 'type'", decided: "2026-07-28" }
+  - { raw: "CC", entity_id: chemin_creux, source_dataset: 41_blois, context: "parcellaire.shp, champ 'type'", decided: "2026-07-28" }
   # Rambouillet — audit 78_Foret-Rambouillet_SHP, champ INTERP, validé 2026-07-27
   - { raw: "trou de bombe", entity_id: cratere, source_dataset: 78_rambouillet, context: "digit_points.shp, champ 'INTERP'", decided: "2026-07-27" }
   - { raw: "voie ancienne", entity_id: voie, source_dataset: 78_rambouillet, context: "digit_lignes2.shp, champ 'INTERP'", decided: "2026-07-27" }
@@ -194,3 +200,9 @@ ignored:
   - { raw: "78_ONF_Foret_domaniale_Saint-Germain_sites_ONF", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
   - { raw: "Digit_lignes", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
   - { raw: "Digit_poly_2", source_dataset: 78_saint_germain_marly, decided: "2026-07-28" }
+  # Blois — attributs charbonnières (codes loc/type) et nom de couche
+  - { raw: "dnc", source_dataset: 41_blois, decided: "2026-07-28" }
+  - { raw: "fdb", source_dataset: 41_blois, decided: "2026-07-28" }
+  - { raw: "1", source_dataset: 41_blois, decided: "2026-07-28" }
+  - { raw: "2", source_dataset: 41_blois, decided: "2026-07-28" }
+  - { raw: "Charbonnieres_dia_total", source_dataset: 41_blois, decided: "2026-07-28" }

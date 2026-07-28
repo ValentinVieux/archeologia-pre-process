@@ -18,15 +18,20 @@ for fichier, spec in cfg["sources"].items():
     gdf = gpd.read_file(source / fichier)
     sources[fichier] = gdf
     est_point = gdf.geom_type.dropna().iloc[0] in ("Point", "MultiPoint")
-    for entite in spec["valeurs"].values():
+    entites = ([spec["entite"]] if "entite" in spec else spec["valeurs"].values())
+    for entite in entites:
         geoms_par_entite.setdefault(entite, set()).add("point" if est_point else "autre")
 
 attendu = {}  # couche -> [(fichier, valeur, n_attendu_hors_nulles)]
 for fichier, spec in cfg["sources"].items():
     gdf = sources[fichier]
     est_point = gdf.geom_type.dropna().iloc[0] in ("Point", "MultiPoint")
-    for brut, entite in spec["valeurs"].items():
-        sel = gdf[gdf[spec["champ"]] == brut]
+    if "entite" in spec:  # couche entière -> type_source = nom de fichier (stem)
+        paires = [(Path(fichier).stem, spec["entite"], gdf)]
+    else:
+        paires = [(brut, entite, gdf[gdf[spec["champ"]] == brut])
+                  for brut, entite in spec["valeurs"].items()]
+    for brut, entite, sel in paires:
         n = int((sel.geometry.notna() & ~sel.geometry.is_empty).sum())
         if n == 0:
             continue
@@ -47,9 +52,12 @@ for couche, entrees in sorted(attendu.items()):
     assert set(d["type_source"]) == {b for _, b, _ in entrees}, f"{couche} : type_source"
     for fichier, brut, _ in entrees:  # 1re géométrie valide retrouvée à l'identique
         src = sources[fichier]
-        cand = src[(src[cfg["sources"][fichier]["champ"]] == brut)
-                   & src.geometry.notna() & ~src.geometry.is_empty
-                   & src.geometry.is_valid]
+        spec_f = cfg["sources"][fichier]
+        masque = (src.geometry.notna() & ~src.geometry.is_empty
+                  & src.geometry.is_valid)
+        if "champ" in spec_f:
+            masque &= src[spec_f["champ"]] == brut
+        cand = src[masque]
         if cand.empty:
             continue
         g0 = cand.geometry.iloc[0]

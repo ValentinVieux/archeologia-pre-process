@@ -15,6 +15,8 @@ Format du YAML de mapping :
         champ: <nom du champ de classe>
         valeurs: { "<valeur brute>": <entity_id>, ... }   # aliases.yaml fait foi
         exclure: ["<valeur ignorée>", ...]                # optionnel (ex. "Autre")
+      <fichier2.shp>:
+        entite: <entity_id>            # couche entière -> une entité (pas de champ)
 
 Usage :
     .venv\\Scripts\\python.exe tools\\build_zone_gpkg.py <mapping.yaml> <dossier_source> [--out <dossier>]
@@ -51,6 +53,12 @@ def main():
         gdf = gpd.read_file(source / fichier)
         if gdf.crs is None or gdf.crs.to_epsg() != cfg["crs"]:
             sys.exit(f"{fichier} : CRS {gdf.crs} inattendu (EPSG:{cfg['crs']} requis)")
+        if "entite" in spec:  # couche entière -> une entité (pas de champ de classe)
+            donnees[fichier] = (gdf, spec)
+            est_point = gdf.geom_type.iloc[0] in ("Point", "MultiPoint") if len(gdf) else False
+            geoms_par_entite.setdefault(spec["entite"], set()).add(
+                "point" if est_point else "autre")
+            continue
         valeurs = set(gdf[spec["champ"]].dropna())
         exclues = set(spec.get("exclure", []))
         for v in exclues & valeurs:
@@ -72,8 +80,13 @@ def main():
     couches_ecrites = set()
     for fichier, (gdf, spec) in donnees.items():
         est_point = gdf.geom_type.iloc[0] in ("Point", "MultiPoint") if len(gdf) else False
-        for brut, entite in spec["valeurs"].items():
-            sel = gdf[gdf[spec["champ"]] == brut].copy()
+        if "entite" in spec:
+            selections = [(Path(fichier).stem, spec["entite"])]
+        else:
+            selections = list(spec["valeurs"].items())
+        for brut, entite in selections:
+            sel = (gdf.copy() if "entite" in spec
+                   else gdf[gdf[spec["champ"]] == brut].copy())
             n_nulles = int((sel.geometry.isna() | sel.geometry.is_empty).sum())
             if n_nulles:  # géométries vidées par l'édition (cas Haye parcellaire v2)
                 sel = sel[sel.geometry.notna() & ~sel.geometry.is_empty]

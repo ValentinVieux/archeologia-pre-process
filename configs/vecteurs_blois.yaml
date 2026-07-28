@@ -1,0 +1,16 @@
+# Mapping GPKG entités — 41_blois (audit du 2026-07-28, aliases.yaml fait foi).
+# Codes SOLiDAR confirmés par l'utilisateur : T = tracé parcellaire générique,
+# TF = talus-fossé indistinct (entité fusionnée), CC = chemin creux.
+# Charbonnières : couche entière -> entité (mode entite:), préservée pour les
+# futurs modèles circulaires.
+gpkg_nom: blois_entites_l93.gpkg
+crs: 2154
+sources:
+  data_aude/Parcellaire_solidar/parcellaire.shp:
+    champ: type
+    valeurs:
+      T: parcellaire
+      TF: talus_fosse
+      CC: chemin_creux
+  data_aude/Charbonnières_solidar/Charbonnieres_dia_total.shp:
+    entite: charbonniere
