@@ -1,0 +1,19 @@
+# Corpus d'entraînement multi-zones — segmentation RF-DETR structures linéaires.
+# Fusion des 5 datasets v2 (vecteurs recalés, buffer 7 m, splits spatiaux
+# préservés tels quels — jamais re-tirés). Classes d'entraînement CANONIQUES
+# (contrat plugin) ; la provenance par zone vit dans le champ `zone` de chaque
+# image et dans corpus_manifest.yaml. voie -> parcellaire : décision
+# utilisateur 2026-07-28 (même classe que les parcellaires de la zone).
+# Éval externe : bretagne (35_anomalie_lidar_bretagne), JAMAIS entraînée —
+# hors corpus par construction.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml
+#         <dossier_des_datasets> [--out <dossier>]
+corpus: lineaires_648_v2
+classes: [parcellaire, talus, fosse, talus_fosse, chemin_creux]
+fusions: {voie: parcellaire}
+datasets:
+  - lineaires_haye_ld_648_v2
+  - lineaires_fontainebleau_ld_648_v2
+  - lineaires_rambouillet_ld_648_v2
+  - lineaires_saint_germain_ld_648_v2
+  - lineaires_blois_ld_648_v2
