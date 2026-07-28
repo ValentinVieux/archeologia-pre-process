@@ -332,10 +332,16 @@ def main():
                 nom = (f"{classe}_{args.suffixe_classes}"
                        if args.suffixe_classes else classe)
                 classes_attendues[renommages.get(nom, nom)] += n
+            # ensemble des classes FINALES de l'image : un renommage qui
+            # FUSIONNE deux classes (ex. voie->parcellaire) ne doit compter
+            # l'image qu'une fois pour la classe cible
+            finales = set()
             for classe in cpt:
                 nom = (f"{classe}_{args.suffixe_classes}"
                        if args.suffixe_classes else classe)
-                images_par_classe[renommages.get(nom, nom)] += 1
+                finales.add(renommages.get(nom, nom))
+            for nom in finales:
+                images_par_classe[nom] += 1
         divergences = []
         for attente in (0, 60, 120, 180):
             if attente:
