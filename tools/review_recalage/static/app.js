@@ -125,6 +125,7 @@ async function ouvrir(id, depuisHistorique = false) {
   etat.base = detail.recale.map((p) => p.map(versPx));
   etat.parts = detail.editee ? detail.editee.map((p) => p.map(versPx))
                              : clone(etat.base);
+  etat.chargees = clone(etat.parts); // état à l'ouverture (cible d'Échap)
   etat.editee = !!detail.editee;
   etat.dirty = false;
   etat.sel = null; etat.undo = []; etat.redo = [];
@@ -521,8 +522,18 @@ window.addEventListener("keydown", (e) => {
     case "v": case "V": etat.voisines = !etat.voisines; dessiner(); break;
     case "c": case "C": etat.corrVoisines = !etat.corrVoisines; dessiner(); break;
     case "d": case "D": commencerDessin(); break;
-    case "Escape": { // retour à la dernière entité travaillée
-      let prec = etat.historique.pop();
+    case "Escape": {
+      if (etat.dirty) { // édition en cours : Échap l'annule (Ctrl+Z la rend)
+        marquer();
+        etat.parts = clone(etat.chargees);
+        etat.editee = JSON.stringify(etat.parts) !== JSON.stringify(etat.base);
+        etat.dirty = false;
+        etat.sel = null;
+        rendrePanneau();
+        dessiner();
+        break;
+      }
+      let prec = etat.historique.pop(); // sinon : retour à l'entité précédente
       while (prec === etat.detail.id) prec = etat.historique.pop();
       if (prec) ouvrir(prec, true);
       break;
