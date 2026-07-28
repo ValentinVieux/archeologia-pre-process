@@ -1,0 +1,22 @@
+# Dataset v2 — structures linéaires de Blois (SOLiDAR) sur indice LD (run plugin,
+# dalles LHD 0,5 m/px EPSG:2154, VRT indices/RVT/tif). 3 classes : T=parcellaire
+# (confirmé utilisateur : tracé générique), TF=talus_fosse (indistinct), CC=
+# chemin_creux. Buffer 5 m (décision utilisateur 2026-07-28). Charbonnières hors
+# modèle linéaire (préservées au GPKG pour les modèles circulaires).
+dataset: lineaires_blois_ld_648_v1
+zone: centre_val_de_loire/41_blois
+raster: <copie locale>\indices\RVT\tif\index.vrt
+gpkg: <copie locale>\blois_entites_l93.gpkg
+couches:
+  parcellaire:   {classe: parcellaire,   buffer_m: 5.0}
+  talus_fosse:   {classe: talus_fosse,   buffer_m: 5.0}
+  chemin_creux:  {classe: chemin_creux,  buffer_m: 5.0}
+tuile_px: 648
+bloc_m: 2000
+split: {train: 70, valid: 20, test: 10}
+negatifs_pct: 10
+min_couverture_valide: 0.5
+# fraction VALIDE (hors nodata) de la bbox — ne filtre PAS les fragments coupés par la grille
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null   # EPSG:2154 embarqué
