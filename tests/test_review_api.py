@@ -85,4 +85,26 @@ d2 = client2.get("/api/ligne/parcellaire_0").json()
 assert d2["decision"] == "editee" and d2["editee"] is not None
 p = client2.get("/api/progression").json()
 assert p["decidees_total"] == 1 and p["par_decision"]["editee"] == 1
-print("api review recalage : OK")
+
+# ---------------------------------------------------------------------------
+# analyse_corrections sur ces décisions + décisions fabriquées
+# ---------------------------------------------------------------------------
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+from analyse_corrections import analyser, typologie_edition
+
+client2.post("/api/decision", json={"id": "parcellaire_1",
+                                    "decision": "original"})
+client2.post("/api/decision", json={"id": "parcellaire_2", "decision": "exclue"})
+rapport = analyser(decisions, gpkg)
+parc = rapport["couches"]["parcellaire"]
+assert rapport["decisions_total"] == 3
+assert parc["decisions"] == {"editee": 1, "original": 1, "exclue": 1}
+assert parc["distance_edition_mediane_m"] is not None
+# parcellaire_1 gardée en original malgré 95 % de points nets -> comptée
+typ, _ = typologie_edition(lignes[0].parallel_offset(3.0, "left"),
+                           lignes[0].parallel_offset(1.0, "left"), lignes[0])
+assert typ == "translation_residuelle", typ
+typ2, _ = typologie_edition(lignes[0], lignes[0].parallel_offset(2.0, "left"),
+                            lignes[0])
+assert typ2 == "recalage_nuisible", typ2
+print("api review + analyse corrections : OK")
