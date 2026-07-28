@@ -448,7 +448,12 @@ def run_slicing(cfg, out_dir, seed=42):
             t["split"] = affectation[t["bloc"]]
             t["nom"] = f"{zone_id}_r{t['row']:04d}_c{t['col']:04d}.png"
 
-        # --- passe 2 : écriture des images + COCO par split
+        # --- passe 2 : écriture des images + COCO par split, avec dédup de contenu.
+        # La plateforme Roboflow déduplique par CONTENU : deux tuiles aux pixels
+        # strictement identiques (zones LD uniformes) fusionnent à l'upload — les
+        # négatifs jumeaux sont écartés ici (constat Blois 2026-07-28 : 23 jumelles,
+        # toutes négatives). Des tuiles ANNOTÉES au contenu identique sont conservées
+        # mais signalées (labels contradictoires possibles + fusion plateforme).
         categories = [{"id": i + 1, "name": c} for i, c in enumerate(classes_ordre)]
         cat_ids = {c["name"]: c["id"] for c in categories}
         cocos = {s: {"images": [], "annotations": [], "categories": categories}
@@ -456,8 +461,19 @@ def run_slicing(cfg, out_dir, seed=42):
         compteur_annos = {s: 0 for s in ORDRE_SPLITS}
         for s in ORDRE_SPLITS:
             (out_dir / s).mkdir(parents=True, exist_ok=True)
+        hashes_vus = set()
+        doublons_negatifs, collisions_annotees = 0, 0
+        selection_retenue = []
         for t in selection:
             donnees = src.read(1, window=t["fenetre"])
+            h = hashlib.sha1(donnees.tobytes()).hexdigest()
+            if h in hashes_vus:
+                if not t["annos"]:
+                    doublons_negatifs += 1
+                    continue
+                collisions_annotees += 1
+            hashes_vus.add(h)
+            selection_retenue.append(t)
             Image.fromarray(np.stack([donnees] * 3, axis=-1), mode="RGB").save(
                 out_dir / t["split"] / t["nom"], "PNG")
             coco = cocos[t["split"]]
@@ -475,6 +491,12 @@ def run_slicing(cfg, out_dir, seed=42):
         for s in ORDRE_SPLITS:
             (out_dir / s / "_annotations.coco.json").write_text(
                 json.dumps(cocos[s], ensure_ascii=False), encoding="utf-8")
+        selection = selection_retenue
+        if doublons_negatifs:
+            print(f"  dédup contenu : {doublons_negatifs} négatif(s) jumeau(x) écarté(s)")
+        if collisions_annotees:
+            print(f"  AVERTISSEMENT : {collisions_annotees} tuile(s) ANNOTÉE(S) au "
+                  "contenu identique à une autre — fusion possible à l'upload, vérifier")
 
         gsd = (abs(src.transform.a), abs(src.transform.e))
         grille_info = {"origine": [src.transform.c, src.transform.f],
@@ -514,9 +536,13 @@ def run_slicing(cfg, out_dir, seed=42):
             print(f"AVERTISSEMENT : le split {s} est VIDE (trop peu de blocs annotés "
                   "pour la taille de bloc demandée) — dataset inutilisable tel quel "
                   "pour l'évaluation ; réduire bloc_m ou revoir la zone.")
-    stats = {"tuiles": len(selection), "annotees": len(annotees),
-             "negatives": len(negatives), "ecartees_nodata": len(tuiles) - len(gardees),
+    stats = {"tuiles": len(selection),
+             "annotees": sum(1 for t in selection if t["annos"]),
+             "negatives": sum(1 for t in selection if not t["annos"]),
+             "ecartees_nodata": len(tuiles) - len(gardees),
              "vides_non_retenues": len(vivier_neg) - len(negatives),
+             "doublons_contenu_ecartes": doublons_negatifs,
+             "collisions_contenu_annotees": collisions_annotees,
              "par_split": par_split,
              "comptes": {s: dict(sorted(comptes[s].items())) for s in ORDRE_SPLITS}}
     return stats
