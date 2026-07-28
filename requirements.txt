@@ -8,3 +8,6 @@ PyYAML
 rasterio
 Pillow
 roboflow
+scipy
+fastapi
+uvicorn
