@@ -1,0 +1,36 @@
+# Dataset v2 — REGÉNÉRATION post-recalage (décisions 2026-07-28) : vecteurs =
+# GPKG v2 recalés/validés en revue humaine (training/vecteurs/*_v2.gpkg),
+# buffer standard 7 m de largeur totale (14 px à 0,5 m/px). Historique des
+# choix de zone : voir lineaires_<zone>_ld_648_v1.yaml. Chemins : COPIES
+# LOCALES obligatoires (le script refuse G:).
+dataset: lineaires_fontainebleau_ld_648_v2
+zone: ile_de_france/77_fontainebleau
+raster: <copie locale>\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+gpkg: <copie locale>\77_foret_de_fontainebleau_entites_l93_final.gpkg
+couches:
+  parcellaire:
+    classe: parcellaire
+    buffer_m: 7.0
+  talus:
+    classe: talus
+    buffer_m: 7.0
+  fosse:
+    classe: fosse
+    buffer_m: 7.0
+  chemin_creux:
+    classe: chemin_creux
+    buffer_m: 7.0
+  tranchees_et_boyaux:
+    ignorer: true
+    buffer_m: 7.0
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null
