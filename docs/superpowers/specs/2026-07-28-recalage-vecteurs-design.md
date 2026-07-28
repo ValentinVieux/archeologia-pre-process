@@ -195,6 +195,30 @@ vérité terrain, avec contrôle de non-régression sur les 110 acceptées) :
   annotation à 13 m du signal) sont indétectables par ces mesures ; couverts
   par la revue + l'échantillon d'auto_ok.
 
+## Retour de la session de revue 2 (2026-07-28, 363 décisions cumulées)
+
+Observation utilisateur confirmée : **les entités proches se recalaient l'une
+sur l'autre** — 250 paires quasi-fusionnées (recalés < 1 m pour des origines
+> 2,5 m), la pénalité de distance ne suffisant pas quand le voisin plus
+contrasté partage la fenêtre. Correctifs :
+
+- **Couloir partagé** (`bornes_laterales`) : la fenêtre de chaque profil est
+  tronquée à mi-distance de la ligne voisine la plus proche de chaque côté
+  (plancher 2 m) — les annotations se partagent l'espace.
+- **Pic local intérieur** : un extremum n'est retenu que s'il est un maximum
+  local encadré — un maximum contre une borne (couloir ou fenêtre) est le
+  flanc tronqué d'une structure voisine, jamais une cible ; même règle pour
+  le second pic du détecteur d'ambiguïté (sinon le flanc du voisin rendait
+  tout ambigu).
+- Bug exposé par la vérification : le signal conditionnant le recalage d'un
+  nœud partagé est désormais testé par PARTIE de multi-ligne.
+
+Bilan (42 éditions parcellaire = vérité terrain) : médiane d(édité, recalé)
+1,95 → **1,19 m** ; quasi-fusions 250 → **45** ; a_revoir 887 → 648 (11 %) ;
+gain de contraste +6,6. Talus_fosse stable (l'unique « régression » est une
+ligne dont le tracé suit le talus — l'exception 1/7 à la convention sombre —
+couverte par l'édition manuelle).
+
 ## Hors périmètre (plus tard)
 
 Côté entraînement RF-DETR (poids de loss, métriques CCQ/centerline — proposés le
