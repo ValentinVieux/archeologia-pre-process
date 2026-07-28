@@ -5,9 +5,16 @@ zone: 54_foret_de_haye
 raster_gsd_attendu: 0.5
 couches:
   # parcellaire = talus/levées de terre -> extremum CLAIR sur LD (mesuré, cf. spec)
-  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10}
-  # fossébutte fusionné indissociable -> polarité choisie ligne par ligne
-  talus_fosse: {polarite: auto, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10}
+  # poids_distance 2.0 : retour session 1 — 10 captures de voisins plus
+  # contrastés dans la fenêtre, corrigées à la main vers la structure proche
+  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                poids_distance: 2.0}
+  # fossébutte fusionné = DIPÔLE talus clair + fossé sombre (~2,5 m d'écart).
+  # DÉCISION session 1 (2026-07-28, 7 éditions humaines) : le tracé suit le
+  # FOSSÉ -> polarité SOMBRE imposée (médiane 1,02 m contre 2,40 en auto) ;
+  # fenêtre 8 (10 capturait des sombres plus lointains).
+  talus_fosse: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+                poids_distance: 2.0}
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
 seuil_ambiguite: 0.7

@@ -30,7 +30,12 @@ from slice_zone import _refuser_drive
 
 PARAMS_DEFAUT = {"polarite": "auto", "fenetre_m": 8.0, "pas_m": 2.0,
                  "seuil_contraste": 10.0, "seuil_ambiguite": 0.7,
-                 "poids_derivee": 4.0, "pas_echant_m": 0.25}
+                 "poids_derivee": 4.0, "pas_echant_m": 0.25,
+                 # préférence pour la structure PROCHE : un extremum à d mètres
+                 # doit surpasser le proche de poids_distance*d en contraste
+                 # (retour session 1 Haye : captures de voisins + dipôle
+                 # talus/fossé résolus par ce prior de proximité)
+                 "poids_distance": 2.0}
 POIDS_ANCRE = 1e6
 
 
@@ -76,11 +81,14 @@ def densifier(ligne, pas_m):
 
 
 def extremum_profil(profil, polarite, seuil_contraste, seuil_ambiguite,
-                    pas_echant_m=0.25):
+                    pas_echant_m=0.25, poids_distance=0.0):
     """(offset_m | None, contraste, ambigu) — extremum sous-pixel d'un profil.
 
     L'offset est relatif au CENTRE du profil (position actuelle du point),
-    positif vers l'extrémité du profil (sens de la normale).
+    positif vers l'extrémité du profil (sens de la normale). poids_distance
+    pénalise les extremums lointains (contraste/m) : la structure proche gagne
+    sauf si la lointaine est nettement plus forte ; le contraste rapporté reste
+    celui du pic brut.
     """
     p = np.asarray(profil, dtype=float)
     if np.isnan(p).all():
@@ -88,7 +96,14 @@ def extremum_profil(profil, polarite, seuil_contraste, seuil_ambiguite,
     signe = 1.0 if polarite == "clair" else -1.0
     s = signe * p
     ref = np.nanmedian(s)
-    idx = int(np.nanargmax(s))
+    centre_i = (len(s) - 1) / 2.0
+    dist_m = np.abs(np.arange(len(s)) - centre_i) * pas_echant_m
+    idx = int(np.nanargmax(s - poids_distance * dist_m))
+    # la pénalité choisit LE pic ; sa position exacte vient du signal brut
+    while 0 < idx and s[idx - 1] > s[idx]:
+        idx -= 1
+    while idx < len(s) - 1 and s[idx + 1] > s[idx]:
+        idx += 1
     contraste = float(s[idx] - ref)
     if contraste < seuil_contraste:
         return None, contraste, False
@@ -98,8 +113,7 @@ def extremum_profil(profil, polarite, seuil_contraste, seuil_ambiguite,
         denom = s[idx - 1] - 2 * s[idx] + s[idx + 1]
         if abs(denom) > 1e-9:
             delta = float(np.clip(0.5 * (s[idx - 1] - s[idx + 1]) / denom, -1, 1))
-    centre = (len(s) - 1) / 2.0
-    offset = (idx + delta - centre) * pas_echant_m
+    offset = (idx + delta - centre_i) * pas_echant_m
     # ambiguïté : second pic net à plus de 3 m de l'extremum
     exclu = int(round(3.0 / pas_echant_m))
     reste = s.copy()
@@ -161,12 +175,18 @@ def recaler_ligne(ligne, lecteur, params, ancres_noeuds=None):
         ambigus = np.zeros(n, dtype=bool)
         for i in range(n):
             off, c, amb = extremum_profil(profils[i], pol, p["seuil_contraste"],
-                                          p["seuil_ambiguite"], p["pas_echant_m"])
+                                          p["seuil_ambiguite"], p["pas_echant_m"],
+                                          p["poids_distance"])
             contrastes[i], ambigus[i] = c, amb
             if off is not None and not amb:
                 offsets[i] = off
         nets = int(np.isfinite(offsets).sum())
-        score = float(np.nansum(np.where(np.isfinite(offsets), contrastes, 0.0)))
+        # score de polarité pénalisé par la distance : entre deux pôles d'un
+        # dipôle talus/fossé, on retient celui qui colle à l'annotation
+        score = float(np.nansum(np.where(
+            np.isfinite(offsets),
+            np.maximum(contrastes - p["poids_distance"] * np.abs(
+                np.nan_to_num(offsets)), 0.0), 0.0)))
         cand = {"pol": pol, "offsets": offsets, "contrastes": contrastes,
                 "ambigus": ambigus, "nets": nets, "score": score}
         if meilleurs is None or cand["score"] > meilleurs["score"]:
@@ -226,8 +246,11 @@ def noeuds_partages(gdfs, tol=0.5):
     return noeuds
 
 
-SEUILS_STATUT = {"pts_nets_pct_min": 40.0, "ambigus_pct_max": 35.0,
-                 "residu_max_m": 1.0}
+# Calibrés sur la session de revue 1 (Haye, 135 décisions) : ~15 % de lignes
+# à revoir ; les échecs sous ces seuils sont à 2-4 m (absorbés par le buffer
+# 7 m) et indétectables par ces mesures (signal faible, l'humain sait mieux).
+SEUILS_STATUT = {"pts_nets_pct_min": 30.0, "ambigus_pct_max": 40.0,
+                 "residu_max_m": 1.2}
 
 
 def statut_ligne(mesures):

@@ -76,6 +76,18 @@ plat = np.full(33, 100.0)
 off3, c3, _ = extremum_profil(plat, "clair", 10.0, 0.7, pas_echant_m=0.5)
 assert off3 is None and c3 < 1.0  # aucun signal
 
+# Pénalité de distance : pic faible proche (60 à +1 m) vs fort lointain (80 à
+# +6 m) — sans pénalité on capture le voisin fort, avec on reste sur le proche
+double = np.full(17, 100.0)
+double[9] = 160.0   # +1 m (pas 1 m, centre à l'index 8)
+double[14] = 180.0  # +6 m
+off_sans, _, _ = extremum_profil(double, "clair", 10.0, 0.2, pas_echant_m=1.0)
+assert abs(off_sans - 6.0) < 0.6, off_sans
+off_avec, c_avec, _ = extremum_profil(double, "clair", 10.0, 0.2,
+                                      pas_echant_m=1.0, poids_distance=8.0)
+assert abs(off_avec - 1.0) < 0.6, off_avec
+assert c_avec > 50  # le contraste rapporté reste celui du pic brut
+
 o = np.array([np.nan, 2.0, 2.2, np.nan, 2.4, 30.0, 2.6, np.nan, 3.0])
 d = regulariser(o, poids_derivee=4.0, ancres={})
 assert np.all(np.isfinite(d)) and abs(d[0] - d[1]) < 1.5

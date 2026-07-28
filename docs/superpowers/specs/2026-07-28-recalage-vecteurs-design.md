@@ -165,6 +165,36 @@ tracés d'origine ne partent jamais à l'entraînement.
 4. Une fois la logique stabilisée : les 4 autres zones en série, puis la cascade
    re-slice/re-upload globale.
 
+## Retour de la session de revue 1 (2026-07-28, 135 décisions sur Haye)
+
+Parcellaire 110/128 recalés acceptés tels quels ; talus_fosse 0/7. Deux
+mécanismes d'échec, une cause commune (« le plus contrasté gagne ») :
+
+1. **Capture de voisin** (10 parcellaire) : une structure plus forte dans la
+   fenêtre ±8 m aspire l'extremum alors que la vraie structure (faible,
+   contraste 16-28) est à < 1,5 m de l'annotation.
+2. **Dipôle talus/fossé** : le fossébutte = pôle clair + pôle sombre séparés
+   de ~2,5 m (100 % des profils) ; l'auto-polarité au contraste total choisit
+   parfois le mauvais pôle (jusqu'à 7,65 m d'erreur).
+
+Correctifs actés (calibrés sur les 22 géométries éditées par l'humain =
+vérité terrain, avec contrôle de non-régression sur les 110 acceptées) :
+
+- **`poids_distance` (défaut 2,0)** : l'extremum est choisi sur le profil
+  pénalisé de `poids × |offset|` (la structure proche gagne sauf si la
+  lointaine est bien plus forte) ; la position exacte reste celle du pic brut
+  (hill-climb) ; le score de polarité auto est pénalisé pareil.
+  Parcellaire : médiane d(édité, recalé) 2,45 → 1,92 m ; poids 3 rejeté
+  (dérive > 1 m sur 33/110 lignes validées = sur-apprentissage).
+- **talus_fosse Haye : polarité SOMBRE imposée** (le tracé suit le fossé,
+  6/7 éditions) — médiane 2,40 → 1,02 m ; fenêtre restée à 8 m (10 m
+  capturait des sombres plus lointains).
+- **Seuils a_revoir recalibrés** : pts_nets < 30 % / ambigus > 40 % /
+  résidu > 1,2 m → ~15 % à revoir (objectif atteint). Limite connue : les
+  échecs résiduels (~2-4 m, signal faible où l'humain sait mieux — ex.
+  annotation à 13 m du signal) sont indétectables par ces mesures ; couverts
+  par la revue + l'échantillon d'auto_ok.
+
 ## Hors périmètre (plus tard)
 
 Côté entraînement RF-DETR (poids de loss, métriques CCQ/centerline — proposés le
