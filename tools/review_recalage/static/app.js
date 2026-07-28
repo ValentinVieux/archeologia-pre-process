@@ -236,7 +236,9 @@ function sommetProche(pos) {
 }
 
 function segmentProche(pos) {
-  const seuil = 10 / etat.vue.zoom;
+  // saisie sur toute la bande de 7 m (3,5 m de part et d'autre de l'axe),
+  // jamais moins de 10 px écran : cliquer l'annotation ne doit pas panner
+  const seuil = Math.max(10 / etat.vue.zoom, 3.5 / etat.gsd);
   let meilleur = null;
   etat.parts.forEach((part, ip) => {
     for (let i = 0; i < part.length - 1; i++) {
