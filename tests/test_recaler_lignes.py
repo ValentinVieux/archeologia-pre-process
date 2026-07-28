@@ -235,6 +235,18 @@ run_recalage(cfg_path, gpkg_path, raster_path, out)  # re-run : écrase, ne plan
 parc2 = gpd.read_file(gpkg_out, layer="parcellaire")
 assert parc2[parc2["src"] == "a"].iloc[0].geometry.equals(ligne_ok.geometry)  # déterminisme
 
+# seuils de statut surchargeables par zone (résidu ultra-strict -> a_revoir)
+cfg_seuils = tmp / "recalage_seuils.yaml"
+cfg_seuils.write_text(yaml.safe_dump({
+    "zone": "jouet_seuils", "raster_gsd_attendu": 0.5,
+    "couches": {"parcellaire": {"polarite": "clair"}},
+    "seuils_statut": {"residu_max_m": 0.0001}}), encoding="utf-8")
+out_seuils = tmp / "out_seuils"
+run_recalage(cfg_seuils, gpkg_path, raster_path, out_seuils)
+p_s = gpd.read_file(out_seuils / "jouet_seuils_entites_l93_recale.gpkg",
+                    layer="parcellaire")
+assert p_s[p_s["src"] == "a"].iloc[0]["statut_recalage"] == "a_revoir"
+
 # ---------------------------------------------------------------------------
 # Contrôleur verif_recalage : cas conforme puis cas volontairement cassé
 # ---------------------------------------------------------------------------

@@ -19,3 +19,8 @@ couches:
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
 seuil_ambiguite: 0.7
+# Relief gréseux bruité : résidu médian 1,29 m (vs ~0,8 à Haye) alors que le
+# gain de contraste est PLAT par tranche de résidu (+2,0 à +2,9, 85-92 %
+# positif, mesuré sur 480 lignes échantillonnées) — le résidu n'y discrimine
+# pas la qualité. Seuil zone : 2,0 m (périmètre 62 % -> ~30 %).
+seuils_statut: {residu_max_m: 2.0}

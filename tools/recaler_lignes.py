@@ -291,12 +291,13 @@ SEUILS_STATUT = {"pts_nets_pct_min": 30.0, "ambigus_pct_max": 40.0,
                  "residu_max_m": 1.2}
 
 
-def statut_ligne(mesures):
+def statut_ligne(mesures, seuils=None):
+    s = seuils or SEUILS_STATUT
     if not mesures.get("recale"):
         return "sans_signal"
-    if (mesures["pts_nets_pct"] < SEUILS_STATUT["pts_nets_pct_min"]
-            or mesures["ambigus_pct"] > SEUILS_STATUT["ambigus_pct_max"]
-            or mesures["residu_m"] > SEUILS_STATUT["residu_max_m"]):
+    if (mesures["pts_nets_pct"] < s["pts_nets_pct_min"]
+            or mesures["ambigus_pct"] > s["ambigus_pct_max"]
+            or mesures["residu_m"] > s["residu_max_m"]):
         return "a_revoir"
     return "auto_ok"
 
@@ -423,8 +424,11 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
     if gpkg_out.exists():
         gpkg_out.unlink()
 
+    # seuils de statut surchargeables par zone (ex. relief bruité -> résidu
+    # naturellement plus haut, cf. Fontainebleau chaos gréseux)
+    seuils = {**SEUILS_STATUT, **cfg.get("seuils_statut", {})}
     rapport = {"zone": cfg["zone"], "raster": str(raster_path),
-               "gpkg_source": str(gpkg_path), "seuils_statut": dict(SEUILS_STATUT),
+               "gpkg_source": str(gpkg_path), "seuils_statut": dict(seuils),
                "parametres": {"couches": {c: dict(p) for c, p in
                                           params_couches.items()}},
                "couches": {}}
@@ -440,7 +444,7 @@ def run_recalage(config_path, gpkg_path, raster_path, out_dir):
                 g, m = passe1[(couche, idx)]
             geoms.append(g)
             lignes_mesures.append(m)
-            statuts.append(statut_ligne(m))
+            statuts.append(statut_ligne(m, seuils))
         sortie = gdf.copy()
         sortie["geom_origine"] = [g.wkt if g is not None else None
                                   for g in gdf.geometry]
