@@ -130,4 +130,49 @@ gdfs = {"c1": gpd.GeoDataFrame(geometry=[a], crs="EPSG:2154"),
 noeuds = noeuds_partages(gdfs, tol=0.5)
 partages = [n for n, membres in noeuds.items() if len(membres) >= 2]
 assert len(partages) == 1, noeuds
-print("noyau recalage : OK")
+
+# ---------------------------------------------------------------------------
+# Intégration : pipeline complet sur mini GPKG 2 couches
+# ---------------------------------------------------------------------------
+import yaml
+from shapely import wkt
+from recaler_lignes import run_recalage
+
+gpkg_path = tmp / "jouet_entites_l93.gpkg"
+gpd.GeoDataFrame({"src": ["a", "b"]}, geometry=[decalee, loin],
+                 crs="EPSG:2154").to_file(gpkg_path, layer="parcellaire", driver="GPKG")
+gpd.GeoDataFrame({"src": ["c"]}, geometry=[creux_decale],
+                 crs="EPSG:2154").to_file(gpkg_path, layer="talus_fosse", driver="GPKG")
+cfg_path = tmp / "recalage_jouet.yaml"
+cfg_path.write_text(yaml.safe_dump({
+    "zone": "jouet", "raster_gsd_attendu": 0.5,
+    "couches": {"parcellaire": {"polarite": "clair"},
+                "talus_fosse": {"polarite": "auto"}},
+    "lissage": {"poids_derivee": 4.0},
+    "seuil_points_nets": 5, "seuil_ambiguite": 0.7}), encoding="utf-8")
+out = tmp / "out"
+run_recalage(cfg_path, gpkg_path, raster_path, out)
+
+gpkg_out = out / "jouet_entites_l93_recale.gpkg"
+parc = gpd.read_file(gpkg_out, layer="parcellaire")
+tf = gpd.read_file(gpkg_out, layer="talus_fosse")
+assert len(parc) == 2 and len(tf) == 1  # zéro ligne perdue/ajoutée
+ligne_ok = parc[parc["src"] == "a"].iloc[0]
+ligne_loin = parc[parc["src"] == "b"].iloc[0]
+assert ligne_ok["statut_recalage"] == "auto_ok"
+assert ligne_loin["statut_recalage"] == "sans_signal"
+assert wkt.loads(ligne_loin["geom_origine"]).equals(ligne_loin.geometry)  # intacte
+assert wkt.loads(ligne_ok["geom_origine"]).equals(decalee)  # origine conservée
+assert ligne_ok.geometry.distance(verite_crete) < 1.0
+assert tf.iloc[0]["polarite_retenue"] == "sombre"
+assert {"score", "offset_median_m", "pts_nets_pct", "id_recalage"} <= set(parc.columns)
+
+rapport = yaml.safe_load((out / "recalage_rapport.yaml").read_text(encoding="utf-8"))
+assert rapport["couches"]["parcellaire"]["statuts"]["auto_ok"] == 1
+assert rapport["couches"]["parcellaire"]["statuts"]["sans_signal"] == 1
+assert rapport["parametres"]["couches"]["parcellaire"]["polarite"] == "clair"
+
+run_recalage(cfg_path, gpkg_path, raster_path, out)  # re-run : écrase, ne plante pas
+parc2 = gpd.read_file(gpkg_out, layer="parcellaire")
+assert parc2[parc2["src"] == "a"].iloc[0].geometry.equals(ligne_ok.geometry)  # déterminisme
+print("noyau + pipeline recalage : OK")

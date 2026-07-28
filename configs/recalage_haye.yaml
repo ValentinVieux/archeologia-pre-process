@@ -1,0 +1,13 @@
+# Recalage 54_foret_de_haye — zone pilote (spec 2026-07-28-recalage-vecteurs-design.md)
+# Usage : .venv\Scripts\python.exe tools\recaler_lignes.py configs\recalage_haye.yaml
+#         <copie locale du GPKG entites> <VRT LD local> --out <dossier>
+zone: 54_foret_de_haye
+raster_gsd_attendu: 0.5
+couches:
+  # parcellaire = talus/levées de terre -> extremum CLAIR sur LD (mesuré, cf. spec)
+  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10}
+  # fossébutte fusionné indissociable -> polarité choisie ligne par ligne
+  talus_fosse: {polarite: auto, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10}
+lissage: {poids_derivee: 4.0}
+seuil_points_nets: 5
+seuil_ambiguite: 0.7
