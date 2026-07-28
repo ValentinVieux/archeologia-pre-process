@@ -26,14 +26,27 @@ def rechercher(base, cle, tag, limit=250):
 
 
 def supprimer(base, cle, image_id):
-    """Supprime une image ; les variantes d'endpoint sont essayées dans l'ordre."""
+    """Supprime une image — variantes d'endpoint + retries sur erreurs 5xx.
+
+    Les messages d'erreur ne doivent JAMAIS contenir l'URL brute (la clé API y
+    figure) : on ne remonte que le code HTTP et l'id d'image.
+    """
     for chemin in (f"{base}/images/{image_id}", f"{base}/{image_id}"):
-        r = requests.delete(f"{chemin}?api_key={cle}", timeout=60)
-        if r.status_code in (200, 204):
-            return True
-        if r.status_code in (404, 405):
-            continue
-        r.raise_for_status()
+        for tentative in range(4):
+            try:
+                r = requests.delete(f"{chemin}?api_key={cle}", timeout=60)
+            except requests.RequestException:
+                time.sleep(2 * (tentative + 1))
+                continue
+            if r.status_code in (200, 204):
+                return True
+            if r.status_code in (404, 405):
+                break  # variante d'endpoint suivante
+            if r.status_code >= 500:  # transitoire : backoff puis retry
+                time.sleep(2 * (tentative + 1))
+                continue
+            print(f"HTTP {r.status_code} sur suppression de {image_id}")
+            return False
     return False
 
 
