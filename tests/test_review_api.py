@@ -103,6 +103,8 @@ voisines = {v["id"]: v for v in d1["voisines"]}
 assert "parcellaire_0" in voisines and "parcellaire_2" not in voisines
 assert voisines["parcellaire_0"]["couche"] == "parcellaire"
 assert abs(voisines["parcellaire_0"]["parts"][0][0][0] - 600012.0) < 1e-6  # éditée
+assert voisines["parcellaire_0"]["decision"] == "editee"
+assert voisines["parcellaire_0"]["origine"][0][0] == [600010.0, 6700050.0]
 
 rapport = analyser(decisions, gpkg)
 parc = rapport["couches"]["parcellaire"]

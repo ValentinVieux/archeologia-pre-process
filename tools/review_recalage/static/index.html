@@ -17,7 +17,11 @@
       <option value="sans_signal">sans_signal</option>
     </select>
     <select id="f-couche"><option value="">toutes couches</option></select>
-    <label><input type="checkbox" id="f-restantes" checked> non décidées</label>
+    <select id="f-etat">
+      <option value="a_traiter">à traiter</option>
+      <option value="decidees">décidées</option>
+      <option value="toutes">toutes</option>
+    </select>
   </div>
   <div id="progression"></div>
   <ul id="liste"></ul>
@@ -44,7 +48,10 @@
     <b>X</b> exclure · <b>←/→ j/k</b> naviguer · <b>molette</b> zoom ·
     <b>drag milieu</b> pan · <b>B</b> bande 7 m on/off ·
     <b>Espace</b> (maintenu) / <b>T</b> = LD à nu ·
-    <b>V</b> voisines on/off<br>
+    <b>V</b> voisines on/off · <b>C</b> corrections des voisines (tirets =
+    origine) · <b>double-clic voisine</b> = la réviser<br>
+    La décision (Entrée/O/X) ne porte que sur la ligne active
+    (verte/jaune).<br>
     <b>Édition :</b> drag sommet · double-clic = insérer · <b>Suppr</b> =
     retirer le sommet · drag corps = translater · <b>Alt+flèches</b> nudge
     (×10 Shift) · <b>Ctrl+Z</b> annuler · <b>R</b> repartir du recalé

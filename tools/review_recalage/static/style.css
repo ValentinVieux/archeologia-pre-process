@@ -20,8 +20,15 @@ h2 { font-size: 13px; word-break: break-all; }
 #liste li:hover { background: #22252c; }
 #liste li.actif { background: #2c3a55; }
 #liste li .score { color: #8b93a0; }
-#liste li.decidee { opacity: .45; }
-#liste li .badge { font-size: 11px; }
+#liste li.decidee { opacity: .75; }
+#liste li .badge { font-size: 11px; padding: 0 5px; border-radius: 3px; }
+.s-a_revoir { color: #e0b23e; }
+.s-auto_ok { color: #6fae7f; }
+.s-sans_signal { color: #8b93a0; }
+.d-recale { background: #234c31; color: #7fd695; }
+.d-original { background: #4c3b23; color: #e0b06a; }
+.d-editee { background: #4c4423; color: #e8d16a; }
+.d-exclue { background: #4c2323; color: #e08a8a; }
 #centre { position: relative; overflow: hidden; }
 #canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
 #hud {

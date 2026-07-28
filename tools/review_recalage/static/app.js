@@ -13,6 +13,7 @@ const etat = {
   vue: { zoom: 1, px: 0, py: 0 },
   parts: null, base: null, editee: false, sel: null,
   undo: [], redo: [], bande: true, masquer: false, voisines: true,
+  corrVoisines: true,
 };
 
 /* une couleur stable par couche (l'active reste verte/jaune, l'origine rouge) */
@@ -60,8 +61,12 @@ async function chargerListe() {
                                                : etat.lignes[0].id);
 }
 
-const visibles = () => $("#f-restantes").checked
-  ? etat.lignes.filter((l) => !l.decision) : etat.lignes;
+const visibles = () => {
+  const mode = $("#f-etat").value;
+  if (mode === "a_traiter") return etat.lignes.filter((l) => !l.decision);
+  if (mode === "decidees") return etat.lignes.filter((l) => l.decision);
+  return etat.lignes;
+};
 
 function rendreListe() {
   const courant = etat.detail && etat.detail.id;
@@ -69,7 +74,8 @@ function rendreListe() {
     <li data-id="${l.id}" class="${l.decision ? "decidee" : ""}
         ${l.id === courant ? "actif" : ""}">
       <span>${l.id}${l.echantillon ? " ◦" : ""}</span>
-      <span class="badge">${l.decision || l.statut}</span>
+      <span class="badge ${l.decision ? "d-" + l.decision : "s-" + l.statut}">
+        ${l.decision || l.statut}</span>
       <span class="score">${l.score.toFixed(0)}</span>
     </li>`).join("");
   document.querySelectorAll("#liste li").forEach((li) =>
@@ -153,9 +159,14 @@ function dessiner() {
     ctx.clip();
     const active = etat.parts;
     if (etat.voisines) { // contexte : les autres lignes du crop, par couche
-      for (const v of etat.detail.voisines || [])
+      for (const v of etat.detail.voisines || []) {
+        if (etat.corrVoisines && v.origine) // leur origine, en tirets
+          tracer(v.origine.map((p) => p.map(versPx)),
+                 couleurCouche(v.couche, 0.45), 1.2 / zoom, false,
+                 [6 / zoom, 5 / zoom]);
         tracer(v.parts.map((p) => p.map(versPx)),
                couleurCouche(v.couche, 0.8), 1.5 / zoom);
+      }
     }
     if (etat.bande) { // bande de 7 m : trait continu, extrémités rondes = buffer
       tracer(active, `rgba(${etat.editee ? "232,201,62" : "79,195,107"},.28)`,
@@ -179,16 +190,18 @@ function dessiner() {
     (etat.masquer ? " — LD à nu" : "");
 }
 
-function tracer(parts, style, largeur, ronde = false) {
+function tracer(parts, style, largeur, ronde = false, tirets = null) {
   ctx.strokeStyle = style;
   ctx.lineWidth = largeur;
   ctx.lineCap = ronde ? "round" : "butt";
   ctx.lineJoin = "round";
+  ctx.setLineDash(tirets || []);
   for (const part of parts) {
     ctx.beginPath();
     part.forEach(([u, v], i) => (i ? ctx.lineTo(u, v) : ctx.moveTo(u, v)));
     ctx.stroke();
   }
+  ctx.setLineDash([]);
 }
 
 /* ---------- édition ---------- */
@@ -269,13 +282,36 @@ window.addEventListener("mouseup", () => {
     etat.undo.pop(); // clic sans déplacement : pas d'entrée d'undo
   drag = null;
 });
+function voisineProche(pos) {
+  const seuil = 8 / etat.vue.zoom;
+  for (const v of (etat.voisines && etat.detail.voisines) || []) {
+    for (const part of v.parts) {
+      const px = part.map(versPx);
+      for (let i = 0; i < px.length - 1; i++) {
+        const [ax, ay] = px[i], [bx, by] = px[i + 1];
+        const l2 = (bx - ax) ** 2 + (by - ay) ** 2;
+        const t = l2 ? Math.max(0, Math.min(1,
+          ((pos[0] - ax) * (bx - ax) + (pos[1] - ay) * (by - ay)) / l2)) : 0;
+        if (Math.hypot(pos[0] - (ax + t * (bx - ax)),
+                       pos[1] - (ay + t * (by - ay))) < seuil) return v.id;
+      }
+    }
+  }
+  return null;
+}
+
 canvas.addEventListener("dblclick", (e) => {
-  const seg = segmentProche(depuisEcran([e.offsetX, e.offsetY]));
-  if (!seg) return;
-  marquer();
-  etat.parts[seg.p].splice(seg.i + 1, 0, seg.q);
-  etat.sel = { p: seg.p, v: seg.i + 1 };
-  muter();
+  const pos = depuisEcran([e.offsetX, e.offsetY]);
+  const seg = segmentProche(pos);
+  if (seg) { // sur la ligne active : insertion de sommet
+    marquer();
+    etat.parts[seg.p].splice(seg.i + 1, 0, seg.q);
+    etat.sel = { p: seg.p, v: seg.i + 1 };
+    muter();
+    return;
+  }
+  const id = voisineProche(pos); // sur une voisine : on la révise
+  if (id) ouvrir(id);
 });
 canvas.addEventListener("wheel", (e) => {
   e.preventDefault();
@@ -368,6 +404,7 @@ window.addEventListener("keydown", (e) => {
     case "b": case "B": etat.bande = !etat.bande; dessiner(); break;
     case "t": case "T": etat.masquer = !etat.masquer; dessiner(); break;
     case "v": case "V": etat.voisines = !etat.voisines; dessiner(); break;
+    case "c": case "C": etat.corrVoisines = !etat.corrVoisines; dessiner(); break;
   }
 });
 window.addEventListener("keyup", (e) => {
@@ -377,6 +414,6 @@ window.addEventListener("keyup", (e) => {
 /* ---------- init ---------- */
 for (const id of ["#f-statut", "#f-couche"])
   $(id).addEventListener("change", chargerListe);
-$("#f-restantes").addEventListener("change", () => { rendreListe(); });
+$("#f-etat").addEventListener("change", () => { rendreListe(); });
 new ResizeObserver(() => dessiner()).observe(canvas);
 chargerListe();
