@@ -1,7 +1,9 @@
 """Contrôleur indépendant de l'application des décisions (boucle de vérif).
 
 Usage : python verif_application.py <gpkg_source> <gpkg_recale>
-            <decisions.yaml> <gpkg_final>
+            <decisions.yaml> <gpkg_final> [<gpkg_reference>]
+(gpkg_reference : si l'application a utilisé --recale-depuis, les décisions
+'recale' doivent porter la géométrie de CETTE version — celle revue.)
 """
 import sys
 from pathlib import Path
@@ -13,6 +15,15 @@ from shapely import wkt
 
 source, recale, decisions_p, final = (Path(a) for a in sys.argv[1:5])
 decisions = yaml.safe_load(decisions_p.read_text(encoding="utf-8")) or {}
+reference = {}
+if len(sys.argv) > 5:
+    ref_p = Path(sys.argv[5])
+    for couche_r in (n for n, _ in pyogrio.list_layers(str(ref_p))):
+        gdf_r = gpd.read_file(ref_p, layer=couche_r)
+        if "id_recalage" not in gdf_r.columns:
+            continue
+        for _, l in gdf_r.iterrows():
+            reference[l["id_recalage"]] = l.geometry
 
 couches_src = {n for n, _ in pyogrio.list_layers(str(source))}
 couches_rec = {n for n, _ in pyogrio.list_layers(str(recale))}
@@ -48,6 +59,8 @@ for couche in sorted(couches_src):
             attendu = wkt.loads(d["geometrie_editee"])
         elif decision == "original":
             attendu = wkt.loads(rec_l["geom_origine"])
+        elif decision == "recale" and l["id_recalage"] in reference:
+            attendu = reference[l["id_recalage"]]
         else:
             attendu = rec_l.geometry
         assert l.geometry.equals(attendu), \

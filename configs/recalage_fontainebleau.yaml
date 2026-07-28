@@ -3,18 +3,25 @@
 #         <copie locale du GPKG entites> <VRT LD> --out <dossier>
 # tranchees_et_boyaux non recalée (couche ignorée à l'entraînement, copiée
 # verbatim par appliquer_decisions).
+#
+# FENÊTRE 4 m (session 1, 180 décisions) : les annotations de cette zone sont
+# bien placées (acceptés déplacés de 0,9-1,8 m médian) mais des attracteurs
+# forts à 4-7 m (routes/fossés parallèles, contrastes jusqu'à 111) tiraient
+# les lignes justes hors de place (54 « garder l'original »). Fenêtre courte =
+# hors de portée ; les vrais gros offsets n'existent pas ici (≠ Haye).
+# TALUS auto : polarité VARIABLE par ligne (5 décisions clair / 5 sombre) —
+# l'auto pénalisé par la distance choisit correctement (2 éditées à < 0,9 m,
+# zéro dérive des acceptées).
 zone: 77_foret_de_fontainebleau
 raster_gsd_attendu: 0.5
 couches:
-  # levées de terre -> extremum CLAIR sur LD ; sources distinguant talus/fosse
-  parcellaire: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+  parcellaire: {polarite: clair, fenetre_m: 4.0, pas_m: 2.0, seuil_contraste: 10,
                 poids_distance: 2.0}
-  talus: {polarite: clair, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+  talus: {polarite: auto, fenetre_m: 4.0, pas_m: 2.0, seuil_contraste: 10,
           poids_distance: 2.0}
-  # creusements -> extremum SOMBRE
-  fosse: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+  fosse: {polarite: sombre, fenetre_m: 4.0, pas_m: 2.0, seuil_contraste: 10,
           poids_distance: 2.0}
-  chemin_creux: {polarite: sombre, fenetre_m: 8.0, pas_m: 2.0, seuil_contraste: 10,
+  chemin_creux: {polarite: sombre, fenetre_m: 4.0, pas_m: 2.0, seuil_contraste: 10,
                  poids_distance: 2.0}
 lissage: {poids_derivee: 4.0}
 seuil_points_nets: 5
@@ -22,5 +29,8 @@ seuil_ambiguite: 0.7
 # Relief gréseux bruité : résidu médian 1,29 m (vs ~0,8 à Haye) alors que le
 # gain de contraste est PLAT par tranche de résidu (+2,0 à +2,9, 85-92 %
 # positif, mesuré sur 480 lignes échantillonnées) — le résidu n'y discrimine
-# pas la qualité. Seuil zone : 2,0 m (périmètre 62 % -> ~30 %).
+# pas la qualité. Seuil zone : 2,0 m.
 seuils_statut: {residu_max_m: 2.0}
+# APPLICATION : la revue a été faite sur le run fenêtre 8 (conservé en local,
+# recalage_fontainebleau/) -> appliquer_decisions --recale-depuis <ce GPKG>
+# pour que les « recalé accepté » gardent la géométrie validée par l'humain.

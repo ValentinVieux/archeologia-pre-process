@@ -306,4 +306,21 @@ r4 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
                      str(gpkg_out), str(dec_path), str(casse2)],
                     capture_output=True, text=True)
 assert r4.returncode != 0, "altération non détectée"
+
+# --recale-depuis : les 'recale' prennent la géométrie de la version REVUE
+ref_gpkg = tmp / "reference.gpkg"
+for couche_r in ("parcellaire", "talus_fosse"):
+    g_r = gpd.read_file(gpkg_out, layer=couche_r)
+    if couche_r == "talus_fosse":
+        g_r.geometry = g_r.geometry.translate(0.9, 0)  # version vue ≠ courante
+    g_r.to_file(ref_gpkg, layer=couche_r, driver="GPKG")
+gpkg_final2, _ = appliquer(gpkg_path, gpkg_out, dec_path,
+                           tmp / "jouet_final2.gpkg", ref_gpkg)
+tf_fin = gpd.read_file(gpkg_final2, layer="talus_fosse").iloc[0]
+tf_ref = gpd.read_file(ref_gpkg, layer="talus_fosse").iloc[0]
+assert tf_fin.geometry.equals(tf_ref.geometry), "référence non appliquée"
+r5 = subprocess.run([sys.executable, str(verif_app), str(gpkg_path),
+                     str(gpkg_out), str(dec_path), str(gpkg_final2),
+                     str(ref_gpkg)], capture_output=True, text=True)
+assert r5.returncode == 0 and "CONFORME" in r5.stdout, r5.stdout + r5.stderr
 print("noyau + pipeline + contrôleurs recalage + application : OK")

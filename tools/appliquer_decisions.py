@@ -22,9 +22,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from slice_zone import _refuser_drive
 
 
-def appliquer(gpkg_source, gpkg_recale, decisions_path, out):
+def appliquer(gpkg_source, gpkg_recale, decisions_path, out, gpkg_reference=None):
+    """gpkg_reference : version du GPKG recalé sur laquelle la revue a été
+    faite — les décisions 'recale' y prennent leur géométrie (l'humain a
+    validé CETTE version ; les re-runs d'algo n'engagent que le non décidé)."""
     decisions = yaml.safe_load(Path(decisions_path).read_text(encoding="utf-8")) or {}
     couches_recalees = {n for n, _ in pyogrio.list_layers(str(gpkg_recale))}
+    reference = {}
+    if gpkg_reference:
+        for couche in (n for n, _ in pyogrio.list_layers(str(gpkg_reference))):
+            for _, l in gpd.read_file(gpkg_reference, layer=couche).iterrows():
+                if "id_recalage" in l:
+                    reference[l["id_recalage"]] = l.geometry
     out = Path(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     if out.exists():
@@ -53,7 +62,9 @@ def appliquer(gpkg_source, gpkg_recale, decisions_path, out):
                 geoms.append(wkt.loads(d["geometrie_editee"]))
             elif decision == "original":
                 geoms.append(wkt.loads(l["geom_origine"]))
-            else:  # recale accepté ou non décidé (auto_ok/sans_signal)
+            elif decision == "recale" and l["id_recalage"] in reference:
+                geoms.append(reference[l["id_recalage"]])  # version validée
+            else:  # recale accepté (sans référence) ou non décidé
                 geoms.append(l.geometry)
         gdf = gdf.assign(decision_humaine=decs)
         gdf.geometry = geoms
@@ -72,13 +83,19 @@ def main():
     ap.add_argument("recale")
     ap.add_argument("decisions")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--recale-depuis", default=None, dest="reference",
+                    help="GPKG recalé sur lequel la revue a été faite : les "
+                         "décisions 'recale' y prennent leur géométrie")
     args = ap.parse_args()
     out = args.out or str(Path(args.recale).with_name(
         Path(args.recale).stem.replace("_recale", "_final") + ".gpkg"))
     for chemin, nom in ((args.source, "source"), (args.recale, "recalé"),
                         (out, "--out")):
         _refuser_drive(chemin, nom)
-    out, comptes = appliquer(args.source, args.recale, args.decisions, out)
+    if args.reference:
+        _refuser_drive(args.reference, "--recale-depuis")
+    out, comptes = appliquer(args.source, args.recale, args.decisions, out,
+                             args.reference)
     for couche, c in comptes.items():
         print(f"{couche} : {c}")
     print(f"Sorties :\n  {out}")
