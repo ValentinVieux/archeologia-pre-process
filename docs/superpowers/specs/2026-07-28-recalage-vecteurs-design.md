@@ -149,6 +149,14 @@ recalé, avec les géométries éditées substituées, les `original` restaurée
 **buffer 7 m** → boucle de vérification habituelle → re-upload de remplacement
 (purge par tag de zone puis upload complet — parades fantômes acquises).
 
+**Conservation des lignes non recalées (exigence utilisateur 2026-07-28)** : la
+géométrie D'ORIGINE de CHAQUE ligne est conservée à toutes les étapes — colonne
+`geom_origine` (WKT) dans le GPKG recalé ET dans le GPKG final v2, y compris pour
+les lignes éditées à la main (l'origine reste l'origine, jamais écrasée) ; le GPKG
+v1 du Drive n'est par ailleurs jamais modifié. En revanche, découpe, datasets et
+uploads Roboflow ne consomment QUE la géométrie active (recalée/validée) — les
+tracés d'origine ne partent jamais à l'entraînement.
+
 ## Zone pilote et itération
 
 1. Recalage de Haye (parcellaire 5926 + talus_fosse 88, LD local déjà présent).
