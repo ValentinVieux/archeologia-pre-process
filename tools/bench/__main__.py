@@ -340,7 +340,9 @@ def cmd_sweep(a) -> None:
             etiquette = "_".join(f"{k}={v}" for k, v in surcharge.items())
             grille.append((etiquette, replace(base, **surcharge)))
 
-    nom_run = Path(a.axes).stem
+    # Le nom du run porte le split : sans ça, la même grille d'axes rejouée sur valid
+    # puis sur test se croirait déjà faite et sauterait silencieusement le second run.
+    nom_run = f"{Path(a.axes).stem}__{Path(a.data).name}"
     dossier = Path(a.out) / "runs" / nom_run
     dossier.mkdir(parents=True, exist_ok=True)
     manifest = Path(a.out) / "manifest.jsonl"

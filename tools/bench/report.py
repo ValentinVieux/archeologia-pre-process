@@ -12,31 +12,67 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 CSS = """
-:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--bd:#e2e2e2;--acc:#0b6b3a;--bad:#a3301f;--z:#f7f7f7}
-@media (prefers-color-scheme:dark){:root{--bg:#14161a;--fg:#e8e8e8;--mut:#9aa0a6;--bd:#2c3138;--acc:#4ade80;--bad:#f87171;--z:#1b1e24}}
+/* Palette tirée du sujet : le gris bleuté du raster Local Dominance, le vert-lichen des
+   massifs audités (Haye, Fontainebleau, Rambouillet), la terre cuite des régressions. */
+:root{
+  --paper:#f7f7f5; --ink:#191c1e; --mut:#5f6b66; --bd:#dedfd9; --zone:#eeefea;
+  --moss:#3f6b46; --clay:#a04430; --ochre:#8a6a1f; --rule:#c9cdc4;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#131618; --ink:#e6e8e5; --mut:#98a49e; --bd:#2a2f31; --zone:#1a1e20;
+  --moss:#7fb083; --clay:#e08a72; --ochre:#d0aa55; --rule:#333a3c;
+}}
+:root[data-theme="dark"]{
+  --paper:#131618; --ink:#e6e8e5; --mut:#98a49e; --bd:#2a2f31; --zone:#1a1e20;
+  --moss:#7fb083; --clay:#e08a72; --ochre:#d0aa55; --rule:#333a3c;
+}
+:root[data-theme="light"]{
+  --paper:#f7f7f5; --ink:#191c1e; --mut:#5f6b66; --bd:#dedfd9; --zone:#eeefea;
+  --moss:#3f6b46; --clay:#a04430; --ochre:#8a6a1f; --rule:#c9cdc4;
+}
 *{box-sizing:border-box}
-body{margin:0;padding:2rem 1rem;background:var(--bg);color:var(--fg);
- font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-main{max-width:1100px;margin:0 auto}
-h1{font-size:1.7rem;margin:0 0 .2rem} h2{font-size:1.2rem;margin:2.2rem 0 .6rem;
- padding-bottom:.3rem;border-bottom:2px solid var(--bd)} h3{font-size:1rem;margin:1.4rem 0 .4rem}
-.sub{color:var(--mut);margin:0 0 1.5rem}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin:1rem 0}
-.kpi div{border:1px solid var(--bd);border-radius:8px;padding:.8rem 1rem;background:var(--z)}
-.kpi b{display:block;font-size:1.5rem;line-height:1.2} .kpi span{color:var(--mut);font-size:.82rem}
-.tw{overflow-x:auto;margin:.6rem 0}
-table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
-th,td{padding:.4rem .55rem;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
-th:first-child,td:first-child{text-align:left;white-space:normal}
-thead th{background:var(--z);position:sticky;top:0;font-weight:600}
-tbody tr:hover{background:var(--z)}
-.pos{color:var(--acc);font-weight:600} .neg{color:var(--bad)}
-.sig{font-weight:700}
-code{background:var(--z);padding:.1rem .3rem;border-radius:3px;font-size:.9em}
-.note{border-left:3px solid var(--acc);padding:.5rem .9rem;background:var(--z);margin:.8rem 0;
- border-radius:0 6px 6px 0}
-.warn{border-left-color:var(--bad)}
-footer{margin-top:3rem;color:var(--mut);font-size:.85rem;border-top:1px solid var(--bd);padding-top:1rem}
+body{margin:0;padding:2.5rem 1.2rem 4rem;background:var(--paper);color:var(--ink);
+ font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+ font-variant-numeric:tabular-nums}
+main{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:.2rem}
+h1,h2,h3{font-family:"Iowan Old Style",Georgia,"Times New Roman",serif;
+ font-weight:600;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 .3rem}
+h2{font-size:1.45rem;margin:2.8rem 0 .5rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule)}
+h3{font-size:1.1rem;margin:1.8rem 0 .3rem;color:var(--mut)}
+p{max-width:68ch}
+.sub{color:var(--mut);margin:0 0 1.8rem;max-width:68ch}
+.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);
+ font-weight:600;margin:0 0 .5rem}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+ margin:1.4rem 0 .6rem;background:var(--rule);border:1px solid var(--rule)}
+.kpi div{padding:1rem 1.1rem;background:var(--paper)}
+.kpi b{display:block;font-size:1.9rem;line-height:1.1;font-family:"Iowan Old Style",Georgia,serif}
+.kpi span{color:var(--mut);font-size:.8rem;display:block;margin-top:.3rem}
+.tw{overflow-x:auto;margin:.7rem 0 1.2rem}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:.45rem .6rem;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;
+ font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:12.5px}
+thead th{background:var(--zone);position:sticky;top:0;font-weight:600;font-size:12px;
+ letter-spacing:.03em;text-transform:uppercase;color:var(--mut)}
+tbody tr:hover{background:var(--zone)}
+.pos{color:var(--moss);font-weight:600} .neg{color:var(--clay)}
+.sig{font-weight:700;color:var(--moss)}
+code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.88em;
+ background:var(--zone);padding:.08rem .32rem;border-radius:2px}
+.note{border-left:2px solid var(--moss);padding:.7rem 1rem;background:var(--zone);
+ margin:1rem 0;max-width:78ch}
+.note.warn{border-left-color:var(--clay)}
+.note.latent{border-left-color:var(--ochre)}
+.note p{margin:.45rem 0 0;max-width:none}
+.reco{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+ border:1px solid var(--rule);margin:1.2rem 0}
+.reco>div{background:var(--paper);padding:1rem 1.1rem}
+.reco h4{margin:0 0 .3rem;font-size:1rem;font-family:"Iowan Old Style",Georgia,serif}
+.reco .chg{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;color:var(--moss)}
+footer{margin-top:3.5rem;color:var(--mut);font-size:.85rem;border-top:1px solid var(--rule);
+ padding-top:1rem;max-width:68ch}
 """
 
 
@@ -116,12 +152,52 @@ def section_run(nom: str, res: dict, boot: Optional[dict]) -> str:
           "signif.", "polygones/km²", "fragm."], lignes)}"""
 
 
+def section_reco(runs: dict) -> str:
+    """Ce qu'il faut changer, avec le chiffre qui le justifie."""
+    t = runs.get("e4_finalistes__test", {})
+    v = runs.get("e4_finalistes", {})
+    if not t or "base" not in t:
+        return ""
+    b, c = t["base"], t.get("conf_0.25", {})
+    return f"""<h2>Ce qu'il faut changer</h2>
+<div class="reco">
+<div><h4>Seuil de confiance <span class="chg">0,30 → 0,25</span></h4>
+<p>Sur les 830 tuiles de test, jamais utilisées pour régler&nbsp;: F1 longueur
+<b>{f(b['f1_len'],4)} → {f(c.get('f1_len'),4)}</b>, écart apparié
+<b class="pos">+0,0359</b> IC95 [+0,0277&nbsp;; +0,0442]. La complétude passe de
+{f(b['completude'],3)} à {f(c.get('completude'),3)} — soit
+{f((c.get('completude',0)-b['completude'])*100,0)} points de longueur de structure
+retrouvée en plus. Contrepartie assumée&nbsp;: {f(b.get('polygones_par_km2'),0)} →
+{f(c.get('polygones_par_km2'),0)} polygones/km² à relire.</p></div>
+
+<div><h4>Recouvrement SAHI <span class="chg">0,2 → 0,4</span></h4>
+<p>Mesuré au niveau mosaïque uniquement — sur une tuile isolée toutes les fenêtres
+retombent sur la même image, l'axe y est inerte. Sur 4 mosaïques (17&nbsp;km²)&nbsp;:
+F1 longueur 0,6223 → 0,6401. À l'inverse supprimer le recouvrement fait tomber à 0,5937.
+Coûte 1,67× plus de fenêtres. <i>Réserve&nbsp;: 4 mosaïques, pas d'intervalle de
+confiance.</i></p></div>
+
+<div><h4>Suppression des superpositions <span class="chg">activée → désactivée</span></h4>
+<p>La stratégie <code>difference</code> est class-agnostic et rogne le polygone le moins
+confiant sur l'union des plus confiants — ce que la docstring du plugin signale elle-même
+comme fabriquant des artefacts sur des formes linéaires qui se croisent. Niveau B&nbsp;:
+0,6223 → 0,6291, à nombre de polygones quasi inchangé.</p></div>
+
+<div><h4>Les quatre correctifs de code <span class="chg">neutres sur cette métrique</span></h4>
+<p>Écart apparié <b>+0,0000</b> [−0,0001&nbsp;; +0,0002]. C'est attendu&nbsp;: la métrique
+en longueur est calculée sur l'union des masques, donc aveugle au découpage en instances.
+Leur valeur est ailleurs — séparation correcte des instances (2× plus d'instances
+distinctes à seuil bas), ×11 sur le temps de calcul à seuil 0,05, et cohérence CPU/GPU.
+Ils sont à appliquer, mais pas pour le F1.</p></div>
+</div>"""
+
+
 def section_defauts(d: dict) -> str:
     if not d:
         return ""
     blocs = []
     for x in d["defauts"]:
-        cls = "note warn" if x["gravite"] == "majeur" else "note"
+        cls = {"majeur": "note warn", "latent": "note latent"}.get(x["gravite"], "note")
         blocs.append(f"""<div class="{cls}">
 <b>{html.escape(x['titre'])}</b> — <code>{html.escape(x['fichier'])}:{x['ligne']}</code>
 · gravité <i>{x['gravite']}</i><br>
@@ -182,10 +258,15 @@ def construire(racine: Path, titre: str = "Banc d'inférence — lineaires_seg_v
     runs = "".join(section_run(n, r, d["bootstrap"].get(n)) for n, r in sorted(d["runs"].items()))
     return f"""<title>{html.escape(titre)}</title><style>{CSS}</style>
 <main>
+<p class="eyebrow">Banc d'essai — structures linéaires sur Local Dominance 0,5 m</p>
 <h1>{html.escape(titre)}</h1>
-<p class="sub">Mesure de la chaîne d'inférence RF-DETR-Seg telle qu'elle tourne dans le
-plugin QGIS, sur des tuiles jamais vues à l'entraînement (blocs spatiaux disjoints de 2 km).</p>
+<p class="sub">Mesure de la chaîne d'inférence RF-DETR-Seg telle qu'elle tourne réellement
+dans le plugin QGIS, sur des tuiles jamais vues à l'entraînement (blocs spatiaux disjoints
+de 2 km). Le banc reproduit <code>_run_rfdetr_seg_with_sahi</code> à l'identique — 132
+détections sur 20 tuiles, polygones égaux au flottant près — avant toute mesure&nbsp;:
+ce qui est chiffré ici est la production, pas une réimplémentation.</p>
 {kpi}
+{section_reco(d['runs'])}
 <div class="note"><b>Métrique d'arbitrage — F1 longueur @ 5 m, toutes classes confondues.</b>
 La vérité terrain est un buffer de 7 m <em>arbitraire</em> autour d'une ligne digitalisée :
 un décalage latéral de 2,35 m suffit à faire tomber l'IoU de masque sous 0,5, et une
