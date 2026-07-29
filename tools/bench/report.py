@@ -177,8 +177,11 @@ retrouvée en plus. Contrepartie assumée&nbsp;: {f(b.get('polygones_par_km2'),0
 <div><h4>Recouvrement SAHI <span class="chg">0,2 → 0,4</span></h4>
 <p>Mesuré au niveau mosaïque uniquement — sur une tuile isolée toutes les fenêtres
 retombent sur la même image, l'axe y est inerte. Sur 4 mosaïques (17&nbsp;km²)&nbsp;:
-F1 longueur 0,6223 → 0,6401. À l'inverse supprimer le recouvrement fait tomber à 0,5937.
-Coûte 1,67× plus de fenêtres. <i>Réserve&nbsp;: 4 mosaïques, pas d'intervalle de
+F1 longueur <b>0,6223 → 0,6402</b>. À l'inverse supprimer le recouvrement fait tomber à
+0,5937&nbsp;: sur un raster large le recouvrement sert réellement.
+Le ratio est une fraction de la tuile retranchée au pas — 0,4 = 259&nbsp;px (129,5&nbsp;m)
+partagés, pas de 389&nbsp;px au lieu de 519. Coûte <b>1,53×</b> plus de fenêtres
+(72 → 110 sur 4,41&nbsp;km²). <i>Réserve&nbsp;: 4 mosaïques, pas d'intervalle de
 confiance.</i></p></div>
 
 <div><h4>Suppression des superpositions <span class="chg">activée → désactivée</span></h4>
@@ -254,17 +257,24 @@ sont déjà la ligne de centre, sans approximation par squelettisation.</p>
 
 def construire(racine: Path, titre: str = "Banc d'inférence — lineaires_seg_v2_1") -> str:
     d = charger(racine)
-    # Les runs ne portent PAS sur le même échantillon (balayage exploratoire sur 390
-    # tuiles, départage sur 1558) : comparer leurs F1 entre eux n'aurait pas de sens.
-    # Le résumé se lit donc sur le run le plus large, et uniquement sur lui.
-    principal = max(d["runs"].items(),
-                    key=lambda kv: max((g.get("n_images") or 0) for g in kv[1].values()),
-                    default=(None, {}))
-    base = principal[1].get("base")
+    # Le bandeau annonce ce qu'on LIVRE, sur le split de test jamais utilisé pour régler —
+    # pas la meilleure cellule d'une grille sur le split de réglage. conf 0,22 a un F1 un
+    # peu plus haut que 0,25 mais rend 1,6x plus de polygones à relire : ce n'est pas la
+    # config retenue, elle n'a donc rien à faire en titre.
+    principal = d["runs"].get("e4_finalistes__test") or max(
+        d["runs"].items(),
+        key=lambda kv: max((g.get("n_images") or 0) for g in kv[1].values()),
+        default=(None, {}))[1]
+    base = principal.get("base")
     meilleur = None
-    for cfg, g in principal[1].items():
-        if meilleur is None or (g.get("f1_len") or 0) > (meilleur[1].get("f1_len") or 0):
-            meilleur = (cfg, g)
+    for cfg in ("conf_0.25", "corrige_conf_0.25"):
+        if cfg in principal:
+            meilleur = (cfg, principal[cfg])
+            break
+    if meilleur is None:
+        for cfg, g in principal.items():
+            if meilleur is None or (g.get("f1_len") or 0) > (meilleur[1].get("f1_len") or 0):
+                meilleur = (cfg, g)
 
     kpi = ""
     if base and meilleur:
