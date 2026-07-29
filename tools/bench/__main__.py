@@ -603,7 +603,9 @@ def cmd_niveaub(a) -> None:
         g["fragmentation"] = M.agreger_frag(list(par_mos.values()))
         g["par_mosaique"] = par_mos
         synthese[nom] = g
-    out = Path(a.out) / "niveau_b.json"
+    # Un fichier par grille d'axes : sinon deux passes successives s'écrasent
+    # silencieusement et le rapport ne montre plus que la dernière.
+    out = Path(a.out) / f"niveau_b_{Path(a.axes).stem}.json"
     out.write_text(json.dumps(synthese, indent=2, ensure_ascii=False), encoding="utf-8")
     print("\n=== SYNTHESE NIVEAU B ===")
     for nom, g in sorted(synthese.items(), key=lambda kv: -kv[1]["f1_len"]):

@@ -1,0 +1,32 @@
+# Fusion inter-tuiles : max (plugin) contre moyenne pondérée par le vote.
+#
+# Deux corrections par rapport à la première passe :
+#   1. `_inst_iou` normalisait mal en mode moyenne (il comparait une SOMME au seuil) —
+#      corrigé dans decode.py. Le 0,6450 annoncé précédemment était en partie un artefact.
+#   2. Moyenner comprime les probabilités vers le milieu, donc le seuil de binarisation
+#      optimal se déplace. On rebalaie le seuil DANS chaque règle : comparer à seuil figé
+#      est la façon classique de conclure à tort qu'une agrégation dégrade.
+base:
+  confidence: 0.3
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.2
+  fusion: max
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+
+configs:
+  # --- max, recouvrement croissant (référence) ---
+  max_o0.4:             {sahi_overlap: 0.4}
+  max_o0.4_cut0.45:     {sahi_overlap: 0.4, mask_cutoff: 0.45}
+  max_o0.4_cut0.55:     {sahi_overlap: 0.4, mask_cutoff: 0.55}
+
+  # --- moyenne, seuil rebalayé (l'agrégation deplace l'optimum) ---
+  moy_o0.2:             {fusion: mean}
+  moy_o0.4:             {fusion: mean, sahi_overlap: 0.4}
+  moy_o0.4_cut0.30:     {fusion: mean, sahi_overlap: 0.4, mask_cutoff: 0.30}
+  moy_o0.4_cut0.35:     {fusion: mean, sahi_overlap: 0.4, mask_cutoff: 0.35}
+  moy_o0.4_cut0.40:     {fusion: mean, sahi_overlap: 0.4, mask_cutoff: 0.40}
+  moy_o0.4_cut0.45:     {fusion: mean, sahi_overlap: 0.4, mask_cutoff: 0.45}
+  moy_o0.4_cut0.55:     {fusion: mean, sahi_overlap: 0.4, mask_cutoff: 0.55}

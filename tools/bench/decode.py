@@ -183,7 +183,15 @@ def _inst_iou(inst: dict, sy: int, sx: int, ey: int, ex: int,
     iy1, ix1 = min(ey, bb[2]), min(ex, bb[3])
     if iy0 >= iy1 or ix0 >= ix1:
         return 0.0
-    e = inst["prob"][iy0 - bb[0]:iy1 - bb[0], ix0 - bb[1]:ix1 - bb[1]] >= cutoff
+    patch = inst["prob"][iy0 - bb[0]:iy1 - bb[0], ix0 - bb[1]:ix1 - bb[1]]
+    cnt = inst.get("cnt")
+    if cnt is not None:
+        # En fusion « moyenne », `prob` est une SOMME de votes : la comparer telle quelle
+        # au seuil rendrait la fusion d'instances d'autant plus permissive qu'une zone a
+        # déjà reçu de contributions. Il faut normaliser avant de seuiller.
+        patch = patch / np.maximum(
+            cnt[iy0 - bb[0]:iy1 - bb[0], ix0 - bb[1]:ix1 - bb[1]], 1.0)
+    e = patch >= cutoff
     n = new_vals[iy0 - sy:iy1 - sy, ix0 - sx:ix1 - sx] >= cutoff
     return np.count_nonzero(e & n) / max(np.count_nonzero(e | n), 1)
 

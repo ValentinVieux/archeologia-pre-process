@@ -1,0 +1,66 @@
+# Réglage appliqué au modèle lineaires_seg_v2_1 dans le plugin, le 2026-07-29.
+#
+# POURQUOI CE FICHIER EXISTE : dans le dépôt du plugin, `data/models/**` est gitignoré
+# (les poids ne sont pas versionnés). Les deux fichiers de métadonnées réglés ci-dessous
+# vivent donc uniquement sur le disque du poste — une réinstallation du plugin les
+# écraserait sans laisser de trace. Ce fichier-ci est la copie de référence, versionnée.
+#
+# Pour réappliquer après une réinstallation, recopier ces valeurs dans :
+#   <plugin>/data/models/lineaires_seg_v2_1/args.yaml
+#   <plugin>/data/models/lineaires_seg_v2_1/model_card.yaml
+# puis vérifier avec <plugin>/scripts/validate_models_metadata.py
+
+modele: lineaires_seg_v2_1
+mesure_par: tools/bench (voir D:\pipeline_results\bench\report.html)
+metrique: F1 en longueur de linéaire, tolérance 5 m, toutes classes confondues
+
+model_card.yaml:
+  thresholds.confidence_default:
+    avant: 0.3
+    apres: 0.25
+    mesure: >-
+      830 tuiles du split test, jamais utilisées pour régler. F1 0,5094 -> 0,5453,
+      écart apparié +0,0359, IC95 [+0,0277 ; +0,0442] sur 4000 tirages. Complétude
+      0,419 -> 0,510. Contrepartie : 71 -> 110 polygones/km² à relire.
+  thresholds.min_area_m2:
+    avant: 0
+    apres: 200
+    mesure: >-
+      Niveau mosaïque, configuration retenue. F1 0,6494 -> 0,6489 (perte négligeable)
+      pour 46,7 -> 34,5 polygones/km², soit -26 % de charge de relecture. 300 m²
+      décroche (-0,004).
+
+args.yaml:
+  sahi.overlap_ratio:
+    avant: 0.2
+    apres: 0.4
+    mesure: >-
+      4 mosaïques géoréférencées (17 km²). F1 0,6291 -> 0,6494. Recouvrement 0 tombe à
+      0,5937 : sur un raster large le recouvrement sert réellement. Coûte 1,53x plus de
+      fenêtres (72 -> 110 sur 4,41 km²).
+  postprocess.remove_overlaps:
+    avant: true
+    apres: false
+    mesure: >-
+      Niveau mosaïque, F1 0,6223 -> 0,6291 à nombre de polygones inchangé. La stratégie
+      `difference` est class-agnostic et rogne le polygone le moins confiant ; la
+      docstring de postprocessing.py signale elle-même qu'elle fabrique des artefacts
+      sur des formes linéaires qui se croisent.
+
+non_applique:
+  fusion_inter_tuiles: >-
+    Remplacer np.maximum par une moyenne pondérée par le vote : hypothèse REFUTEE par la
+    mesure. À recouvrement égal et seuil de binarisation rebalayé dans chaque règle,
+    max 0,6494 contre moyenne 0,6486 — égalité. Une première mesure donnait la moyenne
+    gagnante ; elle venait d'un défaut du banc (somme de votes comparée au seuil sans
+    normalisation), corrigé depuis.
+  noms_sorties_onnx: >-
+    export_to_onnx.py:827. Retirer le [::-1] ne corrige PAS le problème : l'ordre des
+    clés du dict torch (logits, boxes, masks) diffère de l'ordre positionnel du graphe
+    exporté (boxes, logits, masks). Le correctif juste est un renommage d'après les
+    formes après export, non testable sans relancer un export complet. Sans effet sur
+    l'inférence, qui indexe par position.
+  recadrage_cartes_probabilite: >-
+    Stocker la carte de probabilité sur l'emprise réelle du masque plutôt que sur la
+    tuile entière. Devenu optionnel : le correctif des boîtes a déjà fait passer
+    l'accumulation de 50,3 s à 4,4 s sur la tuile la plus dense à seuil 0,05.

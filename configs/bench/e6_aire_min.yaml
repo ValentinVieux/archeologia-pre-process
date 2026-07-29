@@ -1,0 +1,14 @@
+base:
+  confidence: 0.3
+  mask_cutoff: 0.5
+  sahi_overlap: 0.4
+  fusion: max
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+  geo_min_area_m2: 0.0
+configs:
+  aire_100m2:  {geo_min_area_m2: 100.0}
+  aire_200m2:  {geo_min_area_m2: 200.0}
+  aire_300m2:  {geo_min_area_m2: 300.0}
+  buffer_2m:   {geo_merge_buffer_m: 2.0}

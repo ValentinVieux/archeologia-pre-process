@@ -97,10 +97,14 @@ def charger(racine: Path) -> dict:
         d["runs"][r.parent.name] = json.loads(r.read_text(encoding="utf-8"))
     for b in sorted((racine / "runs").glob("*/bootstrap.json")) if (racine / "runs").exists() else []:
         d["bootstrap"][b.parent.name] = json.loads(b.read_text(encoding="utf-8"))
-    for nom, fichier in (("e0", "e0_plafond_rappel.json"), ("niveau_b", "niveau_b.json")):
-        p = racine / fichier
-        if p.exists():
-            d[nom] = json.loads(p.read_text(encoding="utf-8"))
+    p = racine / "e0_plafond_rappel.json"
+    if p.exists():
+        d["e0"] = json.loads(p.read_text(encoding="utf-8"))
+    d["niveau_b"] = {}
+    for p in sorted(racine.glob("niveau_b*.json")):
+        cle = p.stem.replace("niveau_b_", "") or "niveau_b"
+        for cfg, g in json.loads(p.read_text(encoding="utf-8")).items():
+            d["niveau_b"][f"{cle}/{cfg}"] = g
     p = Path(__file__).with_name("defauts.json")
     if p.exists():
         d["defauts"] = json.loads(p.read_text(encoding="utf-8"))
@@ -182,6 +186,24 @@ confiance.</i></p></div>
 confiant sur l'union des plus confiants — ce que la docstring du plugin signale elle-même
 comme fabriquant des artefacts sur des formes linéaires qui se croisent. Niveau B&nbsp;:
 0,6223 → 0,6291, à nombre de polygones quasi inchangé.</p></div>
+
+<div><h4>Aire minimale <span class="chg">0 → 200 m²</span></h4>
+<p>Arbitrage de charge de relecture, pas gain de métrique. Dans la configuration retenue&nbsp;:
+0&nbsp;m² → F1 0,6494 pour 46,7 polygones/km²&nbsp;; 200&nbsp;m² → F1 0,6489 pour
+<b>34,5</b>, soit <b>−26 % de polygones</b> pour −0,0005 de F1. 300&nbsp;m² décroche
+(−0,004). 200&nbsp;m² ≈ 29 m de linéaire au buffer de 7 m&nbsp;: en dessous, un fragment
+n'est plus interprétable seul.</p></div>
+
+<div><h4>Fusion inter-tuiles <span class="chg">inchangée — hypothèse réfutée</span></h4>
+<p>L'argument était solide&nbsp;: <code>np.maximum</code> est monotone, donc sur la bande de
+recouvrement un pixel faiblement prédit dans une fenêtre l'emporte sur un fond confiant
+dans l'autre, et les masques ne peuvent que grossir. Mesuré à recouvrement égal, avec le
+seuil de binarisation rebalayé dans chaque règle&nbsp;: <b>max 0,6494 contre moyenne
+0,6486</b> — égalité. Le contre-effet compense&nbsp;: une fenêtre qui ne voit qu'un bout
+tronqué de structure émet un avis faible et légitime, que la moyenne pénalise.
+Une première mesure donnait la moyenne gagnante&nbsp;; elle venait d'un défaut du banc
+(comparaison d'une somme de votes au seuil sans normaliser), corrigé depuis.
+<b>Aucun changement de comportement cœur sans gain mesuré.</b></p></div>
 
 <div><h4>Les quatre correctifs de code <span class="chg">neutres sur cette métrique</span></h4>
 <p>Écart apparié <b>+0,0000</b> [−0,0001&nbsp;; +0,0002]. C'est attendu&nbsp;: la métrique
