@@ -1,0 +1,52 @@
+# Niveau B — ce que le niveau A ne peut PAS mesurer.
+#
+# Sur une tuile 648 isolée, toutes les fenêtres SAHI retombent sur la même image : la
+# fusion inter-tuiles ne voit que des valeurs identiques (max == moyenne), et il n'y a
+# aucun post-traitement géo à exercer. Ces axes n'ont de sens que sur un raster large.
+base:
+  confidence: 0.3
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.2
+  snap: 16
+  mask_iou_merge: 0.15
+  fusion: max
+  min_area_px: 10.0
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: true
+  geo_overlap_strategy: difference
+  geo_min_area_m2: 0.0
+
+configs:
+  # --- recouvrement des fenêtres : ici les contenus DIFFÈRENT vraiment ---
+  overlap_0.0:          {sahi_overlap: 0.0}
+  overlap_0.1:          {sahi_overlap: 0.1}
+  overlap_0.4:          {sahi_overlap: 0.4}
+
+  # --- règle de fusion : max (plugin) gonfle les masques sur la bande de recouvrement,
+  #     un pixel faible d'une fenêtre l'emportant sur un fond confiant de l'autre.
+  #     La voie SegFormer du plugin fait déjà une moyenne pondérée par le vote. ---
+  fusion_moyenne:       {fusion: mean}
+  fusion_moyenne_o0.4:  {fusion: mean, sahi_overlap: 0.4}
+
+  # --- identité d'instance entre fenêtres ---
+  snap_32:              {snap: 32}
+  snap_8:               {snap: 8}
+  merge_iou_0.05:       {mask_iou_merge: 0.05}
+  merge_iou_0.30:       {mask_iou_merge: 0.30}
+
+  # --- post-traitement géo : fusion intra-classe des fragments collinéaires ---
+  buffer_0m:            {geo_merge_buffer_m: 0.0}
+  buffer_2m:            {geo_merge_buffer_m: 2.0}
+  buffer_5m:            {geo_merge_buffer_m: 5.0}
+  sans_fusion_geo:      {geo_merge: false}
+
+  # --- stratégie de superposition : `difference` est class-agnostic et ampute le
+  #     polygone le moins confiant — faux à un croisement de structures ---
+  strategie_relation:   {geo_overlap_strategy: relation}
+  sans_superpositions:  {geo_remove_overlaps: false}
+
+  # --- filtre d'aire en m2 (min_area_m2 = 0 dans le model_card) ---
+  aire_200m2:           {geo_min_area_m2: 200.0}
+  aire_500m2:           {geo_min_area_m2: 500.0}

@@ -1,0 +1,25 @@
+# Départage du seul axe qui bouge : le seuil de confiance.
+#
+# Sur 390 tuiles, conf 0,25 donne +0,0119 de F1_len mais IC95 [-0,0014 ; +0,0258] —
+# l'intervalle contient zéro. Tous les autres axes sont soit exactement nuls, soit
+# significativement négatifs. On tranche sur les 1558 tuiles de valid, où la résolution
+# d'un écart apparié passe à ~±0,010.
+#
+# On inclut aussi la config « corrigée » : les correctifs de justesse (boîtes, fenêtres
+# dupliquées, 6e classe) n'ont pas d'effet sur la métrique en longueur — elle est
+# volontairement invariante à la façon dont les masques sont découpés en instances — mais
+# ils changent le nombre de polygones rendus à l'archéologue et le temps de calcul. Il
+# faut vérifier qu'ils ne coûtent rien en F1_len.
+base:
+  confidence: 0.3
+  class_offset: 0
+  mask_cutoff: 0.5
+  sahi_overlap: 0.2
+
+configs:
+  conf_0.22:            {confidence: 0.22}
+  conf_0.25:            {confidence: 0.25}
+  conf_0.27:            {confidence: 0.27}
+  corrige:              {boxes_normalisees: true, sahi_dedup: true, n_classes: 5}
+  corrige_conf_0.25:    {boxes_normalisees: true, sahi_dedup: true, n_classes: 5, confidence: 0.25}
+  corrige_conf_0.22:    {boxes_normalisees: true, sahi_dedup: true, n_classes: 5, confidence: 0.22}

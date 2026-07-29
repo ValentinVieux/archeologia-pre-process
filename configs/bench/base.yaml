@@ -1,0 +1,28 @@
+# Config de PARITÉ : toutes les valeurs sont les constantes du plugin.
+# C'est le point de référence de toute la campagne — ne rien changer ici.
+#
+# Sources : computer_vision_onnx.py l.366-367 (snap, mask_iou_merge), l.408 (fusion max),
+# l.427-429 (argmax), l.550 (mask_cutoff), l.566 (min_area_px) ;
+# data/models/lineaires_seg_v2_1/args.yaml (sahi) ; model_card.yaml (confidence 0.3).
+base:
+  decode: argmax
+  confidence: 0.3
+  score_rule: raw
+  class_offset: 0
+  n_classes: null
+  mask_cutoff: 0.5
+  mask_interp: linear
+  mask_logit_space: false
+  sahi_slice: 648
+  sahi_overlap: 0.2
+  sahi_dedup: false
+  boxes_normalisees: null
+  snap: 16
+  mask_iou_merge: 0.15
+  fusion: max
+  nms_mask_iou: null
+  min_area_px: 10.0
+  morph_close: 0
+  morph_open: 0
+  simplify_px: 0.0
+  compactness_max: null

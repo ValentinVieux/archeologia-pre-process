@@ -1,0 +1,88 @@
+# E2/E3 — un seul axe bougé à la fois depuis la config du plugin.
+# Sert à REPÉRER les axes qui bougent, avant la grille conjointe. Aucun de ces chiffres
+# n'est une conclusion : les axes agissent sur la même population de faux positifs et
+# doivent être re-optimisés ensemble (cf. e4_grille_conjointe.yaml).
+base:
+  decode: argmax
+  confidence: 0.3
+  class_offset: 0
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.2
+  snap: 16
+  mask_iou_merge: 0.15
+  fusion: max
+  min_area_px: 10.0
+
+configs:
+  # --- seuil de confiance (le plus gros levier attendu).
+  #     conf 0.05 et 0.10 sont dans e3_bas_seuil.yaml : l'accumulation d'instances du
+  #     plugin est QUADRATIQUE (mesuré : 1,24 s a conf 0.30 mais 33,8 s a conf 0.05 sur
+  #     une seule tuile), donc les balayer sur 1558 tuiles couterait 15 h. ---
+  conf_0.15:            {confidence: 0.15}
+  conf_0.20:            {confidence: 0.20}
+  conf_0.25:            {confidence: 0.25}
+  conf_0.40:            {confidence: 0.40}
+  conf_0.50:            {confidence: 0.50}
+
+  # --- seuil de binarisation du masque (en dur à 0.5 dans le plugin) ---
+  cutoff_0.30:          {mask_cutoff: 0.30}
+  cutoff_0.40:          {mask_cutoff: 0.40}
+  cutoff_0.45:          {mask_cutoff: 0.45}
+  cutoff_0.55:          {mask_cutoff: 0.55}
+  cutoff_0.60:          {mask_cutoff: 0.60}
+  cutoff_0.70:          {mask_cutoff: 0.70}
+
+  # --- passes SAHI dupliquées : 0.0 -> 1 fenetre, 0.2 -> 4 fenetres IDENTIQUES.
+  #     Ces passes en double ne sont pas neutres : elles refont la recherche de cle
+  #     d'instance et fusionnent des instances qu'une passe unique garde separees. ---
+  overlap_0.0:          {sahi_overlap: 0.0}
+  overlap_0.4:          {sahi_overlap: 0.4}
+  fenetres_dedupliquees: {sahi_dedup: true}
+
+  # --- décodage : argmax par requête (plugin) vs top-k officiel rfdetr ---
+  topk_300:             {decode: topk, topk: 300}
+  topk_100:             {decode: topk, topk: 100}
+  multilabel:           {decode: multilabel}
+
+  # --- voie masque officielle rfdetr : interpoler le logit puis seuiller à 0 ---
+  masque_logit:         {mask_logit_space: true}
+
+  # --- règle de score : combiner classification et qualité du masque ---
+  score_mask_mean:      {score_rule: mask_mean}
+  score_x_mask:         {score_rule: raw_x_mask_mean}
+
+  # --- NMS masque : ABSENT du plugin, rien ne supprime les requêtes dupliquées ---
+  nms_0.7:              {nms_mask_iou: 0.7}
+  nms_0.5:              {nms_mask_iou: 0.5}
+  nms_0.3:              {nms_mask_iou: 0.3}
+
+  # --- filtres de forme et de taille ---
+  aire_50:              {min_area_px: 50.0}
+  aire_150:             {min_area_px: 150.0}
+  aire_400:             {min_area_px: 400.0}
+  compacite_0.15:       {compactness_max: 0.15}
+  compacite_0.10:       {compactness_max: 0.10}
+
+  # --- morphologie et simplification ---
+  fermeture_3:          {morph_close: 3}
+  fermeture_5:          {morph_close: 5}
+  ouverture_3:          {morph_open: 3}
+  simplif_1px:          {simplify_px: 1.0}
+
+  # --- accumulation d'instances ---
+  fusion_moyenne:       {fusion: mean}
+  snap_8:               {snap: 8}
+  snap_32:              {snap: 32}
+  merge_iou_0.05:       {mask_iou_merge: 0.05}
+  merge_iou_0.30:       {mask_iou_merge: 0.30}
+
+  # --- correctif latent : borner a 5 classes reelles au lieu des 6 colonnes de logits ---
+  n_classes_5:          {n_classes: 5}
+
+  # --- correctif : forcer la lecture normalisee des boites. L'heuristique
+  #     `boxes.max() <= 1.0` bascule sur 50,7 % des tuiles et ecrase alors toutes
+  #     les cles d'instance sur (classe,0,0,0,0) ---
+  boites_normalisees:   {boxes_normalisees: true}
+  boites_norm_snap32:   {boxes_normalisees: true, snap: 32}
+  boites_norm_o0:       {boxes_normalisees: true, sahi_overlap: 0.0}

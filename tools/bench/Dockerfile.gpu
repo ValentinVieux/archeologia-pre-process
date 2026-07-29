@@ -1,0 +1,30 @@
+# Variante GPU. Volontairement bâtie sur la MÊME base slim que l'image CPU (déjà en
+# cache) plutôt que sur nvidia/cuda:*-cudnn-runtime : cette base pèse ~3 Go et son pull
+# s'est révélé non fiable ici. Les bibliothèques CUDA/cuDNN arrivent par wheels pip, ce
+# qui suffit à onnxruntime-gpu et ne coûte que le delta.
+#
+# Build : docker build -f Dockerfile.gpu -t archeologia-bench:gpu .
+# Smoke : docker run --rm --gpus all archeologia-bench:gpu python3 -c \
+#           "import onnxruntime as o; print(o.get_available_providers())"
+#         DOIT afficher CUDAExecutionProvider — sinon rester sur l'image CPU, car ORT
+#         retombe silencieusement sur CPU et corromprait la clé de cache.
+FROM python:3.11-slim-bookworm
+
+RUN python3 -m pip install --no-cache-dir --upgrade pip && \
+    python3 -m pip install --no-cache-dir \
+      "numpy<3" \
+      onnxruntime-gpu==1.24.1 \
+      nvidia-cuda-runtime-cu12 nvidia-cublas-cu12 nvidia-cufft-cu12 \
+      nvidia-curand-cu12 nvidia-cudnn-cu12 \
+      opencv-python-headless==4.10.0.84 \
+      pillow pyyaml pandas "shapely>=2" pyogrio geopandas pycocotools scikit-image
+
+# ORT cherche les .so sur LD_LIBRARY_PATH ; les wheels nvidia les posent dans site-packages.
+ENV LD_LIBRARY_PATH=/usr/local/lib/python3.11/site-packages/nvidia/cuda_runtime/lib:/usr/local/lib/python3.11/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.11/site-packages/nvidia/cufft/lib:/usr/local/lib/python3.11/site-packages/nvidia/curand/lib:/usr/local/lib/python3.11/site-packages/nvidia/cudnn/lib \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf-8 \
+    PYTHONPATH=/plugin/src:/harness
+
+WORKDIR /harness
+CMD ["python3", "-m", "tools.bench", "--help"]

@@ -30,6 +30,18 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final>  # boucle de vérification de l'application
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
+# --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
+docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
+docker build -f tools\bench\Dockerfile.gpu -t archeologia-bench:gpu tools\bench   # CUDA par wheels pip
+# montages : /data (splits stagés en local), /plugin (plugin QGIS, ro), /harness (ce repo, ro), /out (D:\pipeline_results)
+#   python3 -m tools.bench forward --data /data/valid --device cpu --floor 0.05   # cache des sorties brutes
+#   python3 -m tools.bench e0      --data /data/valid                            # plafond de rappel
+#   python3 -m tools.bench sweep   --data /data/valid --axes /harness/configs/bench/e2_un_axe.yaml --cle <cle>
+#   python3 -m tools.bench bootstrap --run e2_un_axe                             # IC95 apparié par tuile
+#   python3 -m tools.bench niveaub --data /data/test --gpkg /vec --axes .../e_niveaub.yaml
+#   python3 -m tools.bench.report                                                # rapport HTML
+.venv\Scripts\python.exe tools\verif_bench.py --out D:\pipeline_results\bench     # contrôleur indépendant
+<venv_onnx>\python.exe tests\test_parity_bench.py    # PORTE : decode.py doit reproduire le plugin à l'identique
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
 ```
 

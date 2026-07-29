@@ -1,0 +1,45 @@
+# Bas seuils, sur SOUS-ENSEMBLE seulement.
+#
+# E0 montre que le rappel atteignable est dans les bas seuils (complétude 0,75 à 0,05
+# contre 0,37 à 0,30). Mais l'accumulation d'instances du plugin est quadratique en
+# nombre de détections retenues — mesuré sur une seule tuile dense :
+#     conf 0.30 ->   7 instances,  1,24 s
+#     conf 0.15 ->  33 instances,  2,41 s
+#     conf 0.10 ->  77 instances, 14,76 s
+#     conf 0.05 -> 123 instances, 33,82 s
+# Balayer ça sur 1558 tuiles coûterait ~15 h. C'est un résultat en soi : baisser le
+# seuil dans le plugin tel quel rend l'inférence impraticable, pas seulement bruyante.
+base:
+  confidence: 0.3
+  class_offset: 0
+  mask_cutoff: 0.5
+  sahi_overlap: 0.2
+
+configs:
+  conf_0.20:            {confidence: 0.20}
+  conf_0.15:            {confidence: 0.15}
+  conf_0.10:            {confidence: 0.10}
+  conf_0.05:            {confidence: 0.05}
+  # Le bas seuil n'est utile que si la précision est récupérée par ailleurs :
+  # on teste donc les combinaisons seuil bas + filtres.
+  conf_0.15_nms0.5:     {confidence: 0.15, nms_mask_iou: 0.5}
+  conf_0.15_aire150:    {confidence: 0.15, min_area_px: 150.0}
+  conf_0.15_cutoff0.6:  {confidence: 0.15, mask_cutoff: 0.6}
+  conf_0.20_nms0.5:     {confidence: 0.20, nms_mask_iou: 0.5}
+  conf_0.20_aire150:    {confidence: 0.20, min_area_px: 150.0}
+  conf_0.20_cutoff0.6:  {confidence: 0.20, mask_cutoff: 0.6}
+  conf_0.20_dedup:      {confidence: 0.20, sahi_dedup: true}
+
+  # Le correctif des boites rend les bas seuils PRATICABLES : sur la tuile la plus dense,
+  # conf 0.05 passe de 50,26 s a 4,43 s (x11) tout en produisant 245 instances distinctes
+  # au lieu de 123 — les instances n'etaient pas separees, elles etaient ecrasees sur la
+  # meme cle degeneree. C'est donc la combinaison a evaluer serieusement.
+  bn_conf_0.20:         {boxes_normalisees: true, confidence: 0.20}
+  bn_conf_0.15:         {boxes_normalisees: true, confidence: 0.15}
+  bn_conf_0.10:         {boxes_normalisees: true, confidence: 0.10}
+  bn_conf_0.05:         {boxes_normalisees: true, confidence: 0.05}
+  bn_0.15_nms0.5:       {boxes_normalisees: true, confidence: 0.15, nms_mask_iou: 0.5}
+  bn_0.15_aire150:      {boxes_normalisees: true, confidence: 0.15, min_area_px: 150.0}
+  bn_0.10_nms0.5:       {boxes_normalisees: true, confidence: 0.10, nms_mask_iou: 0.5}
+  bn_0.10_nms0.5_a150:  {boxes_normalisees: true, confidence: 0.10, nms_mask_iou: 0.5, min_area_px: 150.0}
+  bn_0.10_cutoff0.6:    {boxes_normalisees: true, confidence: 0.10, mask_cutoff: 0.6}

@@ -1,0 +1,71 @@
+{
+  "_commentaire": "Défauts de la chaîne d'inférence mesurés par le banc. Chaque entrée porte le chiffre qui l'établit, pas une impression de lecture de code.",
+  "defauts": [
+    {
+      "id": "boites_non_normalisees",
+      "titre": "L'heuristique de normalisation des boîtes se trompe une fois sur deux",
+      "fichier": "src/pipeline/cv/computer_vision_onnx.py",
+      "ligne": 442,
+      "code": "boxes_normalized = boxes_out.max() <= 1.0",
+      "gravite": "majeur",
+      "constat": "RF-DETR sort toujours du cxcywh normalisé, mais une boîte qui mord légèrement hors de l'image fait dépasser 1.0. Le plugin en conclut « boîtes en pixels absolus », ne multiplie plus par 648, et calcule gcx = int(0,98) = 0. Toutes les clés d'instance s'écrasent alors sur (classe, 0, 0, 0, 0).",
+      "mesure": "50,7 % des tuiles concernées (600 tuiles valid analysées), dépassement médian 0,0157. Conséquences sur la tuile la plus dense du split : 123 instances au lieu de 245, et 50,26 s au lieu de 4,43 s (x11) à confiance 0,05 — la recherche de suffixe devient quadratique quand toutes les clés collisionnent.",
+      "correctif": "Dans une fonction propre à RF-DETR, les boîtes sont normalisées par construction : poser boxes_normalized = True et journaliser si max() > 1,5 (signe d'un export différent)."
+    },
+    {
+      "id": "fenetres_sahi_dupliquees",
+      "titre": "Quatre passes du modèle sur une entrée strictement identique",
+      "fichier": "src/pipeline/cv/sahi_lite.py",
+      "ligne": 57,
+      "code": "x_min = x_max - x_overlap  # relance une fenêtre déjà couverte",
+      "gravite": "majeur",
+      "constat": "Sur une image 648 avec slice 648 et overlap 0,2, le pas vaut 519 : la boucle relance une fenêtre en 519 qui déborde, est ramenée en arrière sur [0,0,648,648], et le même calcul est refait. Idem en y, d'où quatre fenêtres identiques. Ce n'est pas neutre : chaque passe en double refait la recherche de clé d'instance et fusionne des instances qu'une passe unique garde séparées.",
+      "mesure": "4 fenêtres identiques par tuile 648 (vérifié sur les 20 tuiles du test de parité). Écart de sortie constaté sur une tuile : 18 détections avec les 4 passes contre 19 avec une seule.",
+      "correctif": "Dédupliquer les bbox strictement identiques en sortie de get_slice_bboxes. Contrairement à overlap=0, cela ne change rien au recouvrement utile sur un grand raster : cela n'enlève que le calcul refait à l'identique."
+    },
+    {
+      "id": "tf32_cuda",
+      "titre": "Sur GPU, le plugin ne calcule pas la même chose que sur CPU",
+      "fichier": "src/pipeline/cv/computer_vision_onnx.py",
+      "ligne": 55,
+      "code": "providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']",
+      "gravite": "majeur",
+      "constat": "Le provider CUDA est demandé en priorité, avec ses options par défaut. Sur Ampere et au-delà, TF32 est actif : les convolutions et matmuls tournent avec 10 bits de mantisse. Le binaire livré étant un build CPU, la validation a été faite sur CPU — un poste équipé d'onnxruntime-gpu produit silencieusement d'autres détections.",
+      "mesure": "Écart CPU/GPU sur la même entrée : 1,40e+02 sur les logits de masque, 2,40 sur les logits de classe, erreur relative médiane 2 à 5 %. Sur 12 tuiles, 65 détections en CPU contre 57 en GPU. Avec use_tf32=0 l'écart tombe à 1,73e-02. CPU et GPU sont chacun parfaitement déterministes en rejeu (0,00e+00).",
+      "correctif": "Passer {'use_tf32': '0'} dans les options du CUDAExecutionProvider."
+    },
+    {
+      "id": "n_real_latent",
+      "titre": "Une sixième classe fantôme reste possible",
+      "fichier": "src/pipeline/cv/computer_vision_onnx.py",
+      "ligne": 433,
+      "code": "n_real = max(1, n_cls - class_offset)",
+      "gravite": "latent",
+      "constat": "Le modèle sort 6 colonnes de logits pour 5 classes. Avec class_offset = 0, n_real vaut 6, donc une colonne 5 gagnante serait acceptée et nommée classe_6 en aval.",
+      "mesure": "La colonne 5 ne gagne jamais : sigmoïde maximale 0,0048 sur les tuiles testées. Défaut latent, pas actif — mais il le deviendrait sur un modèle réexporté différemment.",
+      "correctif": "Borner n_real au nombre réel de classes déclarées (classes.txt)."
+    },
+    {
+      "id": "accumulation_quadratique",
+      "titre": "Baisser le seuil rend l'inférence impraticable, pas seulement bruyante",
+      "fichier": "src/pipeline/cv/computer_vision_onnx.py",
+      "ligne": 493,
+      "code": "for suffix in range(1, 100): ... _inst_iou(...)",
+      "gravite": "majeur",
+      "constat": "Chaque détection compare son masque à jusqu'à 99 instances candidates, et chaque comparaison porte sur une carte de probabilité à la taille de la tuile entière. Le coût est quadratique en nombre de détections retenues. Combiné au défaut des boîtes (toutes les clés collisionnent), l'explosion arrive dès qu'on baisse le seuil.",
+      "mesure": "Sur la tuile la plus dense de valid (134 annotations) : 1,24 s à conf 0,30 ; 2,41 s à 0,15 ; 14,76 s à 0,10 ; 33,82 s à 0,05. Avec le correctif des boîtes : 4,43 s à 0,05.",
+      "correctif": "Corriger d'abord les boîtes (l'essentiel de l'explosion disparaît). Ensuite, stocker la carte de probabilité recadrée sur l'emprise réelle du masque plutôt que sur la tuile entière."
+    },
+    {
+      "id": "noms_sorties_onnx",
+      "titre": "Les noms des sorties ONNX sont inversés",
+      "fichier": "dev/runner_onnx/export_to_onnx.py",
+      "ligne": 827,
+      "code": "output_names = list(output.keys())[:3][::-1]",
+      "gravite": "mineur",
+      "constat": "Le graphe exporté nomme « pred_masks » le tenseur de boîtes, « pred_boxes » celui des logits et « pred_logits » celui des masques. Le code consommateur indexe par position, donc le comportement est correct ; mais quiconque lit le graphe par nom se trompe.",
+      "mesure": "Vérifié sur best.onnx : pred_masks [1,200,4], pred_boxes [1,200,6], pred_logits [1,200,162,162].",
+      "correctif": "Retirer le [::-1]. Non appliqué ici : ce fichier porte déjà des modifications non commitées."
+    }
+  ]
+}
