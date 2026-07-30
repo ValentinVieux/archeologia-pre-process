@@ -218,7 +218,12 @@ class Cache:
         return SliceOut(
             start_x=start_x, start_y=start_y, slice_w=slice_w, slice_h=slice_h,
             boxes=d["boxes"], logits=d["logits"],
-            masks=d["masks"].astype(np.float32),
+            # Les masques restent en float16, tels qu'ils sont sur le disque : `decode`
+            # les recaste requête par requête (`sl.masks[q].astype(np.float32)`), donc
+            # remonter tout le tableau en float32 doublait la mémoire pour des valeurs
+            # RIGOUREUSEMENT identiques. Sur une mosaïque de 110 fenêtres cela
+            # représentait ~850 Mo inutiles, et c'est une part de l'OOM constaté.
+            masks=d["masks"],
             qidx=d["qidx"], logits_full=d["logits_full"],
         )
 

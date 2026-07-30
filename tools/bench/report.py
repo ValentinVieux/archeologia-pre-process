@@ -108,6 +108,9 @@ def charger(racine: Path) -> dict:
     p = Path(__file__).with_name("defauts.json")
     if p.exists():
         d["defauts"] = json.loads(p.read_text(encoding="utf-8"))
+    p = racine / "comparatif_modeles.json"
+    if p.exists():
+        d["comparatif"] = json.loads(p.read_text(encoding="utf-8"))
     return d
 
 
@@ -234,6 +237,127 @@ def section_defauts(d: dict) -> str:
             "l'établit, pas une impression de lecture de code.</p>" + "".join(blocs))
 
 
+ZONES_TRAIN_ANCIEN = ("54_foret_de_haye", "78_rambouillet")
+
+
+def section_comparatif(d: dict) -> str:
+    """Comparatif ancien / nouveau modèle, ventilé par zone et par classe canonique."""
+    runs = {k: v for k, v in d.get("niveau_b", {}).items() if "__" in k.split("/")[0]}
+    if not runs:
+        return ""
+    # {modele: {config: bloc}}
+    par_modele: Dict[str, Dict[str, dict]] = {}
+    for cle, bloc in runs.items():
+        grille, cfg = cle.split("/", 1)
+        mod = bloc.get("modele") or grille.split("__")[-1]
+        par_modele.setdefault(mod, {})[cfg] = bloc
+    if len(par_modele) < 2:
+        return ""
+
+    ancien = next((m for m in par_modele if m.startswith("formes_lineaires")), None)
+    nouveau = next((m for m in par_modele if m.startswith("lineaires_seg")), None)
+    if not (ancien and nouveau):
+        return ""
+
+    def meilleur(mod: str) -> tuple:
+        return max(par_modele[mod].items(), key=lambda kv: kv[1].get("f1_len") or 0)
+
+    cfg_a, ba = meilleur(ancien)
+    cfg_n, bn = meilleur(nouveau)
+
+    # --- tableau par zone ---
+    zones = sorted({z for b in (ba, bn) for z in b.get("par_mosaique", {})})
+    lignes = []
+    for z in zones:
+        va, vn = ba["par_mosaique"].get(z), bn["par_mosaique"].get(z)
+        if not (va and vn):
+            continue
+        train = any(t in z for t in ZONES_TRAIN_ANCIEN)
+        etiq = (f"<code>{html.escape(z)}</code>"
+                + (' <b style="color:var(--clay)">⚠ train de l\'ancien</b>' if train else ""))
+        d_f1 = (vn["f1_len"] or 0) - (va["f1_len"] or 0)
+        lignes.append([etiq, f(va["f1_len"]), f(vn["f1_len"]),
+                       f'<span class="{"pos" if d_f1 > 0 else "neg"}">{d_f1:+.4f}</span>',
+                       f(va["completude"], 3), f(vn["completude"], 3),
+                       f(va["correction"], 3), f(vn["correction"], 3),
+                       f(va.get("polygones_par_km2"), 0), f(vn.get("polygones_par_km2"), 0)])
+
+    # --- tableau par classe canonique (agrégat loyal) ---
+    lignes_cl = []
+    for cl in sorted(set(ba.get("par_classe", {})) | set(bn.get("par_classe", {}))):
+        ca, cn = ba.get("par_classe", {}).get(cl, {}), bn.get("par_classe", {}).get(cl, {})
+        d_f1 = (cn.get("f1_len") or 0) - (ca.get("f1_len") or 0)
+        lignes_cl.append([f"<code>{html.escape(cl)}</code>",
+                          f(ca.get("f1_len")), f(cn.get("f1_len")),
+                          f'<span class="{"pos" if d_f1 > 0 else "neg"}">{d_f1:+.4f}</span>',
+                          f(ca.get("completude"), 3), f(cn.get("completude"), 3),
+                          f(ca.get("len_gt_m", 0) / 1000, 2)])
+
+    # --- bootstrap apparié ---
+    boot = ""
+    for _, b in (d.get("comparatif") or {}).items():
+        sig = ("<b class=\"sig\">significatif</b>" if b["significatif"]
+               else "non significatif (l'intervalle contient zéro)")
+        boot = (f"<p><b>Écart apparié par tuile</b> sur {b['n_tuiles']} tuiles "
+                f"({b['aire_km2']:.2f} km² loyaux, {b['n_boot']} tirages) : "
+                f"<b>{b['delta']:+.4f}</b> de F1 longueur, "
+                f"IC95 [{b['ic95'][0]:+.4f} ; {b['ic95'][1]:+.4f}] — {sig}.</p>")
+        break
+
+    # Décomposition : ce que le changement de POIDS apporte, ce que le RÉGLAGE apporte.
+    # Sans elle on attribuerait au nouveau modèle un gain dont une part vient du réglage,
+    # qui aurait pu bénéficier aussi à l'ancien.
+    decompo = ""
+    av = par_modele[nouveau].get("avant_reglage")
+    ga = par_modele[nouveau].get("geo_ancien")
+    if av and bn:
+        lg = [["poids seuls — ancien à son meilleur → nouveau à sa config d'avant réglage",
+               f(ba["f1_len"]), f(av["f1_len"]),
+               f'<span class="{"pos" if av["f1_len"] > ba["f1_len"] else "neg"}">'
+               f'{av["f1_len"] - ba["f1_len"]:+.4f}</span>'],
+              ["réglage seul — nouveau avant réglage → nouveau réglé",
+               f(av["f1_len"]), f(bn["f1_len"]),
+               f'<span class="pos">{bn["f1_len"] - av["f1_len"]:+.4f}</span>'],
+              ["<b>total</b> — ancien à son meilleur → nouveau réglé",
+               f(ba["f1_len"]), f(bn["f1_len"]),
+               f'<span class="pos"><b>{bn["f1_len"] - ba["f1_len"]:+.4f}</b></span>']]
+        if ga:
+            lg.insert(2, ["post-traitement seul — nouveau avec le post-traitement de "
+                          "l'ancien → nouveau réglé",
+                          f(ga["f1_len"]), f(bn["f1_len"]),
+                          f'<span class="pos">{bn["f1_len"] - ga["f1_len"]:+.4f}</span>'])
+        decompo = ("<h3>D'où vient le gain</h3>"
+                   + tableau(["effet isolé", "de", "à", "Δ F1 longueur"], lg))
+
+    return f"""<h2>Comparatif ancien / nouveau modèle</h2>
+<div class="note warn"><b>La comparaison n'est loyale que sur trois zones.</b>
+L'ancien modèle a été entraîné sur Rambouillet et Forêt de Haye uniquement, avec un split
+<em>aléatoire par tuile</em> sur une grille à 40 % de recouvrement réel. Résultat mesuré :
+<b>134/134</b> tuiles test de Haye et <b>210/211</b> de Rambouillet tombent dans son emprise
+d'entraînement, soit ≈ 92 % de leurs pixels. Ce n'est pas de la fuite spatiale, c'est du
+train — et à Haye la vérité terrain v2 est construite depuis les mêmes shapefiles qu'il a
+appris. Ces deux zones sont donc mesurées mais <b>exclues de l'agrégat</b> : elles donnent
+son plafond de mémorisation, pas sa performance.</div>
+<p>Configurations retenues&nbsp;: ancien <code>{html.escape(cfg_a)}</code>, nouveau
+<code>{html.escape(cfg_n)}</code> — chacun à son propre optimum mesuré, pour ne pas
+comparer un réglage optimisé à un réglage qui ne l'a jamais été.</p>
+{boot}
+{decompo}
+<h3>Par zone</h3>
+{tableau(["mosaïque", "F1 ancien", "F1 nouveau", "Δ", "compl. anc.", "compl. nouv.",
+          "corr. anc.", "corr. nouv.", "poly/km² anc.", "poly/km² nouv."], lignes)}
+<h3>Par classe, dans l'espace canonique à 3 classes</h3>
+<p>L'ancien modèle ne connaît que 3 classes et ne peut structurellement pas produire
+<code>talus</code> ni <code>fosse</code>&nbsp;: sans fusion vers un espace commun, les 728
+annotations correspondantes du test lui seraient comptées en manques par construction.
+<code>talus</code>, <code>fosse</code> et <code>talus_fosse</code> du nouveau sont donc
+regroupés. Réserve&nbsp;: le sens de <code>talus_fosse</code> a changé entre les deux
+générations — fourre-tout chez l'ancien, cas indissociables chez le nouveau — donc la
+fusion avantage légèrement l'ancien sur cette ligne.</p>
+{tableau(["classe canonique", "F1 ancien", "F1 nouveau", "Δ", "compl. anc.",
+          "compl. nouv.", "GT (km)"], lignes_cl)}"""
+
+
 def section_b(nb: dict) -> str:
     if not nb:
         return ""
@@ -325,6 +449,7 @@ mais aussi sa limite : le correctif des boîtes, la déduplication des fenêtres
 top-k ne la déplacent pas d'un millième. Leur valeur se lit dans la colonne
 polygones/km² et dans le temps de calcul, pas ici.</div>
 {runs}
+{section_comparatif(d)}
 {section_b(d.get('niveau_b'))}
 <footer>Généré par <code>tools/bench</code>. Parité banc↔plugin vérifiée à l'identique
 (polygones au flottant près) avant toute mesure.</footer>

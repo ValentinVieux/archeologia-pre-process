@@ -199,6 +199,25 @@ def _traiter_e0(iid: int):
 # Évaluation d'une config (niveau A)
 # --------------------------------------------------------------------------------------
 
+def verifier_seuils_vs_plancher(grille: Sequence[tuple], plancher: float) -> None:
+    """Refuse un seuil de confiance SOUS le plancher du cache.
+
+    Le cache ne conserve que les requêtes dont le score dépasse le plancher. Une config
+    demandant un seuil inférieur ne voit donc rien de plus, et rend un résultat
+    RIGOUREUSEMENT identique à celui du plancher — sans aucun signal d'erreur.
+    Constaté en vrai : à plancher 0,15, les configs 0,15 / 0,12 / 0,10 de l'ancien modèle
+    donnaient les mêmes 0,5458 / 0,517 / 0,578 / 26,3, ce qui faisait conclure à tort à un
+    optimum intérieur alors que le balayage était clippé. Mieux vaut échouer bruyamment.
+    """
+    fautives = {n: p.confidence for n, p in grille if p.confidence < plancher - 1e-9}
+    if fautives:
+        raise SystemExit(
+            f"seuil(s) sous le plancher de cache {plancher} : {fautives}\n"
+            f"Ces configs rendraient un resultat identique a celui du plancher, sans le "
+            f"signaler. Soit les retirer, soit relancer `forward` avec --floor plus bas "
+            f"(ce qui invalide le cache : le plancher fait partie de la cle).")
+
+
 def fenetres(h: int, w: int, p: Params) -> List[list]:
     """Fenêtres SAHI du plugin, avec déduplication optionnelle."""
     from pipeline.cv.sahi_lite import get_slice_bboxes
@@ -461,11 +480,120 @@ def cmd_bootstrap(a) -> None:
     print(f"\n-> {out}")
 
 
+def _detail_tuiles(synthese: dict, cfg: str, exclure: Sequence[str] = ()) -> Dict[str, tuple]:
+    """{nom de tuile: (len_gt, len_pred, len_tp_gt, len_tp_pred)} pour une config.
+
+    S'appuie sur la ventilation par tuile du niveau B, qui est exactement additive en
+    longueur (cf. metrics.carte_longueur). C'est ce qui permet d'apparier deux modèles
+    tuile par tuile alors qu'ils ne partagent NI la taille de fenêtre NI la taxonomie.
+    """
+    if cfg not in synthese:
+        raise SystemExit(f"config {cfg!r} absente ({sorted(synthese)[:8]}…)")
+    out: Dict[str, tuple] = {}
+    for mos_id, v in synthese[cfg]["par_mosaique"].items():
+        if any(z and z in mos_id for z in exclure):
+            continue
+        for nom, t in zip(v["tuiles"], v["par_tuile"]):
+            out[f"{mos_id}/{nom}"] = (t["len_gt_m"], t["len_pred_m"],
+                                      t["len_tp_gt_m"], t["len_tp_pred_m"])
+    return out
+
+
+def _f1_depuis(arr: np.ndarray, idx: np.ndarray) -> float:
+    lg, lp = arr[idx, 0].sum(), arr[idx, 1].sum()
+    tg, tp = arr[idx, 2].sum(), arr[idx, 3].sum()
+    if not lg or not lp:
+        return float("nan")
+    c, r = tg / lg, tp / lp
+    return 2 * c * r / (c + r) if (c + r) else 0.0
+
+
+def cmd_comparer(a) -> None:
+    """Bootstrap APPARIÉ par tuile entre deux modèles.
+
+    Les deux modèles n'ont ni la même taxonomie ni la même géométrie de découpe : seule
+    la longueur de linéaire retrouvée, ventilée sur une grille de tuiles commune, permet
+    de les apparier. Rééchantillonner les tuiles une fois par itération et recalculer les
+    deux modèles sur le même tirage resserre l'intervalle d'un facteur ~3 par rapport à
+    un bootstrap indépendant.
+    """
+    exclure = [z for z in (a.hors_agregat or "").split(",") if z]
+    sa = json.loads(Path(a.a).read_text(encoding="utf-8"))
+    sb = json.loads(Path(a.b).read_text(encoding="utf-8"))
+    da = _detail_tuiles(sa, a.cfg_a, exclure)
+    db = _detail_tuiles(sb, a.cfg_b, exclure)
+
+    communes = sorted(set(da) & set(db))
+    if not communes:
+        raise SystemExit("aucune tuile commune aux deux mesures")
+    seules_a, seules_b = set(da) - set(db), set(db) - set(da)
+    if seules_a or seules_b:
+        print(f"[!] tuiles non partagees ignorees : {len(seules_a)} cote A, "
+              f"{len(seules_b)} cote B")
+
+    A = np.array([da[t] for t in communes], float)
+    B = np.array([db[t] for t in communes], float)
+    n = len(communes)
+    idx = np.arange(n)
+    f1_a, f1_b = _f1_depuis(A, idx), _f1_depuis(B, idx)
+
+    rng = np.random.default_rng(20260729)
+    tirages = rng.integers(0, n, size=(a.n_boot, n))
+    delta = np.array([_f1_depuis(B, t) - _f1_depuis(A, t) for t in tirages])
+    lo, hi = np.percentile(delta, [2.5, 97.5])
+    signif = lo > 0 or hi < 0
+
+    nom_a = sa[a.cfg_a].get("modele", "A")
+    nom_b = sb[a.cfg_b].get("modele", "B")
+    km2 = sum(v["aire_km2"] for k, v in sa[a.cfg_a]["par_mosaique"].items()
+              if not any(z and z in k for z in exclure))
+    print(f"\nComparatif apparie par tuile — {n} tuiles, {km2:.2f} km2, "
+          f"{a.n_boot} tirages\n")
+    print(f"  A  {nom_a} / {a.cfg_a}")
+    print(f"     F1 longueur = {f1_a:.4f}")
+    print(f"  B  {nom_b} / {a.cfg_b}")
+    print(f"     F1 longueur = {f1_b:.4f}")
+    print(f"\n  ecart B - A = {f1_b - f1_a:+.4f}   IC95 [{lo:+.4f} ; {hi:+.4f}]   "
+          f"{'SIGNIFICATIF' if signif else 'non significatif (IC contient zero)'}")
+
+    out = Path(a.out) / "comparatif_modeles.json"
+    charge = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
+    charge[f"{nom_a}:{a.cfg_a}__vs__{nom_b}:{a.cfg_b}"] = {
+        "modele_a": nom_a, "config_a": a.cfg_a, "f1_a": f1_a,
+        "modele_b": nom_b, "config_b": a.cfg_b, "f1_b": f1_b,
+        "delta": f1_b - f1_a, "ic95": [lo, hi], "significatif": bool(signif),
+        "n_tuiles": n, "aire_km2": km2, "n_boot": a.n_boot,
+        "mosaiques_exclues": exclure,
+    }
+    out.write_text(json.dumps(charge, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"\n-> {out}")
+
+
 # --------------------------------------------------------------------------------------
 # Niveau B — mosaïques géoréférencées
 # --------------------------------------------------------------------------------------
 
-def _geo_postprocess(dets: List[dict], mos, corpus: Corpus, p: Params) -> List[dict]:
+def noms_classes_modele(model_path: str) -> List[str]:
+    """Noms de classes DU MODÈLE chargé, dans son propre ordre.
+
+    À ne surtout pas prendre dans le COCO de test : celui-ci porte la taxonomie du
+    corpus v2 (5 classes), alors qu'un autre modèle peut en avoir 3 dans un ordre
+    différent. Les nommer avec la mauvaise table donnerait des couches correctement
+    géométriques mais faussement étiquetées.
+    """
+    d = Path(model_path).parent.parent          # weights/best.onnx -> racine du modèle
+    sidecar = Path(model_path).with_suffix(".json")
+    if sidecar.exists():
+        meta = json.loads(sidecar.read_text(encoding="utf-8"))
+        if meta.get("class_names"):
+            return [str(x) for x in meta["class_names"]]
+    txt = d / "classes.txt"
+    if txt.exists():
+        return [l.strip() for l in txt.read_text(encoding="utf-8").splitlines() if l.strip()]
+    raise RuntimeError(f"noms de classes introuvables pour {model_path}")
+
+
+def _geo_postprocess(dets: List[dict], mos, noms: Sequence[str], p: Params) -> List[dict]:
     """Passe les détections par le VRAI post-traitement géo du plugin."""
     from shapely.geometry import Polygon
     from pipeline.cv.postprocessing import postprocess_geo_detections
@@ -481,15 +609,26 @@ def _geo_postprocess(dets: List[dict], mos, corpus: Corpus, p: Params) -> List[d
             g = g.buffer(0)
         if g.is_empty:
             continue
-        nom = corpus.noms_classes[d["class_id"]] if d["class_id"] < len(corpus.noms_classes) \
+        nom = noms[d["class_id"]] if d["class_id"] < len(noms) \
             else f"classe_{d['class_id']}"
-        par_classe.setdefault(nom, []).append({"geometry": g, "confidence": d["confidence"]})
+        par_classe.setdefault(nom, []).append(
+            {"geometry": g, "confidence": d["confidence"], "class_id": d["class_id"]})
 
     sortie = postprocess_geo_detections(
         par_classe, merge_buffer_m=p.geo_merge_buffer_m, min_area_m2=p.geo_min_area_m2,
         do_merge=p.geo_merge, do_remove_overlaps=p.geo_remove_overlaps,
         overlap_strategy=p.geo_overlap_strategy)
-    return [d for lst in sortie.values() for d in lst]
+    # Le post-traitement fusionne des géométries : `class_id` peut disparaître des dicts
+    # de sortie. On le rétablit depuis le nom de couche, qui lui est conservé — c'est ce
+    # qui permet ensuite la ventilation par classe canonique.
+    index = {n: i for i, n in enumerate(noms)}
+    out: List[dict] = []
+    for nom, lst in sortie.items():
+        for d in lst:
+            d.setdefault("class_id", index.get(nom, -1))
+            d["class_name"] = nom
+            out.append(d)
+    return out
 
 
 def _rasteriser_geo(dets_geo: List[dict], mos) -> np.ndarray:
@@ -516,11 +655,17 @@ def _rasteriser_geo(dets_geo: List[dict], mos) -> np.ndarray:
 def cmd_niveaub(a) -> None:
     import onnxruntime as ort
     import yaml
-    from pipeline.cv.sahi_lite import get_slice_bboxes
-    from tools.bench.data import composantes, parse_tuile
-    from tools.bench.mosaic import Mosaique, choisir, gt_lignes
+    from tools.bench.data import TUILE_PX, composantes, parse_tuile
+    from tools.bench.mosaic import (
+        CANONIQUES, Mosaique, canonique_pour, choisir, gt_lignes,
+    )
 
     corpus = Corpus(Path(a.data))
+    noms_modele = noms_classes_modele(a.model)
+    canon = canonique_pour(a.model)
+    print(f"modele    : {Path(a.model).parent.parent.name}")
+    print(f"classes   : {noms_modele}")
+    print(f"canonique : { {noms_modele[i]: c for i, c in sorted(canon.items()) } }\n")
     tuiles = [t for t in (parse_tuile(i["file_name"]) for i in corpus.images.values()) if t]
     mosaiques = choisir(composantes(tuiles, min_tuiles=a.min_tuiles), par_zone=a.par_zone,
                         max_tuiles=a.max_tuiles)
@@ -534,6 +679,7 @@ def cmd_niveaub(a) -> None:
     base = Params(**(configs.get("base") or {}))
     grille = [("base", base)] + [(n, replace(base, **s))
                                  for n, s in (configs.get("configs") or {}).items()]
+    verifier_seuils_vs_plancher(grille, a.floor)
 
     session, input_name, shape, meta, provider = charger_session(a.model, a.device)
     hw = (int(shape[3]), int(shape[2]))
@@ -545,7 +691,24 @@ def cmd_niveaub(a) -> None:
 
     racine = Path(a.out) / "mosaiques"
     racine.mkdir(parents=True, exist_ok=True)
-    resultats: Dict[str, dict] = {}
+
+    # Reprise au niveau CONFIG. L'accumulation d'instances peut saturer la mémoire sur une
+    # grande mosaïque à seuil bas (mesuré : l'ancien modèle, fenêtre 1032 px, dépasse
+    # 7,4 Go à confiance 0,10) ; sans reprise, un OOM en fin de grille perdrait tout le
+    # travail des configs déjà calculées.
+    partiel = Path(a.out) / f"niveau_b_{Path(a.axes).stem}__{Path(a.model).parent.parent.name}.json"
+    deja: Dict[str, dict] = {}
+    if partiel.exists() and not a.force:
+        anciennes = json.loads(partiel.read_text(encoding="utf-8"))
+        deja = {n: b.get("par_mosaique", {}) for n, b in anciennes.items()}
+        faites = [n for n, m in deja.items() if len(m) == len(mosaiques)]
+        if faites:
+            print(f"reprise : {len(faites)} config(s) deja completes, ignorees\n")
+    resultats: Dict[str, dict] = {n: dict(m) for n, m in deja.items()}
+    grille = [(n, p) for n, p in grille
+              if len(deja.get(n, {})) < len(mosaiques)]
+    if not grille:
+        print("rien a recalculer")
 
     for mos in mosaiques:
         t0 = time.time()
@@ -558,8 +721,22 @@ def cmd_niveaub(a) -> None:
         skel_gt, longueurs = gt_lignes(mos, gpkg)
         skel_gt &= valide
         cote_gt = M.CoteGT.depuis_squelette(skel_gt)
+        # GT par classe canonique : identique pour les deux modèles, donc comparable.
+        cotes_canon = {}
+        for cl in CANONIQUES:
+            sk, _ = gt_lignes(mos, gpkg, canonique=cl)
+            sk &= valide
+            if sk.any():
+                cotes_canon[cl] = M.CoteGT.depuis_squelette(sk)
+        # Emprises des tuiles en pixels de mosaïque : unités du bootstrap apparié.
+        emprises = []
+        for t in mos.tuiles:
+            x, y = mos.px(t)
+            emprises.append((y, y + TUILE_PX, x, x + TUILE_PX))
         print(f"\n{mos.id} : GT {cote_gt.longueur/1000:.2f} km de lineaire, "
-              f"{cote_gt.n_composantes} segments", flush=True)
+              f"{cote_gt.n_composantes} segments, "
+              f"canonique { {c: round(v.longueur/1000, 2) for c, v in cotes_canon.items()} } km",
+              flush=True)
 
         # Forward sur l'union des fenêtres demandées par toutes les configs.
         besoins = set()
@@ -578,39 +755,83 @@ def cmd_niveaub(a) -> None:
         print(f"  {len(besoins)} fenetres, {time.time()-t0:.0f}s", flush=True)
 
         for nom, p in grille:
+            if mos.id in resultats.get(nom, {}):
+                continue
             bb = fenetres(mos.h, mos.w, p)
             slices = [cache.lire(f"{mos.id}/{x0}_{y0}_{x1}_{y1}", x0, y0, x1 - x0, y1 - y0)
                       for x0, y0, x1, y1 in bb]
             dets = decoder(slices, mos.w, mos.h, hw[0], hw[1], p)
-            dets_geo = _geo_postprocess(dets, mos, corpus, p)
+            dets_geo = _geo_postprocess(dets, mos, noms_modele, p)
             pred = _rasteriser_geo(dets_geo, mos) & valide
             c = M.ccq_prepare(pred, cote_gt, a.tau)
             c.update({"n_pred": len(dets_geo), "n_pred_avant_geo": len(dets),
                       "aire_km2": float(valide.sum()) * M.GSD_M ** 2 / 1e6,
                       "n_fenetres": len(bb)})
             c["polygones_par_km2"] = c["n_pred"] / max(c["aire_km2"], 1e-9)
+
+            # Ventilation par classe canonique : prédictions du modèle regroupées dans
+            # l'espace commun aux deux taxonomies, contre la GT de la même classe.
+            c["par_classe"] = {}
+            for cl, cote in cotes_canon.items():
+                ids = [i for i, v in canon.items() if v == cl]
+                sous = [d for d in dets_geo if d.get("class_id") in ids]
+                pc = _rasteriser_geo(sous, mos) & valide
+                g = M.ccq_prepare(pc, cote, a.tau)
+                g["n_pred"] = len(sous)
+                c["par_classe"][cl] = g
+
+            # Ventilation par tuile : additive en longueur, donc c'est elle qui rend
+            # possible un intervalle de confiance apparié (3 mosaïques -> ~86 tuiles).
+            c["par_tuile"] = M.ccq_decompose(pred, cote_gt, emprises, a.tau)
+            c["tuiles"] = [t.nom for t in mos.tuiles]
             resultats.setdefault(nom, {})[mos.id] = c
             print(f"    {nom:<28} F1_len={c['f1_len']:.4f} comp={c['completude']:.3f} "
                   f"corr={c['correction']:.3f} poly/km2={c['polygones_par_km2']:.1f} "
                   f"({len(bb)} fen.)", flush=True)
+            # Sauvegarde incrémentale : une config coûteuse ne doit pas être perdue si la
+            # suivante fait sauter la mémoire.
+            partiel.write_text(json.dumps(
+                {n: {"par_mosaique": m} for n, m in resultats.items()},
+                indent=2, ensure_ascii=False), encoding="utf-8")
 
+    # Agrégat des mosaïques LOYALES par défaut : Haye et Rambouillet sont dans l'emprise
+    # d'entraînement de l'ancien modèle (134/134 et 210/211 tuiles test), donc les y
+    # inclure mélangerait mémorisation et généralisation dans un même chiffre.
+    exclues = set((a.hors_agregat or "").split(",")) - {""}
     synthese = {}
     for nom, par_mos in resultats.items():
-        g = M.agreger_ccq(list(par_mos.values()), a.tau)
-        g["n_pred"] = sum(v["n_pred"] for v in par_mos.values())
-        g["aire_km2"] = sum(v["aire_km2"] for v in par_mos.values())
+        loyales = [v for k, v in par_mos.items()
+                   if not any(z and z in k for z in exclues)]
+        g = M.agreger_ccq(loyales, a.tau)
+        g["n_pred"] = sum(v["n_pred"] for v in loyales)
+        g["aire_km2"] = sum(v["aire_km2"] for v in loyales)
         g["polygones_par_km2"] = g["n_pred"] / max(g["aire_km2"], 1e-9)
-        g["fragmentation"] = M.agreger_frag(list(par_mos.values()))
+        g["fragmentation"] = M.agreger_frag(loyales)
+        g["mosaiques_agregees"] = [k for k in par_mos
+                                   if not any(z and z in k for z in exclues)]
+        g["mosaiques_exclues"] = [k for k in par_mos
+                                  if any(z and z in k for z in exclues)]
+        g["par_classe"] = {
+            cl: M.agreger_ccq([v["par_classe"][cl] for v in loyales
+                               if cl in v.get("par_classe", {})], a.tau)
+            for cl in CANONIQUES
+            if any(cl in v.get("par_classe", {}) for v in loyales)
+        }
+        g["modele"] = Path(a.model).parent.parent.name
         g["par_mosaique"] = par_mos
         synthese[nom] = g
-    # Un fichier par grille d'axes : sinon deux passes successives s'écrasent
+    # Un fichier par (grille d'axes, modèle) : sinon deux passes successives s'écrasent
     # silencieusement et le rapport ne montre plus que la dernière.
-    out = Path(a.out) / f"niveau_b_{Path(a.axes).stem}.json"
+    out = Path(a.out) / f"niveau_b_{Path(a.axes).stem}__{Path(a.model).parent.parent.name}.json"
     out.write_text(json.dumps(synthese, indent=2, ensure_ascii=False), encoding="utf-8")
-    print("\n=== SYNTHESE NIVEAU B ===")
+    ref = synthese[list(synthese)[0]]
+    print(f"\n=== SYNTHESE NIVEAU B — agregat sur {len(ref['mosaiques_agregees'])} mosaique(s) ===")
+    if ref["mosaiques_exclues"]:
+        print(f"  (hors agregat, publiees a part : {', '.join(ref['mosaiques_exclues'])})")
     for nom, g in sorted(synthese.items(), key=lambda kv: -kv[1]["f1_len"]):
+        pc = "  ".join(f"{cl[:4]}={v['f1_len']:.3f}" for cl, v in g["par_classe"].items())
         print(f"  {g['f1_len']:.4f}  comp={g['completude']:.3f} corr={g['correction']:.3f} "
-              f"poly/km2={g['polygones_par_km2']:6.1f}  frag={g['fragmentation']:.2f}  {nom}")
+              f"poly/km2={g['polygones_par_km2']:6.1f}  {pc}  {nom}")
     print(f"-> {out}")
 
 
@@ -659,6 +880,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument("--n-boot", type=int, default=2000, dest="n_boot")
     p.set_defaults(f=cmd_bootstrap)
 
+    p = sub.add_parser("comparer")
+    p.add_argument("--a", required=True, help="niveau_b_*.json du modele A")
+    p.add_argument("--b", required=True, help="niveau_b_*.json du modele B")
+    p.add_argument("--cfg-a", required=True, dest="cfg_a")
+    p.add_argument("--cfg-b", required=True, dest="cfg_b")
+    p.add_argument("--hors-agregat", dest="hors_agregat", default="")
+    p.add_argument("--n-boot", type=int, default=4000, dest="n_boot")
+    p.set_defaults(f=cmd_comparer)
+
     p = sub.add_parser("niveaub")
     p.add_argument("--data", required=True)
     p.add_argument("--gpkg", required=True)
@@ -669,6 +899,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument("--par-zone", type=int, default=1, dest="par_zone")
     p.add_argument("--min-tuiles", type=int, default=16, dest="min_tuiles")
     p.add_argument("--max-tuiles", type=int, default=49, dest="max_tuiles")
+    p.add_argument("--hors-agregat", dest="hors_agregat", default="",
+                   help="fragments de nom de mosaique a MESURER mais exclure de l'agregat "
+                        "(ex. les zones d'entrainement d'un modele), separes par des virgules")
+    p.add_argument("--force", action="store_true",
+                   help="recalculer les configs deja presentes dans le json de sortie")
     p.set_defaults(f=cmd_niveaub)
 
     a = ap.parse_args(argv)

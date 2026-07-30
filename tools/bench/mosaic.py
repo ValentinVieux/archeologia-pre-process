@@ -38,6 +38,53 @@ IGNOREES = {"54_foret_de_haye": ["rempart"],
             "78_saint_germain_marly": ["amenagement_militaire"],
             "41_blois": []}
 
+# --------------------------------------------------------------------------------------
+# Espace de classes CANONIQUE, pour comparer deux modèles de taxonomies différentes
+# --------------------------------------------------------------------------------------
+# L'ancien modèle de linéaires ne connaît que 3 classes et ne peut structurellement pas
+# produire `talus` ni `fosse` : le test v2 en contient 728 annotations, qui lui seraient
+# comptées en manques par pure construction. On ramène donc les deux taxonomies au plus
+# petit espace commun avant toute ventilation par classe.
+#
+# Le chiffre PRINCIPAL du comparatif (F1 longueur class-agnostic) n'a pas besoin de cette
+# table : il porte sur l'union des masques, donc il est insensible à la taxonomie.
+#
+# Réserve à porter au rapport : le sens de `talus_fosse` a changé entre les générations.
+# Chez l'ancien c'était un fourre-tout talus+fossé ; chez le nouveau il est réservé aux
+# cas indissociables, `talus` et `fosse` existant à côté. La fusion est donc favorable à
+# l'ancien sur ce point précis, et il faut le dire.
+CANONIQUES = ("parcellaire", "talus_fosse", "chemin_creux")
+
+# {nom du dossier de modèle: {class_id du modèle: classe canonique}}
+CANONIQUE_PAR_MODELE = {
+    "lineaires_seg_v2_1": {
+        0: "parcellaire", 1: "talus_fosse", 2: "talus_fosse",
+        3: "talus_fosse", 4: "chemin_creux",
+    },
+    "formes_lineaires_ld_a15_rmin10_rm_rfdetr_seg_1": {
+        0: "chemin_creux", 1: "parcellaire", 2: "talus_fosse",
+    },
+}
+
+# Couches GPKG -> classe canonique (vérité terrain commune aux deux modèles).
+COUCHES_CANONIQUES = {
+    "parcellaire": "parcellaire", "voie": "parcellaire",
+    "talus": "talus_fosse", "fosse": "talus_fosse", "talus_fosse": "talus_fosse",
+    "chemin_creux": "chemin_creux",
+}
+
+
+def canonique_pour(model_path) -> Dict[int, str]:
+    """Table id -> classe canonique, déduite du dossier du modèle."""
+    racine = Path(model_path)
+    for _ in range(4):                       # weights/best.onnx -> racine du modèle
+        if racine.name in CANONIQUE_PAR_MODELE:
+            return CANONIQUE_PAR_MODELE[racine.name]
+        racine = racine.parent
+    raise RuntimeError(
+        f"aucun mappage canonique connu pour {model_path} — ajouter une entrée dans "
+        f"CANONIQUE_PAR_MODELE plutôt que de deviner la correspondance")
+
 
 class Mosaique:
     def __init__(self, tuiles: Sequence[Tuile]):
@@ -101,11 +148,15 @@ class Mosaique:
 
 
 def gt_lignes(mosaique: Mosaique, gpkg: Path,
-              classes: Optional[Sequence[int]] = None) -> Tuple[np.ndarray, Dict[int, float]]:
+              classes: Optional[Sequence[int]] = None,
+              canonique: Optional[str] = None) -> Tuple[np.ndarray, Dict[int, float]]:
     """Rasterise les LIGNES de vérité terrain (1 px) dans la grille de la mosaïque.
 
     Une ligne rasterisée à 1 px est déjà la ligne de centre : pas de squelettisation,
     donc pas d'artefact de bout de buffer.
+
+    `canonique` restreint aux couches d'une classe canonique donnée — c'est la GT
+    commune aux deux modèles, indépendante de leurs taxonomies respectives.
     """
     import geopandas as gpd
     from shapely.geometry import box
@@ -122,6 +173,8 @@ def gt_lignes(mosaique: Mosaique, gpkg: Path,
         if gdf.empty:
             continue
         if classes is not None and class_id not in classes:
+            continue
+        if canonique is not None and COUCHES_CANONIQUES.get(nom_couche) != canonique:
             continue
         gdf = gdf[gdf.intersects(emprise)]
         if gdf.empty:

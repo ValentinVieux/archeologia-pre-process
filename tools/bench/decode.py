@@ -78,6 +78,14 @@ class Params:
     snap: int = 16
     mask_iou_merge: float = 0.15
     fusion: str = "max"              # max | mean
+    # Stocke les cartes de probabilité d'instance en float16 au lieu de float32.
+    # MOTIF : chaque instance porte une carte à la taille de la fenêtre, étendue à
+    # l'emprise des fenêtres fusionnées. Sur une mosaïque de 4,4 km² à seuil bas, cela
+    # dépasse les 7,4 Go disponibles (OOM constaté sur les DEUX modèles). float16 divise
+    # la mémoire par deux pour une résolution de ~2,4e-4 autour du seuil de 0,5 — la même
+    # précision que celle déjà mesurée comme sans effet pour le cache des masques
+    # (20/20 tuiles identiques). Défaut False : la parité bit-à-bit reste intacte.
+    prob_float16: bool = False
 
     # --- suppression de doublons (absente du plugin) ---
     nms_mask_iou: Optional[float] = None      # None = pas de NMS
@@ -207,7 +215,7 @@ def _agrandir(inst: dict, sy: int, sx: int, ey: int, ex: int) -> None:
     for champ in ("prob", "cnt"):
         if inst.get(champ) is None:
             continue
-        neuf = np.zeros((ny1 - ny0, nx1 - nx0), dtype=np.float32)
+        neuf = np.zeros((ny1 - ny0, nx1 - nx0), dtype=inst[champ].dtype)
         neuf[oy:oy + oh, ox:ox + ow] = inst[champ]
         inst[champ] = neuf
     inst["bbox"] = [ny0, nx0, ny1, nx1]
@@ -333,9 +341,11 @@ def accumuler(slices: Sequence[SliceOut], orig_w: int, orig_h: int,
                                 end_y, end_x, new_vals, p)
 
             if key not in instance_maps:
+                dt = np.float16 if p.prob_float16 else np.float32
                 instance_maps[key] = {
-                    "prob": new_vals.copy(),
-                    "cnt": np.ones_like(new_vals) if p.fusion == "mean" else None,
+                    "prob": new_vals.astype(dt, copy=True),
+                    "cnt": (np.ones_like(new_vals, dtype=dt)
+                            if p.fusion == "mean" else None),
                     "bbox": [sl.start_y, sl.start_x, end_y, end_x],
                     "conf": confidence,
                     "class_id": class_id,

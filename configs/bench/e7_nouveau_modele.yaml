@@ -1,0 +1,41 @@
+# NOUVEAU modèle `lineaires_seg_v2_1` — sa configuration RETENUE, sur les mêmes mosaïques.
+#
+# `base` = exactement ce qui est appliqué en production après la campagne de réglage :
+# confiance 0,25, aire min 200 m², recouvrement SAHI 0,4, remove_overlaps désactivé.
+# C'est la comparaison de PRODUITS : ce que l'archéologue obtient réellement de chaque
+# modèle, pas une comparaison de poids à post-traitement égalisé.
+#
+# On vérifie quand même son seuil sur ces mosaïques-ci, par symétrie avec le balayage
+# accordé à l'ancien — sinon on offrirait à l'un un optimum local et pas à l'autre.
+base:
+  class_offset: 0
+  n_classes: 5
+  confidence: 0.25
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.4
+  fusion: max
+  min_area_px: 10.0
+  boxes_normalisees: true
+  sahi_dedup: true
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+  geo_min_area_m2: 200.0
+
+# `prob_float16` sur les seuils bas : MESURÉ, l'accumulation d'instances passe de 6,9 Go
+# à 4,1 Go à confiance 0,15 sur la mosaïque de Rambouillet, ce qui la fait tenir dans les
+# 7,4 Go disponibles (OOM constaté sinon). Vérifié sans effet sur le résultat : F1 longueur
+# identique à 3e-5, mêmes 345 polygones. Coût : ~5x plus lent (numpy émule le float16).
+configs:
+  conf0.15:      {confidence: 0.15, prob_float16: true}
+  conf0.20:      {confidence: 0.20, prob_float16: true}
+  conf0.30:      {confidence: 0.30}
+
+  # Config livrée AVANT la campagne de réglage : sert à chiffrer séparément ce que le
+  # réglage a apporté et ce que le changement de modèle a apporté.
+  avant_reglage: {confidence: 0.3, sahi_overlap: 0.2,
+                  geo_remove_overlaps: true, geo_min_area_m2: 0.0}
+
+  # Le post-traitement de l'ancien, appliqué au nouveau : isole l'effet des poids.
+  geo_ancien:    {geo_remove_overlaps: true, geo_min_area_m2: 500.0, sahi_overlap: 0.2}

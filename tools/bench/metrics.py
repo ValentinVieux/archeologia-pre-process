@@ -14,7 +14,7 @@ FP/km², indice de fragmentation.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple, TYPE_CHECKING
 
 import cv2
 import numpy as np
@@ -101,6 +101,65 @@ def squelette(masque: np.ndarray, elagage_px: int = 20) -> np.ndarray:
     return _elaguer(skeletonize(masque), elagage_px)
 
 
+_ORTH = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]], np.uint8)
+_DIAG = np.array([[1, 0, 1], [0, 0, 0], [1, 0, 1]], np.uint8)
+
+
+def carte_longueur(skel: np.ndarray) -> np.ndarray:
+    """Longueur (m) portée par CHAQUE pixel du squelette.
+
+    `carte_longueur(s).sum()` vaut `longueur_m(s)` : c'est la même formule, simplement
+    non sommée. Sert à ventiler une longueur par tuile de façon EXACTEMENT additive —
+    découper le squelette en tranches perdrait les arêtes qui franchissent les bords de
+    tuile, et la somme des morceaux serait inférieure au total.
+    """
+    s = skel.astype(np.uint8)
+    if not s.any():
+        return np.zeros(skel.shape, np.float64)
+    n_o = (cv2.filter2D(s, -1, _ORTH, borderType=cv2.BORDER_CONSTANT) * s).astype(np.float64)
+    n_d = (cv2.filter2D(s, -1, _DIAG, borderType=cv2.BORDER_CONSTANT) * s).astype(np.float64)
+    return (n_o / 2.0 + (n_d / 2.0) * np.sqrt(2.0)) * GSD_M
+
+
+def ccq_decompose(pred_masque: np.ndarray, gt: "CoteGT",
+                  tuiles: Sequence[Tuple[int, int, int, int]],
+                  tau_m: float = 5.0, elagage_px: int = 20) -> List[Dict[str, float]]:
+    """CCQ ventilé par tuile, sans aucune squelettisation supplémentaire.
+
+    Avec 3 mosaïques on n'a que 3 unités : impossible de produire un intervalle de
+    confiance. Or la métrique est additive en longueur : les squelettes et cartes de
+    distance sont calculés une fois à l'échelle de la mosaïque, puis la longueur est
+    répartie par tuile. On passe de 3 à ~86 unités, donc à un bootstrap apparié utile.
+
+    `tuiles` : emprises (y0, y1, x0, x1) en pixels de mosaïque.
+    """
+    sk_p = squelette(pred_masque, elagage_px)
+    tau_px = tau_m / GSD_M
+    vide = np.zeros(pred_masque.shape, bool)
+    if gt.skel.any() and sk_p.any():
+        dt_p = ndimage.distance_transform_edt(~sk_p).astype(np.float32)
+        ok_g = gt.skel & (dt_p <= tau_px)
+        ok_p = sk_p & (gt.dt <= tau_px)
+    else:
+        ok_g = ok_p = vide
+
+    c_gt, c_pred = carte_longueur(gt.skel), carte_longueur(sk_p)
+    c_okg = np.where(ok_g, c_gt, 0.0)
+    c_okp = np.where(ok_p, c_pred, 0.0)
+
+    parts = []
+    for y0, y1, x0, x1 in tuiles:
+        z = (slice(y0, y1), slice(x0, x1))
+        parts.append({
+            "len_gt_m": float(c_gt[z].sum()),
+            "len_pred_m": float(c_pred[z].sum()),
+            "len_tp_gt_m": float(c_okg[z].sum()),
+            "len_tp_pred_m": float(c_okp[z].sum()),
+            "n_seg_pred": 0, "n_seg_gt": 0,
+        })
+    return parts
+
+
 def longueur_m(skel: np.ndarray) -> float:
     """Longueur d'un squelette en mètres.
 
@@ -137,7 +196,8 @@ class CoteGT:
         Aucune squelettisation, donc aucun artefact de bout de buffer."""
         o = cls.__new__(cls)
         o.skel = skel
-        o.dt = ndimage.distance_transform_edt(~skel) if skel.any() else None
+        o.dt = (ndimage.distance_transform_edt(~skel).astype(np.float32)
+                if skel.any() else None)
         o.longueur = longueur_m(skel)
         o.n_composantes = (ndimage.label(skel, structure=np.ones((3, 3), int))[1]
                            if skel.any() else 0)
@@ -145,7 +205,10 @@ class CoteGT:
 
     def __init__(self, gt_masque: np.ndarray, elagage_px: int = 20):
         self.skel = squelette(gt_masque, elagage_px)
-        self.dt = (ndimage.distance_transform_edt(~self.skel)
+        # float32 suffit : la carte sert uniquement à comparer à une tolérance de 10 px,
+        # et scipy la rend en float64, soit 141 Mo sur une mosaïque de 4536x3888 — x4 avec
+        # les cartes par classe canonique.
+        self.dt = (ndimage.distance_transform_edt(~self.skel).astype(np.float32)
                    if self.skel.any() else None)
         self.longueur = longueur_m(self.skel)
         self.n_composantes = (ndimage.label(self.skel, structure=np.ones((3, 3), int))[1]
@@ -161,7 +224,7 @@ def ccq_prepare(pred_masque: np.ndarray, gt: CoteGT, tau_m: float = 5.0,
     len_g = gt.longueur
 
     if gt.skel.any() and sk_p.any():
-        dt_p = ndimage.distance_transform_edt(~sk_p)
+        dt_p = ndimage.distance_transform_edt(~sk_p).astype(np.float32)
         comp = longueur_m(gt.skel & (dt_p <= tau_px)) / len_g if len_g else 0.0
         corr = longueur_m(sk_p & (gt.dt <= tau_px)) / len_p if len_p else 0.0
     else:
@@ -199,8 +262,8 @@ def ccq(pred_masque: np.ndarray, gt_masque: np.ndarray, tau_m: float = 5.0,
     len_p = longueur_m(sk_p)
 
     if sk_g.any() and sk_p.any():
-        dt_p = ndimage.distance_transform_edt(~sk_p)
-        dt_g = ndimage.distance_transform_edt(~sk_g)
+        dt_p = ndimage.distance_transform_edt(~sk_p).astype(np.float32)
+        dt_g = ndimage.distance_transform_edt(~sk_g).astype(np.float32)
         comp = longueur_m(sk_g & (dt_p <= tau_px)) / len_g if len_g else 0.0
         corr = longueur_m(sk_p & (dt_g <= tau_px)) / len_p if len_p else 0.0
     else:

@@ -1,0 +1,86 @@
+# ANCIEN modèle `formes_lineaires_ld_a15_rmin10_rm_rfdetr_seg_1` — balayage.
+#
+# Ce modèle n'a JAMAIS été évalué avec appariement (son evaluation_results.json ne
+# contient que des comptages bruts) et ses métadonnées se contredisent : confiance 0,2
+# dans model_card.yaml, 0,3 dans config.json. Le comparer à son réglage livré serait un
+# homme de paille. On lui balaie donc deux axes et on retiendra SON optimum.
+#
+# `base` = exactement sa configuration livrée, pour référence.
+#   entrée réseau 1032 px (statique), class_offset 1, 3 classes,
+#   sahi.slice 512 / overlap 0,2, remove_overlaps ACTIVÉ, aire min 500 m², confiance 0,2.
+#
+# AXE D'ÉCHELLE — la fenêtre est redimensionnée à 1032 quoi qu'il arrive, donc la taille
+# de tuile fixe le GSD effectif vu par le réseau :
+#     slice 512  -> x2,016 -> 0,248 m/px  (sa config livrée)
+#     slice 640  -> x1,613 -> 0,310 m/px
+#     slice 1032 -> x1,000 -> 0,500 m/px  (échelle native du raster, sans rééchantillonnage)
+# Cela tranche EMPIRIQUEMENT la taille de tuile de son entraînement (640 ou 512 ?), que
+# je n'ai pas pu vérifier : G: n'était pas monté et le split v1 n'est pas reconstructible
+# (random.random() sur un ensemble de tuiles dépendant d'un buffer inconnu).
+# prob_float16 est active sur les configs a seuil <= 0,20 : mesure, l'accumulation
+# d'instances y depasse les 7,4 Go disponibles en float32 (OOM constate). Verifie sans
+# effet sur le resultat (F1 identique a 3e-5, meme nombre de polygones), au prix de ~5x
+# en temps de calcul.
+base:
+  class_offset: 1
+  n_classes: 3
+  confidence: 0.2
+  mask_cutoff: 0.5
+  sahi_slice: 512
+  sahi_overlap: 0.2
+  fusion: max
+  min_area_px: 10.0
+  boxes_normalisees: true      # correctifs de code du plugin : c'est desormais la production
+  sahi_dedup: true
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: true    # sa config livree
+  geo_min_area_m2: 500.0       # sa config livree
+
+# SEUIL PLANCHER 0,15 — mesure, pas choix esthetique. A confiance 0,10 sur la mosaique de
+# Rambouillet (4536x3888), l'accumulation d'instances depasse les 7,4 Go disponibles et le
+# processus est tue (OOM constate). La fenetre de 1032 px de ce modele rend chaque carte de
+# probabilite d'instance 2,5x plus lourde que celle du nouveau (648 px), et `_agrandir`
+# etend ces cartes jusqu'a l'emprise union des fenetres fusionnees. C'est une propriete du
+# modele a rapporter : il n'est PAS exploitable sous 0,15 a l'echelle mosaique.
+# Si l'optimum du balayage tombait sur 0,15 (borne), il faudrait le signaler comme tronque.
+configs:
+  # --- seuil de confiance, a son echelle livree ---
+  s512_conf0.15: {confidence: 0.15, prob_float16: true}
+  s512_conf0.25: {confidence: 0.25}
+  s512_conf0.30: {confidence: 0.30}
+  s512_conf0.40: {confidence: 0.40}
+
+  # --- echelle 640 px (hypothese : tuiles d'entrainement 640 px / 320 m) ---
+  s640_conf0.15: {sahi_slice: 640, confidence: 0.15, prob_float16: true}
+  s640_conf0.20: {sahi_slice: 640, confidence: 0.20, prob_float16: true}
+  s640_conf0.25: {sahi_slice: 640, confidence: 0.25}
+  s640_conf0.30: {sahi_slice: 640, confidence: 0.30}
+
+  # --- ECHELLE 1032 px ABANDONNEE : chaque carte de probabilite d'instance ferait 1032^2
+  #     en float32 (4,3 Mo), etendue jusqu'a l'emprise des fenetres fusionnees. OOM
+  #     constate a 7,4 Go des la premiere config. A rapporter comme propriete du modele :
+  #     il n'est pas exploitable a son echelle native sur une mosaique de 4,4 km2.
+  #     La perte d'information est limitee : 640 px depasse deja largement 512 px, et
+  #     l'echelle 1032 ferait apparaitre les structures ~1,6x plus petites qu'a
+  #     l'entrainement, donc c'est le sens le moins prometteur.
+
+  # --- son meilleur seuil mais avec le post-traitement geo du nouveau : separe ce qui
+  #     vient des poids de ce qui vient du post-traitement ---
+  s640_geo_neuf: {sahi_slice: 640, confidence: 0.15,
+                  geo_remove_overlaps: false, geo_min_area_m2: 200.0, prob_float16: true}
+
+  # --- SEUILS SOUS 0,15 : IMPOSSIBLES A MESURER, ET C'EST UN CONSTAT, PAS UN CHOIX.
+  #
+  # Premiere tentative : 0,12 et 0,10 ont rendu des resultats RIGOUREUSEMENT identiques a
+  # 0,15 (0,5458 / compl. 0,517 / corr. 0,578 / 26,3 poly/km2). Ce n'etait pas un plateau
+  # mais un artefact : le plancher du cache valant 0,15, aucune requete sous ce score n'y
+  # figure, et les seuils inferieurs etaient silencieusement clippes. `cmd_niveaub` refuse
+  # desormais ce cas (verifier_seuils_vs_plancher).
+  #
+  # Descendre reellement exigerait un cache a plancher 0,10, donc de refaire tous les
+  # forwards ET de decoder avec bien plus de requetes retenues — or c'est exactement ce
+  # qui a provoque l'OOM initial a 7,4 Go. Conclusion a porter au rapport : l'optimum
+  # mesure de ce modele est SUR LA BORNE 0,15, et l'explorer plus bas est hors d'atteinte
+  # a l'echelle mosaique avec la memoire disponible. Son optimum reel est peut-etre plus
+  # bas ; on ne peut pas l'affirmer.
