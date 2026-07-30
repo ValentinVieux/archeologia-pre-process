@@ -73,6 +73,11 @@ code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.88em
 .reco .chg{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;color:var(--moss)}
 footer{margin-top:3.5rem;color:var(--mut);font-size:.85rem;border-top:1px solid var(--rule);
  padding-top:1rem;max-width:68ch}
+.galerie{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;
+ background:var(--rule);border:1px solid var(--rule);margin:1.2rem 0}
+.galerie figure{margin:0;background:var(--paper);padding:.5rem}
+.galerie img{width:100%;height:auto;display:block;border-radius:2px}
+.galerie figcaption{font-size:.78rem;color:var(--mut);margin-top:.35rem}
 """
 
 
@@ -294,8 +299,13 @@ def section_comparatif(d: dict) -> str:
                           f(ca.get("len_gt_m", 0) / 1000, 2)])
 
     # --- bootstrap apparié ---
+    # Prendre le bootstrap qui correspond AUX CONFIGS AFFICHÉES, pas le premier venu :
+    # le fichier en accumule plusieurs (chacun à son meilleur, chacun tel que livré,
+    # poids seuls…) et en afficher un autre que celui du tableau serait incohérent.
     boot = ""
     for _, b in (d.get("comparatif") or {}).items():
+        if b.get("config_a") != cfg_a or b.get("config_b") != cfg_n:
+            continue
         sig = ("<b class=\"sig\">significatif</b>" if b["significatif"]
                else "non significatif (l'intervalle contient zéro)")
         boot = (f"<p><b>Écart apparié par tuile</b> sur {b['n_tuiles']} tuiles "
@@ -303,6 +313,10 @@ def section_comparatif(d: dict) -> str:
                 f"<b>{b['delta']:+.4f}</b> de F1 longueur, "
                 f"IC95 [{b['ic95'][0]:+.4f} ; {b['ic95'][1]:+.4f}] — {sig}.</p>")
         break
+    if not boot and (d.get("comparatif") or {}):
+        boot = ('<p class="sub">Aucun bootstrap ne correspond au couple de configurations '
+                'affiché ci-dessous — relancer <code>bench comparer</code> avec ces '
+                'configs avant de citer un intervalle.</p>')
 
     # Décomposition : ce que le changement de POIDS apporte, ce que le RÉGLAGE apporte.
     # Sans elle on attribuerait au nouveau modèle un gain dont une part vient du réglage,
@@ -341,6 +355,18 @@ son plafond de mémorisation, pas sa performance.</div>
 <p>Configurations retenues&nbsp;: ancien <code>{html.escape(cfg_a)}</code>, nouveau
 <code>{html.escape(cfg_n)}</code> — chacun à son propre optimum mesuré, pour ne pas
 comparer un réglage optimisé à un réglage qui ne l'a jamais été.</p>
+<div class="note latent"><b>Deux limites de la mesure de l'ancien modèle, à connaître avant
+de lire les chiffres.</b>
+<p>Son seuil de confiance optimal tombe <b>sur la borne</b> du balayage (0,15) et non à
+l'intérieur. Descendre plus bas exigerait un cache à plancher inférieur puis un décodage à
+bien plus de requêtes retenues — ce qui sature les 7,4 Go disponibles. Son optimum réel est
+peut-être plus bas&nbsp;; on ne peut pas l'affirmer.</p>
+<p>L'axe d'échelle, lui, est complet (512 / 640 / 1032&nbsp;px) et il révèle que le
+bénéfice de l'échelle native est surtout un bénéfice de <em>mémorisation</em>&nbsp;: sur ses
+zones d'entraînement 512→1032 fait passer le F1 de 0,512 à 0,620, mais sur les zones
+loyales seulement de 0,318 à 0,465, où 640 et 1032 sont quasi à égalité. On ne peut donc
+pas déduire de l'inférence la taille de ses tuiles d'entraînement. Ce qui reste établi&nbsp;:
+sa configuration livrée (<code>slice: 512</code>) laisse <b>0,15 de F1</b> sur la table.</p></div>
 {boot}
 {decompo}
 <h3>Par zone</h3>
@@ -356,6 +382,63 @@ générations — fourre-tout chez l'ancien, cas indissociables chez le nouveau 
 fusion avantage légèrement l'ancien sur cette ligne.</p>
 {tableau(["classe canonique", "F1 ancien", "F1 nouveau", "Δ", "compl. anc.",
           "compl. nouv.", "GT (km)"], lignes_cl)}"""
+
+
+def section_visuel(racine: Path, n_max: int = 8) -> str:
+    """Extraits superposés, intégrés en base64 pour que le HTML reste autonome.
+
+    Les vignettes sont centrées sur les tuiles où les deux modèles DIVERGENT le plus :
+    montrer des extraits au hasard n'aiderait pas à juger, alors que le désaccord est
+    précisément là où l'œil de l'archéologue tranche mieux que la métrique.
+    """
+    import base64
+    idx = racine / "visuel" / "index.json"
+    if not idx.exists():
+        return ""
+    meta = json.loads(idx.read_text(encoding="utf-8"))
+    extraits = meta.get("extraits", [])
+    if not extraits:
+        return ""
+    # Un extrait par zone d'abord, puis on complète — pour ne pas montrer 8 vues de Blois.
+    par_zone: Dict[str, list] = {}
+    for e in extraits:
+        par_zone.setdefault(e["zone"], []).append(e)
+    ordonnes: list = []
+    rang = 0
+    while len(ordonnes) < min(n_max, len(extraits)):
+        ajoute = False
+        for z in sorted(par_zone):
+            if rang < len(par_zone[z]) and len(ordonnes) < n_max:
+                ordonnes.append(par_zone[z][rang])
+                ajoute = True
+        if not ajoute:
+            break
+        rang += 1
+
+    vignettes = []
+    for e in ordonnes:
+        p = racine / "visuel" / e["fichier"]
+        if not p.exists():
+            continue
+        b64 = base64.b64encode(p.read_bytes()).decode()
+        vignettes.append(
+            f'<figure><img src="data:image/jpeg;base64,{b64}" '
+            f'alt="{html.escape(e["zone"])} {html.escape(e["tuile"])}" loading="lazy">'
+            f'<figcaption>{html.escape(e["zone"])} · <code>{html.escape(e["tuile"])}</code>'
+            f'</figcaption></figure>')
+    if not vignettes:
+        return ""
+    return f"""<h2>Voir par soi-même</h2>
+<p>Vignettes centrées sur les tuiles où les deux modèles <b>divergent le plus</b> en
+longueur retrouvée — c'est là que l'œil tranche mieux que la métrique. En vert la vérité
+terrain (les lignes des GPKG recalés), en magenta l'ancien modèle, en cyan le nouveau.</p>
+<div class="galerie">{''.join(vignettes)}</div>
+<div class="note"><b>Pour inspecter dans QGIS.</b> Chaque mosaïque a son
+<code>comparatif.gpkg</code> dans <code>D:\\pipeline_results\\bench\\visuel\\</code>, avec
+une couche par modèle et par classe plus la vérité terrain, en EPSG:2154 — elles se
+superposent donc directement à vos rasters LD existants, les mosaïques n'en étant que des
+découpes. Un <code>fond_LD.png</code> géoréférencé (<code>.pgw</code> + <code>.prj</code>)
+est fourni si vous préférez ne rien avoir à charger d'autre.</div>"""
 
 
 def section_b(nb: dict) -> str:
@@ -450,6 +533,7 @@ top-k ne la déplacent pas d'un millième. Leur valeur se lit dans la colonne
 polygones/km² et dans le temps de calcul, pas ici.</div>
 {runs}
 {section_comparatif(d)}
+{section_visuel(racine)}
 {section_b(d.get('niveau_b'))}
 <footer>Généré par <code>tools/bench</code>. Parité banc↔plugin vérifiée à l'identique
 (polygones au flottant près) avant toute mesure.</footer>

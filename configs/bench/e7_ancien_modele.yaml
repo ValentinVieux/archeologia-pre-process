@@ -57,13 +57,22 @@ configs:
   s640_conf0.25: {sahi_slice: 640, confidence: 0.25}
   s640_conf0.30: {sahi_slice: 640, confidence: 0.30}
 
-  # --- ECHELLE 1032 px ABANDONNEE : chaque carte de probabilite d'instance ferait 1032^2
-  #     en float32 (4,3 Mo), etendue jusqu'a l'emprise des fenetres fusionnees. OOM
-  #     constate a 7,4 Go des la premiere config. A rapporter comme propriete du modele :
-  #     il n'est pas exploitable a son echelle native sur une mosaique de 4,4 km2.
-  #     La perte d'information est limitee : 640 px depasse deja largement 512 px, et
-  #     l'echelle 1032 ferait apparaitre les structures ~1,6x plus petites qu'a
-  #     l'entrainement, donc c'est le sens le moins prometteur.
+  # --- echelle native 1032 px, sans reechantillonnage (0,5 m/px).
+  #
+  # Premiere tentative ABANDONNEE sur OOM : chaque carte de probabilite d'instance fait
+  # 1032^2 en float32 (4,3 Mo), etendue jusqu'a l'emprise des fenetres fusionnees.
+  # Redevenue faisable depuis : `prob_float16` divise la memoire par deux (verifie sans
+  # effet sur le resultat), et 1032 px ne demande que ~30 fenetres par mosaique contre 110
+  # a 512 px, donc bien moins d'instances au total.
+  #
+  # Cet axe est NECESSAIRE, pas optionnel : sans lui le balayage d'echelle n'a que deux
+  # points (512 et 640) et l'on ne peut pas affirmer que 640 est l'optimum — 1032 pourrait
+  # etre meilleur encore. C'est l'echelle NATIVE du raster, donc le cas ou le modele ne
+  # subit aucun reechantillonnage.
+  s1032_conf0.15: {sahi_slice: 1032, confidence: 0.15, prob_float16: true}
+  s1032_conf0.20: {sahi_slice: 1032, confidence: 0.20, prob_float16: true}
+  s1032_conf0.25: {sahi_slice: 1032, confidence: 0.25, prob_float16: true}
+  s1032_conf0.30: {sahi_slice: 1032, confidence: 0.30, prob_float16: true}
 
   # --- son meilleur seuil mais avec le post-traitement geo du nouveau : separe ce qui
   #     vient des poids de ce qui vient du post-traitement ---
