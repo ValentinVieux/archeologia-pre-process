@@ -94,6 +94,36 @@ class PageDouble:
         self.n_changed += 1
 
 
+STEP2 = PLUGIN / "src" / "ui" / "steps" / "step_2_indices.py"
+
+
+def verifier_coherence() -> list[str]:
+    """Les deux remises a defaut du plugin doivent se comporter pareil.
+
+    L'utilisateur a demande explicitement cette coherence. Sans test, elle derive au
+    premier changement d'un seul des deux ecrans.
+    """
+    err = []
+    s3, s2 = STEP.read_text(encoding="utf-8"), STEP2.read_text(encoding="utf-8")
+    for nom, src in (("step_3_detection", s3), ("step_2_indices", s2)):
+        if "↺" not in src:
+            err.append(f"{nom} : le bouton n'a plus le prefixe « ↺ » commun")
+        if 'setObjectName("GhostButton")' not in src:
+            err.append(f"{nom} : le bouton n'est plus en style GhostButton")
+        if "PointingHandCursor" not in src:
+            err.append(f"{nom} : pas de curseur main au survol")
+        if "show_toast" not in src:
+            err.append(f"{nom} : pas de confirmation par Toast")
+    # La confirmation doit DIRE ce qui a change, pas afficher un message fige.
+    for nom, src, jeton in (("step_3_detection", s3, "n_seuils"),
+                            ("step_2_indices", s2, "modifies")):
+        if jeton not in src:
+            err.append(f"{nom} : la confirmation ne compte pas ce qui a ete efface "
+                       f"(jeton {jeton!r} absent) — un message generique laisserait "
+                       f"douter que l'action ait eu un effet")
+    return err
+
+
 def verifier_source() -> list[str]:
     """La doublure ne vaut que si le vrai code fait bien ce qu'elle imite."""
     err = []
@@ -117,13 +147,15 @@ def verifier_source() -> list[str]:
 
 
 def main() -> int:
-    err = verifier_source()
+    err = verifier_source() + verifier_coherence()
     if err:
         print("Le code source ne correspond plus a ce que le test reproduit :")
         for e in err:
             print("  -", e)
         return 1
-    print("source conforme a la doublure (5 points de contact verifies)\n")
+    print("source conforme a la doublure (5 points de contact verifies)")
+    print("coherence des DEUX remises a defaut : prefixe, style, curseur, toast, "
+          "message chiffre\n")
 
     eids = ["parcellaire", "talus", "fosse", "talus_fosse", "chemin_creux"]
     page = PageDouble(eids)

@@ -384,6 +384,55 @@ fusion avantage légèrement l'ancien sur cette ligne.</p>
           "compl. nouv.", "GT (km)"], lignes_cl)}"""
 
 
+def section_superpositions(racine: Path) -> str:
+    """Faut-il laisser les détections de classes différentes se superposer ?"""
+    p = racine / "superpositions_nouveau.json"
+    if not p.exists():
+        return ""
+    s = json.loads(p.read_text(encoding="utf-8"))
+    n, nd, nc = s["n_paires"], s["n_doublons"], s["n_croisements"]
+    lignes = [[f"<code>{html.escape(k.replace('|', '</code> × <code>'))}</code>", str(v)]
+              for k, v in sorted(s["couples"].items(), key=lambda kv: -kv[1])]
+    par_mos = [[f"<code>{html.escape(z)}</code>", str(v["n_polygones"]),
+                str(v["n_paires"]), str(v["n_doublons"]),
+                f(100 * v["aire_doublons_m2"] / max(v["aire_totale_m2"], 1e-9), 2)]
+               for z, v in sorted(s["par_mosaique"].items())]
+    return f"""<h2>Faut-il laisser les superpositions entre classes&nbsp;?</h2>
+<p>Constat de terrain&nbsp;: deux classes tracent parfois la même structure, ce qui donne
+deux polygones à valider pour un seul objet. La campagne avait mesuré que désactiver
+<code>remove_overlaps</code> gagnait +0,007 de F1 longueur, mais ce chiffre ne dit pas
+<em>ce qu'on voit</em>. Deux situations que la métrique confond&nbsp;:</p>
+<div class="note"><b>Doublon</b> — deux classes décrivent le même objet&nbsp;: fortement
+emboîtés et colinéaires. C'est de la confusion de classe, et l'archéologue valide deux fois.
+<br><b>Croisement</b> — deux structures réelles se coupent, un chemin creux qui traverse un
+parcellaire. Les supprimer serait une <b>perte d'information archéologique</b>.</div>
+<p>Critère de séparation&nbsp;: IoS (intersection rapportée à l'aire du plus petit)
+≥&nbsp;{s['seuils']['ios']} <b>et</b> écart d'azimut des axes principaux
+≤&nbsp;{s['seuils']['angle_deg']:.0f}°. La distribution de l'IoS est franchement bimodale
+— 81 paires sous 0,1 et 10 au-dessus de 0,8 — donc le seuil sépare deux populations
+réelles, il ne coupe pas au milieu d'un continuum.</p>
+<div class="kpi">
+<div><span>paires de classes qui se recouvrent, sur {s['n_polygones']} polygones</span><b>{n}</b></div>
+<div><span>vrais doublons</span><b>{nd} <small>({100*nd/n:.0f} %)</small></b></div>
+<div><span>croisements réels</span><b class="pos">{nc} <small>({100*nc/n:.0f} %)</small></b></div>
+<div><span>aire des doublons, sur l'aire détectée</span><b>{100*s['part_aire_doublons']:.2f} %</b></div>
+</div>
+<div class="note warn"><b>Conclusion&nbsp;: garder les superpositions, et ne rien coder de
+plus.</b> Activer <code>remove_overlaps</code> rognerait 9&nbsp;paires utiles (0,52&nbsp;ha)
+contre 98&nbsp;paires nuisibles (1,23&nbsp;ha) — soit <b>11 croisements réels abîmés pour
+1&nbsp;doublon corrigé</b>. Cela explique mécaniquement le +0,007 mesuré&nbsp;: la stratégie
+<code>difference</code> ne se trompait pas à la marge, elle amputait majoritairement de
+vraies structures qui se croisent. Quant à un déduplicateur ciblé qui ne viserait que les
+doublons colinéaires&nbsp;: il porterait sur <b>9 polygones sur {s['n_polygones']}</b>
+(1,2&nbsp;%) et 0,40&nbsp;% de l'aire. Le coder ne se justifie pas.</div>
+{tableau(["couple de classes", "paires"], lignes)}
+{tableau(["mosaïque", "polygones", "paires", "doublons", "% aire doublons"], par_mos)}
+<p class="sub">Mesuré sur les détections du nouveau modèle à sa configuration retenue.
+L'ancien modèle ne peut pas être comparé ici&nbsp;: sa configuration a
+<code>remove_overlaps</code> activé, donc ses superpositions — croisements compris — ont
+déjà été supprimées avant l'export.</p>"""
+
+
 def section_visuel(racine: Path, n_max: int = 8) -> str:
     """Extraits superposés, intégrés en base64 pour que le HTML reste autonome.
 
@@ -533,6 +582,7 @@ top-k ne la déplacent pas d'un millième. Leur valeur se lit dans la colonne
 polygones/km² et dans le temps de calcul, pas ici.</div>
 {runs}
 {section_comparatif(d)}
+{section_superpositions(racine)}
 {section_visuel(racine)}
 {section_b(d.get('niveau_b'))}
 <footer>Généré par <code>tools/bench</code>. Parité banc↔plugin vérifiée à l'identique
