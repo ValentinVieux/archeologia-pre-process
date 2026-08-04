@@ -7,24 +7,24 @@
 <style>
   :root {
     color-scheme: light dark;
-    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
-    --ink: #26251F; --muted: #6B695E;
-    --accent: #5A6B3C; --accent-ink: #42502B; --bar: #7A8C55;
-    --line: #DDDCD4;
-    --crit-bg: #F6E4E1; --crit-ink: #A83226;
-    --warn-bg: #F4EAD3; --warn-ink: #8F6212;
-    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
-    --info-bg: #E5E9DB; --info-ink: #42502B;
+    --bg: #F1F3F5; --panel: #FFFFFF; --panel2: #E6EAED;
+    --ink: #1B2127; --muted: #667079;
+    --accent: #0E7C86; --accent-ink: #0B5A61; --bar: #3AA0A8;
+    --line: #DCE1E5;
+    --crit-bg: #FBE4E1; --crit-ink: #B23A2E;
+    --warn-bg: #FBEED0; --warn-ink: #8A6410;
+    --ok-bg: #DCEEE0; --ok-ink: #2E7D46;
+    --info-bg: #E1E8EC; --info-ink: #0B5A61;
   }
   @media (prefers-color-scheme: dark) { :root {
-    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
-    --ink: #E8E6DD; --muted: #A5A395;
-    --accent: #9DB16E; --accent-ink: #B5C68C; --bar: #7A8C55;
-    --line: #3A3D33;
-    --crit-bg: #46261F; --crit-ink: #E89A8C;
-    --warn-bg: #423414; --warn-ink: #DBB562;
-    --ok-bg: #24382A; --ok-ink: #8FC79D;
-    --info-bg: #2E3524; --info-ink: #B5C68C;
+    --bg: #161A1D; --panel: #1E2429; --panel2: #262D33;
+    --ink: #E6EAED; --muted: #93A0A8;
+    --accent: #4FC3CC; --accent-ink: #6FD3DB; --bar: #2E8B93;
+    --line: #313A40;
+    --crit-bg: #452420; --crit-ink: #E8998C;
+    --warn-bg: #40320F; --warn-ink: #DBB562;
+    --ok-bg: #1E3626; --ok-ink: #7FC593;
+    --info-bg: #23303A; --info-ink: #6FD3DB;
   } }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink);
@@ -68,6 +68,7 @@
   .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
   .chip.ok   { background: var(--ok-bg); color: var(--ok-ink); }
   .chip.info { background: var(--panel2); color: var(--muted); }
+  .chip.hit  { outline: 1px solid currentColor; font-weight: 600; }
   a.chip:hover, a.chip:focus-visible { outline: 1px solid currentColor; }
   /* ---- cartes / boxes ---- */
   .zone, .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
@@ -189,7 +190,7 @@
     <h2>Conventions</h2>
     <div class="rules">
       <ul>
-        <li><b>Par zone</b> : <code>manifest.yaml</code> + <code>raw/</code> (livraison brute <b>immuable</b>) + <code>transformed/vecteurs/</code> (GPKG nettoyés, EPSG:2154) + <code>transformed/roboflow/</code> (payloads d'upload + <code>upload_manifest.yaml</code>) + <code>docs/</code>.</li>
+        <li><b>Par zone</b> : <code>manifest.yaml</code> + <code>raw/</code> (livraison brute <b>immuable</b>) + <code>raw/MNT/</code> (MNT + indices produits) + <code>training/vecteurs/</code> (GPKG nettoyés, EPSG:2154) + <code>training/roboflow/</code> (payloads d'upload + <code>upload_manifest.yaml</code>) + <code>docs/</code>.</li>
         <li><b>Tags Roboflow</b> par image : <code>&lt;zone_id&gt;</code> + <code>&lt;region&gt;</code> — l'export Roboflow ne préserve pas les tags, les <code>upload_manifest.yaml</code> locaux font foi. Sous-classes : <code>&lt;entite&gt;_&lt;site&gt;</code>.</li>
         <li><b>Notes typées</b> dans manifest.yaml : <code>ARBITRAGE:</code> (bloquant), <code>TODO:</code> (action), <code>ATTENTION:</code> (alerte), <code>DÉCISION &lt;date&gt;:</code> (actée) — elles alimentent la section « À traiter ».</li>
         <li>On n'édite <b>jamais</b> un fichier en place sur le Drive (pas d'ArcGIS/QGIS sur G:). Ne rien supprimer sans décision humaine explicite.</li>
@@ -213,6 +214,16 @@ const fs = b => b >= 1e9 ? (b/1e9).toFixed(2)+" Go" : b >= 1e6 ? (b/1e6).toFixed
 const sum = a => a.reduce((x, y) => x + y, 0);
 const dsImages = d => sum(Object.values(d.splits).map(s => s.images));
 const dsAnnots = d => sum(Object.values(d.splits).map(s => s.annotations));
+const zoneEntities = z => [...new Set(z.datasets.flatMap(d => Object.keys(d.classes)))]
+  .sort((a, b) => a.localeCompare(b, "fr"));
+/* GPKG de référence d'une zone : le *_v2.gpkg (recalé) s'il existe, sinon la
+   réunion des couches des autres .gpkg (fichiers complémentaires, pas des versions). */
+const zoneCouches = z => {
+  const g = (z.vecteurs || {}).gpkg || [];
+  if (!g.length) return null;
+  const v2 = g.find(x => x.file.endsWith("_v2.gpkg"));
+  return v2 ? v2.couches : Object.assign({}, ...g.map(x => x.couches));
+};
 const FLAG = {
   arbitrage: ["arbitrage", "crit"], todo: ["à faire", "warn"],
   attention: ["attention", "warn"], source: ["source ?", "warn"], raw: ["raw en v1", "info"],
@@ -276,6 +287,7 @@ document.getElementById("nav").innerHTML = [
 })();
 
 /* -------------------------- table de synthèse des zones -------------------------- */
+const normJS = s => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
 const ZCOLS = [
   { l: "Zone", v: z => z.zone_id, html: z => `<a class="mono" href="#z-${esc(z.zone_id)}">${esc(z.zone_id)}</a>` },
   { l: "Région", v: z => z.region, html: z => esc(z.region) },
@@ -287,6 +299,25 @@ const ZCOLS = [
   { l: "Datasets", num: true, v: z => z.stats.n_datasets, html: z => fi(z.stats.n_datasets) },
   { l: "Images", num: true, v: z => z.stats.images, html: z => fi(z.stats.images) },
   { l: "Annots", num: true, v: z => z.stats.annotations, html: z => fi(z.stats.annotations) },
+  /* Entités : couches du GPKG de référence (source de vérité vecteur) avec effectifs ;
+     repli sur les classes Roboflow pour les zones sans GPKG. Filtre actif : les
+     chips qui matchent passent en tête (surlignées) — le « pourquoi ce match »
+     reste visible même une fois la liste plafonnée. */
+  { l: "Entités", v: z => { const c = zoneCouches(z);
+      return c ? Object.keys(c).length : zoneEntities(z).length; },
+    html: z => {
+      const q = normJS(document.getElementById("filter").value.trim());
+      const c = zoneCouches(z);
+      const items = c
+        ? Object.entries(c).sort((a, b) => b[1] - a[1]).map(([n, v]) => ({ k: n, t: `${n} (${fi(v)})` }))
+        : zoneEntities(z).map(n => ({ k: n, t: n }));
+      if (q) items.sort((a, b) => normJS(b.k).includes(q) - normJS(a.k).includes(q));
+      const MAX = 6, extra = items.length - MAX;
+      return items.length
+        ? items.slice(0, MAX).map(i =>
+            `<span class="chip tag${q && normJS(i.k).includes(q) ? " hit" : ""}">${esc(i.t)}</span>`).join("")
+          + (extra > 0 ? ` <span class="na">+${extra}</span>` : "")
+        : `<span class="na">—</span>`; } },
   { l: "À traiter", v: z => z.flags.length, html: z => flagChips(z.flags) || `<span class="chip ok">ok</span>` },
 ];
 let zsort = { i: -1, dir: 1 };
@@ -315,7 +346,6 @@ function renderZoneTable() {
 renderZoneTable();
 
 /* ------------------------------------ filtre ------------------------------------ */
-const normJS = s => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
 function applyFilter() {
   const q = normJS(document.getElementById("filter").value.trim());
   let visible = 0;
@@ -335,7 +365,10 @@ function applyFilter() {
     h.hidden = !any;
   });
 }
-document.getElementById("filter").addEventListener("input", applyFilter);
+document.getElementById("filter").addEventListener("input", () => {
+  renderZoneTable();  // ré-ordonne/surligne les chips Entités selon la requête
+  applyFilter();
+});
 
 /* ------------------------------- détail des zones ------------------------------- */
 const bars = classes => {
@@ -372,8 +405,10 @@ document.getElementById("zones-detail").innerHTML = Object.keys(byRegion).sort()
         <div class="sub">${Object.entries(z.raw.exts).map(([e, n]) => `${esc(e)}×${n}`).join(", ")}${z.raw.exts_autres ? ` +${z.raw.exts_autres} autres` : ""}</div>
         ${annonce}
       </div>` : `<div class="box"><div class="bt">raw / vérité terrain</div><span class="na">vide — livraison brute encore dans data_regions (v1)</span>${annonce}</div>`;
-    const vecBox = z.vecteurs ? `<div class="box"><div class="bt">transformed / vecteurs</div>
-        <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}</div>` : "";
+    const vecBox = z.vecteurs ? `<div class="box"><div class="bt">training / vecteurs</div>
+        <b>${fi(z.vecteurs.n_files)}</b> fichiers · ${fs(z.vecteurs.size)}
+        ${(z.vecteurs.gpkg || []).map(g => `<div class="sub"><span class="mono">${esc(g.file)}</span> :
+          ${Object.entries(g.couches).map(([c, n]) => `${esc(c)} (${fi(n)})`).join(", ")}</div>`).join("")}</div>` : "";
     const dsBoxes = z.datasets.map(d => {
       const meth = (d.manifest || {}).attribution_methods || {};
       const methTxt = Object.entries(meth).map(([k, v]) => `${esc(k)}×${v}`).join(", ");

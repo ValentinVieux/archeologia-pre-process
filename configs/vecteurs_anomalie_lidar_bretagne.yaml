@@ -1,0 +1,48 @@
+# Mapping GPKG entités — 35_anomalie_lidar_bretagne (data_bretagne_1), audit du
+# 2026-08-03 (régénéré depuis la copie v2, 0 inconnu). Toutes les entités de cette
+# zone sont digitalisées en LIGNES (LineString/MultiLineString), y compris
+# enclos/enceinte — cohérent avec la décision de 2026-08-03 d'harmoniser enclos en
+# lignes plutôt qu'en polygones (contrairement à Rambouillet/Saint-Germain/
+# Fontainebleau, qui ont enclos en polygone).
+# enclos / enceinte / enclos_funeraire restent 3 entités DISTINCTES pour l'instant
+# (décision utilisateur 2026-08-03) : la fusion en enclos_enceinte n'interviendra
+# qu'à la génération du dataset Roboflow (fusions:, comme voie -> parcellaire dans
+# corpus_lineaires_v2.yaml), jamais ici. "enclos funéraire" -> enclos_funeraire
+# (entité candidate) SUPERSÈDE la décision aliases.yaml du 2026-07-16 (qui le
+# fusionnait dans enclos) — voir la note de révision dans aliases.yaml.
+# Zone jamais entraînée par ce dataset seul (cf. corpus_lineaires_v2.yaml : hors
+# corpus par construction) — utilisé pour tester le pipeline entité "zone en lignes".
+# ENCODAGE : le DBF livré est UTF-8 SANS .cpg — GDAL le décode alors en Latin-1
+# (mojibake sur les accents -> build échoue en "valeurs non mappées"). Sur la copie
+# locale, créer un sidecar anomalie_lidar_bretagne.cpg contenant "UTF-8" avant le
+# build. Ne PAS ajouter ce .cpg au raw/ sur G: (intégrité octet-à-octet vs zip livré,
+# cf. note du manifest).
+# ANOMALIE SOURCE : l'en-tête .shx déclare 536 enregistrements mais seuls 524 sont
+# lisibles (12 fantômes, constaté avec geopandas ET pyogrio.raw) ; 524 = 509 mappés
+# + 15 exclus, aucune perte silencieuse.
+gpkg_nom: anomalie_lidar_bretagne_entites_l93.gpkg
+crs: 2154
+sources:
+  anomalie_lidar_bretagne.shp:
+    champ: type
+    valeurs:
+      enclos: enclos
+      enceinte: enceinte
+      "enclos funéraire": enclos_funeraire
+      "fossé": fosse
+      tumulus: tumulus
+      parcellaire: parcellaire
+      motte: motte
+      "voie/chemin": voie
+      mur: mur
+      "éperon barré": eperon_barre
+      menhir: menhir
+      batiment: batiment
+      "bâtiment": batiment
+      "gisement de surface": gisement_de_surface
+      "mégalithe (hors menhir)": megalithe
+      "charbonnière": charbonniere
+      dolmen: dolmen
+      douve: douve
+      mine: extraction
+    exclure: ["autres/divers", "autres", "dépôt"]

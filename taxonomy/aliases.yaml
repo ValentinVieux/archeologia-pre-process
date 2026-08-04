@@ -14,6 +14,11 @@ aliases:
     source_dataset: data_bretagne_1
     context: "anomalie_lidar_bretagne.shp, champ 'type'"
     decided: "2026-07-16"
+  - raw: "enclos funéraire"
+    entity_id: enclos_funeraire
+    source_dataset: data_bretagne_1
+    context: "anomalie_lidar_bretagne.shp, champ 'type' — RÉVISION 2026-08-03 : décision utilisateur de garder enclos/enceinte/enclos_funeraire distincts pour l'instant (fusion en enclos_enceinte prévue plus tard, uniquement à la génération du dataset Roboflow). Supersède la décision 2026-07-16 ci-dessus pour la construction du GPKG training/vecteurs ; l'outil audit.py (setdefault sur exact_alias) continuera de matcher cette chaîne sur 'enclos' via l'entrée la plus ancienne — le mapping réel utilisé par build_zone_gpkg.py pour cette zone est direct (configs/vecteurs_anomalie_lidar_bretagne.yaml), pas dérivé de cet alias."
+    decided: "2026-08-03"
   - raw: "mégalithe (hors menhir)"
     entity_id: megalithe
     source_dataset: data_bretagne_1

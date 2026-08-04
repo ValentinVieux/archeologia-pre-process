@@ -147,9 +147,14 @@ entities:
     status: canonical
     plugin_entity_id: null
     roboflow_classes: ["extraction"]
+  # DÉCISION utilisateur 2026-08-03 : enclos/enceinte harmonisés en morphology
+  # `lineaire` (la source Bretagne les digitalise en tracés ; les polygones des
+  # zones Rambouillet/Saint-Germain/Fontainebleau devront être convertis en lignes).
+  # enclos, enceinte et enclos_funeraire restent 3 entités DISTINCTES ; leur fusion
+  # en `enclos_enceinte` n'interviendra qu'à la génération des datasets Roboflow.
   - id: enclos
     label_fr: Enclos
-    morphology: zone
+    morphology: lineaire
     status: canonical
     plugin_entity_id: null
     roboflow_classes: ["enclos"]
@@ -171,9 +176,10 @@ entities:
     status: canonical
     plugin_entity_id: null
     roboflow_classes: ["tumulus"]
+  # morphology lineaire : cf. DÉCISION utilisateur 2026-08-03 sur `enclos` ci-dessus.
   - id: enceinte
     label_fr: Enceintes
-    morphology: zone
+    morphology: lineaire
     status: canonical
     plugin_entity_id: null
     roboflow_classes: ["enceinte"]
@@ -272,6 +278,12 @@ entities:
   - id: blaireautiere
     label_fr: Blaireautières
     morphology: zone
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
+  - id: enclos_funeraire
+    label_fr: Enclos funéraires
+    morphology: lineaire
     status: candidate
     plugin_entity_id: null
     roboflow_classes: []

@@ -76,8 +76,44 @@ def dir_stats(root: Path) -> dict:
             "exts_autres": n - sum(c for _, c in top)}
 
 
+def gpkg_couches(vec: Path) -> list[dict]:
+    """Couches (nom -> nb d'entités) de chaque .gpkg de training/vecteurs.
+
+    Alimente le filtre (une classe vecteur comme `enclos` n'existe parfois dans
+    aucune classe Roboflow) et la fiche zone. pyogrio absent ou GPKG illisible
+    (File Stream) : on dégrade sans casser l'index.
+    """
+    out = []
+    try:
+        import pyogrio
+    except ImportError:
+        print("  [vecteurs?] pyogrio absent : couches GPKG non indexées")
+        return out
+    for f in sorted(vec.glob("*.gpkg")):
+        try:
+            couches = {str(name): int(pyogrio.read_info(f, layer=name)["features"])
+                       for name, _geom in pyogrio.list_layers(f)}
+        except Exception as e:
+            print(f"  [vecteurs?] {f.name} illisible : {e}")
+            continue
+        out.append({"file": f.name, "couches": couches})
+    return out
+
+
+def read_json_gros(p: Path) -> dict:
+    """json.loads via lecture binaire par morceaux de 64 Mo.
+
+    Google Drive File Stream échoue par intermittence (OSError EINVAL) sur la
+    lecture texte monolithique des très gros fichiers (COCO Verdun, 1,4 Go) ;
+    la lecture chunkée passe.
+    """
+    with open(p, "rb") as f:
+        buf = b"".join(iter(lambda: f.read(1 << 26), b""))
+    return json.loads(buf)
+
+
 def read_dataset(dsdir: Path) -> dict:
-    """Un dossier transformed/roboflow/<dataset> ou _a_trier/<dataset>."""
+    """Un dossier training/roboflow/<dataset> ou _a_trier/<dataset>."""
     out = {"name": dsdir.name, "splits": {}, "classes": {}, "manifest": None}
     um = dsdir / "upload_manifest.yaml"
     if um.exists():
@@ -93,7 +129,13 @@ def read_dataset(dsdir: Path) -> dict:
                     if f.suffix.lower() in (".jpg", ".jpeg", ".png"))
         rec = {"images": n_img, "annotations": 0}
         if ann.exists():
-            coco = json.loads(ann.read_text(encoding="utf-8"))
+            try:
+                coco = read_json_gros(ann)
+            except OSError as e:
+                print(f"  [dataset?] {dsdir.name}/{split_dir.name} : "
+                      f"_annotations.coco.json illisible ({e}) — annotations non comptées")
+                out["splits"][split_dir.name] = rec
+                continue
             cats = {c["id"]: c["name"] for c in coco.get("categories", [])}
             per = collections.Counter(cats[a["category_id"]]
                                       for a in coco.get("annotations", []))
@@ -140,10 +182,11 @@ def build(root: Path) -> dict:
             if raw.is_dir():
                 zone["raw"] = dir_stats(raw)
                 zone["raw"]["subdirs"] = sorted(p.name for p in raw.iterdir() if p.is_dir())
-            vec = zone_dir / "transformed" / "vecteurs"
+            vec = zone_dir / "training" / "vecteurs"
             if vec.is_dir():
                 zone["vecteurs"] = dir_stats(vec)
-            rf = zone_dir / "transformed" / "roboflow"
+                zone["vecteurs"]["gpkg"] = gpkg_couches(vec)
+            rf = zone_dir / "training" / "roboflow"
             if rf.is_dir():
                 for dsdir in sorted(p for p in rf.iterdir() if p.is_dir()):
                     zone["datasets"].append(read_dataset(dsdir))
@@ -162,7 +205,9 @@ def build(root: Path) -> dict:
                 [zone["zone_id"], zone["region"],
                  str((zone["manifest"] or {}).get("departement", ""))]
                 + [d["name"] for d in zone["datasets"]]
-                + [c for d in zone["datasets"] for c in d["classes"]]))
+                + [c for d in zone["datasets"] for c in d["classes"]]
+                + [c for g in (zone["vecteurs"] or {}).get("gpkg", [])
+                   for c in g["couches"]]))
             data["zones"].append(zone)
 
             for n in zone["notes"]:
