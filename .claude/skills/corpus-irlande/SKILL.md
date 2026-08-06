@@ -22,7 +22,8 @@ nouveau secteur (objectif dans le tracker).
 ## Étape 1 — Télécharger le secteur
 - Dalles du secteur = liste `dalles:` du tracker. **Vérifier l'espace libre D: avant.**
 - `telecharger_dalles_gsi` (reprise idempotente, 4 connexions). Purge des zips après
-  conversion OK. Zips GSI : 4 structures connues, garde-fou intégré si inconnue.
+  conversion OK. Zips GSI : structures hétérogènes (arbo ET géoréférencement — Kerry
+  livre des GeoTIFF sans CRS, estampillés ITM d'office) ; garde-fous intégrés aux outils.
 
 ## Étape 2 — Mosaïque unique + vérification
 - `mosaique_mnt` vers `dalles\mnt_<secteur>_mosaique\` — **verdict CONFORME obligatoire**
