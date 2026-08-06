@@ -28,6 +28,10 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\analyse_corrections.py <decisions.yaml> <gpkg_recale>  # typologie des corrections + suggestions de paramètres
 .venv\Scripts\python.exe tools\appliquer_decisions.py <gpkg_source> <gpkg_recale> <decisions.yaml> [--out <gpkg_final>]  # GPKG final (décisions humaines appliquées)
 .venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final>  # boucle de vérification de l'application
+.venv\Scripts\python.exe tools\mosaique_mnt.py <dossier_dalles> <sortie.tif> [--tr 1.0]  # MNT téléchargés (étrangers ou IGN) -> UNE mosaïque EPSG:2154 en une passe ; JAMAIS de reprojection dalle par dalle (canevas union + joints RVT)
+.venv\Scripts\python.exe tools\telecharger_dalles_gsi.py --noms <DATA_NAME...> [--couche <couche>] [--epsg2154]  # dalles LiDAR ouvertes irlandaises (DTM GeoTIFF) depuis l'index D:\veille_irlande ; --liste pour l'inventaire ; cf. suivi_corpus.yaml (corpus Irlande)
+D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.py <points.gpkg> <ld.tif> <sortie.gpkg>  # propositions hybrides cercle+SAM (corpus Irlande, cf. /corpus-irlande) — venv_sam OBLIGATOIRE (torch)
+.venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
