@@ -100,10 +100,15 @@ def extraire_dtm_en_tif(zip_path, nom, out_tif, out_dir):
             print(f"    DTM {src.width}x{src.height} px, res {src.res[0]:g} m")
             rio_copy(src, out_tif, driver="GTiff",
                      compress="deflate", tiled=True, predictor=2)
-        # le .prj des grilles GSI est un TM "unnamed" sans code EPSG : ce sont les
-        # paramètres exacts de l'ITM (EPSG:2157) — on estampille pour QGIS.
+        # Géoréférencement GSI hétérogène : grilles ESRI en TM "unnamed" sans code
+        # EPSG (Boyne), GeoTIFF SANS CRS du tout (Kerry) — dans les deux cas les
+        # coordonnées sont de l'ITM (EPSG:2157, tout l'open data GSI). On estampille,
+        # sinon la mosaïque L93 sort fausse (piège découvert sur Kerry 2026-08-06).
         with rasterio.open(out_tif, "r+") as dst:
-            if dst.crs and dst.crs.to_epsg() is None and "Transverse_Mercator" in dst.crs.to_wkt():
+            if dst.crs is None:
+                dst.crs = rasterio.crs.CRS.from_epsg(2157)
+                print(f"    CRS absent -> estampillé EPSG:2157 (ITM)")
+            elif dst.crs.to_epsg() is None and "Transverse_Mercator" in dst.crs.to_wkt():
                 dst.crs = rasterio.crs.CRS.from_epsg(2157)
 
 

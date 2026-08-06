@@ -34,6 +34,14 @@ def main() -> None:
     dalles = sorted(a.dossier.glob("*.tif")) + sorted(a.dossier.glob("*.asc"))
     if not dalles:
         sys.exit(f"aucune dalle .tif/.asc dans {a.dossier}")
+    # une dalle sans CRS ferait "reprojeter" gdalwarp sans transformation : la
+    # mosaïque sortirait étiquetée 2154 avec des coordonnées natives fausses
+    # (constaté sur Kerry 2026-08-06 — dalles GSI livrées sans CRS)
+    import rasterio
+    sans_crs = [d.name for d in dalles if rasterio.open(d).crs is None]
+    if sans_crs:
+        sys.exit(f"{len(sans_crs)} dalle(s) SANS CRS ({sans_crs[:3]}...) — estampiller d'abord "
+                 "(telecharger_dalles_gsi le fait pour l'ITM) ; refus de mosaïquer")
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
 
     print(f"{len(dalles)} dalles -> {a.sortie}")
