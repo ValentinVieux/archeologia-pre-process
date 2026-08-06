@@ -29,11 +29,12 @@ nouveau secteur (objectif dans le tracker).
   avant de donner la main. **JAMAIS de reprojection dalle par dalle, jamais de mosaïque
   géante** : les secteurs épars sont déjà découpés en sous-groupes ≤ 60 dalles au tracker.
 
-## Étape 3 — LD + recalage des points [Vous]
-- [Vous] LD via le plugin. **Rayons en PIXELS, jamais en mètres** : Rmin5/Rmax10 à
-  1 m/px (toute autre résolution → re-mesurer, ne pas diviser de tête).
+## Étape 3 — LD automatique + recalage des points [Vous pour le recalage seul]
+- LD généré par `generer_ld` (mosaïque → LD 8 bits) : **rayons dérivés de la
+  résolution automatiquement** (anneau métrique constant 5-10 m ; refus si trop
+  grossier), étirement fixe 0,5-1,8, auto-vérification **CONFORME obligatoire**.
 - Préparer la couche des points SMR du secteur non encore annotés (exclure invisibles
-  déjà jugés et polygones existants), triée par score de contraste.
+  déjà jugés et polygones existants), triée par score de contraste local sur le LD.
 - [Vous] recalage : déplacer chaque point sur sa structure ; **supprimer = invisible**.
 
 ## Étape 4 — Propositions hybrides + vérification
