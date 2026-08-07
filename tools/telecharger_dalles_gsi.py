@@ -13,6 +13,7 @@
 import argparse
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import urllib.request
@@ -51,10 +52,30 @@ def telecharger_zip(url, dest, prefixe=""):
 
 
 def extraire_dtm_en_tif(zip_path, nom, out_tif, out_dir):
-    """Extrait le DTM (grille ESRI .adf) du zip et l'écrit en GeoTIFF compressé."""
+    """Extrait le DTM de l'archive (zip ou 7z) et l'écrit en GeoTIFF compressé."""
     with tempfile.TemporaryDirectory(dir=os.path.dirname(zip_path)) as tmpd:
+        with open(zip_path, "rb") as f:
+            est_7z = f.read(2) == b"7z"
+        if est_7z:
+            # 6e variante GSI (gsi_phase2_1m, ex. Galway) : archives .7z servies sous un nom
+            # .zip, un seul GeoTIFF + prj/tfw dedans. py7zr indisponible (PyPI inaccessible
+            # depuis ce poste) -> bsdtar de Windows, libarchive lit le 7z nativement.
+            subprocess.run([r"C:\Windows\System32\tar.exe", "-xf", zip_path, "-C", tmpd],
+                           check=True, capture_output=True)
+            for dp, _dn, fn in os.walk(tmpd):
+                for fl in fn:
+                    if fl.lower().endswith(".txt") and ("licen" in fl.lower() or "copyright" in fl.lower()):
+                        cible = os.path.join(out_dir, fl)
+                        if not os.path.exists(cible):
+                            tmp_lic = cible + "." + nom + ".tmp"  # écriture atomique (threads)
+                            shutil.copy(os.path.join(dp, fl), tmp_lic)
+                            try:
+                                os.replace(tmp_lic, cible)
+                            except OSError:
+                                os.remove(tmp_lic)
+            return _copier_raster(tmpd, zip_path, out_tif)
         with zipfile.ZipFile(zip_path) as z:
-            # 4 structures rencontrées : Boyne <n>/DTM/<grille ESRI>/ ; Sligo <n>/DTM/<n>.tif ;
+            # 4 structures zip rencontrées : Boyne <n>/DTM/<grille ESRI>/ ; Sligo <n>/DTM/<n>.tif ;
             # OPW NASC <n>_DTM.tif à plat ; TII <n>/<n>.tif (un seul raster, pas de mention DTM).
             noms_zip = z.namelist()
             membres = [m for m in noms_zip if "dtm" in m.lower()]
@@ -80,36 +101,40 @@ def extraire_dtm_en_tif(zip_path, nom, out_tif, out_dir):
                             os.replace(tmp_lic, cible)
                         except OSError:
                             os.remove(tmp_lic)
-        # le raster DTM : grille ESRI (dossier avec w001001.adf, ex. Boyne) ou
-        # fichier direct .tif/.img/.asc (ex. Sligo)
-        grille = None
-        for dp, _dn, fn in os.walk(tmpd):
-            bas = [f.lower() for f in fn]
-            if "w001001.adf" in bas:
-                grille = dp
+        _copier_raster(tmpd, zip_path, out_tif)
+
+
+def _copier_raster(tmpd, zip_path, out_tif):
+    """Trouve le raster DTM extrait dans tmpd et l'écrit en GeoTIFF compressé, CRS garanti."""
+    # grille ESRI (dossier avec w001001.adf, ex. Boyne) ou fichier direct .tif/.img/.asc
+    grille = None
+    for dp, _dn, fn in os.walk(tmpd):
+        bas = [f.lower() for f in fn]
+        if "w001001.adf" in bas:
+            grille = dp
+            break
+        for f in fn:
+            if f.lower().endswith((".tif", ".img", ".asc")) and not f.lower().endswith(".aux.xml"):
+                grille = os.path.join(dp, f)
                 break
-            for f in fn:
-                if f.lower().endswith((".tif", ".img", ".asc")) and not f.lower().endswith(".aux.xml"):
-                    grille = os.path.join(dp, f)
-                    break
-            if grille:
-                break
-        if grille is None:
-            raise RuntimeError(f"raster DTM introuvable dans {os.path.basename(zip_path)}")
-        with rasterio.open(grille) as src:
-            print(f"    DTM {src.width}x{src.height} px, res {src.res[0]:g} m")
-            rio_copy(src, out_tif, driver="GTiff",
-                     compress="deflate", tiled=True, predictor=2)
-        # Géoréférencement GSI hétérogène : grilles ESRI en TM "unnamed" sans code
-        # EPSG (Boyne), GeoTIFF SANS CRS du tout (Kerry) — dans les deux cas les
-        # coordonnées sont de l'ITM (EPSG:2157, tout l'open data GSI). On estampille,
-        # sinon la mosaïque L93 sort fausse (piège découvert sur Kerry 2026-08-06).
-        with rasterio.open(out_tif, "r+") as dst:
-            if dst.crs is None:
-                dst.crs = rasterio.crs.CRS.from_epsg(2157)
-                print(f"    CRS absent -> estampillé EPSG:2157 (ITM)")
-            elif dst.crs.to_epsg() is None and "Transverse_Mercator" in dst.crs.to_wkt():
-                dst.crs = rasterio.crs.CRS.from_epsg(2157)
+        if grille:
+            break
+    if grille is None:
+        raise RuntimeError(f"raster DTM introuvable dans {os.path.basename(zip_path)}")
+    with rasterio.open(grille) as src:
+        print(f"    DTM {src.width}x{src.height} px, res {src.res[0]:g} m")
+        rio_copy(src, out_tif, driver="GTiff",
+                 compress="deflate", tiled=True, predictor=2)
+    # Géoréférencement GSI hétérogène : grilles ESRI en TM "unnamed" sans code
+    # EPSG (Boyne), GeoTIFF SANS CRS du tout (Kerry) — dans les deux cas les
+    # coordonnées sont de l'ITM (EPSG:2157, tout l'open data GSI). On estampille,
+    # sinon la mosaïque L93 sort fausse (piège découvert sur Kerry 2026-08-06).
+    with rasterio.open(out_tif, "r+") as dst:
+        if dst.crs is None:
+            dst.crs = rasterio.crs.CRS.from_epsg(2157)
+            print(f"    CRS absent -> estampillé EPSG:2157 (ITM)")
+        elif dst.crs.to_epsg() is None and "Transverse_Mercator" in dst.crs.to_wkt():
+            dst.crs = rasterio.crs.CRS.from_epsg(2157)
 
 
 def reprojeter_2154(src_tif, dst_tif):
