@@ -34,14 +34,17 @@ def main() -> None:
     dalles = sorted(a.dossier.glob("*.tif")) + sorted(a.dossier.glob("*.asc"))
     if not dalles:
         sys.exit(f"aucune dalle .tif/.asc dans {a.dossier}")
-    # une dalle sans CRS ferait "reprojeter" gdalwarp sans transformation : la
-    # mosaïque sortirait étiquetée 2154 avec des coordonnées natives fausses
-    # (constaté sur Kerry 2026-08-06 — dalles GSI livrées sans CRS)
+    # une dalle sans CRS ferait "reprojeter" gdalwarp sans transformation (mosaïque
+    # étiquetée 2154 avec des coordonnées natives fausses, Kerry 2026-08-06) et un
+    # CRS sans code EPSG (LOCAL_CS Galway 2026-08-07) fait échouer gdalwarp : refus net.
     import rasterio
-    sans_crs = [d.name for d in dalles if rasterio.open(d).crs is None]
+    def _crs_ko(d):
+        crs = rasterio.open(d).crs
+        return crs is None or crs.to_epsg() is None
+    sans_crs = [d.name for d in dalles if _crs_ko(d)]
     if sans_crs:
-        sys.exit(f"{len(sans_crs)} dalle(s) SANS CRS ({sans_crs[:3]}...) — estampiller d'abord "
-                 "(telecharger_dalles_gsi le fait pour l'ITM) ; refus de mosaïquer")
+        sys.exit(f"{len(sans_crs)} dalle(s) sans CRS résolvable EPSG ({sans_crs[:3]}...) — "
+                 "estampiller d'abord (telecharger_dalles_gsi le fait pour l'ITM) ; refus de mosaïquer")
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
 
     print(f"{len(dalles)} dalles -> {a.sortie}")

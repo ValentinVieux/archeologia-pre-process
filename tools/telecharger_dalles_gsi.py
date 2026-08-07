@@ -125,16 +125,15 @@ def _copier_raster(tmpd, zip_path, out_tif):
         print(f"    DTM {src.width}x{src.height} px, res {src.res[0]:g} m")
         rio_copy(src, out_tif, driver="GTiff",
                  compress="deflate", tiled=True, predictor=2)
-    # Géoréférencement GSI hétérogène : grilles ESRI en TM "unnamed" sans code
-    # EPSG (Boyne), GeoTIFF SANS CRS du tout (Kerry) — dans les deux cas les
-    # coordonnées sont de l'ITM (EPSG:2157, tout l'open data GSI). On estampille,
-    # sinon la mosaïque L93 sort fausse (piège découvert sur Kerry 2026-08-06).
+    # Géoréférencement GSI hétérogène : TM "unnamed" sans code EPSG (Boyne), AUCUN CRS
+    # (Kerry), LOCAL_CS "unnamed" (Galway) — les coordonnées sont toujours de l'ITM
+    # (EPSG:2157, tout l'open data GSI). Règle générale : tout CRS qui ne résout pas
+    # vers un code EPSG est estampillé 2157, sinon la mosaïque L93 sort fausse
+    # (Kerry 2026-08-06) ou gdalwarp refuse (Galway 2026-08-07).
     with rasterio.open(out_tif, "r+") as dst:
-        if dst.crs is None:
+        if dst.crs is None or dst.crs.to_epsg() is None:
             dst.crs = rasterio.crs.CRS.from_epsg(2157)
-            print(f"    CRS absent -> estampillé EPSG:2157 (ITM)")
-        elif dst.crs.to_epsg() is None and "Transverse_Mercator" in dst.crs.to_wkt():
-            dst.crs = rasterio.crs.CRS.from_epsg(2157)
+            print("    CRS absent/non-EPSG -> estampillé EPSG:2157 (ITM)")
 
 
 def reprojeter_2154(src_tif, dst_tif):
