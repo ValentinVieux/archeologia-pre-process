@@ -67,8 +67,11 @@ def main() -> None:
                 rh = min(src.height, r0 + h + marge)
                 ch = min(src.width, c0 + w + marge)
                 bloc = src.read(1, window=rasterio.windows.Window(cl, rl, ch - cl, rh - rl)).astype("float32")
+                # NoData float64-max : inf apres cast float32, echappe au == (bug vu
+                # sur les SLRM galway_b_*) — neutraliser tout non-fini d'abord
+                bloc[~np.isfinite(bloc)] = np.nan
                 if src.nodata is not None:
-                    bloc[bloc == src.nodata] = np.nan
+                    bloc[bloc == np.float32(src.nodata)] = np.nan
                 if not np.isfinite(bloc).any():
                     sortie = np.full((h, w), NODATA_OUT, dtype="uint8")
                 else:
