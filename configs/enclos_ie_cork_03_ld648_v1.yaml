@@ -1,0 +1,21 @@
+# Dataset enclos - run 1 Irlande (decision 2026-08-08 : ringfort+enclosure
+# FUSIONNES en 'enclos', indice LD 1 m, pas de Roboflow - dataset Drive uniquement).
+# Emprises pleines revues humainement (campagne 1 figee, suivi_corpus.yaml sur D:).
+dataset: enclos_ie_cork_03_ld648_v1
+zone: irlande/ie_cork_03
+raster: D:/veille_irlande/indices/ld/ld_cork_03.tif
+gpkg: D:/veille_irlande/annotations/cork_03_annotations_v1.gpkg
+couches:
+  annotations:
+    classe: enclos
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

@@ -1,0 +1,20 @@
+# Corpus d'entraînement enclos — run 1 Irlande seule (décision 2026-08-08 :
+# transfert séquentiel IE -> FR ; classes ringfort+enclosure FUSIONNÉES en
+# 'enclos' dès la découpe ; indice LD 1 m ; PAS de Roboflow, dataset Drive
+# uniquement). 9 zones campagne 1 figée (1 089 emprises revues, cf.
+# suivi_corpus.yaml sur D:), splits spatiaux préservés tels quels.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_ie_v1.yaml
+#         datasets [--out <dossier>]
+corpus: enclos_ie_648_v1
+classes: [enclos]
+fusions: {}
+datasets:
+  - enclos_ie_sligo_ld648_v1
+  - enclos_ie_kerry_ld648_v1
+  - enclos_ie_boyne_valley_ld648_v1
+  - enclos_ie_galway_01_ld648_v1
+  - enclos_ie_galway_02_ld648_v1
+  - enclos_ie_galway_b_01_ld648_v1
+  - enclos_ie_galway_b_02_ld648_v1
+  - enclos_ie_roscommon_ld648_v1
+  - enclos_ie_cork_03_ld648_v1
