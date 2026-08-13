@@ -1,0 +1,48 @@
+# E9 — seuils de confiance PAR CLASSE, niveau B (modèle déployé ép.34).
+#
+# Point de départ : la mesure de juillet au niveau A (split valid) donne des optima
+# très étalés — parcellaire 0,25, talus 0,15, fosse 0,10, talus_fosse 0,30,
+# chemin_creux 0,10 — avec fosse et chemin_creux EN BORD DE BALAYAGE (0,10 = borne
+# basse testée). Deux raisons de re-mesurer au niveau B avant d'écrire des défauts
+# dans le plugin : le post-traitement géo fait partie du produit, et en décodage
+# argmax les classes INTERAGISSENT (baisser le seuil d'une classe ajoute ses
+# instances à la carte de probabilité, qui peut voler des pixels aux autres).
+#
+# Plancher 0,05 obligatoire (les configs descendent à 0,05) -> nouveau cache.
+# `base` sert AUSSI de contrôle : à seuils égaux, elle doit reproduire le 0,6519
+# mesuré en e8 à plancher 0,15 — un écart signalerait un effet de plancher inattendu.
+#
+# ids : 0=parcellaire, 1=talus, 2=fosse, 3=talus_fosse, 4=chemin_creux.
+base:
+  class_offset: 0
+  n_classes: 5
+  confidence: 0.25
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.4
+  fusion: max
+  min_area_px: 10.0
+  boxes_normalisees: true
+  sahi_dedup: true
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+  geo_min_area_m2: 200.0
+
+configs:
+  # Optima de juillet tels quels.
+  percl_juillet:
+    confidence_par_classe: {1: 0.15, 2: 0.10, 3: 0.30, 4: 0.10}
+    prob_float16: true
+  # Bord de balayage : fosse et chemin_creux encore plus bas.
+  percl_bas:
+    confidence_par_classe: {1: 0.15, 2: 0.05, 3: 0.30, 4: 0.05}
+    prob_float16: true
+  # Version prudente : classes rares à 0,15 (moins de charge de relecture).
+  percl_doux:
+    confidence_par_classe: {1: 0.20, 2: 0.15, 3: 0.30, 4: 0.15}
+    prob_float16: true
+  # Ablation : sans la hausse de talus_fosse — isole ce que le 0,30 apporte vraiment.
+  percl_sans_hausse:
+    confidence_par_classe: {1: 0.15, 2: 0.10, 4: 0.10}
+    prob_float16: true

@@ -1,0 +1,40 @@
+# E10 — affinage des seuils par classe : UN changement à la fois.
+#
+# e9 a montré que le profil « tout baissé » (optima niveau A de juillet) DÉGRADE le
+# niveau B (0,6326 vs 0,6519) : en décodage argmax les classes interagissent, et le
+# post-traitement géo change les optima. Le seul gain net d'e9 est chemin_creux
+# 0,25 -> 0,15 (F1 classe 0,177 -> 0,321, mesuré dans percl_doux) ; la seule perte
+# nette est sur talus/fosse abaissés. e10 isole chaque effet pour composer le
+# profil final par addition de gains prouvés, pas par pari.
+#
+# ids : 0=parcellaire, 1=talus, 2=fosse, 3=talus_fosse, 4=chemin_creux.
+base:
+  class_offset: 0
+  n_classes: 5
+  confidence: 0.25
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.4
+  fusion: max
+  min_area_px: 10.0
+  boxes_normalisees: true
+  sahi_dedup: true
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+  geo_min_area_m2: 200.0
+
+configs:
+  # L'effet chemin_creux isolé — le candidat favori.
+  chem015:        {confidence_par_classe: {4: 0.15}, prob_float16: true}
+  # Sa sensibilité immédiate (0,12 et 0,18 encadrent 0,15).
+  chem012:        {confidence_par_classe: {4: 0.12}, prob_float16: true}
+  chem018:        {confidence_par_classe: {4: 0.18}, prob_float16: true}
+  # L'effet fosse isolé (le niveau A le voulait très bas ; le niveau B doute).
+  fosse015:       {confidence_par_classe: {2: 0.15}, prob_float16: true}
+  # L'effet talus isolé.
+  talus020:       {confidence_par_classe: {1: 0.20}, prob_float16: true}
+  # L'effet talus_fosse relevé isolé (e8 : le global 0,30 donnait talu 0,762).
+  tf030:          {confidence_par_classe: {3: 0.30}}
+  # Les combinaisons des effets qui survivent individuellement.
+  chem015_tf030:  {confidence_par_classe: {3: 0.30, 4: 0.15}, prob_float16: true}

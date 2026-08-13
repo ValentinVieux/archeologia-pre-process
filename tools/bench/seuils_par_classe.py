@@ -33,7 +33,10 @@ from tools.bench.data import Corpus                          # noqa: E402
 from tools.bench.decode import Params, run as decoder        # noqa: E402
 from tools.bench.__main__ import slices_niveau_a             # noqa: E402
 
-SEUILS = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.50]
+# 0,05 et 0,075 ajoutés après la mesure de juillet : fosse et chemin_creux avaient leur
+# optimum À la borne basse (0,10), donc le vrai optimum était peut-être en dessous.
+# Le cache niveau A a un plancher de 0,05 — descendre plus bas serait un artefact.
+SEUILS = [0.05, 0.075, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.50]
 # Aires en m² ; le décodage travaille en pixels et le GSD vaut 0,5 m -> 1 m² = 4 px².
 AIRES_M2 = [0.0, 50.0, 100.0, 200.0, 300.0, 500.0, 800.0]
 _CTX: dict = {}

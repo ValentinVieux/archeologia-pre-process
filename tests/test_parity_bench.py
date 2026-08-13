@@ -165,6 +165,23 @@ def main() -> int:
             for i, (a, b) in enumerate(zip(ref, obt)):
                 err.extend(compare(a, b, i))
 
+        # (a-bis) chemin SEUILS PAR CLASSE : le plugin (confidence_per_class) et le
+        #     banc (confidence_par_classe) doivent rester identiques quand les seuils
+        #     divergent du global — une hausse (classe 0) ET une baisse (classe 4),
+        #     pour exercer les deux côtés du filtre.
+        PC = {0: min(1.0, CONF + 0.1), 4: max(0.0, CONF - 0.2)}
+        ref_pc = _run_rfdetr_seg_with_sahi(
+            pil, session, input_name, mw, mh, SLICE, SLICE, OVERLAP, CONF,
+            confidence_per_class=PC, class_offset=CLASS_OFFSET)
+        obt_pc = decoder(slices, ow, oh, mw, mh,
+                         Params(confidence=CONF, class_offset=CLASS_OFFSET,
+                                confidence_par_classe=PC, **PARAMS_SUP))
+        if len(ref_pc) != len(obt_pc):
+            err.append(f"seuils par classe : {len(ref_pc)} det (plugin) != {len(obt_pc)} (banc)")
+        else:
+            for i, (a, b) in enumerate(zip(ref_pc, obt_pc)):
+                err.extend(f"[par-classe] {e}" for e in compare(a, b, i))
+
         # (b) chemin CACHE : un seul forward répliqué sur les N fenêtres identiques,
         #     masques stockés en float16. C'est ce qui économise 4x le GPU — il faut
         #     donc prouver que ça ne change pas la sortie.

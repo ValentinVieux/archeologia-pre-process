@@ -209,7 +209,10 @@ def verifier_seuils_vs_plancher(grille: Sequence[tuple], plancher: float) -> Non
     donnaient les mêmes 0,5458 / 0,517 / 0,578 / 26,3, ce qui faisait conclure à tort à un
     optimum intérieur alors que le balayage était clippé. Mieux vaut échouer bruyamment.
     """
-    fautives = {n: p.confidence for n, p in grille if p.confidence < plancher - 1e-9}
+    # Le minimum EFFECTIF, seuils par classe compris : une surcharge de classe sous le
+    # plancher serait clippée aussi silencieusement qu'un seuil global.
+    from tools.bench.decode import _seuil_min
+    fautives = {n: _seuil_min(p) for n, p in grille if _seuil_min(p) < plancher - 1e-9}
     if fautives:
         raise SystemExit(
             f"seuil(s) sous le plancher de cache {plancher} : {fautives}\n"
