@@ -61,6 +61,14 @@ CANONIQUE_PAR_MODELE = {
         0: "parcellaire", 1: "talus_fosse", 2: "talus_fosse",
         3: "talus_fosse", 4: "chemin_creux",
     },
+    # Reprise du même run jusqu'à l'époque 47 (checkpoint_best_ema). Taxonomie
+    # strictement identique au modèle déployé : la table l'est donc aussi. Le
+    # comparatif ép.34 / ép.47 n'a pas besoin de la fusion canonique (mêmes
+    # 5 classes des deux côtés), mais cmd_niveaub la réclame sans condition.
+    "lineaires_seg_v2_1_ep47": {
+        0: "parcellaire", 1: "talus_fosse", 2: "talus_fosse",
+        3: "talus_fosse", 4: "chemin_creux",
+    },
     "formes_lineaires_ld_a15_rmin10_rm_rfdetr_seg_1": {
         0: "chemin_creux", 1: "parcellaire", 2: "talus_fosse",
     },

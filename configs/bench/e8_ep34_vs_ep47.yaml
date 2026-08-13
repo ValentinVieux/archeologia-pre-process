@@ -1,0 +1,37 @@
+# Comparatif ép.34 (modèle DÉPLOYÉ) / ép.47 (reprise du même run) — niveau B.
+#
+# Même fichier d'axes pour les deux modèles : seul `--model` change, et le nom du JSON de
+# sortie porte le dossier du modèle. Les deux ont la MÊME taxonomie (5 classes v2), la même
+# résolution (648) et le même post-traitement : la seule variable est le poids.
+#
+# `base` = configuration de PRODUCTION appliquée après la campagne de réglage (confiance
+# 0,25, aire min 200 m², recouvrement SAHI 0,4, remove_overlaps désactivé). C'est la
+# comparaison de produits : ce que l'archéologue obtient réellement de chaque modèle.
+base:
+  class_offset: 0
+  n_classes: 5
+  confidence: 0.25
+  mask_cutoff: 0.5
+  sahi_slice: 648
+  sahi_overlap: 0.4
+  fusion: max
+  min_area_px: 10.0
+  boxes_normalisees: true
+  sahi_dedup: true
+  geo_merge: true
+  geo_merge_buffer_m: 0.5
+  geo_remove_overlaps: false
+  geo_min_area_m2: 200.0
+
+# Balayage de seuil accordé AUX DEUX modèles, par symétrie. Il n'est pas décoratif ici :
+# l'évaluation COCO a montré que l'ép.47 est plus permissive (au seuil 0,3 : +108 faux
+# positifs pour +44 vrais positifs sur le test). Son optimum de confiance peut donc avoir
+# glissé vers le haut, et comparer les deux au seul 0,25 avantagerait mécaniquement
+# l'ancien. Chaque modèle sera jugé à SON optimum, et aussi à configuration égale.
+#
+# Tous les seuils sont >= au plancher de cache (0,15) : `verifier_seuils_vs_plancher`
+# refuserait sinon, après l'artefact mesuré en juillet (0,15/0,12/0,10 identiques).
+configs:
+  conf0.20: {confidence: 0.20, prob_float16: true}
+  conf0.30: {confidence: 0.30}
+  conf0.35: {confidence: 0.35}

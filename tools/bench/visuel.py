@@ -150,6 +150,7 @@ def main() -> int:
     ap.add_argument("--modele-b", required=True, dest="modele_b")
     ap.add_argument("--axes-b", required=True, dest="axes_b")
     ap.add_argument("--cfg-b", required=True, dest="cfg_b")
+    ap.add_argument("--device", choices=["auto", "gpu", "cpu"], default="auto")
     ap.add_argument("--floor", type=float, default=0.15)
     ap.add_argument("--min-tuiles", type=int, default=12, dest="min_tuiles")
     ap.add_argument("--max-tuiles", type=int, default=42, dest="max_tuiles")
@@ -166,7 +167,10 @@ def main() -> int:
     specs = []
     for cle, mod, axes, cfg in (("a", a.modele_a, a.axes_a, a.cfg_a),
                                 ("b", a.modele_b, a.axes_b, a.cfg_b)):
-        sess, iname, shape, _meta, prov = charger_session(mod, "gpu")
+        # `gpu` était codé en dur, hérité de l'image Docker CUDA : hors de ce conteneur
+        # le module ne démarrait pas. Le défaut `auto` retombe sur le CPU sans rien dire,
+        # et la clé de cache porte déjà le provider — aucun risque de mélanger les deux.
+        sess, iname, shape, _meta, prov = charger_session(mod, a.device)
         hw = (int(shape[3]), int(shape[2]))
         cache = Cache(Path(a.out) / "cache_b",
                       cle_cache(mod, ort.__version__, prov, "plugin_v1", hw, "id", a.floor))
