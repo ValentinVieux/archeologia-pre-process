@@ -106,11 +106,12 @@ git log ; pas de fichier de log séparé.
   balayage de seuil — jamais de seuil fixe). Les planches + `appariements.json` sont
   déposées dans `data/models/<modele>/comparaison_*/` du plugin (ne JAMAIS écraser
   l'`evaluation_results.json` de référence). Le seuil F1-max mesuré devient le
-  `confidence_default` du model_card. **Le dossier data/models/<modele>/ embarque
-  aussi la traçabilité du run** : `metrics.csv` (+ historiques si reprises +
-  NOTE-metriques.md), `hparams.yaml`, `visualizations/` — cf. skill
-  `/installer-modele-plugin` pour la checklist complète (ONNX, parité binarisée,
-  sidecar class_offset, entité catalogue).
+  `confidence_default` du model_card. **La traçabilité du run vit dans le
+  sous-dossier `entrainement/`** de data/models/<modele>/ : `metrics.csv`
+  (+ historiques si reprises + NOTE-metriques.md), `hparams.yaml`, tfevents,
+  `visualizations/` — le contrat reste à la racine, les comparaisons dans
+  `comparaison_*/`. Cf. skill `/installer-modele-plugin` pour la checklist
+  complète (ONNX, parité binarisée, sidecar class_offset, entité catalogue).
 - **Chantier enclos** (2026-08) : entité plugin `enclos_circulaire` (le derived_target
   `enclos` du modèle formes_lineaires est COMMENTÉ, réactivable). Modèles :
   `enclos_ie_seg_v1` (installé — corpus irlandais 1 089 emprises, test mAP@50 0,682,

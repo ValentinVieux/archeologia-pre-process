@@ -19,11 +19,12 @@ Gabarit de référence : un modèle déjà conforme (ex. `cratere_circulaire_2` 
 compléments 2026-08).
 
 ## Le dossier data/models/<id>/ DOIT contenir
-- Contrat : `args.yaml`, `classes.txt`, `config.json`, `model_card.yaml`,
-  `training_params.json`, `evaluation_results.json` (du packaging notebook) ;
-- **Traçabilité entraînement** : `metrics.csv` (+ historiques numérotés si
-  reprises, avec NOTE-metriques.md disant quel CSV = le checkpoint déployé),
-  `hparams.yaml`, `visualizations/` (training_curves + dashboards du run Drive) ;
+- Contrat (À LA RACINE) : `args.yaml`, `classes.txt`, `config.json`,
+  `model_card.yaml`, `training_params.json`, `evaluation_results.json` ;
+- **Traçabilité entraînement (dans `entrainement/`)** : `metrics.csv`
+  (+ historiques numérotés si reprises, avec NOTE-metriques.md disant quel CSV
+  = le checkpoint déployé), `hparams.yaml`, tfevents, `visualizations/`
+  (training_curves + dashboards du run Drive) ;
 - **Courbes standard** : `comparaison_<vs>/` (tools/courbes_eval.py — planches
   + appariements.json) ; ne JAMAIS écraser l'`evaluation_results.json` de
   référence d'un modèle existant ;
