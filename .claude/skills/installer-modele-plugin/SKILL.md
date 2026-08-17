@@ -24,10 +24,10 @@ compléments 2026-08).
 - **Traçabilité entraînement (dans `entrainement/`)** : `metrics.csv`
   (+ historiques numérotés si reprises, avec NOTE-metriques.md disant quel CSV
   = le checkpoint déployé), `hparams.yaml`, tfevents, `visualizations/`
-  (training_curves + dashboards du run Drive) ;
-- **Courbes standard** : `comparaison_<vs>/` (tools/courbes_eval.py — planches
-  + appariements.json) ; ne JAMAIS écraser l'`evaluation_results.json` de
-  référence d'un modèle existant ;
+  (training_curves + dashboards du run Drive), et les **courbes standard**
+  `comparaison_<vs>/` (tools/courbes_eval.py — planches + appariements.json ;
+  convention utilisateur 2026-08-17 : dans entrainement/). Ne JAMAIS écraser
+  l'`evaluation_results.json` de référence d'un modèle existant ;
 - `weights/` : `best.pth`, `best.onnx`, `best.json`.
 
 ## Étapes
