@@ -34,6 +34,7 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.py <points.gpkg> <ld.tif> <sortie.gpkg>  # propositions hybrides cercle+SAM (corpus Irlande, cf. /corpus-irlande) — venv_sam OBLIGATOIRE (torch)
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques)
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <corpus> --modele "nom=best.pth@res" [--modele ...] --out <dossier>  # courbes P/R/F1/PR standard (venv_adaf OBLIGATOIRE — GPU ; cache appariements.json = re-rendu sans ré-inférence)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
 docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
@@ -97,6 +98,13 @@ git log ; pas de fichier de log séparé.
 - **Boucle de vérification systématique** (règle utilisateur 2026-07-27) : produire →
   vérifier les FICHIERS produits par contrôleur indépendant → corriger → REproduire →
   re-vérifier. Aucune livraison (Drive/Roboflow) avant verdict conforme.
+- **Courbes d'évaluation standard** (règle utilisateur 2026-08-17) : TOUT nouveau modèle
+  entraîné produit les courbes `tools/courbes_eval.py` (P/R/F1/PR superposées vs le
+  modèle précédent ou la baseline, points F1-max annotés, appariement IoU masque ≥ 0,5,
+  balayage de seuil — jamais de seuil fixe). Les planches + `appariements.json` sont
+  déposées dans `data/models/<modele>/comparaison_*/` du plugin (ne JAMAIS écraser
+  l'`evaluation_results.json` de référence). Le seuil F1-max mesuré devient le
+  `confidence_default` du model_card.
 - Talus/fossés : 3 entités — `talus` et `fosse` (sources qui distinguent), `talus_fosse`
   (labels indistincts, ex. fossébutte Haye). Classes plateforme suffixées `<entite>_<site>` ;
   buffer de lignes standard pour tout NOUVEAU dataset : **7 m de largeur totale**
