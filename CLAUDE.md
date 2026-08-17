@@ -35,6 +35,8 @@ D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.p
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques)
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <corpus> --modele "nom=best.pth@res" [--modele ...] --out <dossier>  # courbes P/R/F1/PR standard (venv_adaf OBLIGATOIRE — GPU ; cache appariements.json = re-rendu sans ré-inférence)
+.venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
+.venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ...  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
 docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
@@ -104,7 +106,23 @@ git log ; pas de fichier de log séparé.
   balayage de seuil — jamais de seuil fixe). Les planches + `appariements.json` sont
   déposées dans `data/models/<modele>/comparaison_*/` du plugin (ne JAMAIS écraser
   l'`evaluation_results.json` de référence). Le seuil F1-max mesuré devient le
-  `confidence_default` du model_card.
+  `confidence_default` du model_card. **Le dossier data/models/<modele>/ embarque
+  aussi la traçabilité du run** : `metrics.csv` (+ historiques si reprises +
+  NOTE-metriques.md), `hparams.yaml`, `visualizations/` — cf. skill
+  `/installer-modele-plugin` pour la checklist complète (ONNX, parité binarisée,
+  sidecar class_offset, entité catalogue).
+- **Chantier enclos** (2026-08) : entité plugin `enclos_circulaire` (le derived_target
+  `enclos` du modèle formes_lineaires est COMMENTÉ, réactivable). Modèles :
+  `enclos_ie_seg_v1` (installé — corpus irlandais 1 089 emprises, test mAP@50 0,682,
+  seuil 0,375) ; affinages français en cours (transfert/graduel/témoin, notebook
+  `rfdetr_enclos_ie.ipynb`). **Pas de Roboflow pour les enclos** : corpus COCO sur le
+  Drive uniquement (`model-training/enclos/`, corpus enclos_ie_648_v1 / enclos_fr_648_v1 /
+  enclos_frie_graduel_648_v1). **Éval française GELÉE** : `eval_fr_gelee_v1.yaml`
+  (listes d'images nominatives) — jamais re-tirée, extensions de GT en train seulement.
+  GSD enclos = 1 m (LD Rmin5/Rmax10) ; ringfort/enclosure fusionnés à l'entraînement.
+- **Un script scratchpad réutilisé deux sessions de suite doit être promu dans
+  `tools/`** (leçon : points_a_recaler perdu dans une purge de scratchpad et réécrit
+  deux fois avant promotion).
 - Talus/fossés : 3 entités — `talus` et `fosse` (sources qui distinguent), `talus_fosse`
   (labels indistincts, ex. fossébutte Haye). Classes plateforme suffixées `<entite>_<site>` ;
   buffer de lignes standard pour tout NOUVEAU dataset : **7 m de largeur totale**
@@ -126,6 +144,30 @@ git log ; pas de fichier de log séparé.
   batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,
   search plafonné à 250 à l'ordre instable, compteur de classes en cache) sont parés dans
   `upload_roboflow_split.py` — lire la mémoire persistante avant d'y toucher.
+
+## Rasters externes (GSI, IGN WMS, .asc…) — pièges mesurés
+
+Cinq variantes de livraison cassées rencontrées en une semaine (2026-08) ; règles :
+
+- **Estampiller/harmoniser AVANT tout VRT/mosaïque** : CRS absent (GSI Kerry),
+  LOCAL_CS (GSI phase2), WKT custom étiqueté "EPSG:2154" (WMS IGN) → estampiller le
+  vrai code EPSG (rasterio `r+`). Dtype discordant (WMS IGN Float32 vs Drive Float64)
+  → convertir (`gdal_translate -ot`).
+- **gdalbuildvrt SAUTE les dalles incompatibles EN SILENCE** (projection, dtype) et
+  sort quand même un VRT « valide » : toujours `grep -c Skipping` sur ses logs, et
+  **vérifier les fenêtres produites en PLEINE résolution** (compter les pixels
+  valides) — un verdict CONFORME global peut mentir (médiane échantillonnée au 1/8).
+- GDAL (OSGeo4W) ne lit PAS les chemins git-bash `/g/...` : toujours `G:/...`.
+- **Slashs avant dans tout code/config généré** (le `\v` de `D:\veille_irlande`
+  devient une tabulation verticale — déjà mordu trois fois) ; valider le YAML/JSON
+  généré AVANT écriture (octets de contrôle compris).
+- Archives : zips GSI à 4 structures + .7z (py7zr) ; détecter par magic bytes, pas
+  par extension. WMS IGN : GeoTIFF exact par dalle via la grille WFS
+  `IGNF_MNT-LIDAR-HD:dalle` (data.geopf.fr).
+- Montages fragiles : **GoogleDriveFS meurt en cours de session** (3 fois en un
+  jour, y compris en plein gdalwarp) — vérifier `Get-PSDrive` avant toute opération
+  G:/D:, relancer via `Start-Process GoogleDriveFS.exe`, attendre le remontage ;
+  robocopy exit 1 = succès (piège connu).
 
 ## Stockage Drive — data_regions_v2
 
