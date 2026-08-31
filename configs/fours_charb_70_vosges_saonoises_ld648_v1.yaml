@@ -1,0 +1,24 @@
+# Corpus fours/charbonnières v1 — Vosges saônoises (labels COCO dispatché -> ellipses,
+# fusion charbonniere_vosges -> charbonniere actée 2026-08-21). LD 0,5 m (VRT des jpg).
+dataset: fours_charb_70_vosges_saonoises_ld648_v1
+zone: bourgogne_franche_comte/70_vosges_saonoises
+raster: D:/entrainement_fours_charbonnieres/zones/70_vosges_saonoises/ld.vrt
+gpkg: D:/entrainement_fours_charbonnieres/zones/70_vosges_saonoises/annotations_coco.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  four:
+    classe: four
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null

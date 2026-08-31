@@ -1,0 +1,16 @@
+# Corpus d'entraînement enclos FRANCE — run 2 (transfert depuis enclos_ie_seg_v1).
+# GT vérifiée par l'utilisateur le 2026-08-16 (464 emprises : 414 Bretagne dont
+# ~190 digitalisations neuves issues de la prospection zéro-shot + 50 IdF),
+# classe unique enclos_circulaire, LD 1 m, splits spatiaux seed 42.
+# Les splits valid/test constituent l'ÉVAL FRANÇAISE GELÉE (jamais re-tirée ;
+# toute extension future de GT va en train uniquement).
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_fr_v1.yaml
+#         datasets [--out <dossier>]
+corpus: enclos_fr_648_v1
+classes: [enclos_circulaire]
+fusions: {}
+datasets:
+  - enclos_fr_bretagne_ld648_v1
+  - enclos_fr_rambouillet_ld648_v1
+  - enclos_fr_fontainebleau_ld648_v1
+  - enclos_fr_saint_germain_ld648_v1

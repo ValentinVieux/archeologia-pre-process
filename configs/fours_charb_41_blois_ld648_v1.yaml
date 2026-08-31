@@ -1,0 +1,25 @@
+# Corpus fours/charbonnières v1 — Blois. Charbonnières = cercles aux rayons RÉELS
+# par entité (champ diamètre/rayon de la livraison) ; dépressions = AUTO-LABELS
+# run_rf_detr_1 @0,395 (décision 2026-08-21, pas de revue humaine) -> ellipses.
+# LD 0,5 m généré (generer_ld) depuis les mosaïques MNT e-k du raw.
+dataset: fours_charb_41_blois_ld648_v1
+zone: centre_val_de_loire/41_blois
+raster: D:/entrainement_fours_charbonnieres/blois/blois_ld.tif
+gpkg: D:/entrainement_fours_charbonnieres/zones/41_blois/blois_entites.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  # Auto-label 2026-08-21 : 0 détection circular_depression au seuil 0,395 sur les
+  # 130+ tuiles (diagnostic au plancher : scores max 0,06-0,08 — vrai résultat,
+  # le modèle voit bien les charbonnières de ces mêmes tuiles). Pas de couche.
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

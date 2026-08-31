@@ -1,0 +1,19 @@
+# Corpus enclos IE — variante multicanal CSL (R:cvat_combined G:slrm_r10±0,5 B:ld_v1).
+# Mêmes tuiles/splits/annotations que enclos_ie_648_v1 (datasets repeints par
+# tools\repeindre_dataset.py — splits gelés préservés, canal B byte-identique v1).
+# Décisions 2026-08-20 : SLRM r10 ±0,5 (standard ADAF), CVAT combined vrai.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_ie_csl_v1.yaml
+#         datasets [--out <dossier>]
+corpus: enclos_ie_648_csl_v1
+classes: [enclos]
+fusions: {}
+datasets:
+  - enclos_ie_sligo_csl648_v1
+  - enclos_ie_kerry_csl648_v1
+  - enclos_ie_boyne_valley_csl648_v1
+  - enclos_ie_galway_01_csl648_v1
+  - enclos_ie_galway_02_csl648_v1
+  - enclos_ie_galway_b_01_csl648_v1
+  - enclos_ie_galway_b_02_csl648_v1
+  - enclos_ie_roscommon_csl648_v1
+  - enclos_ie_cork_03_csl648_v1

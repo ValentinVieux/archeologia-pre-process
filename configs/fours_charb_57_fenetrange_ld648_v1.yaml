@@ -1,0 +1,26 @@
+# Corpus fours/charbonnières v1 — Fenêtrange (labels COCO dispatché -> ellipses,
+# classe charbonnière UNIQUE actée 2026-08-21). LD 0,5 m (VRT des jpg d'origine).
+dataset: fours_charb_57_fenetrange_ld648_v1
+zone: grand_est/57_fenetrange
+raster: D:/entrainement_fours_charbonnieres/zones/57_fenetrange/ld.vrt
+gpkg: D:/entrainement_fours_charbonnieres/zones/57_fenetrange/annotations_coco.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  # 2 fours seulement dans la zone : impossible à répartir sur 3 splits
+  # (DIVERGENCE verif_dataset) -> ignorer (pas de négatifs sur ces tuiles).
+  four:
+    ignorer: true
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null

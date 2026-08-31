@@ -1,0 +1,18 @@
+# Corpus enclos IE — variante multicanal CRIM (RGB crim_orrd, recette planche_indices).
+# Mêmes tuiles/splits/annotations que enclos_ie_648_v1 (datasets repeints par
+# tools\repeindre_dataset.py — splits gelés préservés).
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_ie_crim_v1.yaml
+#         datasets [--out <dossier>]
+corpus: enclos_ie_648_crim_v1
+classes: [enclos]
+fusions: {}
+datasets:
+  - enclos_ie_sligo_crim648_v1
+  - enclos_ie_kerry_crim648_v1
+  - enclos_ie_boyne_valley_crim648_v1
+  - enclos_ie_galway_01_crim648_v1
+  - enclos_ie_galway_02_crim648_v1
+  - enclos_ie_galway_b_01_crim648_v1
+  - enclos_ie_galway_b_02_crim648_v1
+  - enclos_ie_roscommon_crim648_v1
+  - enclos_ie_cork_03_crim648_v1

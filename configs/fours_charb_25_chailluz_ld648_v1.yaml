@@ -1,0 +1,24 @@
+# Corpus fours/charbonnières v1 — Besançon Chailluz. Charbonnières = cercles rayon
+# 5 m (points sans taille ; diamètre médian Blois 9,6 m) ; dépressions = AUTO-LABELS
+# run_rf_detr_1 @0,395 (décision 2026-08-21, pas de revue humaine) -> ellipses.
+# LD 0,5 m généré (generer_ld, chaîne française) depuis 208 dalles MNT IGN.
+dataset: fours_charb_25_chailluz_ld648_v1
+zone: bourgogne_franche_comte/25_besancon_chailluz
+raster: D:/entrainement_fours_charbonnieres/chailluz/chailluz_ld.tif
+gpkg: D:/entrainement_fours_charbonnieres/zones/25_besancon_chailluz/chailluz_entites.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

@@ -1,0 +1,26 @@
+# Corpus fours/charbonnières v1 — Rambouillet. Charbonnières = ellipses des bboxes
+# COCO (tailles réelles par instance) ; dépressions = polygones du GPKG v2 ;
+# points de dépression sans emprise -> ignorer (bloquent les négatifs sans annoter).
+# LD 0,5 m : VRT des 365 dalles LD_A15_Rmin10_Rmax20_H1p7 du raw.
+dataset: fours_charb_78_rambouillet_ld648_v1
+zone: ile_de_france/78_rambouillet
+raster: D:/entrainement_fours_charbonnieres/zones/78_rambouillet/ld/rambouillet_ld.vrt
+gpkg: D:/entrainement_fours_charbonnieres/zones/78_rambouillet/rambouillet_entites.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  circular_depression:
+    classe: circular_depression
+  depression_pts_ignorer:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null

@@ -1,0 +1,21 @@
+# Dataset enclos FR - corpus run 2 (GT verifiee utilisateur 2026-08-16,
+# emprises pleines, classe unique enclos_circulaire, LD 1 m, split spatial
+# 70/20/10 seed 42 = EVAL GELEE, jamais re-tire).
+dataset: enclos_fr_bretagne_ld648_v1
+zone: bretagne/bretagne
+raster: D:/veille_irlande/corpus_enclos_fr/ld/bretagne_ld_1m.vrt
+gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/bretagne_emprises.gpkg
+couches:
+  emprises:
+    classe: enclos_circulaire
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

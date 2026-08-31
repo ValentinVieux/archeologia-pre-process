@@ -1,0 +1,21 @@
+# Corpus d'entraînement fours à chaux / charbonnières / dépressions circulaires — v1
+# (chantier 2026-08-21). 8 zones, classes canoniques, décisions actées :
+#   - charbonnière UNIQUE (fin des sous-classes par site, fusion faite en amont
+#     dans les GPKG de zones — recherche sourcée + rétrospective v2_1) ;
+#   - dépressions Chailluz/Blois = auto-labels run_rf_detr_1 @0,395 sans revue ;
+#   - sources bbox (COCO dispatchés) convertis en ellipses inscrites (masques) ;
+#   - split spatial par blocs 2 km par zone (slice_zone, seed 42), LD 0,5 m.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_fours_charbonnieres_v1.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: fours_charbonnieres_648_v1
+classes: [charbonniere, four, circular_depression]
+fusions: {}
+datasets:
+  - fours_charb_57_fenetrange_ld648_v1
+  - fours_charb_70_vosges_saonoises_ld648_v1
+  - fours_charb_25_haut_doubs_ld648_v1
+  - fours_charb_30_ales_garrigues_ne_ld648_v1
+  - fours_charb_30_la_capelle_ld648_v1
+  - fours_charb_78_rambouillet_ld648_v1
+  - fours_charb_25_chailluz_ld648_v1
+  - fours_charb_41_blois_ld648_v1

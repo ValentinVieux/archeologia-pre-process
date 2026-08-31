@@ -1,0 +1,13 @@
+# Corpus enclos FRANCE — variante multicanal CRIM (RGB crim_orrd, recette planche_indices).
+# Mêmes tuiles/splits/annotations que enclos_fr_648_v1 (datasets repeints par
+# tools\repeindre_dataset.py) : l'ÉVAL FRANÇAISE GELÉE reste valable telle quelle.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_fr_crim_v1.yaml
+#         datasets [--out <dossier>]
+corpus: enclos_fr_648_crim_v1
+classes: [enclos_circulaire]
+fusions: {}
+datasets:
+  - enclos_fr_bretagne_crim648_v1
+  - enclos_fr_rambouillet_crim648_v1
+  - enclos_fr_fontainebleau_crim648_v1
+  - enclos_fr_saint_germain_crim648_v1
