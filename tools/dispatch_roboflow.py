@@ -8,8 +8,8 @@ Usage :
 - Ne modifie JAMAIS les zips sources. Applique les résolutions d'ambiguïté documentées.
 
 Structure produite par zone :
-    <region>/<zone_id>/transformed/roboflow/<dataset>/{train,valid,test}/  (+ _annotations.coco.json filtré)
-    <region>/<zone_id>/transformed/roboflow/<dataset>/upload_manifest.yaml (filename -> tags, prêt pour ré-upload)
+    <region>/<zone_id>/training/roboflow/<dataset>/{train,valid,test}/  (+ _annotations.coco.json filtré)
+    <region>/<zone_id>/training/roboflow/<dataset>/upload_manifest.yaml (filename -> tags, prêt pour ré-upload)
     _a_trier/<dataset>/...  pour les images inattribuables.
 """
 from __future__ import annotations
@@ -115,7 +115,7 @@ def main() -> None:
                 if zone is None:
                     zdir = staging / "_a_trier" / slug
                 else:
-                    zdir = staging / REGION_OF_ZONE[zone] / zone / "transformed" / "roboflow" / slug
+                    zdir = staging / REGION_OF_ZONE[zone] / zone / "training" / "roboflow" / slug
                 manifest_rows = []
                 for split, keep in sorted(splits.items()):
                     outdir = zdir / split
