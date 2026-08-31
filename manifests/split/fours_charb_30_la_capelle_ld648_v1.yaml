@@ -1,0 +1,3709 @@
+dataset: fours_charb_30_la_capelle_ld648_v1
+zone: occitanie/30_la_capelle_et_masmolene
+seed: 42
+genere_le: '2026-08-21'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+    four:
+      classe: four
+      buffer_m: null
+      ignorer: false
+    circular_depression:
+      classe: circular_depression
+      buffer_m: null
+      ignorer: false
+  dataset: fours_charb_30_la_capelle_ld648_v1
+  gpkg: D:/entrainement_fours_charbonnieres/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: 0
+  raster: D:/entrainement_fours_charbonnieres/zones/30_la_capelle_et_masmolene/ld.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: occitanie/30_la_capelle_et_masmolene
+grille:
+  origine:
+  - 805000.0
+  - 6338000.0
+  gsd_m_px:
+  - 0.45433893684688775
+  - 0.45433893684688775
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 38
+    circular_depression: 61
+    four: 155
+  valid:
+    charbonniere: 10
+    circular_depression: 17
+    four: 44
+  test:
+    charbonniere: 7
+    circular_depression: 8
+    four: 22
+hashes_sha1:
+  train: b8b96316586244d106a9441cd0e87563fb387a90
+  valid: 6ffda2d73bbb14dcb7917c6f2c9711c6cf846b37
+  test: ea25844db9d2a88336eba0d3ce69faf240a921d5
+tuiles:
+- nom: 30_la_capelle_et_masmolene_r0003_c0003.png
+  row: 3
+  col: 3
+  bloc:
+  - 403
+  - 3168
+  split: train
+  bounds:
+  - 805883.235
+  - 6336822.353
+  - 806177.647
+  - 6337116.765
+  n_annotations: 4
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0003_c0005.png
+  row: 3
+  col: 5
+  bloc:
+  - 403
+  - 3168
+  split: train
+  bounds:
+  - 806472.058
+  - 6336822.353
+  - 806766.47
+  - 6337116.765
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0003_c0007.png
+  row: 3
+  col: 7
+  bloc:
+  - 403
+  - 3168
+  split: train
+  bounds:
+  - 807060.881
+  - 6336822.353
+  - 807355.293
+  - 6337116.765
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0003_c0008.png
+  row: 3
+  col: 8
+  bloc:
+  - 403
+  - 3168
+  split: train
+  bounds:
+  - 807355.293
+  - 6336822.353
+  - 807649.705
+  - 6337116.765
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0003_c0011.png
+  row: 3
+  col: 11
+  bloc:
+  - 404
+  - 3168
+  split: train
+  bounds:
+  - 808238.528
+  - 6336822.353
+  - 808532.94
+  - 6337116.765
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0004_c0000.png
+  row: 4
+  col: 0
+  bloc:
+  - 402
+  - 3168
+  split: train
+  bounds:
+  - 805000.0
+  - 6336527.942
+  - 805294.412
+  - 6336822.353
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0005_c0000.png
+  row: 5
+  col: 0
+  bloc:
+  - 402
+  - 3168
+  split: train
+  bounds:
+  - 805000.0
+  - 6336233.53
+  - 805294.412
+  - 6336527.942
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0005_c0002.png
+  row: 5
+  col: 2
+  bloc:
+  - 402
+  - 3168
+  split: train
+  bounds:
+  - 805588.823
+  - 6336233.53
+  - 805883.235
+  - 6336527.942
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0005_c0004.png
+  row: 5
+  col: 4
+  bloc:
+  - 403
+  - 3168
+  split: train
+  bounds:
+  - 806177.647
+  - 6336233.53
+  - 806472.058
+  - 6336527.942
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0005_c0010.png
+  row: 5
+  col: 10
+  bloc:
+  - 404
+  - 3168
+  split: train
+  bounds:
+  - 807944.116
+  - 6336233.53
+  - 808238.528
+  - 6336527.942
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0005_c0011.png
+  row: 5
+  col: 11
+  bloc:
+  - 404
+  - 3168
+  split: train
+  bounds:
+  - 808238.528
+  - 6336233.53
+  - 808532.94
+  - 6336527.942
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0006_c0002.png
+  row: 6
+  col: 2
+  bloc:
+  - 402
+  - 3168
+  split: train
+  bounds:
+  - 805588.823
+  - 6335939.119
+  - 805883.235
+  - 6336233.53
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0007_c0000.png
+  row: 7
+  col: 0
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805000.0
+  - 6335644.707
+  - 805294.412
+  - 6335939.119
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0007_c0001.png
+  row: 7
+  col: 1
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805294.412
+  - 6335644.707
+  - 805588.823
+  - 6335939.119
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0007_c0002.png
+  row: 7
+  col: 2
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805588.823
+  - 6335644.707
+  - 805883.235
+  - 6335939.119
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0008_c0000.png
+  row: 8
+  col: 0
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805000.0
+  - 6335350.295
+  - 805294.412
+  - 6335644.707
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0008_c0001.png
+  row: 8
+  col: 1
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805294.412
+  - 6335350.295
+  - 805588.823
+  - 6335644.707
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0008_c0002.png
+  row: 8
+  col: 2
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805588.823
+  - 6335350.295
+  - 805883.235
+  - 6335644.707
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0008_c0003.png
+  row: 8
+  col: 3
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 805883.235
+  - 6335350.295
+  - 806177.647
+  - 6335644.707
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0008_c0004.png
+  row: 8
+  col: 4
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806177.647
+  - 6335350.295
+  - 806472.058
+  - 6335644.707
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0008_c0008.png
+  row: 8
+  col: 8
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 807355.293
+  - 6335350.295
+  - 807649.705
+  - 6335644.707
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0008_c0009.png
+  row: 8
+  col: 9
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 807649.705
+  - 6335350.295
+  - 807944.116
+  - 6335644.707
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0009_c0000.png
+  row: 9
+  col: 0
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805000.0
+  - 6335055.884
+  - 805294.412
+  - 6335350.295
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0009_c0001.png
+  row: 9
+  col: 1
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805294.412
+  - 6335055.884
+  - 805588.823
+  - 6335350.295
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0009_c0002.png
+  row: 9
+  col: 2
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805588.823
+  - 6335055.884
+  - 805883.235
+  - 6335350.295
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0009_c0003.png
+  row: 9
+  col: 3
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 805883.235
+  - 6335055.884
+  - 806177.647
+  - 6335350.295
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0009_c0004.png
+  row: 9
+  col: 4
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806177.647
+  - 6335055.884
+  - 806472.058
+  - 6335350.295
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0009_c0005.png
+  row: 9
+  col: 5
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806472.058
+  - 6335055.884
+  - 806766.47
+  - 6335350.295
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0009_c0006.png
+  row: 9
+  col: 6
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806766.47
+  - 6335055.884
+  - 807060.881
+  - 6335350.295
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0009_c0010.png
+  row: 9
+  col: 10
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 807944.116
+  - 6335055.884
+  - 808238.528
+  - 6335350.295
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0009_c0013.png
+  row: 9
+  col: 13
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 808827.351
+  - 6335055.884
+  - 809121.763
+  - 6335350.295
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0010_c0000.png
+  row: 10
+  col: 0
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805000.0
+  - 6334761.472
+  - 805294.412
+  - 6335055.884
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0010_c0001.png
+  row: 10
+  col: 1
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805294.412
+  - 6334761.472
+  - 805588.823
+  - 6335055.884
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0010_c0005.png
+  row: 10
+  col: 5
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806472.058
+  - 6334761.472
+  - 806766.47
+  - 6335055.884
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0010_c0008.png
+  row: 10
+  col: 8
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 807355.293
+  - 6334761.472
+  - 807649.705
+  - 6335055.884
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0010_c0009.png
+  row: 10
+  col: 9
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 807649.705
+  - 6334761.472
+  - 807944.116
+  - 6335055.884
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0010_c0016.png
+  row: 10
+  col: 16
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 809710.586
+  - 6334761.472
+  - 810004.998
+  - 6335055.884
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0011_c0000.png
+  row: 11
+  col: 0
+  bloc:
+  - 402
+  - 3167
+  split: train
+  bounds:
+  - 805000.0
+  - 6334467.06
+  - 805294.412
+  - 6334761.472
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0011_c0003.png
+  row: 11
+  col: 3
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 805883.235
+  - 6334467.06
+  - 806177.647
+  - 6334761.472
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0011_c0004.png
+  row: 11
+  col: 4
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806177.647
+  - 6334467.06
+  - 806472.058
+  - 6334761.472
+  n_annotations: 7
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0011_c0010.png
+  row: 11
+  col: 10
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 807944.116
+  - 6334467.06
+  - 808238.528
+  - 6334761.472
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0011_c0013.png
+  row: 11
+  col: 13
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 808827.351
+  - 6334467.06
+  - 809121.763
+  - 6334761.472
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0011_c0014.png
+  row: 11
+  col: 14
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 809121.763
+  - 6334467.06
+  - 809416.174
+  - 6334761.472
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0012_c0004.png
+  row: 12
+  col: 4
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806177.647
+  - 6334172.649
+  - 806472.058
+  - 6334467.06
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0012_c0010.png
+  row: 12
+  col: 10
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 807944.116
+  - 6334172.649
+  - 808238.528
+  - 6334467.06
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0012_c0011.png
+  row: 12
+  col: 11
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 808238.528
+  - 6334172.649
+  - 808532.94
+  - 6334467.06
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0012_c0014.png
+  row: 12
+  col: 14
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 809121.763
+  - 6334172.649
+  - 809416.174
+  - 6334467.06
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0013_c0005.png
+  row: 13
+  col: 5
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806472.058
+  - 6333878.237
+  - 806766.47
+  - 6334172.649
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0013_c0006.png
+  row: 13
+  col: 6
+  bloc:
+  - 403
+  - 3167
+  split: train
+  bounds:
+  - 806766.47
+  - 6333878.237
+  - 807060.881
+  - 6334172.649
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0013_c0014.png
+  row: 13
+  col: 14
+  bloc:
+  - 404
+  - 3167
+  split: valid
+  bounds:
+  - 809121.763
+  - 6333878.237
+  - 809416.174
+  - 6334172.649
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0014_c0016.png
+  row: 14
+  col: 16
+  bloc:
+  - 404
+  - 3166
+  split: train
+  bounds:
+  - 809710.586
+  - 6333583.826
+  - 810004.998
+  - 6333878.237
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0024_c0001.png
+  row: 24
+  col: 1
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805294.412
+  - 6330639.709
+  - 805588.823
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0024_c0002.png
+  row: 24
+  col: 2
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805588.823
+  - 6330639.709
+  - 805883.235
+  - 6330934.121
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0024_c0003.png
+  row: 24
+  col: 3
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 805883.235
+  - 6330639.709
+  - 806177.647
+  - 6330934.121
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0024_c0006.png
+  row: 24
+  col: 6
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806766.47
+  - 6330639.709
+  - 807060.881
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0024_c0012.png
+  row: 24
+  col: 12
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 808532.94
+  - 6330639.709
+  - 808827.351
+  - 6330934.121
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0024_c0015.png
+  row: 24
+  col: 15
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 809416.174
+  - 6330639.709
+  - 809710.586
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0024_c0019.png
+  row: 24
+  col: 19
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810593.821
+  - 6330639.709
+  - 810888.233
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0024_c0022.png
+  row: 24
+  col: 22
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 811477.056
+  - 6330639.709
+  - 811771.468
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0024_c0023.png
+  row: 24
+  col: 23
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 811771.468
+  - 6330639.709
+  - 812065.879
+  - 6330934.121
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0000.png
+  row: 25
+  col: 0
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805000.0
+  - 6330345.298
+  - 805294.412
+  - 6330639.709
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0001.png
+  row: 25
+  col: 1
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805294.412
+  - 6330345.298
+  - 805588.823
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0002.png
+  row: 25
+  col: 2
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805588.823
+  - 6330345.298
+  - 805883.235
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0004.png
+  row: 25
+  col: 4
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806177.647
+  - 6330345.298
+  - 806472.058
+  - 6330639.709
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0005.png
+  row: 25
+  col: 5
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806472.058
+  - 6330345.298
+  - 806766.47
+  - 6330639.709
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0006.png
+  row: 25
+  col: 6
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806766.47
+  - 6330345.298
+  - 807060.881
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0007.png
+  row: 25
+  col: 7
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807060.881
+  - 6330345.298
+  - 807355.293
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0008.png
+  row: 25
+  col: 8
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807355.293
+  - 6330345.298
+  - 807649.705
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0009.png
+  row: 25
+  col: 9
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807649.705
+  - 6330345.298
+  - 807944.116
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0010.png
+  row: 25
+  col: 10
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 807944.116
+  - 6330345.298
+  - 808238.528
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0011.png
+  row: 25
+  col: 11
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 808238.528
+  - 6330345.298
+  - 808532.94
+  - 6330639.709
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0025_c0012.png
+  row: 25
+  col: 12
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 808532.94
+  - 6330345.298
+  - 808827.351
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0014.png
+  row: 25
+  col: 14
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 809121.763
+  - 6330345.298
+  - 809416.174
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0025_c0015.png
+  row: 25
+  col: 15
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 809416.174
+  - 6330345.298
+  - 809710.586
+  - 6330639.709
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0017.png
+  row: 25
+  col: 17
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810004.998
+  - 6330345.298
+  - 810299.409
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0018.png
+  row: 25
+  col: 18
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810299.409
+  - 6330345.298
+  - 810593.821
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0019.png
+  row: 25
+  col: 19
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810593.821
+  - 6330345.298
+  - 810888.233
+  - 6330639.709
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0025_c0022.png
+  row: 25
+  col: 22
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 811477.056
+  - 6330345.298
+  - 811771.468
+  - 6330639.709
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0001.png
+  row: 26
+  col: 1
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805294.412
+  - 6330050.886
+  - 805588.823
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0026_c0002.png
+  row: 26
+  col: 2
+  bloc:
+  - 402
+  - 3165
+  split: train
+  bounds:
+  - 805588.823
+  - 6330050.886
+  - 805883.235
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0026_c0004.png
+  row: 26
+  col: 4
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806177.647
+  - 6330050.886
+  - 806472.058
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0005.png
+  row: 26
+  col: 5
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 806472.058
+  - 6330050.886
+  - 806766.47
+  - 6330345.298
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0007.png
+  row: 26
+  col: 7
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807060.881
+  - 6330050.886
+  - 807355.293
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0026_c0008.png
+  row: 26
+  col: 8
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807355.293
+  - 6330050.886
+  - 807649.705
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0026_c0009.png
+  row: 26
+  col: 9
+  bloc:
+  - 403
+  - 3165
+  split: train
+  bounds:
+  - 807649.705
+  - 6330050.886
+  - 807944.116
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0026_c0015.png
+  row: 26
+  col: 15
+  bloc:
+  - 404
+  - 3165
+  split: test
+  bounds:
+  - 809416.174
+  - 6330050.886
+  - 809710.586
+  - 6330345.298
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0018.png
+  row: 26
+  col: 18
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810299.409
+  - 6330050.886
+  - 810593.821
+  - 6330345.298
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0019.png
+  row: 26
+  col: 19
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810593.821
+  - 6330050.886
+  - 810888.233
+  - 6330345.298
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0026_c0020.png
+  row: 26
+  col: 20
+  bloc:
+  - 405
+  - 3165
+  split: valid
+  bounds:
+  - 810888.233
+  - 6330050.886
+  - 811182.644
+  - 6330345.298
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0027_c0004.png
+  row: 27
+  col: 4
+  bloc:
+  - 403
+  - 3164
+  split: train
+  bounds:
+  - 806177.647
+  - 6329756.474
+  - 806472.058
+  - 6330050.886
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0027_c0005.png
+  row: 27
+  col: 5
+  bloc:
+  - 403
+  - 3164
+  split: train
+  bounds:
+  - 806472.058
+  - 6329756.474
+  - 806766.47
+  - 6330050.886
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - four
+- nom: 30_la_capelle_et_masmolene_r0027_c0018.png
+  row: 27
+  col: 18
+  bloc:
+  - 405
+  - 3164
+  split: train
+  bounds:
+  - 810299.409
+  - 6329756.474
+  - 810593.821
+  - 6330050.886
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0028_c0006.png
+  row: 28
+  col: 6
+  bloc:
+  - 403
+  - 3164
+  split: train
+  bounds:
+  - 806766.47
+  - 6329462.063
+  - 807060.881
+  - 6329756.474
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0029_c0019.png
+  row: 29
+  col: 19
+  bloc:
+  - 405
+  - 3164
+  split: train
+  bounds:
+  - 810593.821
+  - 6329167.651
+  - 810888.233
+  - 6329462.063
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0042_c0007.png
+  row: 42
+  col: 7
+  bloc:
+  - 403
+  - 3162
+  split: train
+  bounds:
+  - 807060.881
+  - 6325340.3
+  - 807355.293
+  - 6325634.711
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0042_c0010.png
+  row: 42
+  col: 10
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 807944.116
+  - 6325340.3
+  - 808238.528
+  - 6325634.711
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0042_c0013.png
+  row: 42
+  col: 13
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808827.351
+  - 6325340.3
+  - 809121.763
+  - 6325634.711
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0043_c0007.png
+  row: 43
+  col: 7
+  bloc:
+  - 403
+  - 3162
+  split: train
+  bounds:
+  - 807060.881
+  - 6325045.888
+  - 807355.293
+  - 6325340.3
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0043_c0010.png
+  row: 43
+  col: 10
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 807944.116
+  - 6325045.888
+  - 808238.528
+  - 6325340.3
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0043_c0011.png
+  row: 43
+  col: 11
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808238.528
+  - 6325045.888
+  - 808532.94
+  - 6325340.3
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0043_c0015.png
+  row: 43
+  col: 15
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 809416.174
+  - 6325045.888
+  - 809710.586
+  - 6325340.3
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0043_c0016.png
+  row: 43
+  col: 16
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 809710.586
+  - 6325045.888
+  - 810004.998
+  - 6325340.3
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0044_c0011.png
+  row: 44
+  col: 11
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808238.528
+  - 6324751.477
+  - 808532.94
+  - 6325045.888
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0044_c0015.png
+  row: 44
+  col: 15
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 809416.174
+  - 6324751.477
+  - 809710.586
+  - 6325045.888
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0044_c0016.png
+  row: 44
+  col: 16
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 809710.586
+  - 6324751.477
+  - 810004.998
+  - 6325045.888
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0044_c0017.png
+  row: 44
+  col: 17
+  bloc:
+  - 405
+  - 3162
+  split: train
+  bounds:
+  - 810004.998
+  - 6324751.477
+  - 810299.409
+  - 6325045.888
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0044_c0046.png
+  row: 44
+  col: 46
+  bloc:
+  - 409
+  - 3162
+  split: train
+  bounds:
+  - 818542.935
+  - 6324751.477
+  - 818837.347
+  - 6325045.888
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0045_c0011.png
+  row: 45
+  col: 11
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808238.528
+  - 6324457.065
+  - 808532.94
+  - 6324751.477
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0045_c0012.png
+  row: 45
+  col: 12
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808532.94
+  - 6324457.065
+  - 808827.351
+  - 6324751.477
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0046_c0002.png
+  row: 46
+  col: 2
+  bloc:
+  - 402
+  - 3162
+  split: train
+  bounds:
+  - 805588.823
+  - 6324162.653
+  - 805883.235
+  - 6324457.065
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0046_c0011.png
+  row: 46
+  col: 11
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 808238.528
+  - 6324162.653
+  - 808532.94
+  - 6324457.065
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0046_c0016.png
+  row: 46
+  col: 16
+  bloc:
+  - 404
+  - 3162
+  split: valid
+  bounds:
+  - 809710.586
+  - 6324162.653
+  - 810004.998
+  - 6324457.065
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0047_c0046.png
+  row: 47
+  col: 46
+  bloc:
+  - 409
+  - 3162
+  split: train
+  bounds:
+  - 818542.935
+  - 6323868.242
+  - 818837.347
+  - 6324162.653
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0048_c0046.png
+  row: 48
+  col: 46
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818542.935
+  - 6323573.83
+  - 818837.347
+  - 6323868.242
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0049_c0036.png
+  row: 49
+  col: 36
+  bloc:
+  - 407
+  - 3161
+  split: train
+  bounds:
+  - 815598.819
+  - 6323279.418
+  - 815893.23
+  - 6323573.83
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0049_c0044.png
+  row: 49
+  col: 44
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 817954.112
+  - 6323279.418
+  - 818248.523
+  - 6323573.83
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0049_c0045.png
+  row: 49
+  col: 45
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818248.523
+  - 6323279.418
+  - 818542.935
+  - 6323573.83
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0049_c0046.png
+  row: 49
+  col: 46
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818542.935
+  - 6323279.418
+  - 818837.347
+  - 6323573.83
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0049_c0047.png
+  row: 49
+  col: 47
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818837.347
+  - 6323279.418
+  - 819131.758
+  - 6323573.83
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0050_c0036.png
+  row: 50
+  col: 36
+  bloc:
+  - 407
+  - 3161
+  split: train
+  bounds:
+  - 815598.819
+  - 6322985.007
+  - 815893.23
+  - 6323279.418
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0050_c0044.png
+  row: 50
+  col: 44
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 817954.112
+  - 6322985.007
+  - 818248.523
+  - 6323279.418
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0050_c0045.png
+  row: 50
+  col: 45
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818248.523
+  - 6322985.007
+  - 818542.935
+  - 6323279.418
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0050_c0046.png
+  row: 50
+  col: 46
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818542.935
+  - 6322985.007
+  - 818837.347
+  - 6323279.418
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0050_c0047.png
+  row: 50
+  col: 47
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818837.347
+  - 6322985.007
+  - 819131.758
+  - 6323279.418
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0051_c0041.png
+  row: 51
+  col: 41
+  bloc:
+  - 408
+  - 3161
+  split: train
+  bounds:
+  - 817070.877
+  - 6322690.595
+  - 817365.289
+  - 6322985.007
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0051_c0044.png
+  row: 51
+  col: 44
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 817954.112
+  - 6322690.595
+  - 818248.523
+  - 6322985.007
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0051_c0045.png
+  row: 51
+  col: 45
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818248.523
+  - 6322690.595
+  - 818542.935
+  - 6322985.007
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0051_c0046.png
+  row: 51
+  col: 46
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818542.935
+  - 6322690.595
+  - 818837.347
+  - 6322985.007
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0052_c0042.png
+  row: 52
+  col: 42
+  bloc:
+  - 408
+  - 3161
+  split: train
+  bounds:
+  - 817365.289
+  - 6322396.184
+  - 817659.7
+  - 6322690.595
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0052_c0043.png
+  row: 52
+  col: 43
+  bloc:
+  - 408
+  - 3161
+  split: train
+  bounds:
+  - 817659.7
+  - 6322396.184
+  - 817954.112
+  - 6322690.595
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0052_c0044.png
+  row: 52
+  col: 44
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 817954.112
+  - 6322396.184
+  - 818248.523
+  - 6322690.595
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0052_c0045.png
+  row: 52
+  col: 45
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818248.523
+  - 6322396.184
+  - 818542.935
+  - 6322690.595
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0052_c0052.png
+  row: 52
+  col: 52
+  bloc:
+  - 410
+  - 3161
+  split: valid
+  bounds:
+  - 820309.405
+  - 6322396.184
+  - 820603.816
+  - 6322690.595
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0053_c0044.png
+  row: 53
+  col: 44
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 817954.112
+  - 6322101.772
+  - 818248.523
+  - 6322396.184
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0053_c0045.png
+  row: 53
+  col: 45
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818248.523
+  - 6322101.772
+  - 818542.935
+  - 6322396.184
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0053_c0046.png
+  row: 53
+  col: 46
+  bloc:
+  - 409
+  - 3161
+  split: train
+  bounds:
+  - 818542.935
+  - 6322101.772
+  - 818837.347
+  - 6322396.184
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0053_c0053.png
+  row: 53
+  col: 53
+  bloc:
+  - 410
+  - 3161
+  split: valid
+  bounds:
+  - 820603.816
+  - 6322101.772
+  - 820898.228
+  - 6322396.184
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0054_c0053.png
+  row: 54
+  col: 53
+  bloc:
+  - 410
+  - 3160
+  split: train
+  bounds:
+  - 820603.816
+  - 6321807.36
+  - 820898.228
+  - 6322101.772
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0054_c0059.png
+  row: 54
+  col: 59
+  bloc:
+  - 411
+  - 3160
+  split: train
+  bounds:
+  - 822370.286
+  - 6321807.36
+  - 822664.698
+  - 6322101.772
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0055_c0052.png
+  row: 55
+  col: 52
+  bloc:
+  - 410
+  - 3160
+  split: train
+  bounds:
+  - 820309.405
+  - 6321512.949
+  - 820603.816
+  - 6321807.36
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0055_c0060.png
+  row: 55
+  col: 60
+  bloc:
+  - 411
+  - 3160
+  split: train
+  bounds:
+  - 822664.698
+  - 6321512.949
+  - 822959.109
+  - 6321807.36
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0057_c0034.png
+  row: 57
+  col: 34
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815009.995
+  - 6320924.125
+  - 815304.407
+  - 6321218.537
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0057_c0035.png
+  row: 57
+  col: 35
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815304.407
+  - 6320924.125
+  - 815598.819
+  - 6321218.537
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0058_c0031.png
+  row: 58
+  col: 31
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814126.761
+  - 6320629.714
+  - 814421.172
+  - 6320924.125
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0058_c0032.png
+  row: 58
+  col: 32
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814421.172
+  - 6320629.714
+  - 814715.584
+  - 6320924.125
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0058_c0033.png
+  row: 58
+  col: 33
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814715.584
+  - 6320629.714
+  - 815009.995
+  - 6320924.125
+  n_annotations: 4
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0058_c0034.png
+  row: 58
+  col: 34
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815009.995
+  - 6320629.714
+  - 815304.407
+  - 6320924.125
+  n_annotations: 5
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0058_c0035.png
+  row: 58
+  col: 35
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815304.407
+  - 6320629.714
+  - 815598.819
+  - 6320924.125
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0059_c0031.png
+  row: 59
+  col: 31
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814126.761
+  - 6320335.302
+  - 814421.172
+  - 6320629.714
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0059_c0032.png
+  row: 59
+  col: 32
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814421.172
+  - 6320335.302
+  - 814715.584
+  - 6320629.714
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0059_c0033.png
+  row: 59
+  col: 33
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814715.584
+  - 6320335.302
+  - 815009.995
+  - 6320629.714
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0059_c0034.png
+  row: 59
+  col: 34
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815009.995
+  - 6320335.302
+  - 815304.407
+  - 6320629.714
+  n_annotations: 4
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0059_c0035.png
+  row: 59
+  col: 35
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815304.407
+  - 6320335.302
+  - 815598.819
+  - 6320629.714
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0060_c0027.png
+  row: 60
+  col: 27
+  bloc:
+  - 406
+  - 3160
+  split: train
+  bounds:
+  - 812949.114
+  - 6320040.891
+  - 813243.526
+  - 6320335.302
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0060_c0031.png
+  row: 60
+  col: 31
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814126.761
+  - 6320040.891
+  - 814421.172
+  - 6320335.302
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0060_c0032.png
+  row: 60
+  col: 32
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814421.172
+  - 6320040.891
+  - 814715.584
+  - 6320335.302
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0060_c0033.png
+  row: 60
+  col: 33
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 814715.584
+  - 6320040.891
+  - 815009.995
+  - 6320335.302
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0060_c0034.png
+  row: 60
+  col: 34
+  bloc:
+  - 407
+  - 3160
+  split: train
+  bounds:
+  - 815009.995
+  - 6320040.891
+  - 815304.407
+  - 6320335.302
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0062_c0023.png
+  row: 62
+  col: 23
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811771.468
+  - 6319452.067
+  - 812065.879
+  - 6319746.479
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0062_c0025.png
+  row: 62
+  col: 25
+  bloc:
+  - 406
+  - 3159
+  split: train
+  bounds:
+  - 812360.291
+  - 6319452.067
+  - 812654.702
+  - 6319746.479
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0063_c0021.png
+  row: 63
+  col: 21
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811182.644
+  - 6319157.656
+  - 811477.056
+  - 6319452.067
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0063_c0022.png
+  row: 63
+  col: 22
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811477.056
+  - 6319157.656
+  - 811771.468
+  - 6319452.067
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0063_c0023.png
+  row: 63
+  col: 23
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811771.468
+  - 6319157.656
+  - 812065.879
+  - 6319452.067
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0063_c0026.png
+  row: 63
+  col: 26
+  bloc:
+  - 406
+  - 3159
+  split: train
+  bounds:
+  - 812654.702
+  - 6319157.656
+  - 812949.114
+  - 6319452.067
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0065_c0023.png
+  row: 65
+  col: 23
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811771.468
+  - 6318568.832
+  - 812065.879
+  - 6318863.244
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0067_c0021.png
+  row: 67
+  col: 21
+  bloc:
+  - 405
+  - 3159
+  split: train
+  bounds:
+  - 811182.644
+  - 6317980.009
+  - 811477.056
+  - 6318274.421
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0067_c0048.png
+  row: 67
+  col: 48
+  bloc:
+  - 409
+  - 3159
+  split: train
+  bounds:
+  - 819131.758
+  - 6317980.009
+  - 819426.17
+  - 6318274.421
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0067_c0049.png
+  row: 67
+  col: 49
+  bloc:
+  - 409
+  - 3159
+  split: train
+  bounds:
+  - 819426.17
+  - 6317980.009
+  - 819720.582
+  - 6318274.421
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0067_c0054.png
+  row: 67
+  col: 54
+  bloc:
+  - 410
+  - 3159
+  split: train
+  bounds:
+  - 820898.228
+  - 6317980.009
+  - 821192.64
+  - 6318274.421
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0068_c0037.png
+  row: 68
+  col: 37
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 815893.23
+  - 6317685.597
+  - 816187.642
+  - 6317980.009
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0068_c0043.png
+  row: 68
+  col: 43
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 817659.7
+  - 6317685.597
+  - 817954.112
+  - 6317980.009
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0068_c0049.png
+  row: 68
+  col: 49
+  bloc:
+  - 409
+  - 3158
+  split: train
+  bounds:
+  - 819426.17
+  - 6317685.597
+  - 819720.582
+  - 6317980.009
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0068_c0054.png
+  row: 68
+  col: 54
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820898.228
+  - 6317685.597
+  - 821192.64
+  - 6317980.009
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0068_c0060.png
+  row: 68
+  col: 60
+  bloc:
+  - 411
+  - 3158
+  split: valid
+  bounds:
+  - 822664.698
+  - 6317685.597
+  - 822959.109
+  - 6317980.009
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0069_c0016.png
+  row: 69
+  col: 16
+  bloc:
+  - 404
+  - 3158
+  split: train
+  bounds:
+  - 809710.586
+  - 6317391.186
+  - 810004.998
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0017.png
+  row: 69
+  col: 17
+  bloc:
+  - 405
+  - 3158
+  split: test
+  bounds:
+  - 810004.998
+  - 6317391.186
+  - 810299.409
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0028.png
+  row: 69
+  col: 28
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 813243.526
+  - 6317391.186
+  - 813537.937
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0069_c0033.png
+  row: 69
+  col: 33
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814715.584
+  - 6317391.186
+  - 815009.995
+  - 6317685.597
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0036.png
+  row: 69
+  col: 36
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 815598.819
+  - 6317391.186
+  - 815893.23
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0069_c0046.png
+  row: 69
+  col: 46
+  bloc:
+  - 409
+  - 3158
+  split: train
+  bounds:
+  - 818542.935
+  - 6317391.186
+  - 818837.347
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0051.png
+  row: 69
+  col: 51
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820014.993
+  - 6317391.186
+  - 820309.405
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0052.png
+  row: 69
+  col: 52
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820309.405
+  - 6317391.186
+  - 820603.816
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0069_c0053.png
+  row: 69
+  col: 53
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820603.816
+  - 6317391.186
+  - 820898.228
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0069_c0059.png
+  row: 69
+  col: 59
+  bloc:
+  - 411
+  - 3158
+  split: valid
+  bounds:
+  - 822370.286
+  - 6317391.186
+  - 822664.698
+  - 6317685.597
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0070_c0028.png
+  row: 70
+  col: 28
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 813243.526
+  - 6317096.774
+  - 813537.937
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0070_c0029.png
+  row: 70
+  col: 29
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 813537.937
+  - 6317096.774
+  - 813832.349
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0030.png
+  row: 70
+  col: 30
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 813832.349
+  - 6317096.774
+  - 814126.761
+  - 6317391.186
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0031.png
+  row: 70
+  col: 31
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814126.761
+  - 6317096.774
+  - 814421.172
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0033.png
+  row: 70
+  col: 33
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814715.584
+  - 6317096.774
+  - 815009.995
+  - 6317391.186
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0034.png
+  row: 70
+  col: 34
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 815009.995
+  - 6317096.774
+  - 815304.407
+  - 6317391.186
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0042.png
+  row: 70
+  col: 42
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 817365.289
+  - 6317096.774
+  - 817659.7
+  - 6317391.186
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0070_c0043.png
+  row: 70
+  col: 43
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 817659.7
+  - 6317096.774
+  - 817954.112
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0044.png
+  row: 70
+  col: 44
+  bloc:
+  - 409
+  - 3158
+  split: train
+  bounds:
+  - 817954.112
+  - 6317096.774
+  - 818248.523
+  - 6317391.186
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0045.png
+  row: 70
+  col: 45
+  bloc:
+  - 409
+  - 3158
+  split: train
+  bounds:
+  - 818248.523
+  - 6317096.774
+  - 818542.935
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0048.png
+  row: 70
+  col: 48
+  bloc:
+  - 409
+  - 3158
+  split: train
+  bounds:
+  - 819131.758
+  - 6317096.774
+  - 819426.17
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0053.png
+  row: 70
+  col: 53
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820603.816
+  - 6317096.774
+  - 820898.228
+  - 6317391.186
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0055.png
+  row: 70
+  col: 55
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 821192.64
+  - 6317096.774
+  - 821487.051
+  - 6317391.186
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0070_c0060.png
+  row: 70
+  col: 60
+  bloc:
+  - 411
+  - 3158
+  split: valid
+  bounds:
+  - 822664.698
+  - 6317096.774
+  - 822959.109
+  - 6317391.186
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0071_c0032.png
+  row: 71
+  col: 32
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814421.172
+  - 6316802.363
+  - 814715.584
+  - 6317096.774
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0071_c0033.png
+  row: 71
+  col: 33
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814715.584
+  - 6316802.363
+  - 815009.995
+  - 6317096.774
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0071_c0034.png
+  row: 71
+  col: 34
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 815009.995
+  - 6316802.363
+  - 815304.407
+  - 6317096.774
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0071_c0043.png
+  row: 71
+  col: 43
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 817659.7
+  - 6316802.363
+  - 817954.112
+  - 6317096.774
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0071_c0051.png
+  row: 71
+  col: 51
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820014.993
+  - 6316802.363
+  - 820309.405
+  - 6317096.774
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0071_c0052.png
+  row: 71
+  col: 52
+  bloc:
+  - 410
+  - 3158
+  split: train
+  bounds:
+  - 820309.405
+  - 6316802.363
+  - 820603.816
+  - 6317096.774
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0072_c0024.png
+  row: 72
+  col: 24
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 812065.879
+  - 6316507.951
+  - 812360.291
+  - 6316802.363
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0072_c0025.png
+  row: 72
+  col: 25
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 812360.291
+  - 6316507.951
+  - 812654.702
+  - 6316802.363
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0072_c0031.png
+  row: 72
+  col: 31
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814126.761
+  - 6316507.951
+  - 814421.172
+  - 6316802.363
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0072_c0032.png
+  row: 72
+  col: 32
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814421.172
+  - 6316507.951
+  - 814715.584
+  - 6316802.363
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0072_c0033.png
+  row: 72
+  col: 33
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814715.584
+  - 6316507.951
+  - 815009.995
+  - 6316802.363
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0073_c0015.png
+  row: 73
+  col: 15
+  bloc:
+  - 404
+  - 3158
+  split: train
+  bounds:
+  - 809416.174
+  - 6316213.539
+  - 809710.586
+  - 6316507.951
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0073_c0023.png
+  row: 73
+  col: 23
+  bloc:
+  - 405
+  - 3158
+  split: test
+  bounds:
+  - 811771.468
+  - 6316213.539
+  - 812065.879
+  - 6316507.951
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0073_c0024.png
+  row: 73
+  col: 24
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 812065.879
+  - 6316213.539
+  - 812360.291
+  - 6316507.951
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0073_c0025.png
+  row: 73
+  col: 25
+  bloc:
+  - 406
+  - 3158
+  split: train
+  bounds:
+  - 812360.291
+  - 6316213.539
+  - 812654.702
+  - 6316507.951
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0073_c0040.png
+  row: 73
+  col: 40
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 816776.465
+  - 6316213.539
+  - 817070.877
+  - 6316507.951
+  n_annotations: 3
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0074_c0016.png
+  row: 74
+  col: 16
+  bloc:
+  - 404
+  - 3158
+  split: train
+  bounds:
+  - 809710.586
+  - 6315919.128
+  - 810004.998
+  - 6316213.539
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0074_c0031.png
+  row: 74
+  col: 31
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814126.761
+  - 6315919.128
+  - 814421.172
+  - 6316213.539
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0074_c0032.png
+  row: 74
+  col: 32
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814421.172
+  - 6315919.128
+  - 814715.584
+  - 6316213.539
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0074_c0033.png
+  row: 74
+  col: 33
+  bloc:
+  - 407
+  - 3158
+  split: test
+  bounds:
+  - 814715.584
+  - 6315919.128
+  - 815009.995
+  - 6316213.539
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0074_c0038.png
+  row: 74
+  col: 38
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 816187.642
+  - 6315919.128
+  - 816482.054
+  - 6316213.539
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0074_c0039.png
+  row: 74
+  col: 39
+  bloc:
+  - 408
+  - 3158
+  split: valid
+  bounds:
+  - 816482.054
+  - 6315919.128
+  - 816776.465
+  - 6316213.539
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0075_c0014.png
+  row: 75
+  col: 14
+  bloc:
+  - 404
+  - 3157
+  split: train
+  bounds:
+  - 809121.763
+  - 6315624.716
+  - 809416.174
+  - 6315919.128
+  n_annotations: 0
+  classes: []
+- nom: 30_la_capelle_et_masmolene_r0075_c0018.png
+  row: 75
+  col: 18
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810299.409
+  - 6315624.716
+  - 810593.821
+  - 6315919.128
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0075_c0019.png
+  row: 75
+  col: 19
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810593.821
+  - 6315624.716
+  - 810888.233
+  - 6315919.128
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0075_c0031.png
+  row: 75
+  col: 31
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 814126.761
+  - 6315624.716
+  - 814421.172
+  - 6315919.128
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0075_c0032.png
+  row: 75
+  col: 32
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 814421.172
+  - 6315624.716
+  - 814715.584
+  - 6315919.128
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0075_c0037.png
+  row: 75
+  col: 37
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 815893.23
+  - 6315624.716
+  - 816187.642
+  - 6315919.128
+  n_annotations: 2
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0075_c0039.png
+  row: 75
+  col: 39
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816482.054
+  - 6315624.716
+  - 816776.465
+  - 6315919.128
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0075_c0040.png
+  row: 75
+  col: 40
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816776.465
+  - 6315624.716
+  - 817070.877
+  - 6315919.128
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0075_c0049.png
+  row: 75
+  col: 49
+  bloc:
+  - 409
+  - 3157
+  split: train
+  bounds:
+  - 819426.17
+  - 6315624.716
+  - 819720.582
+  - 6315919.128
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0076_c0017.png
+  row: 76
+  col: 17
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810004.998
+  - 6315330.304
+  - 810299.409
+  - 6315624.716
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0076_c0018.png
+  row: 76
+  col: 18
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810299.409
+  - 6315330.304
+  - 810593.821
+  - 6315624.716
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0076_c0034.png
+  row: 76
+  col: 34
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 815009.995
+  - 6315330.304
+  - 815304.407
+  - 6315624.716
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0076_c0036.png
+  row: 76
+  col: 36
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 815598.819
+  - 6315330.304
+  - 815893.23
+  - 6315624.716
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0076_c0038.png
+  row: 76
+  col: 38
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816187.642
+  - 6315330.304
+  - 816482.054
+  - 6315624.716
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0076_c0039.png
+  row: 76
+  col: 39
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816482.054
+  - 6315330.304
+  - 816776.465
+  - 6315624.716
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0076_c0040.png
+  row: 76
+  col: 40
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816776.465
+  - 6315330.304
+  - 817070.877
+  - 6315624.716
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0077_c0014.png
+  row: 77
+  col: 14
+  bloc:
+  - 404
+  - 3157
+  split: train
+  bounds:
+  - 809121.763
+  - 6315035.893
+  - 809416.174
+  - 6315330.304
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0077_c0018.png
+  row: 77
+  col: 18
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810299.409
+  - 6315035.893
+  - 810593.821
+  - 6315330.304
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 30_la_capelle_et_masmolene_r0077_c0019.png
+  row: 77
+  col: 19
+  bloc:
+  - 405
+  - 3157
+  split: train
+  bounds:
+  - 810593.821
+  - 6315035.893
+  - 810888.233
+  - 6315330.304
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0077_c0034.png
+  row: 77
+  col: 34
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 815009.995
+  - 6315035.893
+  - 815304.407
+  - 6315330.304
+  n_annotations: 1
+  classes:
+  - four
+- nom: 30_la_capelle_et_masmolene_r0077_c0036.png
+  row: 77
+  col: 36
+  bloc:
+  - 407
+  - 3157
+  split: train
+  bounds:
+  - 815598.819
+  - 6315035.893
+  - 815893.23
+  - 6315330.304
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 30_la_capelle_et_masmolene_r0077_c0038.png
+  row: 77
+  col: 38
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816187.642
+  - 6315035.893
+  - 816482.054
+  - 6315330.304
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 30_la_capelle_et_masmolene_r0077_c0039.png
+  row: 77
+  col: 39
+  bloc:
+  - 408
+  - 3157
+  split: valid
+  bounds:
+  - 816482.054
+  - 6315035.893
+  - 816776.465
+  - 6315330.304
+  n_annotations: 2
+  classes:
+  - circular_depression

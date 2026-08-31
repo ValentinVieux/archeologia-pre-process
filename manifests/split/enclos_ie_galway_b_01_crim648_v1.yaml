@@ -1,0 +1,546 @@
+dataset: enclos_ie_galway_b_01_crim648_v1
+zone: irlande/ie_galway_b_01
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_galway_b_01_ld648_v1
+  gpkg: D:/veille_irlande/annotations/galway_b_01_annotations_v1.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_galway_b_01.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_galway_b_01
+grille:
+  origine:
+  - -108145.0
+  - 7403315.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 26
+  valid:
+    enclos: 7
+  test:
+    enclos: 5
+hashes_sha1:
+  train: 7f4663f843e6f56abb9e0ee81cce8309c4f80c76
+  valid: 2690b0ba6e452d981f9549d666fdcf4d2739ab7b
+  test: 589260a2c527cf14a11da879b3838dbafbf6cfe7
+tuiles:
+- nom: ie_galway_b_01_r0001_c0019.png
+  row: 1
+  col: 19
+  bloc:
+  - -48
+  - 3701
+  split: train
+  bounds:
+  - -95833.0
+  - 7402019.0
+  - -95185.0
+  - 7402667.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0001_c0020.png
+  row: 1
+  col: 20
+  bloc:
+  - -48
+  - 3701
+  split: train
+  bounds:
+  - -95185.0
+  - 7402019.0
+  - -94537.0
+  - 7402667.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0002_c0018.png
+  row: 2
+  col: 18
+  bloc:
+  - -49
+  - 3700
+  split: valid
+  bounds:
+  - -96481.0
+  - 7401371.0
+  - -95833.0
+  - 7402019.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0002_c0019.png
+  row: 2
+  col: 19
+  bloc:
+  - -48
+  - 3700
+  split: train
+  bounds:
+  - -95833.0
+  - 7401371.0
+  - -95185.0
+  - 7402019.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0002_c0021.png
+  row: 2
+  col: 21
+  bloc:
+  - -48
+  - 3700
+  split: train
+  bounds:
+  - -94537.0
+  - 7401371.0
+  - -93889.0
+  - 7402019.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0003_c0017.png
+  row: 3
+  col: 17
+  bloc:
+  - -49
+  - 3700
+  split: valid
+  bounds:
+  - -97129.0
+  - 7400723.0
+  - -96481.0
+  - 7401371.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0003_c0018.png
+  row: 3
+  col: 18
+  bloc:
+  - -49
+  - 3700
+  split: valid
+  bounds:
+  - -96481.0
+  - 7400723.0
+  - -95833.0
+  - 7401371.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_b_01_r0003_c0021.png
+  row: 3
+  col: 21
+  bloc:
+  - -48
+  - 3700
+  split: train
+  bounds:
+  - -94537.0
+  - 7400723.0
+  - -93889.0
+  - 7401371.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0004_c0018.png
+  row: 4
+  col: 18
+  bloc:
+  - -49
+  - 3700
+  split: valid
+  bounds:
+  - -96481.0
+  - 7400075.0
+  - -95833.0
+  - 7400723.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0005_c0016.png
+  row: 5
+  col: 16
+  bloc:
+  - -49
+  - 3699
+  split: train
+  bounds:
+  - -97777.0
+  - 7399427.0
+  - -97129.0
+  - 7400075.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0006_c0016.png
+  row: 6
+  col: 16
+  bloc:
+  - -49
+  - 3699
+  split: train
+  bounds:
+  - -97777.0
+  - 7398779.0
+  - -97129.0
+  - 7399427.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0007_c0018.png
+  row: 7
+  col: 18
+  bloc:
+  - -49
+  - 3699
+  split: train
+  bounds:
+  - -96481.0
+  - 7398131.0
+  - -95833.0
+  - 7398779.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_b_01_r0008_c0016.png
+  row: 8
+  col: 16
+  bloc:
+  - -49
+  - 3698
+  split: test
+  bounds:
+  - -97777.0
+  - 7397483.0
+  - -97129.0
+  - 7398131.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0009_c0015.png
+  row: 9
+  col: 15
+  bloc:
+  - -50
+  - 3698
+  split: train
+  bounds:
+  - -98425.0
+  - 7396835.0
+  - -97777.0
+  - 7397483.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0009_c0016.png
+  row: 9
+  col: 16
+  bloc:
+  - -49
+  - 3698
+  split: test
+  bounds:
+  - -97777.0
+  - 7396835.0
+  - -97129.0
+  - 7397483.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0011_c0012.png
+  row: 11
+  col: 12
+  bloc:
+  - -51
+  - 3697
+  split: train
+  bounds:
+  - -100369.0
+  - 7395539.0
+  - -99721.0
+  - 7396187.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0016_c0008.png
+  row: 16
+  col: 8
+  bloc:
+  - -52
+  - 3696
+  split: train
+  bounds:
+  - -102961.0
+  - 7392299.0
+  - -102313.0
+  - 7392947.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0016_c0011.png
+  row: 16
+  col: 11
+  bloc:
+  - -51
+  - 3696
+  split: train
+  bounds:
+  - -101017.0
+  - 7392299.0
+  - -100369.0
+  - 7392947.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0018_c0007.png
+  row: 18
+  col: 7
+  bloc:
+  - -52
+  - 3695
+  split: valid
+  bounds:
+  - -103609.0
+  - 7391003.0
+  - -102961.0
+  - 7391651.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0021_c0005.png
+  row: 21
+  col: 5
+  bloc:
+  - -53
+  - 3694
+  split: test
+  bounds:
+  - -104905.0
+  - 7389059.0
+  - -104257.0
+  - 7389707.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0022_c0006.png
+  row: 22
+  col: 6
+  bloc:
+  - -52
+  - 3694
+  split: train
+  bounds:
+  - -104257.0
+  - 7388411.0
+  - -103609.0
+  - 7389059.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0022_c0007.png
+  row: 22
+  col: 7
+  bloc:
+  - -52
+  - 3694
+  split: train
+  bounds:
+  - -103609.0
+  - 7388411.0
+  - -102961.0
+  - 7389059.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0023_c0014.png
+  row: 23
+  col: 14
+  bloc:
+  - -50
+  - 3694
+  split: valid
+  bounds:
+  - -99073.0
+  - 7387763.0
+  - -98425.0
+  - 7388411.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0024_c0007.png
+  row: 24
+  col: 7
+  bloc:
+  - -52
+  - 3693
+  split: train
+  bounds:
+  - -103609.0
+  - 7387115.0
+  - -102961.0
+  - 7387763.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0024_c0014.png
+  row: 24
+  col: 14
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -99073.0
+  - 7387115.0
+  - -98425.0
+  - 7387763.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0024_c0015.png
+  row: 24
+  col: 15
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -98425.0
+  - 7387115.0
+  - -97777.0
+  - 7387763.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0025_c0014.png
+  row: 25
+  col: 14
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -99073.0
+  - 7386467.0
+  - -98425.0
+  - 7387115.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0025_c0015.png
+  row: 25
+  col: 15
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -98425.0
+  - 7386467.0
+  - -97777.0
+  - 7387115.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0026_c0007.png
+  row: 26
+  col: 7
+  bloc:
+  - -52
+  - 3693
+  split: train
+  bounds:
+  - -103609.0
+  - 7385819.0
+  - -102961.0
+  - 7386467.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_b_01_r0026_c0014.png
+  row: 26
+  col: 14
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -99073.0
+  - 7385819.0
+  - -98425.0
+  - 7386467.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0026_c0015.png
+  row: 26
+  col: 15
+  bloc:
+  - -50
+  - 3693
+  split: train
+  bounds:
+  - -98425.0
+  - 7385819.0
+  - -97777.0
+  - 7386467.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0027_c0014.png
+  row: 27
+  col: 14
+  bloc:
+  - -50
+  - 3692
+  split: train
+  bounds:
+  - -99073.0
+  - 7385171.0
+  - -98425.0
+  - 7385819.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_b_01_r0028_c0005.png
+  row: 28
+  col: 5
+  bloc:
+  - -53
+  - 3692
+  split: valid
+  bounds:
+  - -104905.0
+  - 7384523.0
+  - -104257.0
+  - 7385171.0
+  n_annotations: 1
+  classes:
+  - enclos
+repeint:
+  source_dataset: enclos_ie_galway_b_01_ld648_v1
+  variante: crim
+  canaux: RGB:crim_orrd
+  mnt:
+  - D:\veille_irlande\dalles\mnt_galway_b_01_mosaique\mnt_galway_b_01_mosaique.tif
+  ld: D:\veille_irlande\indices\ld\ld_galway_b_01.tif
+  date: '2026-08-20'

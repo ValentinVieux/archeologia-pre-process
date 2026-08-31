@@ -2,7 +2,7 @@
 # emprises pleines, classe unique enclos_circulaire, LD 1 m, split spatial
 # 70/20/10 seed 42 = EVAL GELEE, jamais re-tire).
 dataset: enclos_fr_rambouillet_ld648_v1
-zone: ile_de_france/rambouillet
+zone: ile_de_france/78_rambouillet
 raster: D:/veille_irlande/corpus_enclos_fr/ld/rambouillet_ld_1m.vrt
 gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/rambouillet_emprises.gpkg
 couches:

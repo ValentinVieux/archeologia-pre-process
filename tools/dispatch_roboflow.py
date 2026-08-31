@@ -86,7 +86,13 @@ def filter_coco(coco: dict, keep: set[str]) -> dict:
 
 
 def main() -> None:
-    attribution_path, zips_dir, staging = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("attribution", help="attribution.json (image -> zone par dataset)")
+    ap.add_argument("zips", help="dossier des zips d'exports Roboflow")
+    ap.add_argument("staging", help="dossier de staging local (puis robocopy vers G:)")
+    a = ap.parse_args()
+    attribution_path, zips_dir, staging = Path(a.attribution), Path(a.zips), Path(a.staging)
     attribution = json.loads(attribution_path.read_text(encoding="utf-8"))
 
     for slug, data in attribution.items():

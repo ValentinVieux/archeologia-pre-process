@@ -1,0 +1,5775 @@
+dataset: fours_charb_25_chailluz_ld648_v1
+zone: bourgogne_franche_comte/25_besancon_chailluz
+seed: 42
+genere_le: '2026-08-21'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+    circular_depression:
+      classe: circular_depression
+      buffer_m: null
+      ignorer: false
+  dataset: fours_charb_25_chailluz_ld648_v1
+  gpkg: D:/entrainement_fours_charbonnieres/zones/25_besancon_chailluz/chailluz_entites.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/entrainement_fours_charbonnieres/chailluz/chailluz_ld.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: bourgogne_franche_comte/25_besancon_chailluz
+grille:
+  origine:
+  - 922999.5
+  - 6698000.5
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 1295
+    circular_depression: 74
+  valid:
+    charbonniere: 336
+    circular_depression: 19
+  test:
+    charbonniere: 175
+    circular_depression: 11
+hashes_sha1:
+  train: d09a0f6b0f682bdde7812fb96267cd6412f2365d
+  valid: 6b5afac96434e6d75014427d5ae2e1e16fe33829
+  test: 9ce1094fb94be17cfd7f7ffd5b84d489d7432309
+tuiles:
+- nom: 25_besancon_chailluz_r0001_c0021.png
+  row: 1
+  col: 21
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 929803.5
+  - 6697352.5
+  - 930127.5
+  - 6697676.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0001_c0029.png
+  row: 1
+  col: 29
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 932395.5
+  - 6697352.5
+  - 932719.5
+  - 6697676.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0001_c0032.png
+  row: 1
+  col: 32
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 933367.5
+  - 6697352.5
+  - 933691.5
+  - 6697676.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0001_c0034.png
+  row: 1
+  col: 34
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934015.5
+  - 6697352.5
+  - 934339.5
+  - 6697676.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0002_c0039.png
+  row: 2
+  col: 39
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 935635.5
+  - 6697028.5
+  - 935959.5
+  - 6697352.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0004_c0016.png
+  row: 4
+  col: 16
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 928183.5
+  - 6696380.5
+  - 928507.5
+  - 6696704.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0017.png
+  row: 4
+  col: 17
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 928507.5
+  - 6696380.5
+  - 928831.5
+  - 6696704.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0033.png
+  row: 4
+  col: 33
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 933691.5
+  - 6696380.5
+  - 934015.5
+  - 6696704.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0034.png
+  row: 4
+  col: 34
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934015.5
+  - 6696380.5
+  - 934339.5
+  - 6696704.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0035.png
+  row: 4
+  col: 35
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934339.5
+  - 6696380.5
+  - 934663.5
+  - 6696704.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0036.png
+  row: 4
+  col: 36
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934663.5
+  - 6696380.5
+  - 934987.5
+  - 6696704.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0004_c0037.png
+  row: 4
+  col: 37
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934987.5
+  - 6696380.5
+  - 935311.5
+  - 6696704.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0016.png
+  row: 5
+  col: 16
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 928183.5
+  - 6696056.5
+  - 928507.5
+  - 6696380.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0018.png
+  row: 5
+  col: 18
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 928831.5
+  - 6696056.5
+  - 929155.5
+  - 6696380.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0019.png
+  row: 5
+  col: 19
+  bloc:
+  - 464
+  - 3348
+  split: train
+  bounds:
+  - 929155.5
+  - 6696056.5
+  - 929479.5
+  - 6696380.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0005_c0031.png
+  row: 5
+  col: 31
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 933043.5
+  - 6696056.5
+  - 933367.5
+  - 6696380.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0032.png
+  row: 5
+  col: 32
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 933367.5
+  - 6696056.5
+  - 933691.5
+  - 6696380.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0033.png
+  row: 5
+  col: 33
+  bloc:
+  - 466
+  - 3348
+  split: train
+  bounds:
+  - 933691.5
+  - 6696056.5
+  - 934015.5
+  - 6696380.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0034.png
+  row: 5
+  col: 34
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934015.5
+  - 6696056.5
+  - 934339.5
+  - 6696380.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0035.png
+  row: 5
+  col: 35
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934339.5
+  - 6696056.5
+  - 934663.5
+  - 6696380.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0036.png
+  row: 5
+  col: 36
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934663.5
+  - 6696056.5
+  - 934987.5
+  - 6696380.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0005_c0037.png
+  row: 5
+  col: 37
+  bloc:
+  - 467
+  - 3348
+  split: test
+  bounds:
+  - 934987.5
+  - 6696056.5
+  - 935311.5
+  - 6696380.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0006_c0009.png
+  row: 6
+  col: 9
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 925915.5
+  - 6695732.5
+  - 926239.5
+  - 6696056.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0010.png
+  row: 6
+  col: 10
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 926239.5
+  - 6695732.5
+  - 926563.5
+  - 6696056.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0011.png
+  row: 6
+  col: 11
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 926563.5
+  - 6695732.5
+  - 926887.5
+  - 6696056.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0006_c0020.png
+  row: 6
+  col: 20
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929479.5
+  - 6695732.5
+  - 929803.5
+  - 6696056.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0022.png
+  row: 6
+  col: 22
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930127.5
+  - 6695732.5
+  - 930451.5
+  - 6696056.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0006_c0027.png
+  row: 6
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6695732.5
+  - 932071.5
+  - 6696056.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0028.png
+  row: 6
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6695732.5
+  - 932395.5
+  - 6696056.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0029.png
+  row: 6
+  col: 29
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932395.5
+  - 6695732.5
+  - 932719.5
+  - 6696056.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0030.png
+  row: 6
+  col: 30
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932719.5
+  - 6695732.5
+  - 933043.5
+  - 6696056.5
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0031.png
+  row: 6
+  col: 31
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933043.5
+  - 6695732.5
+  - 933367.5
+  - 6696056.5
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0032.png
+  row: 6
+  col: 32
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933367.5
+  - 6695732.5
+  - 933691.5
+  - 6696056.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0033.png
+  row: 6
+  col: 33
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933691.5
+  - 6695732.5
+  - 934015.5
+  - 6696056.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0034.png
+  row: 6
+  col: 34
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934015.5
+  - 6695732.5
+  - 934339.5
+  - 6696056.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0035.png
+  row: 6
+  col: 35
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934339.5
+  - 6695732.5
+  - 934663.5
+  - 6696056.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0006_c0036.png
+  row: 6
+  col: 36
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934663.5
+  - 6695732.5
+  - 934987.5
+  - 6696056.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0017.png
+  row: 7
+  col: 17
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928507.5
+  - 6695408.5
+  - 928831.5
+  - 6695732.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0018.png
+  row: 7
+  col: 18
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928831.5
+  - 6695408.5
+  - 929155.5
+  - 6695732.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0025.png
+  row: 7
+  col: 25
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931099.5
+  - 6695408.5
+  - 931423.5
+  - 6695732.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0007_c0026.png
+  row: 7
+  col: 26
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931423.5
+  - 6695408.5
+  - 931747.5
+  - 6695732.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0027.png
+  row: 7
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6695408.5
+  - 932071.5
+  - 6695732.5
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0028.png
+  row: 7
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6695408.5
+  - 932395.5
+  - 6695732.5
+  n_annotations: 19
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0029.png
+  row: 7
+  col: 29
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932395.5
+  - 6695408.5
+  - 932719.5
+  - 6695732.5
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0030.png
+  row: 7
+  col: 30
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932719.5
+  - 6695408.5
+  - 933043.5
+  - 6695732.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0031.png
+  row: 7
+  col: 31
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933043.5
+  - 6695408.5
+  - 933367.5
+  - 6695732.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0032.png
+  row: 7
+  col: 32
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933367.5
+  - 6695408.5
+  - 933691.5
+  - 6695732.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0033.png
+  row: 7
+  col: 33
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933691.5
+  - 6695408.5
+  - 934015.5
+  - 6695732.5
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0034.png
+  row: 7
+  col: 34
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934015.5
+  - 6695408.5
+  - 934339.5
+  - 6695732.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0035.png
+  row: 7
+  col: 35
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934339.5
+  - 6695408.5
+  - 934663.5
+  - 6695732.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0037.png
+  row: 7
+  col: 37
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934987.5
+  - 6695408.5
+  - 935311.5
+  - 6695732.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0007_c0038.png
+  row: 7
+  col: 38
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 935311.5
+  - 6695408.5
+  - 935635.5
+  - 6695732.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0014.png
+  row: 8
+  col: 14
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 927535.5
+  - 6695084.5
+  - 927859.5
+  - 6695408.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0016.png
+  row: 8
+  col: 16
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928183.5
+  - 6695084.5
+  - 928507.5
+  - 6695408.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0017.png
+  row: 8
+  col: 17
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928507.5
+  - 6695084.5
+  - 928831.5
+  - 6695408.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0018.png
+  row: 8
+  col: 18
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928831.5
+  - 6695084.5
+  - 929155.5
+  - 6695408.5
+  n_annotations: 18
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0023.png
+  row: 8
+  col: 23
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930451.5
+  - 6695084.5
+  - 930775.5
+  - 6695408.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0024.png
+  row: 8
+  col: 24
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930775.5
+  - 6695084.5
+  - 931099.5
+  - 6695408.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0025.png
+  row: 8
+  col: 25
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931099.5
+  - 6695084.5
+  - 931423.5
+  - 6695408.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0026.png
+  row: 8
+  col: 26
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931423.5
+  - 6695084.5
+  - 931747.5
+  - 6695408.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0027.png
+  row: 8
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6695084.5
+  - 932071.5
+  - 6695408.5
+  n_annotations: 27
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0028.png
+  row: 8
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6695084.5
+  - 932395.5
+  - 6695408.5
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0029.png
+  row: 8
+  col: 29
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932395.5
+  - 6695084.5
+  - 932719.5
+  - 6695408.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0030.png
+  row: 8
+  col: 30
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932719.5
+  - 6695084.5
+  - 933043.5
+  - 6695408.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0031.png
+  row: 8
+  col: 31
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933043.5
+  - 6695084.5
+  - 933367.5
+  - 6695408.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0035.png
+  row: 8
+  col: 35
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934339.5
+  - 6695084.5
+  - 934663.5
+  - 6695408.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0036.png
+  row: 8
+  col: 36
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934663.5
+  - 6695084.5
+  - 934987.5
+  - 6695408.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0037.png
+  row: 8
+  col: 37
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934987.5
+  - 6695084.5
+  - 935311.5
+  - 6695408.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0008_c0038.png
+  row: 8
+  col: 38
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 935311.5
+  - 6695084.5
+  - 935635.5
+  - 6695408.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0013.png
+  row: 9
+  col: 13
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 927211.5
+  - 6694760.5
+  - 927535.5
+  - 6695084.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0014.png
+  row: 9
+  col: 14
+  bloc:
+  - 463
+  - 3347
+  split: train
+  bounds:
+  - 927535.5
+  - 6694760.5
+  - 927859.5
+  - 6695084.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0018.png
+  row: 9
+  col: 18
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928831.5
+  - 6694760.5
+  - 929155.5
+  - 6695084.5
+  n_annotations: 15
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0019.png
+  row: 9
+  col: 19
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929155.5
+  - 6694760.5
+  - 929479.5
+  - 6695084.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0023.png
+  row: 9
+  col: 23
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930451.5
+  - 6694760.5
+  - 930775.5
+  - 6695084.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0024.png
+  row: 9
+  col: 24
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930775.5
+  - 6694760.5
+  - 931099.5
+  - 6695084.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0025.png
+  row: 9
+  col: 25
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931099.5
+  - 6694760.5
+  - 931423.5
+  - 6695084.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0026.png
+  row: 9
+  col: 26
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931423.5
+  - 6694760.5
+  - 931747.5
+  - 6695084.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0027.png
+  row: 9
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6694760.5
+  - 932071.5
+  - 6695084.5
+  n_annotations: 22
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0028.png
+  row: 9
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6694760.5
+  - 932395.5
+  - 6695084.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0032.png
+  row: 9
+  col: 32
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933367.5
+  - 6694760.5
+  - 933691.5
+  - 6695084.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0009_c0036.png
+  row: 9
+  col: 36
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934663.5
+  - 6694760.5
+  - 934987.5
+  - 6695084.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0016.png
+  row: 10
+  col: 16
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928183.5
+  - 6694436.5
+  - 928507.5
+  - 6694760.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0010_c0019.png
+  row: 10
+  col: 19
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929155.5
+  - 6694436.5
+  - 929479.5
+  - 6694760.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0020.png
+  row: 10
+  col: 20
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929479.5
+  - 6694436.5
+  - 929803.5
+  - 6694760.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0021.png
+  row: 10
+  col: 21
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929803.5
+  - 6694436.5
+  - 930127.5
+  - 6694760.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0022.png
+  row: 10
+  col: 22
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930127.5
+  - 6694436.5
+  - 930451.5
+  - 6694760.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0023.png
+  row: 10
+  col: 23
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930451.5
+  - 6694436.5
+  - 930775.5
+  - 6694760.5
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0024.png
+  row: 10
+  col: 24
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930775.5
+  - 6694436.5
+  - 931099.5
+  - 6694760.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0025.png
+  row: 10
+  col: 25
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931099.5
+  - 6694436.5
+  - 931423.5
+  - 6694760.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0026.png
+  row: 10
+  col: 26
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931423.5
+  - 6694436.5
+  - 931747.5
+  - 6694760.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0027.png
+  row: 10
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6694436.5
+  - 932071.5
+  - 6694760.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0028.png
+  row: 10
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6694436.5
+  - 932395.5
+  - 6694760.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0032.png
+  row: 10
+  col: 32
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933367.5
+  - 6694436.5
+  - 933691.5
+  - 6694760.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0035.png
+  row: 10
+  col: 35
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934339.5
+  - 6694436.5
+  - 934663.5
+  - 6694760.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0036.png
+  row: 10
+  col: 36
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934663.5
+  - 6694436.5
+  - 934987.5
+  - 6694760.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0037.png
+  row: 10
+  col: 37
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934987.5
+  - 6694436.5
+  - 935311.5
+  - 6694760.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0010_c0038.png
+  row: 10
+  col: 38
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 935311.5
+  - 6694436.5
+  - 935635.5
+  - 6694760.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0003.png
+  row: 11
+  col: 3
+  bloc:
+  - 462
+  - 3347
+  split: valid
+  bounds:
+  - 923971.5
+  - 6694112.5
+  - 924295.5
+  - 6694436.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0004.png
+  row: 11
+  col: 4
+  bloc:
+  - 462
+  - 3347
+  split: valid
+  bounds:
+  - 924295.5
+  - 6694112.5
+  - 924619.5
+  - 6694436.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0016.png
+  row: 11
+  col: 16
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928183.5
+  - 6694112.5
+  - 928507.5
+  - 6694436.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0011_c0018.png
+  row: 11
+  col: 18
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 928831.5
+  - 6694112.5
+  - 929155.5
+  - 6694436.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0011_c0019.png
+  row: 11
+  col: 19
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929155.5
+  - 6694112.5
+  - 929479.5
+  - 6694436.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0020.png
+  row: 11
+  col: 20
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929479.5
+  - 6694112.5
+  - 929803.5
+  - 6694436.5
+  n_annotations: 21
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0021.png
+  row: 11
+  col: 21
+  bloc:
+  - 464
+  - 3347
+  split: train
+  bounds:
+  - 929803.5
+  - 6694112.5
+  - 930127.5
+  - 6694436.5
+  n_annotations: 21
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0022.png
+  row: 11
+  col: 22
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930127.5
+  - 6694112.5
+  - 930451.5
+  - 6694436.5
+  n_annotations: 20
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0023.png
+  row: 11
+  col: 23
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930451.5
+  - 6694112.5
+  - 930775.5
+  - 6694436.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0024.png
+  row: 11
+  col: 24
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 930775.5
+  - 6694112.5
+  - 931099.5
+  - 6694436.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0025.png
+  row: 11
+  col: 25
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931099.5
+  - 6694112.5
+  - 931423.5
+  - 6694436.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0026.png
+  row: 11
+  col: 26
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931423.5
+  - 6694112.5
+  - 931747.5
+  - 6694436.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0027.png
+  row: 11
+  col: 27
+  bloc:
+  - 465
+  - 3347
+  split: train
+  bounds:
+  - 931747.5
+  - 6694112.5
+  - 932071.5
+  - 6694436.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0028.png
+  row: 11
+  col: 28
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932071.5
+  - 6694112.5
+  - 932395.5
+  - 6694436.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0029.png
+  row: 11
+  col: 29
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932395.5
+  - 6694112.5
+  - 932719.5
+  - 6694436.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0030.png
+  row: 11
+  col: 30
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 932719.5
+  - 6694112.5
+  - 933043.5
+  - 6694436.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0031.png
+  row: 11
+  col: 31
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933043.5
+  - 6694112.5
+  - 933367.5
+  - 6694436.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0032.png
+  row: 11
+  col: 32
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933367.5
+  - 6694112.5
+  - 933691.5
+  - 6694436.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0033.png
+  row: 11
+  col: 33
+  bloc:
+  - 466
+  - 3347
+  split: valid
+  bounds:
+  - 933691.5
+  - 6694112.5
+  - 934015.5
+  - 6694436.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0034.png
+  row: 11
+  col: 34
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934015.5
+  - 6694112.5
+  - 934339.5
+  - 6694436.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0035.png
+  row: 11
+  col: 35
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934339.5
+  - 6694112.5
+  - 934663.5
+  - 6694436.5
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0036.png
+  row: 11
+  col: 36
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934663.5
+  - 6694112.5
+  - 934987.5
+  - 6694436.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0011_c0037.png
+  row: 11
+  col: 37
+  bloc:
+  - 467
+  - 3347
+  split: train
+  bounds:
+  - 934987.5
+  - 6694112.5
+  - 935311.5
+  - 6694436.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0003.png
+  row: 12
+  col: 3
+  bloc:
+  - 462
+  - 3346
+  split: valid
+  bounds:
+  - 923971.5
+  - 6693788.5
+  - 924295.5
+  - 6694112.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0012_c0013.png
+  row: 12
+  col: 13
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927211.5
+  - 6693788.5
+  - 927535.5
+  - 6694112.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0012_c0014.png
+  row: 12
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6693788.5
+  - 927859.5
+  - 6694112.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0015.png
+  row: 12
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6693788.5
+  - 928183.5
+  - 6694112.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0018.png
+  row: 12
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6693788.5
+  - 929155.5
+  - 6694112.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0019.png
+  row: 12
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6693788.5
+  - 929479.5
+  - 6694112.5
+  n_annotations: 22
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0020.png
+  row: 12
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6693788.5
+  - 929803.5
+  - 6694112.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0021.png
+  row: 12
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6693788.5
+  - 930127.5
+  - 6694112.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0022.png
+  row: 12
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6693788.5
+  - 930451.5
+  - 6694112.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0023.png
+  row: 12
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6693788.5
+  - 930775.5
+  - 6694112.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0024.png
+  row: 12
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6693788.5
+  - 931099.5
+  - 6694112.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0025.png
+  row: 12
+  col: 25
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931099.5
+  - 6693788.5
+  - 931423.5
+  - 6694112.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0026.png
+  row: 12
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6693788.5
+  - 931747.5
+  - 6694112.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0029.png
+  row: 12
+  col: 29
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932395.5
+  - 6693788.5
+  - 932719.5
+  - 6694112.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0012_c0030.png
+  row: 12
+  col: 30
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932719.5
+  - 6693788.5
+  - 933043.5
+  - 6694112.5
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0012_c0031.png
+  row: 12
+  col: 31
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933043.5
+  - 6693788.5
+  - 933367.5
+  - 6694112.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0012_c0032.png
+  row: 12
+  col: 32
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933367.5
+  - 6693788.5
+  - 933691.5
+  - 6694112.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0012_c0033.png
+  row: 12
+  col: 33
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933691.5
+  - 6693788.5
+  - 934015.5
+  - 6694112.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0012_c0034.png
+  row: 12
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6693788.5
+  - 934339.5
+  - 6694112.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0035.png
+  row: 12
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6693788.5
+  - 934663.5
+  - 6694112.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0036.png
+  row: 12
+  col: 36
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934663.5
+  - 6693788.5
+  - 934987.5
+  - 6694112.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0037.png
+  row: 12
+  col: 37
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934987.5
+  - 6693788.5
+  - 935311.5
+  - 6694112.5
+  n_annotations: 24
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0012_c0038.png
+  row: 12
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6693788.5
+  - 935635.5
+  - 6694112.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0009.png
+  row: 13
+  col: 9
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 925915.5
+  - 6693464.5
+  - 926239.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0010.png
+  row: 13
+  col: 10
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926239.5
+  - 6693464.5
+  - 926563.5
+  - 6693788.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0011.png
+  row: 13
+  col: 11
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926563.5
+  - 6693464.5
+  - 926887.5
+  - 6693788.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0013_c0014.png
+  row: 13
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6693464.5
+  - 927859.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0015.png
+  row: 13
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6693464.5
+  - 928183.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0017.png
+  row: 13
+  col: 17
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928507.5
+  - 6693464.5
+  - 928831.5
+  - 6693788.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0018.png
+  row: 13
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6693464.5
+  - 929155.5
+  - 6693788.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0019.png
+  row: 13
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6693464.5
+  - 929479.5
+  - 6693788.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0020.png
+  row: 13
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6693464.5
+  - 929803.5
+  - 6693788.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0021.png
+  row: 13
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6693464.5
+  - 930127.5
+  - 6693788.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0022.png
+  row: 13
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6693464.5
+  - 930451.5
+  - 6693788.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0023.png
+  row: 13
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6693464.5
+  - 930775.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0024.png
+  row: 13
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6693464.5
+  - 931099.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0026.png
+  row: 13
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6693464.5
+  - 931747.5
+  - 6693788.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0027.png
+  row: 13
+  col: 27
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931747.5
+  - 6693464.5
+  - 932071.5
+  - 6693788.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0028.png
+  row: 13
+  col: 28
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932071.5
+  - 6693464.5
+  - 932395.5
+  - 6693788.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0013_c0029.png
+  row: 13
+  col: 29
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932395.5
+  - 6693464.5
+  - 932719.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0013_c0030.png
+  row: 13
+  col: 30
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932719.5
+  - 6693464.5
+  - 933043.5
+  - 6693788.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0032.png
+  row: 13
+  col: 32
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933367.5
+  - 6693464.5
+  - 933691.5
+  - 6693788.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0013_c0033.png
+  row: 13
+  col: 33
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933691.5
+  - 6693464.5
+  - 934015.5
+  - 6693788.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0034.png
+  row: 13
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6693464.5
+  - 934339.5
+  - 6693788.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0035.png
+  row: 13
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6693464.5
+  - 934663.5
+  - 6693788.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0036.png
+  row: 13
+  col: 36
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934663.5
+  - 6693464.5
+  - 934987.5
+  - 6693788.5
+  n_annotations: 34
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0037.png
+  row: 13
+  col: 37
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934987.5
+  - 6693464.5
+  - 935311.5
+  - 6693788.5
+  n_annotations: 21
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0013_c0038.png
+  row: 13
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6693464.5
+  - 935635.5
+  - 6693788.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0012.png
+  row: 14
+  col: 12
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926887.5
+  - 6693140.5
+  - 927211.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0015.png
+  row: 14
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6693140.5
+  - 928183.5
+  - 6693464.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0016.png
+  row: 14
+  col: 16
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928183.5
+  - 6693140.5
+  - 928507.5
+  - 6693464.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0017.png
+  row: 14
+  col: 17
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928507.5
+  - 6693140.5
+  - 928831.5
+  - 6693464.5
+  n_annotations: 18
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0018.png
+  row: 14
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6693140.5
+  - 929155.5
+  - 6693464.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0019.png
+  row: 14
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6693140.5
+  - 929479.5
+  - 6693464.5
+  n_annotations: 15
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0020.png
+  row: 14
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6693140.5
+  - 929803.5
+  - 6693464.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0021.png
+  row: 14
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6693140.5
+  - 930127.5
+  - 6693464.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0022.png
+  row: 14
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6693140.5
+  - 930451.5
+  - 6693464.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0025.png
+  row: 14
+  col: 25
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931099.5
+  - 6693140.5
+  - 931423.5
+  - 6693464.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0026.png
+  row: 14
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6693140.5
+  - 931747.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0027.png
+  row: 14
+  col: 27
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931747.5
+  - 6693140.5
+  - 932071.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0014_c0028.png
+  row: 14
+  col: 28
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932071.5
+  - 6693140.5
+  - 932395.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0014_c0029.png
+  row: 14
+  col: 29
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 932395.5
+  - 6693140.5
+  - 932719.5
+  - 6693464.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0014_c0034.png
+  row: 14
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6693140.5
+  - 934339.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0035.png
+  row: 14
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6693140.5
+  - 934663.5
+  - 6693464.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0036.png
+  row: 14
+  col: 36
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934663.5
+  - 6693140.5
+  - 934987.5
+  - 6693464.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0037.png
+  row: 14
+  col: 37
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934987.5
+  - 6693140.5
+  - 935311.5
+  - 6693464.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0014_c0038.png
+  row: 14
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6693140.5
+  - 935635.5
+  - 6693464.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0007.png
+  row: 15
+  col: 7
+  bloc:
+  - 462
+  - 3346
+  split: valid
+  bounds:
+  - 925267.5
+  - 6692816.5
+  - 925591.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0010.png
+  row: 15
+  col: 10
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926239.5
+  - 6692816.5
+  - 926563.5
+  - 6693140.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0015_c0013.png
+  row: 15
+  col: 13
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927211.5
+  - 6692816.5
+  - 927535.5
+  - 6693140.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0015_c0014.png
+  row: 15
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6692816.5
+  - 927859.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0015.png
+  row: 15
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6692816.5
+  - 928183.5
+  - 6693140.5
+  n_annotations: 19
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0016.png
+  row: 15
+  col: 16
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928183.5
+  - 6692816.5
+  - 928507.5
+  - 6693140.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0017.png
+  row: 15
+  col: 17
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928507.5
+  - 6692816.5
+  - 928831.5
+  - 6693140.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0018.png
+  row: 15
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6692816.5
+  - 929155.5
+  - 6693140.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0019.png
+  row: 15
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6692816.5
+  - 929479.5
+  - 6693140.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0015_c0020.png
+  row: 15
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6692816.5
+  - 929803.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0021.png
+  row: 15
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6692816.5
+  - 930127.5
+  - 6693140.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0015_c0022.png
+  row: 15
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6692816.5
+  - 930451.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0023.png
+  row: 15
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6692816.5
+  - 930775.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0024.png
+  row: 15
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6692816.5
+  - 931099.5
+  - 6693140.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0025.png
+  row: 15
+  col: 25
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931099.5
+  - 6692816.5
+  - 931423.5
+  - 6693140.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0015_c0026.png
+  row: 15
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6692816.5
+  - 931747.5
+  - 6693140.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0015_c0036.png
+  row: 15
+  col: 36
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934663.5
+  - 6692816.5
+  - 934987.5
+  - 6693140.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0037.png
+  row: 15
+  col: 37
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934987.5
+  - 6692816.5
+  - 935311.5
+  - 6693140.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0015_c0038.png
+  row: 15
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6692816.5
+  - 935635.5
+  - 6693140.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0010.png
+  row: 16
+  col: 10
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926239.5
+  - 6692492.5
+  - 926563.5
+  - 6692816.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0012.png
+  row: 16
+  col: 12
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926887.5
+  - 6692492.5
+  - 927211.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0013.png
+  row: 16
+  col: 13
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927211.5
+  - 6692492.5
+  - 927535.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0014.png
+  row: 16
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6692492.5
+  - 927859.5
+  - 6692816.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0015.png
+  row: 16
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6692492.5
+  - 928183.5
+  - 6692816.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0016.png
+  row: 16
+  col: 16
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928183.5
+  - 6692492.5
+  - 928507.5
+  - 6692816.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0017.png
+  row: 16
+  col: 17
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928507.5
+  - 6692492.5
+  - 928831.5
+  - 6692816.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0018.png
+  row: 16
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6692492.5
+  - 929155.5
+  - 6692816.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0016_c0019.png
+  row: 16
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6692492.5
+  - 929479.5
+  - 6692816.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0016_c0020.png
+  row: 16
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6692492.5
+  - 929803.5
+  - 6692816.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0016_c0021.png
+  row: 16
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6692492.5
+  - 930127.5
+  - 6692816.5
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0016_c0022.png
+  row: 16
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6692492.5
+  - 930451.5
+  - 6692816.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0023.png
+  row: 16
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6692492.5
+  - 930775.5
+  - 6692816.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0024.png
+  row: 16
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6692492.5
+  - 931099.5
+  - 6692816.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0025.png
+  row: 16
+  col: 25
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931099.5
+  - 6692492.5
+  - 931423.5
+  - 6692816.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0026.png
+  row: 16
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6692492.5
+  - 931747.5
+  - 6692816.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0027.png
+  row: 16
+  col: 27
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931747.5
+  - 6692492.5
+  - 932071.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0033.png
+  row: 16
+  col: 33
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933691.5
+  - 6692492.5
+  - 934015.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0034.png
+  row: 16
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6692492.5
+  - 934339.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0035.png
+  row: 16
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6692492.5
+  - 934663.5
+  - 6692816.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0016_c0037.png
+  row: 16
+  col: 37
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934987.5
+  - 6692492.5
+  - 935311.5
+  - 6692816.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0008.png
+  row: 17
+  col: 8
+  bloc:
+  - 462
+  - 3346
+  split: valid
+  bounds:
+  - 925591.5
+  - 6692168.5
+  - 925915.5
+  - 6692492.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0012.png
+  row: 17
+  col: 12
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926887.5
+  - 6692168.5
+  - 927211.5
+  - 6692492.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0013.png
+  row: 17
+  col: 13
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927211.5
+  - 6692168.5
+  - 927535.5
+  - 6692492.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0014.png
+  row: 17
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6692168.5
+  - 927859.5
+  - 6692492.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0015.png
+  row: 17
+  col: 15
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 927859.5
+  - 6692168.5
+  - 928183.5
+  - 6692492.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0016.png
+  row: 17
+  col: 16
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928183.5
+  - 6692168.5
+  - 928507.5
+  - 6692492.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0017.png
+  row: 17
+  col: 17
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928507.5
+  - 6692168.5
+  - 928831.5
+  - 6692492.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0018.png
+  row: 17
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6692168.5
+  - 929155.5
+  - 6692492.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0017_c0019.png
+  row: 17
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6692168.5
+  - 929479.5
+  - 6692492.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0017_c0020.png
+  row: 17
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6692168.5
+  - 929803.5
+  - 6692492.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0017_c0021.png
+  row: 17
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6692168.5
+  - 930127.5
+  - 6692492.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0017_c0022.png
+  row: 17
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6692168.5
+  - 930451.5
+  - 6692492.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0023.png
+  row: 17
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6692168.5
+  - 930775.5
+  - 6692492.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0024.png
+  row: 17
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6692168.5
+  - 931099.5
+  - 6692492.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0025.png
+  row: 17
+  col: 25
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931099.5
+  - 6692168.5
+  - 931423.5
+  - 6692492.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0026.png
+  row: 17
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6692168.5
+  - 931747.5
+  - 6692492.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0031.png
+  row: 17
+  col: 31
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933043.5
+  - 6692168.5
+  - 933367.5
+  - 6692492.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0032.png
+  row: 17
+  col: 32
+  bloc:
+  - 466
+  - 3346
+  split: valid
+  bounds:
+  - 933367.5
+  - 6692168.5
+  - 933691.5
+  - 6692492.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0034.png
+  row: 17
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6692168.5
+  - 934339.5
+  - 6692492.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0035.png
+  row: 17
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6692168.5
+  - 934663.5
+  - 6692492.5
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0017_c0038.png
+  row: 17
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6692168.5
+  - 935635.5
+  - 6692492.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0008.png
+  row: 18
+  col: 8
+  bloc:
+  - 462
+  - 3346
+  split: valid
+  bounds:
+  - 925591.5
+  - 6691844.5
+  - 925915.5
+  - 6692168.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0009.png
+  row: 18
+  col: 9
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 925915.5
+  - 6691844.5
+  - 926239.5
+  - 6692168.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0011.png
+  row: 18
+  col: 11
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926563.5
+  - 6691844.5
+  - 926887.5
+  - 6692168.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0012.png
+  row: 18
+  col: 12
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 926887.5
+  - 6691844.5
+  - 927211.5
+  - 6692168.5
+  n_annotations: 15
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0013.png
+  row: 18
+  col: 13
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927211.5
+  - 6691844.5
+  - 927535.5
+  - 6692168.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0014.png
+  row: 18
+  col: 14
+  bloc:
+  - 463
+  - 3346
+  split: valid
+  bounds:
+  - 927535.5
+  - 6691844.5
+  - 927859.5
+  - 6692168.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0018.png
+  row: 18
+  col: 18
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 928831.5
+  - 6691844.5
+  - 929155.5
+  - 6692168.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0019.png
+  row: 18
+  col: 19
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929155.5
+  - 6691844.5
+  - 929479.5
+  - 6692168.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0020.png
+  row: 18
+  col: 20
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929479.5
+  - 6691844.5
+  - 929803.5
+  - 6692168.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0021.png
+  row: 18
+  col: 21
+  bloc:
+  - 464
+  - 3346
+  split: train
+  bounds:
+  - 929803.5
+  - 6691844.5
+  - 930127.5
+  - 6692168.5
+  n_annotations: 13
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0022.png
+  row: 18
+  col: 22
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930127.5
+  - 6691844.5
+  - 930451.5
+  - 6692168.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0023.png
+  row: 18
+  col: 23
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930451.5
+  - 6691844.5
+  - 930775.5
+  - 6692168.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0024.png
+  row: 18
+  col: 24
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 930775.5
+  - 6691844.5
+  - 931099.5
+  - 6692168.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0018_c0026.png
+  row: 18
+  col: 26
+  bloc:
+  - 465
+  - 3346
+  split: test
+  bounds:
+  - 931423.5
+  - 6691844.5
+  - 931747.5
+  - 6692168.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0034.png
+  row: 18
+  col: 34
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934015.5
+  - 6691844.5
+  - 934339.5
+  - 6692168.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0035.png
+  row: 18
+  col: 35
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 934339.5
+  - 6691844.5
+  - 934663.5
+  - 6692168.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0018_c0038.png
+  row: 18
+  col: 38
+  bloc:
+  - 467
+  - 3346
+  split: train
+  bounds:
+  - 935311.5
+  - 6691844.5
+  - 935635.5
+  - 6692168.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0007.png
+  row: 19
+  col: 7
+  bloc:
+  - 462
+  - 3345
+  split: train
+  bounds:
+  - 925267.5
+  - 6691520.5
+  - 925591.5
+  - 6691844.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0008.png
+  row: 19
+  col: 8
+  bloc:
+  - 462
+  - 3345
+  split: train
+  bounds:
+  - 925591.5
+  - 6691520.5
+  - 925915.5
+  - 6691844.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0011.png
+  row: 19
+  col: 11
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 926563.5
+  - 6691520.5
+  - 926887.5
+  - 6691844.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0012.png
+  row: 19
+  col: 12
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 926887.5
+  - 6691520.5
+  - 927211.5
+  - 6691844.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0013.png
+  row: 19
+  col: 13
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927211.5
+  - 6691520.5
+  - 927535.5
+  - 6691844.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0014.png
+  row: 19
+  col: 14
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927535.5
+  - 6691520.5
+  - 927859.5
+  - 6691844.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0020.png
+  row: 19
+  col: 20
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929479.5
+  - 6691520.5
+  - 929803.5
+  - 6691844.5
+  n_annotations: 11
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0021.png
+  row: 19
+  col: 21
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929803.5
+  - 6691520.5
+  - 930127.5
+  - 6691844.5
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0022.png
+  row: 19
+  col: 22
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930127.5
+  - 6691520.5
+  - 930451.5
+  - 6691844.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0019_c0023.png
+  row: 19
+  col: 23
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930451.5
+  - 6691520.5
+  - 930775.5
+  - 6691844.5
+  n_annotations: 6
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0019_c0024.png
+  row: 19
+  col: 24
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930775.5
+  - 6691520.5
+  - 931099.5
+  - 6691844.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0019_c0026.png
+  row: 19
+  col: 26
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 931423.5
+  - 6691520.5
+  - 931747.5
+  - 6691844.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0034.png
+  row: 19
+  col: 34
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934015.5
+  - 6691520.5
+  - 934339.5
+  - 6691844.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0035.png
+  row: 19
+  col: 35
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934339.5
+  - 6691520.5
+  - 934663.5
+  - 6691844.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0019_c0036.png
+  row: 19
+  col: 36
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934663.5
+  - 6691520.5
+  - 934987.5
+  - 6691844.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0008.png
+  row: 20
+  col: 8
+  bloc:
+  - 462
+  - 3345
+  split: train
+  bounds:
+  - 925591.5
+  - 6691196.5
+  - 925915.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0012.png
+  row: 20
+  col: 12
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 926887.5
+  - 6691196.5
+  - 927211.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0013.png
+  row: 20
+  col: 13
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927211.5
+  - 6691196.5
+  - 927535.5
+  - 6691520.5
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0014.png
+  row: 20
+  col: 14
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927535.5
+  - 6691196.5
+  - 927859.5
+  - 6691520.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0019.png
+  row: 20
+  col: 19
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929155.5
+  - 6691196.5
+  - 929479.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0020.png
+  row: 20
+  col: 20
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929479.5
+  - 6691196.5
+  - 929803.5
+  - 6691520.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0021.png
+  row: 20
+  col: 21
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929803.5
+  - 6691196.5
+  - 930127.5
+  - 6691520.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0022.png
+  row: 20
+  col: 22
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930127.5
+  - 6691196.5
+  - 930451.5
+  - 6691520.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0020_c0023.png
+  row: 20
+  col: 23
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930451.5
+  - 6691196.5
+  - 930775.5
+  - 6691520.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0020_c0024.png
+  row: 20
+  col: 24
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930775.5
+  - 6691196.5
+  - 931099.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0020_c0034.png
+  row: 20
+  col: 34
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934015.5
+  - 6691196.5
+  - 934339.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0035.png
+  row: 20
+  col: 35
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934339.5
+  - 6691196.5
+  - 934663.5
+  - 6691520.5
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0036.png
+  row: 20
+  col: 36
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934663.5
+  - 6691196.5
+  - 934987.5
+  - 6691520.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0020_c0037.png
+  row: 20
+  col: 37
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934987.5
+  - 6691196.5
+  - 935311.5
+  - 6691520.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0021_c0012.png
+  row: 21
+  col: 12
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 926887.5
+  - 6690872.5
+  - 927211.5
+  - 6691196.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0021_c0013.png
+  row: 21
+  col: 13
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927211.5
+  - 6690872.5
+  - 927535.5
+  - 6691196.5
+  n_annotations: 18
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0021_c0014.png
+  row: 21
+  col: 14
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927535.5
+  - 6690872.5
+  - 927859.5
+  - 6691196.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0021_c0022.png
+  row: 21
+  col: 22
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930127.5
+  - 6690872.5
+  - 930451.5
+  - 6691196.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_besancon_chailluz_r0021_c0023.png
+  row: 21
+  col: 23
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930451.5
+  - 6690872.5
+  - 930775.5
+  - 6691196.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0021_c0024.png
+  row: 21
+  col: 24
+  bloc:
+  - 465
+  - 3345
+  split: train
+  bounds:
+  - 930775.5
+  - 6690872.5
+  - 931099.5
+  - 6691196.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0021_c0036.png
+  row: 21
+  col: 36
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934663.5
+  - 6690872.5
+  - 934987.5
+  - 6691196.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0022_c0012.png
+  row: 22
+  col: 12
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 926887.5
+  - 6690548.5
+  - 927211.5
+  - 6690872.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0022_c0013.png
+  row: 22
+  col: 13
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927211.5
+  - 6690548.5
+  - 927535.5
+  - 6690872.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0022_c0014.png
+  row: 22
+  col: 14
+  bloc:
+  - 463
+  - 3345
+  split: train
+  bounds:
+  - 927535.5
+  - 6690548.5
+  - 927859.5
+  - 6690872.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0022_c0021.png
+  row: 22
+  col: 21
+  bloc:
+  - 464
+  - 3345
+  split: train
+  bounds:
+  - 929803.5
+  - 6690548.5
+  - 930127.5
+  - 6690872.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0022_c0038.png
+  row: 22
+  col: 38
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 935311.5
+  - 6690548.5
+  - 935635.5
+  - 6690872.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0023_c0004.png
+  row: 23
+  col: 4
+  bloc:
+  - 462
+  - 3345
+  split: train
+  bounds:
+  - 924295.5
+  - 6690224.5
+  - 924619.5
+  - 6690548.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0023_c0037.png
+  row: 23
+  col: 37
+  bloc:
+  - 467
+  - 3345
+  split: train
+  bounds:
+  - 934987.5
+  - 6690224.5
+  - 935311.5
+  - 6690548.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0027_c0003.png
+  row: 27
+  col: 3
+  bloc:
+  - 462
+  - 3344
+  split: train
+  bounds:
+  - 923971.5
+  - 6688928.5
+  - 924295.5
+  - 6689252.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0029_c0006.png
+  row: 29
+  col: 6
+  bloc:
+  - 462
+  - 3344
+  split: train
+  bounds:
+  - 924943.5
+  - 6688280.5
+  - 925267.5
+  - 6688604.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0029_c0027.png
+  row: 29
+  col: 27
+  bloc:
+  - 465
+  - 3344
+  split: valid
+  bounds:
+  - 931747.5
+  - 6688280.5
+  - 932071.5
+  - 6688604.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0030_c0023.png
+  row: 30
+  col: 23
+  bloc:
+  - 465
+  - 3344
+  split: valid
+  bounds:
+  - 930451.5
+  - 6687956.5
+  - 930775.5
+  - 6688280.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0030_c0026.png
+  row: 30
+  col: 26
+  bloc:
+  - 465
+  - 3344
+  split: valid
+  bounds:
+  - 931423.5
+  - 6687956.5
+  - 931747.5
+  - 6688280.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0031_c0028.png
+  row: 31
+  col: 28
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 932071.5
+  - 6687632.5
+  - 932395.5
+  - 6687956.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0032_c0033.png
+  row: 32
+  col: 33
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 933691.5
+  - 6687308.5
+  - 934015.5
+  - 6687632.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0032_c0034.png
+  row: 32
+  col: 34
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934015.5
+  - 6687308.5
+  - 934339.5
+  - 6687632.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0032_c0037.png
+  row: 32
+  col: 37
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934987.5
+  - 6687308.5
+  - 935311.5
+  - 6687632.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0033_c0004.png
+  row: 33
+  col: 4
+  bloc:
+  - 462
+  - 3343
+  split: valid
+  bounds:
+  - 924295.5
+  - 6686984.5
+  - 924619.5
+  - 6687308.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0033_c0024.png
+  row: 33
+  col: 24
+  bloc:
+  - 465
+  - 3343
+  split: test
+  bounds:
+  - 930775.5
+  - 6686984.5
+  - 931099.5
+  - 6687308.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0034_c0003.png
+  row: 34
+  col: 3
+  bloc:
+  - 462
+  - 3343
+  split: valid
+  bounds:
+  - 923971.5
+  - 6686660.5
+  - 924295.5
+  - 6686984.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0034_c0004.png
+  row: 34
+  col: 4
+  bloc:
+  - 462
+  - 3343
+  split: valid
+  bounds:
+  - 924295.5
+  - 6686660.5
+  - 924619.5
+  - 6686984.5
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0034_c0033.png
+  row: 34
+  col: 33
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 933691.5
+  - 6686660.5
+  - 934015.5
+  - 6686984.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0034_c0034.png
+  row: 34
+  col: 34
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934015.5
+  - 6686660.5
+  - 934339.5
+  - 6686984.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0034_c0035.png
+  row: 34
+  col: 35
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934339.5
+  - 6686660.5
+  - 934663.5
+  - 6686984.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0004.png
+  row: 35
+  col: 4
+  bloc:
+  - 462
+  - 3343
+  split: valid
+  bounds:
+  - 924295.5
+  - 6686336.5
+  - 924619.5
+  - 6686660.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0007.png
+  row: 35
+  col: 7
+  bloc:
+  - 462
+  - 3343
+  split: valid
+  bounds:
+  - 925267.5
+  - 6686336.5
+  - 925591.5
+  - 6686660.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0035_c0023.png
+  row: 35
+  col: 23
+  bloc:
+  - 465
+  - 3343
+  split: test
+  bounds:
+  - 930451.5
+  - 6686336.5
+  - 930775.5
+  - 6686660.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0024.png
+  row: 35
+  col: 24
+  bloc:
+  - 465
+  - 3343
+  split: test
+  bounds:
+  - 930775.5
+  - 6686336.5
+  - 931099.5
+  - 6686660.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0033.png
+  row: 35
+  col: 33
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 933691.5
+  - 6686336.5
+  - 934015.5
+  - 6686660.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0034.png
+  row: 35
+  col: 34
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934015.5
+  - 6686336.5
+  - 934339.5
+  - 6686660.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0035_c0035.png
+  row: 35
+  col: 35
+  bloc:
+  - 467
+  - 3343
+  split: train
+  bounds:
+  - 934339.5
+  - 6686336.5
+  - 934663.5
+  - 6686660.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0036_c0032.png
+  row: 36
+  col: 32
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 933367.5
+  - 6686012.5
+  - 933691.5
+  - 6686336.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0036_c0033.png
+  row: 36
+  col: 33
+  bloc:
+  - 466
+  - 3343
+  split: train
+  bounds:
+  - 933691.5
+  - 6686012.5
+  - 934015.5
+  - 6686336.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0037_c0022.png
+  row: 37
+  col: 22
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 930127.5
+  - 6685688.5
+  - 930451.5
+  - 6686012.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0039_c0024.png
+  row: 39
+  col: 24
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 930775.5
+  - 6685040.5
+  - 931099.5
+  - 6685364.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0040_c0027.png
+  row: 40
+  col: 27
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 931747.5
+  - 6684716.5
+  - 932071.5
+  - 6685040.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0041_c0027.png
+  row: 41
+  col: 27
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 931747.5
+  - 6684392.5
+  - 932071.5
+  - 6684716.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0041_c0028.png
+  row: 41
+  col: 28
+  bloc:
+  - 466
+  - 3342
+  split: train
+  bounds:
+  - 932071.5
+  - 6684392.5
+  - 932395.5
+  - 6684716.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0042_c0026.png
+  row: 42
+  col: 26
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 931423.5
+  - 6684068.5
+  - 931747.5
+  - 6684392.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0042_c0027.png
+  row: 42
+  col: 27
+  bloc:
+  - 465
+  - 3342
+  split: train
+  bounds:
+  - 931747.5
+  - 6684068.5
+  - 932071.5
+  - 6684392.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0042_c0031.png
+  row: 42
+  col: 31
+  bloc:
+  - 466
+  - 3342
+  split: train
+  bounds:
+  - 933043.5
+  - 6684068.5
+  - 933367.5
+  - 6684392.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0042_c0032.png
+  row: 42
+  col: 32
+  bloc:
+  - 466
+  - 3342
+  split: train
+  bounds:
+  - 933367.5
+  - 6684068.5
+  - 933691.5
+  - 6684392.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0043_c0017.png
+  row: 43
+  col: 17
+  bloc:
+  - 464
+  - 3341
+  split: train
+  bounds:
+  - 928507.5
+  - 6683744.5
+  - 928831.5
+  - 6684068.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0044_c0015.png
+  row: 44
+  col: 15
+  bloc:
+  - 464
+  - 3341
+  split: train
+  bounds:
+  - 927859.5
+  - 6683420.5
+  - 928183.5
+  - 6683744.5
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0044_c0017.png
+  row: 44
+  col: 17
+  bloc:
+  - 464
+  - 3341
+  split: train
+  bounds:
+  - 928507.5
+  - 6683420.5
+  - 928831.5
+  - 6683744.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0045_c0007.png
+  row: 45
+  col: 7
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 925267.5
+  - 6683096.5
+  - 925591.5
+  - 6683420.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0045_c0008.png
+  row: 45
+  col: 8
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 925591.5
+  - 6683096.5
+  - 925915.5
+  - 6683420.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0045_c0023.png
+  row: 45
+  col: 23
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930451.5
+  - 6683096.5
+  - 930775.5
+  - 6683420.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0045_c0024.png
+  row: 45
+  col: 24
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930775.5
+  - 6683096.5
+  - 931099.5
+  - 6683420.5
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0046_c0007.png
+  row: 46
+  col: 7
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 925267.5
+  - 6682772.5
+  - 925591.5
+  - 6683096.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0046_c0009.png
+  row: 46
+  col: 9
+  bloc:
+  - 463
+  - 3341
+  split: train
+  bounds:
+  - 925915.5
+  - 6682772.5
+  - 926239.5
+  - 6683096.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0046_c0022.png
+  row: 46
+  col: 22
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930127.5
+  - 6682772.5
+  - 930451.5
+  - 6683096.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0046_c0023.png
+  row: 46
+  col: 23
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930451.5
+  - 6682772.5
+  - 930775.5
+  - 6683096.5
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0046_c0024.png
+  row: 46
+  col: 24
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930775.5
+  - 6682772.5
+  - 931099.5
+  - 6683096.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0005.png
+  row: 47
+  col: 5
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 924619.5
+  - 6682448.5
+  - 924943.5
+  - 6682772.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0006.png
+  row: 47
+  col: 6
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 924943.5
+  - 6682448.5
+  - 925267.5
+  - 6682772.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0007.png
+  row: 47
+  col: 7
+  bloc:
+  - 462
+  - 3341
+  split: train
+  bounds:
+  - 925267.5
+  - 6682448.5
+  - 925591.5
+  - 6682772.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0021.png
+  row: 47
+  col: 21
+  bloc:
+  - 464
+  - 3341
+  split: train
+  bounds:
+  - 929803.5
+  - 6682448.5
+  - 930127.5
+  - 6682772.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0047_c0023.png
+  row: 47
+  col: 23
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930451.5
+  - 6682448.5
+  - 930775.5
+  - 6682772.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0024.png
+  row: 47
+  col: 24
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 930775.5
+  - 6682448.5
+  - 931099.5
+  - 6682772.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0047_c0025.png
+  row: 47
+  col: 25
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 931099.5
+  - 6682448.5
+  - 931423.5
+  - 6682772.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0047_c0026.png
+  row: 47
+  col: 26
+  bloc:
+  - 465
+  - 3341
+  split: train
+  bounds:
+  - 931423.5
+  - 6682448.5
+  - 931747.5
+  - 6682772.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0048_c0021.png
+  row: 48
+  col: 21
+  bloc:
+  - 464
+  - 3341
+  split: train
+  bounds:
+  - 929803.5
+  - 6682124.5
+  - 930127.5
+  - 6682448.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0049_c0020.png
+  row: 49
+  col: 20
+  bloc:
+  - 464
+  - 3340
+  split: test
+  bounds:
+  - 929479.5
+  - 6681800.5
+  - 929803.5
+  - 6682124.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0049_c0029.png
+  row: 49
+  col: 29
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 932395.5
+  - 6681800.5
+  - 932719.5
+  - 6682124.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0049_c0031.png
+  row: 49
+  col: 31
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 933043.5
+  - 6681800.5
+  - 933367.5
+  - 6682124.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0049_c0035.png
+  row: 49
+  col: 35
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934339.5
+  - 6681800.5
+  - 934663.5
+  - 6682124.5
+  n_annotations: 0
+  classes: []
+- nom: 25_besancon_chailluz_r0050_c0007.png
+  row: 50
+  col: 7
+  bloc:
+  - 462
+  - 3340
+  split: train
+  bounds:
+  - 925267.5
+  - 6681476.5
+  - 925591.5
+  - 6681800.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0028.png
+  row: 50
+  col: 28
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 932071.5
+  - 6681476.5
+  - 932395.5
+  - 6681800.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0029.png
+  row: 50
+  col: 29
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 932395.5
+  - 6681476.5
+  - 932719.5
+  - 6681800.5
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0030.png
+  row: 50
+  col: 30
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 932719.5
+  - 6681476.5
+  - 933043.5
+  - 6681800.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0031.png
+  row: 50
+  col: 31
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 933043.5
+  - 6681476.5
+  - 933367.5
+  - 6681800.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0032.png
+  row: 50
+  col: 32
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 933367.5
+  - 6681476.5
+  - 933691.5
+  - 6681800.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 25_besancon_chailluz_r0050_c0034.png
+  row: 50
+  col: 34
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934015.5
+  - 6681476.5
+  - 934339.5
+  - 6681800.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0050_c0035.png
+  row: 50
+  col: 35
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934339.5
+  - 6681476.5
+  - 934663.5
+  - 6681800.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0052_c0025.png
+  row: 52
+  col: 25
+  bloc:
+  - 465
+  - 3340
+  split: train
+  bounds:
+  - 931099.5
+  - 6680828.5
+  - 931423.5
+  - 6681152.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0053_c0033.png
+  row: 53
+  col: 33
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 933691.5
+  - 6680504.5
+  - 934015.5
+  - 6680828.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0053_c0036.png
+  row: 53
+  col: 36
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934663.5
+  - 6680504.5
+  - 934987.5
+  - 6680828.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0054_c0025.png
+  row: 54
+  col: 25
+  bloc:
+  - 465
+  - 3340
+  split: train
+  bounds:
+  - 931099.5
+  - 6680180.5
+  - 931423.5
+  - 6680504.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0054_c0028.png
+  row: 54
+  col: 28
+  bloc:
+  - 466
+  - 3340
+  split: train
+  bounds:
+  - 932071.5
+  - 6680180.5
+  - 932395.5
+  - 6680504.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0054_c0034.png
+  row: 54
+  col: 34
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934015.5
+  - 6680180.5
+  - 934339.5
+  - 6680504.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_besancon_chailluz_r0054_c0035.png
+  row: 54
+  col: 35
+  bloc:
+  - 467
+  - 3340
+  split: valid
+  bounds:
+  - 934339.5
+  - 6680180.5
+  - 934663.5
+  - 6680504.5
+  n_annotations: 1
+  classes:
+  - circular_depression

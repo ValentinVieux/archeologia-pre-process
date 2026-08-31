@@ -111,7 +111,8 @@ def test_extract_thresholds_tolerant():
 
 def test_extract_thresholds_absent():
     conf, pc, area, iou = _extract_thresholds({})
-    assert pc == {} and abs(conf - 0.2) < 1e-9
+    # 0.3 = défaut UNIFIÉ de la chaîne CV (audit 2026-08-31, ex-0.2)
+    assert pc == {} and abs(conf - 0.3) < 1e-9
 
 
 if __name__ == "__main__":

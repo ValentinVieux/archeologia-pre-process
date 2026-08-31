@@ -2,7 +2,7 @@
 # emprises pleines, classe unique enclos_circulaire, LD 1 m, split spatial
 # 70/20/10 seed 42 = EVAL GELEE, jamais re-tire).
 dataset: enclos_fr_bretagne_ld648_v1
-zone: bretagne/bretagne
+zone: bretagne/35_anomalie_lidar_bretagne
 raster: D:/veille_irlande/corpus_enclos_fr/ld/bretagne_ld_1m.vrt
 gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/bretagne_emprises.gpkg
 couches:

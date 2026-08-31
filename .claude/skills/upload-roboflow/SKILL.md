@@ -7,6 +7,12 @@ description: >
   « envoie sur roboflow », « lance le lot de test », « upload le reste des
   images », « push to roboflow ».
 argument-hint: <dossier local du dataset>
+entrees:
+  - "dataset découpé CONFORME (verif_dataset) avec split_manifest.yaml"
+  - "clé env ROBOFLOW_API_KEY"
+sorties:
+  - "projet Roboflow à jour (split IMPOSÉ) + upload_manifest.yaml local (source de vérité)"
+suivant: [entrainement-modele]
 ---
 
 # Upload Roboflow à split imposé (test → validation humaine → complet)
@@ -34,8 +40,9 @@ persistante — les relire avant toute modification de `upload_roboflow_split.py
   noms de classes). Rappels UI : la barre de recherche du Dataset est SÉMANTIQUE
   (filtrer par Tags/Classes, pas par nom) ; le batch « Pip Package Upload » de
   l'onglet Annotate est un double affichage cosmétique. Toute rectification
-  (buffer, classes…) → retour à `/prepare-zone-training`, purge du lot par ids,
-  nouveau test sur tuiles vierges (`--eviter`, dédup corbeille).
+  (buffer, classes…) → retour à `/prepare-zone-training`, purge du lot par tag
+  zone (`tools/purge_roboflow_zone.py`, `--dry-run` d'abord — parades corbeille +
+  dédup intégrées), nouveau test sur tuiles vierges (`--eviter`).
 
 ## Étape 4 — Upload complet
 - Même commande sans `--test` (hérite du lot de test, ne le renvoie pas).

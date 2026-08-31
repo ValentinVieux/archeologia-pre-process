@@ -8,6 +8,12 @@ description: >
   « on lance le secteur X », « télécharge kerry », « propose les polygones de X »,
   « où en est le corpus », « next Irish sector », ou livre une couche de points recalés.
 argument-hint: <secteur, ex. kerry | cork_03 (cf. suivi_corpus.yaml)>
+entrees:
+  - "D:\\veille_irlande\\suivi_corpus.yaml (tracker) + dalles LiDAR GSI du secteur"
+sorties:
+  - "data_regions_v2/irlande/ie_<secteur>/ : <secteur>_annotations_vN.gpkg (source humain/pipeline)"
+  - "suivi_corpus.yaml à jour (+ copie de sauvegarde sur le Drive)"
+suivant: [corpus-entrainement]
 ---
 
 # Corpus Irlande (téléchargement → mosaïque → LD + recalage → propositions → dépôt versionné)
@@ -50,7 +56,12 @@ nouveau secteur (objectif dans le tracker).
   chaque extension = nouveau fichier _vN.**
 - Dépôt `data_regions_v2\irlande\ie_<secteur>\` (staging local puis robocopy, hash
   vérifié, note DÉCISION au manifest, double attribution CC-BY SMR+GSI) puis
-  `build_v2_index`. Mettre à jour cumuls et statuts du tracker.
+  `build_v2_index`. Mettre à jour cumuls et statuts du tracker, et **copier
+  `suivi_corpus.yaml` vers le Drive du corpus** (D: n'a aucune sauvegarde —
+  point de perte unique constaté à l'audit 2026-08-31).
+- **Passerelle entraînement** : secteur soldé et cumuls atteints → découpe
+  (`configs/enclos_ie_<secteur>_ld648_v1.yaml` + slice_zone) puis
+  `/corpus-entrainement` (corpus enclos_ie_*).
 
 ## Garde-fous
 - **Évals gelées 100 % humaines et jamais re-tirées** (`sam_ft/split_irlande.yaml`) :

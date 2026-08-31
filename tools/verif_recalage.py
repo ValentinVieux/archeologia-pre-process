@@ -2,6 +2,7 @@
 
 Usage : python verif_recalage.py <recalage.yaml> <gpkg_source> <gpkg_recale> <raster>
 """
+import argparse
 import sys
 from pathlib import Path
 
@@ -14,7 +15,14 @@ from shapely import wkt
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from recaler_lignes import PARAMS_DEFAUT, LecteurRaster, densifier
 
-config, source, recale, raster = (Path(a) for a in sys.argv[1:5])
+_ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+_ap.add_argument("config", help="configs/recalage_<zone>.yaml")
+_ap.add_argument("source", help="GPKG source (avant recalage)")
+_ap.add_argument("recale", help="GPKG recalé produit par recaler_lignes")
+_ap.add_argument("raster", help="raster LD utilisé pour le recalage")
+_a = _ap.parse_args()
+config, source, recale, raster = (Path(x) for x in
+                                  (_a.config, _a.source, _a.recale, _a.raster))
 cfg = yaml.safe_load(config.read_text(encoding="utf-8"))
 lecteur = LecteurRaster(raster)
 

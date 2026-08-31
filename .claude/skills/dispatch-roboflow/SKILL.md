@@ -8,6 +8,12 @@ description: >
   des datasets roboflow », « nouveaux exports à ranger », ou fournit un dossier
   de zips d'exports Roboflow.
 argument-hint: <dossier-des-zips>
+entrees:
+  - "zips d'exports Roboflow (COCO) + attribution.json (image -> zone)"
+sorties:
+  - "data_regions_v2/<region>/<zone>/training/roboflow/<dataset>/ (COCO filtré + upload_manifest.yaml)"
+  - "index.html v2 régénéré"
+suivant: [audit-dataset]
 ---
 
 # Dispatch d'exports Roboflow vers data_regions_v2
@@ -15,7 +21,8 @@ argument-hint: <dossier-des-zips>
 Interagir en français. Racine cible :
 `G:\Mon Drive\Archeologia\Archeologia_Shared\data\data_regions_v2` (voir CLAUDE.md
 § Stockage Drive pour les règles — notamment : ne JAMAIS écrire dans `data_regions`
-v1, ne rien supprimer, raw/ immuable).
+v1, ne rien supprimer ; `raw/` n'est plus « immuable » au sens strict mais ne
+s'édite JAMAIS en place — copie locale puis redépôt, règle actuelle du § Stockage).
 
 ## Étape 1 — Inspecter les zips (sans extraire)
 Pour chaque zip : splits, classes (COCO `categories`), comptes d'annotations par

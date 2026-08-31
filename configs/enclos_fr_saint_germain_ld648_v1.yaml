@@ -2,7 +2,7 @@
 # emprises pleines, classe unique enclos_circulaire, LD 1 m, split spatial
 # 70/20/10 seed 42 = EVAL GELEE, jamais re-tire).
 dataset: enclos_fr_saint_germain_ld648_v1
-zone: ile_de_france/saint_germain
+zone: ile_de_france/78_saint_germain_marly
 raster: D:/veille_irlande/corpus_enclos_fr/ld/saint_germain_ld_1m.vrt
 gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/saint_germain_emprises.gpkg
 couches:

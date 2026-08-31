@@ -1,7 +1,8 @@
 """Vérification générique d'un GPKG d'entités contre sa livraison (mapping YAML).
 
-Usage : python verif_gpkg_zone.py <mapping.yaml> <dossier_source> <gpkg>
+Usage : python verif_zone_gpkg.py <mapping.yaml> <dossier_source> <gpkg>
 """
+import argparse
 import sys
 from pathlib import Path
 
@@ -9,7 +10,12 @@ import geopandas as gpd
 import pyogrio
 import yaml
 
-mapping, source, gpkg = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
+_ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+_ap.add_argument("mapping", help="configs/vecteurs_<zone>.yaml (mapping de la livraison)")
+_ap.add_argument("source", help="dossier de la livraison auditée")
+_ap.add_argument("gpkg", help="GPKG d'entités produit par build_zone_gpkg")
+_a = _ap.parse_args()
+mapping, source, gpkg = Path(_a.mapping), Path(_a.source), Path(_a.gpkg)
 cfg = yaml.safe_load(mapping.read_text(encoding="utf-8"))
 
 sources = {}

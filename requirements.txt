@@ -1,14 +1,17 @@
-geopandas
-pyogrio
-shapely
-pandas
-numpy
-pyproj
-PyYAML
-rasterio
-Pillow
-roboflow
-scipy
-fastapi
-uvicorn
-httpx2
+# Dépendances directes ÉPINGLÉES (audit 2026-08-31 — versions du .venv fonctionnel,
+# Python 3.11 ; httpx2 supprimé : paquet VIDE typosquat, le vrai besoin est httpx
+# pour le TestClient de tests/test_review_api.py). Gels complets : envs/*.txt
+geopandas==1.1.4
+pyogrio==0.13.0
+shapely==2.1.2
+pandas==3.0.3
+numpy==2.3.5
+pyproj==3.7.2
+PyYAML==6.0.3
+rasterio==1.4.4
+Pillow==12.3.0
+roboflow==1.4.0
+scipy==1.17.1
+fastapi==0.140.7
+uvicorn==0.51.0
+httpx==0.28.1

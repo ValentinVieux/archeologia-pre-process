@@ -127,7 +127,8 @@ def construire(racine):
         f"tools/tableau_modeles.py — {len(evals)} évaluation(s), "
         f"{sum(len(v) for v in familles.values())} ligne(s) modèle, "
         f"{len(sans_mesure)} run(s) sans mesure. Source : metriques_eval.json "
-        "(seuils F1-max mesurés — jamais de seuil fixe).</p>",
+        "(seuils F1-max mesurés — jamais de seuil fixe). "
+        "<a href='../data/data_regions_v2/index.html'>→ index data_regions_v2</a></p>",
     ]
     for msg in avertissements:
         parties.append(f"<p class='warn'>⚠ {e(str(msg))}</p>")
@@ -186,11 +187,52 @@ def construire(racine):
     return "\n".join(parties)
 
 
+def maj_registre(racine, chemin_registre):
+    """Met à jour modeles.yaml (registre zone<->modèle de data_regions_v2) en MERGE :
+    les champs manuels des entrées existantes (statut, entites, notes, zones) sont
+    conservés ; chaque run porteur d'un metriques_eval.json est ajouté/actualisé
+    avec son bloc `evaluation` et ses zones mesurées. Remplace la mise à jour
+    manuelle (registre figé au 2026-07-16 constaté à l'audit 2026-08-31)."""
+    import yaml
+
+    chemin = Path(chemin_registre)
+    registre = {"schema_version": 1, "modeles": []}
+    if chemin.exists():
+        registre = yaml.safe_load(chemin.read_text(encoding="utf-8")) or registre
+    entrees = {m.get("nom"): m for m in registre.get("modeles", []) if isinstance(m, dict)}
+
+    evals, _, _ = collecter(Path(racine))
+    for _, data in sorted(evals, key=lambda t: t[1].get("genere_le", "")):
+        tache = ("détection" if data.get("tache") == "detection"
+                 else "segmentation d'instances")
+        for nom, m in (data.get("modeles") or {}).items():
+            e = entrees.setdefault(nom, {"nom": nom, "architecture": "RF-DETR",
+                                         "statut": "expérimental"})
+            e.setdefault("architecture", "RF-DETR")
+            e["tache"] = tache
+            if not e.get("entites"):
+                e["entites"] = ", ".join(sorted(m.get("par_classe") or {}))
+            zones = sorted({z.split("/", 1)[-1] for z in (m.get("par_zone") or {})})
+            if zones:
+                e["zones"] = zones
+            g = m.get("global") or {}
+            e["evaluation"] = {"date": (data.get("genere_le") or "")[:10],
+                               "f1": g.get("F1"), "ap50": g.get("AP50"),
+                               "seuil": g.get("seuil_f1max")}
+    registre["modeles"] = sorted(entrees.values(), key=lambda m: m.get("nom", ""))
+    chemin.write_text(yaml.safe_dump(registre, allow_unicode=True, sort_keys=False),
+                      encoding="utf-8")
+    yaml.safe_load(chemin.read_text(encoding="utf-8"))  # relecture de validation
+    print(f"registre -> {chemin} ({len(registre['modeles'])} modèles)")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("racine", help="racine à scanner (ex. G:\\...\\model-training)")
     ap.add_argument("--out", default=None, help="HTML de sortie (défaut : <racine>\\index.html)")
+    ap.add_argument("--registre", default=None,
+                    help="modeles.yaml de data_regions_v2 à mettre à jour (merge)")
     a = ap.parse_args()
     sortie = a.out or os.path.join(a.racine, "index.html")
     page = construire(a.racine)
@@ -198,6 +240,8 @@ def main():
         f.write(page)
     assert "<html" in open(sortie, encoding="utf-8").read(200), "relecture invalide"
     print("dashboard ->", sortie)
+    if a.registre:
+        maj_registre(a.racine, a.registre)
 
 
 if __name__ == "__main__":

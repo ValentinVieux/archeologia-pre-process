@@ -5,6 +5,7 @@ Usage : python verif_application.py <gpkg_source> <gpkg_recale>
 (gpkg_reference : si l'application a utilisé --recale-depuis, les décisions
 'recale' doivent porter la géométrie de CETTE version — celle revue.)
 """
+import argparse
 import sys
 from pathlib import Path
 
@@ -13,11 +14,21 @@ import pyogrio
 import yaml
 from shapely import wkt
 
-source, recale, decisions_p, final = (Path(a) for a in sys.argv[1:5])
+_ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+_ap.add_argument("source", help="GPKG source (avant recalage)")
+_ap.add_argument("recale", help="GPKG recalé (sortie recaler_lignes)")
+_ap.add_argument("decisions", help="decisions.yaml de la revue humaine")
+_ap.add_argument("final", help="GPKG final produit par appliquer_decisions")
+_ap.add_argument("reference", nargs="?", default=None,
+                 help="GPKG revu si l'application a utilisé --recale-depuis "
+                      "(les décisions 'recale' doivent porter SA géométrie)")
+_a = _ap.parse_args()
+source, recale, decisions_p, final = (Path(x) for x in
+                                      (_a.source, _a.recale, _a.decisions, _a.final))
 decisions = yaml.safe_load(decisions_p.read_text(encoding="utf-8")) or {}
 reference = {}
-if len(sys.argv) > 5:
-    ref_p = Path(sys.argv[5])
+if _a.reference:
+    ref_p = Path(_a.reference)
     for couche_r in (n for n, _ in pyogrio.list_layers(str(ref_p))):
         gdf_r = gpd.read_file(ref_p, layer=couche_r)
         if "id_recalage" not in gdf_r.columns:

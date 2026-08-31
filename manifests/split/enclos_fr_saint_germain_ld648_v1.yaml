@@ -1,0 +1,180 @@
+dataset: enclos_fr_saint_germain_ld648_v1
+zone: ile_de_france/78_saint_germain_marly
+seed: 42
+genere_le: '2026-08-16'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    emprises:
+      classe: enclos_circulaire
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_fr_saint_germain_ld648_v1
+  gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/saint_germain_emprises.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/corpus_enclos_fr/ld/saint_germain_ld_1m.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: ile_de_france/78_saint_germain_marly
+grille:
+  origine:
+  - 625541.0
+  - 6875446.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos_circulaire: 6
+  valid:
+    enclos_circulaire: 4
+  test:
+    enclos_circulaire: 2
+hashes_sha1:
+  train: f518fb252b70b9304911c97451e337b5ab18c357
+  valid: 30d3023c2af7f669d1612324d94bc36f87e3626c
+  test: 3686d30c2733c20c2de9962ef899d7083a5f5609
+tuiles:
+- nom: saint_germain_r0001_c0015.png
+  row: 1
+  col: 15
+  bloc:
+  - 317
+  - 3437
+  split: train
+  bounds:
+  - 635261.0
+  - 6874150.0
+  - 635909.0
+  - 6874798.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0002_c0015.png
+  row: 2
+  col: 15
+  bloc:
+  - 317
+  - 3436
+  split: test
+  bounds:
+  - 635261.0
+  - 6873502.0
+  - 635909.0
+  - 6874150.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0003_c0013.png
+  row: 3
+  col: 13
+  bloc:
+  - 317
+  - 3436
+  split: test
+  bounds:
+  - 633965.0
+  - 6872854.0
+  - 634613.0
+  - 6873502.0
+  n_annotations: 0
+  classes: []
+- nom: saint_germain_r0005_c0011.png
+  row: 5
+  col: 11
+  bloc:
+  - 316
+  - 3435
+  split: valid
+  bounds:
+  - 632669.0
+  - 6871558.0
+  - 633317.0
+  - 6872206.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0007_c0010.png
+  row: 7
+  col: 10
+  bloc:
+  - 316
+  - 3435
+  split: valid
+  bounds:
+  - 632021.0
+  - 6870262.0
+  - 632669.0
+  - 6870910.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0007_c0011.png
+  row: 7
+  col: 11
+  bloc:
+  - 316
+  - 3435
+  split: valid
+  bounds:
+  - 632669.0
+  - 6870262.0
+  - 633317.0
+  - 6870910.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0013_c0001.png
+  row: 13
+  col: 1
+  bloc:
+  - 313
+  - 3433
+  split: train
+  bounds:
+  - 626189.0
+  - 6866374.0
+  - 626837.0
+  - 6867022.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0013_c0002.png
+  row: 13
+  col: 2
+  bloc:
+  - 313
+  - 3433
+  split: train
+  bounds:
+  - 626837.0
+  - 6866374.0
+  - 627485.0
+  - 6867022.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: saint_germain_r0020_c0007.png
+  row: 20
+  col: 7
+  bloc:
+  - 315
+  - 3431
+  split: train
+  bounds:
+  - 630077.0
+  - 6861838.0
+  - 630725.0
+  - 6862486.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire

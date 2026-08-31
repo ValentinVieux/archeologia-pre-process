@@ -1,0 +1,4608 @@
+dataset: fours_charb_41_blois_ld648_v1
+zone: centre_val_de_loire/41_blois
+seed: 42
+genere_le: '2026-08-21'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+  dataset: fours_charb_41_blois_ld648_v1
+  gpkg: D:/entrainement_fours_charbonnieres/zones/41_blois/blois_entites.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/entrainement_fours_charbonnieres/blois/blois_ld.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: centre_val_de_loire/41_blois
+grille:
+  origine:
+  - 581999.5
+  - 6731000.0
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 457
+  valid:
+    charbonniere: 140
+  test:
+    charbonniere: 84
+hashes_sha1:
+  train: 29bc57c394c0c6af2eeb088a833138a68685a134
+  valid: b7d414085cc0e616dd0a8358e8205bc4e1333d8c
+  test: d40022cba4b48e594cf8dc30ad135ec59b1e6c51
+tuiles:
+- nom: 41_blois_r0004_c0026.png
+  row: 4
+  col: 26
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590423.5
+  - 6729380.0
+  - 590747.5
+  - 6729704.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0004_c0027.png
+  row: 4
+  col: 27
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590747.5
+  - 6729380.0
+  - 591071.5
+  - 6729704.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0004_c0028.png
+  row: 4
+  col: 28
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 591071.5
+  - 6729380.0
+  - 591395.5
+  - 6729704.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0004_c0030.png
+  row: 4
+  col: 30
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 591719.5
+  - 6729380.0
+  - 592043.5
+  - 6729704.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0004_c0033.png
+  row: 4
+  col: 33
+  bloc:
+  - 296
+  - 3364
+  split: valid
+  bounds:
+  - 592691.5
+  - 6729380.0
+  - 593015.5
+  - 6729704.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0004_c0035.png
+  row: 4
+  col: 35
+  bloc:
+  - 296
+  - 3364
+  split: valid
+  bounds:
+  - 593339.5
+  - 6729380.0
+  - 593663.5
+  - 6729704.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0005_c0025.png
+  row: 5
+  col: 25
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590099.5
+  - 6729056.0
+  - 590423.5
+  - 6729380.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0005_c0027.png
+  row: 5
+  col: 27
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590747.5
+  - 6729056.0
+  - 591071.5
+  - 6729380.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0005_c0029.png
+  row: 5
+  col: 29
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 591395.5
+  - 6729056.0
+  - 591719.5
+  - 6729380.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0006_c0021.png
+  row: 6
+  col: 21
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588803.5
+  - 6728732.0
+  - 589127.5
+  - 6729056.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0006_c0022.png
+  row: 6
+  col: 22
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 589127.5
+  - 6728732.0
+  - 589451.5
+  - 6729056.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 41_blois_r0006_c0026.png
+  row: 6
+  col: 26
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590423.5
+  - 6728732.0
+  - 590747.5
+  - 6729056.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0006_c0027.png
+  row: 6
+  col: 27
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 590747.5
+  - 6728732.0
+  - 591071.5
+  - 6729056.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0006_c0031.png
+  row: 6
+  col: 31
+  bloc:
+  - 296
+  - 3364
+  split: valid
+  bounds:
+  - 592043.5
+  - 6728732.0
+  - 592367.5
+  - 6729056.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0007_c0020.png
+  row: 7
+  col: 20
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588479.5
+  - 6728408.0
+  - 588803.5
+  - 6728732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0007_c0021.png
+  row: 7
+  col: 21
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588803.5
+  - 6728408.0
+  - 589127.5
+  - 6728732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0007_c0030.png
+  row: 7
+  col: 30
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 591719.5
+  - 6728408.0
+  - 592043.5
+  - 6728732.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0007_c0033.png
+  row: 7
+  col: 33
+  bloc:
+  - 296
+  - 3364
+  split: valid
+  bounds:
+  - 592691.5
+  - 6728408.0
+  - 593015.5
+  - 6728732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0008_c0019.png
+  row: 8
+  col: 19
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588155.5
+  - 6728084.0
+  - 588479.5
+  - 6728408.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0008_c0020.png
+  row: 8
+  col: 20
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588479.5
+  - 6728084.0
+  - 588803.5
+  - 6728408.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0008_c0021.png
+  row: 8
+  col: 21
+  bloc:
+  - 294
+  - 3364
+  split: valid
+  bounds:
+  - 588803.5
+  - 6728084.0
+  - 589127.5
+  - 6728408.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0008_c0028.png
+  row: 8
+  col: 28
+  bloc:
+  - 295
+  - 3364
+  split: train
+  bounds:
+  - 591071.5
+  - 6728084.0
+  - 591395.5
+  - 6728408.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0008_c0036.png
+  row: 8
+  col: 36
+  bloc:
+  - 296
+  - 3364
+  split: valid
+  bounds:
+  - 593663.5
+  - 6728084.0
+  - 593987.5
+  - 6728408.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0009_c0017.png
+  row: 9
+  col: 17
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587507.5
+  - 6727760.0
+  - 587831.5
+  - 6728084.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0018.png
+  row: 9
+  col: 18
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587831.5
+  - 6727760.0
+  - 588155.5
+  - 6728084.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0019.png
+  row: 9
+  col: 19
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588155.5
+  - 6727760.0
+  - 588479.5
+  - 6728084.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0020.png
+  row: 9
+  col: 20
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588479.5
+  - 6727760.0
+  - 588803.5
+  - 6728084.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0009_c0022.png
+  row: 9
+  col: 22
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 589127.5
+  - 6727760.0
+  - 589451.5
+  - 6728084.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0025.png
+  row: 9
+  col: 25
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590099.5
+  - 6727760.0
+  - 590423.5
+  - 6728084.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0026.png
+  row: 9
+  col: 26
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590423.5
+  - 6727760.0
+  - 590747.5
+  - 6728084.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0027.png
+  row: 9
+  col: 27
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590747.5
+  - 6727760.0
+  - 591071.5
+  - 6728084.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0009_c0033.png
+  row: 9
+  col: 33
+  bloc:
+  - 296
+  - 3363
+  split: valid
+  bounds:
+  - 592691.5
+  - 6727760.0
+  - 593015.5
+  - 6728084.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0010_c0018.png
+  row: 10
+  col: 18
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587831.5
+  - 6727436.0
+  - 588155.5
+  - 6727760.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0010_c0019.png
+  row: 10
+  col: 19
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588155.5
+  - 6727436.0
+  - 588479.5
+  - 6727760.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0010_c0020.png
+  row: 10
+  col: 20
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588479.5
+  - 6727436.0
+  - 588803.5
+  - 6727760.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0010_c0024.png
+  row: 10
+  col: 24
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 589775.5
+  - 6727436.0
+  - 590099.5
+  - 6727760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0010_c0025.png
+  row: 10
+  col: 25
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590099.5
+  - 6727436.0
+  - 590423.5
+  - 6727760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0010_c0028.png
+  row: 10
+  col: 28
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 591071.5
+  - 6727436.0
+  - 591395.5
+  - 6727760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0011_c0021.png
+  row: 11
+  col: 21
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588803.5
+  - 6727112.0
+  - 589127.5
+  - 6727436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0011_c0024.png
+  row: 11
+  col: 24
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 589775.5
+  - 6727112.0
+  - 590099.5
+  - 6727436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0011_c0025.png
+  row: 11
+  col: 25
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590099.5
+  - 6727112.0
+  - 590423.5
+  - 6727436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0011_c0026.png
+  row: 11
+  col: 26
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590423.5
+  - 6727112.0
+  - 590747.5
+  - 6727436.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0011_c0030.png
+  row: 11
+  col: 30
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 591719.5
+  - 6727112.0
+  - 592043.5
+  - 6727436.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0012_c0016.png
+  row: 12
+  col: 16
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587183.5
+  - 6726788.0
+  - 587507.5
+  - 6727112.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0012_c0017.png
+  row: 12
+  col: 17
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587507.5
+  - 6726788.0
+  - 587831.5
+  - 6727112.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0012_c0028.png
+  row: 12
+  col: 28
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 591071.5
+  - 6726788.0
+  - 591395.5
+  - 6727112.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0012_c0030.png
+  row: 12
+  col: 30
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 591719.5
+  - 6726788.0
+  - 592043.5
+  - 6727112.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0012_c0031.png
+  row: 12
+  col: 31
+  bloc:
+  - 296
+  - 3363
+  split: valid
+  bounds:
+  - 592043.5
+  - 6726788.0
+  - 592367.5
+  - 6727112.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0013_c0018.png
+  row: 13
+  col: 18
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587831.5
+  - 6726464.0
+  - 588155.5
+  - 6726788.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0013_c0019.png
+  row: 13
+  col: 19
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 588155.5
+  - 6726464.0
+  - 588479.5
+  - 6726788.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0013_c0029.png
+  row: 13
+  col: 29
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 591395.5
+  - 6726464.0
+  - 591719.5
+  - 6726788.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0013_c0031.png
+  row: 13
+  col: 31
+  bloc:
+  - 296
+  - 3363
+  split: valid
+  bounds:
+  - 592043.5
+  - 6726464.0
+  - 592367.5
+  - 6726788.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0014_c0017.png
+  row: 14
+  col: 17
+  bloc:
+  - 293
+  - 3363
+  split: train
+  bounds:
+  - 587507.5
+  - 6726140.0
+  - 587831.5
+  - 6726464.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0014_c0022.png
+  row: 14
+  col: 22
+  bloc:
+  - 294
+  - 3363
+  split: train
+  bounds:
+  - 589127.5
+  - 6726140.0
+  - 589451.5
+  - 6726464.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0014_c0027.png
+  row: 14
+  col: 27
+  bloc:
+  - 295
+  - 3363
+  split: train
+  bounds:
+  - 590747.5
+  - 6726140.0
+  - 591071.5
+  - 6726464.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0014_c0031.png
+  row: 14
+  col: 31
+  bloc:
+  - 296
+  - 3363
+  split: valid
+  bounds:
+  - 592043.5
+  - 6726140.0
+  - 592367.5
+  - 6726464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0018.png
+  row: 15
+  col: 18
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587831.5
+  - 6725816.0
+  - 588155.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0019.png
+  row: 15
+  col: 19
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 588155.5
+  - 6725816.0
+  - 588479.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0021.png
+  row: 15
+  col: 21
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 588803.5
+  - 6725816.0
+  - 589127.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0022.png
+  row: 15
+  col: 22
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 589127.5
+  - 6725816.0
+  - 589451.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0025.png
+  row: 15
+  col: 25
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590099.5
+  - 6725816.0
+  - 590423.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0028.png
+  row: 15
+  col: 28
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591071.5
+  - 6725816.0
+  - 591395.5
+  - 6726140.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0015_c0030.png
+  row: 15
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6725816.0
+  - 592043.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0034.png
+  row: 15
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6725816.0
+  - 593339.5
+  - 6726140.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0015_c0035.png
+  row: 15
+  col: 35
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593339.5
+  - 6725816.0
+  - 593663.5
+  - 6726140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0038.png
+  row: 15
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6725816.0
+  - 594635.5
+  - 6726140.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0015_c0046.png
+  row: 15
+  col: 46
+  bloc:
+  - 298
+  - 3362
+  split: test
+  bounds:
+  - 596903.5
+  - 6725816.0
+  - 597227.5
+  - 6726140.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0016_c0018.png
+  row: 16
+  col: 18
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587831.5
+  - 6725492.0
+  - 588155.5
+  - 6725816.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0019.png
+  row: 16
+  col: 19
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 588155.5
+  - 6725492.0
+  - 588479.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0023.png
+  row: 16
+  col: 23
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 589451.5
+  - 6725492.0
+  - 589775.5
+  - 6725816.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0016_c0030.png
+  row: 16
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6725492.0
+  - 592043.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0033.png
+  row: 16
+  col: 33
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592691.5
+  - 6725492.0
+  - 593015.5
+  - 6725816.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0034.png
+  row: 16
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6725492.0
+  - 593339.5
+  - 6725816.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0035.png
+  row: 16
+  col: 35
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593339.5
+  - 6725492.0
+  - 593663.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0036.png
+  row: 16
+  col: 36
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593663.5
+  - 6725492.0
+  - 593987.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0038.png
+  row: 16
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6725492.0
+  - 594635.5
+  - 6725816.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0039.png
+  row: 16
+  col: 39
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594635.5
+  - 6725492.0
+  - 594959.5
+  - 6725816.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0045.png
+  row: 16
+  col: 45
+  bloc:
+  - 298
+  - 3362
+  split: test
+  bounds:
+  - 596579.5
+  - 6725492.0
+  - 596903.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0016_c0047.png
+  row: 16
+  col: 47
+  bloc:
+  - 298
+  - 3362
+  split: test
+  bounds:
+  - 597227.5
+  - 6725492.0
+  - 597551.5
+  - 6725816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0026.png
+  row: 17
+  col: 26
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590423.5
+  - 6725168.0
+  - 590747.5
+  - 6725492.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0017_c0030.png
+  row: 17
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6725168.0
+  - 592043.5
+  - 6725492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0032.png
+  row: 17
+  col: 32
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592367.5
+  - 6725168.0
+  - 592691.5
+  - 6725492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0033.png
+  row: 17
+  col: 33
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592691.5
+  - 6725168.0
+  - 593015.5
+  - 6725492.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0034.png
+  row: 17
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6725168.0
+  - 593339.5
+  - 6725492.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0038.png
+  row: 17
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6725168.0
+  - 594635.5
+  - 6725492.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0039.png
+  row: 17
+  col: 39
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594635.5
+  - 6725168.0
+  - 594959.5
+  - 6725492.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0045.png
+  row: 17
+  col: 45
+  bloc:
+  - 298
+  - 3362
+  split: test
+  bounds:
+  - 596579.5
+  - 6725168.0
+  - 596903.5
+  - 6725492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0017_c0047.png
+  row: 17
+  col: 47
+  bloc:
+  - 298
+  - 3362
+  split: test
+  bounds:
+  - 597227.5
+  - 6725168.0
+  - 597551.5
+  - 6725492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0027.png
+  row: 18
+  col: 27
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590747.5
+  - 6724844.0
+  - 591071.5
+  - 6725168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0028.png
+  row: 18
+  col: 28
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591071.5
+  - 6724844.0
+  - 591395.5
+  - 6725168.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0029.png
+  row: 18
+  col: 29
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591395.5
+  - 6724844.0
+  - 591719.5
+  - 6725168.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0030.png
+  row: 18
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6724844.0
+  - 592043.5
+  - 6725168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0031.png
+  row: 18
+  col: 31
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592043.5
+  - 6724844.0
+  - 592367.5
+  - 6725168.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0032.png
+  row: 18
+  col: 32
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592367.5
+  - 6724844.0
+  - 592691.5
+  - 6725168.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0033.png
+  row: 18
+  col: 33
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592691.5
+  - 6724844.0
+  - 593015.5
+  - 6725168.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0034.png
+  row: 18
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6724844.0
+  - 593339.5
+  - 6725168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0035.png
+  row: 18
+  col: 35
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593339.5
+  - 6724844.0
+  - 593663.5
+  - 6725168.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0036.png
+  row: 18
+  col: 36
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593663.5
+  - 6724844.0
+  - 593987.5
+  - 6725168.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0037.png
+  row: 18
+  col: 37
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 593987.5
+  - 6724844.0
+  - 594311.5
+  - 6725168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0018_c0039.png
+  row: 18
+  col: 39
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594635.5
+  - 6724844.0
+  - 594959.5
+  - 6725168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0014.png
+  row: 19
+  col: 14
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 586535.5
+  - 6724520.0
+  - 586859.5
+  - 6724844.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0015.png
+  row: 19
+  col: 15
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 586859.5
+  - 6724520.0
+  - 587183.5
+  - 6724844.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0016.png
+  row: 19
+  col: 16
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587183.5
+  - 6724520.0
+  - 587507.5
+  - 6724844.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0024.png
+  row: 19
+  col: 24
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 589775.5
+  - 6724520.0
+  - 590099.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0026.png
+  row: 19
+  col: 26
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590423.5
+  - 6724520.0
+  - 590747.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0028.png
+  row: 19
+  col: 28
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591071.5
+  - 6724520.0
+  - 591395.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0029.png
+  row: 19
+  col: 29
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591395.5
+  - 6724520.0
+  - 591719.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0030.png
+  row: 19
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6724520.0
+  - 592043.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0031.png
+  row: 19
+  col: 31
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592043.5
+  - 6724520.0
+  - 592367.5
+  - 6724844.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0032.png
+  row: 19
+  col: 32
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592367.5
+  - 6724520.0
+  - 592691.5
+  - 6724844.0
+  n_annotations: 14
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0033.png
+  row: 19
+  col: 33
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592691.5
+  - 6724520.0
+  - 593015.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0034.png
+  row: 19
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6724520.0
+  - 593339.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0035.png
+  row: 19
+  col: 35
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593339.5
+  - 6724520.0
+  - 593663.5
+  - 6724844.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0036.png
+  row: 19
+  col: 36
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593663.5
+  - 6724520.0
+  - 593987.5
+  - 6724844.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0019_c0038.png
+  row: 19
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6724520.0
+  - 594635.5
+  - 6724844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0014.png
+  row: 20
+  col: 14
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 586535.5
+  - 6724196.0
+  - 586859.5
+  - 6724520.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0016.png
+  row: 20
+  col: 16
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587183.5
+  - 6724196.0
+  - 587507.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0020.png
+  row: 20
+  col: 20
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 588479.5
+  - 6724196.0
+  - 588803.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0023.png
+  row: 20
+  col: 23
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 589451.5
+  - 6724196.0
+  - 589775.5
+  - 6724520.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0024.png
+  row: 20
+  col: 24
+  bloc:
+  - 294
+  - 3362
+  split: train
+  bounds:
+  - 589775.5
+  - 6724196.0
+  - 590099.5
+  - 6724520.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0025.png
+  row: 20
+  col: 25
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590099.5
+  - 6724196.0
+  - 590423.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0026.png
+  row: 20
+  col: 26
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590423.5
+  - 6724196.0
+  - 590747.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0027.png
+  row: 20
+  col: 27
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590747.5
+  - 6724196.0
+  - 591071.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0028.png
+  row: 20
+  col: 28
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591071.5
+  - 6724196.0
+  - 591395.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0029.png
+  row: 20
+  col: 29
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591395.5
+  - 6724196.0
+  - 591719.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0030.png
+  row: 20
+  col: 30
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591719.5
+  - 6724196.0
+  - 592043.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0031.png
+  row: 20
+  col: 31
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592043.5
+  - 6724196.0
+  - 592367.5
+  - 6724520.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0032.png
+  row: 20
+  col: 32
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 592367.5
+  - 6724196.0
+  - 592691.5
+  - 6724520.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0034.png
+  row: 20
+  col: 34
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593015.5
+  - 6724196.0
+  - 593339.5
+  - 6724520.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0035.png
+  row: 20
+  col: 35
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593339.5
+  - 6724196.0
+  - 593663.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0037.png
+  row: 20
+  col: 37
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 593987.5
+  - 6724196.0
+  - 594311.5
+  - 6724520.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0038.png
+  row: 20
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6724196.0
+  - 594635.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0020_c0039.png
+  row: 20
+  col: 39
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594635.5
+  - 6724196.0
+  - 594959.5
+  - 6724520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0012.png
+  row: 21
+  col: 12
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 585887.5
+  - 6723872.0
+  - 586211.5
+  - 6724196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0015.png
+  row: 21
+  col: 15
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 586859.5
+  - 6723872.0
+  - 587183.5
+  - 6724196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0016.png
+  row: 21
+  col: 16
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587183.5
+  - 6723872.0
+  - 587507.5
+  - 6724196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0017.png
+  row: 21
+  col: 17
+  bloc:
+  - 293
+  - 3362
+  split: train
+  bounds:
+  - 587507.5
+  - 6723872.0
+  - 587831.5
+  - 6724196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0025.png
+  row: 21
+  col: 25
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 590099.5
+  - 6723872.0
+  - 590423.5
+  - 6724196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0028.png
+  row: 21
+  col: 28
+  bloc:
+  - 295
+  - 3362
+  split: valid
+  bounds:
+  - 591071.5
+  - 6723872.0
+  - 591395.5
+  - 6724196.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0036.png
+  row: 21
+  col: 36
+  bloc:
+  - 296
+  - 3362
+  split: train
+  bounds:
+  - 593663.5
+  - 6723872.0
+  - 593987.5
+  - 6724196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0037.png
+  row: 21
+  col: 37
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 593987.5
+  - 6723872.0
+  - 594311.5
+  - 6724196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0038.png
+  row: 21
+  col: 38
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594311.5
+  - 6723872.0
+  - 594635.5
+  - 6724196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0021_c0039.png
+  row: 21
+  col: 39
+  bloc:
+  - 297
+  - 3362
+  split: train
+  bounds:
+  - 594635.5
+  - 6723872.0
+  - 594959.5
+  - 6724196.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0013.png
+  row: 22
+  col: 13
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586211.5
+  - 6723548.0
+  - 586535.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0014.png
+  row: 22
+  col: 14
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586535.5
+  - 6723548.0
+  - 586859.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0015.png
+  row: 22
+  col: 15
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586859.5
+  - 6723548.0
+  - 587183.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0016.png
+  row: 22
+  col: 16
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 587183.5
+  - 6723548.0
+  - 587507.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0031.png
+  row: 22
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6723548.0
+  - 592367.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0034.png
+  row: 22
+  col: 34
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593015.5
+  - 6723548.0
+  - 593339.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0035.png
+  row: 22
+  col: 35
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593339.5
+  - 6723548.0
+  - 593663.5
+  - 6723872.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0036.png
+  row: 22
+  col: 36
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593663.5
+  - 6723548.0
+  - 593987.5
+  - 6723872.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0037.png
+  row: 22
+  col: 37
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 593987.5
+  - 6723548.0
+  - 594311.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0038.png
+  row: 22
+  col: 38
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594311.5
+  - 6723548.0
+  - 594635.5
+  - 6723872.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0039.png
+  row: 22
+  col: 39
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594635.5
+  - 6723548.0
+  - 594959.5
+  - 6723872.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0043.png
+  row: 22
+  col: 43
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 595931.5
+  - 6723548.0
+  - 596255.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0044.png
+  row: 22
+  col: 44
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 596255.5
+  - 6723548.0
+  - 596579.5
+  - 6723872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0022_c0045.png
+  row: 22
+  col: 45
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 596579.5
+  - 6723548.0
+  - 596903.5
+  - 6723872.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0013.png
+  row: 23
+  col: 13
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586211.5
+  - 6723224.0
+  - 586535.5
+  - 6723548.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0018.png
+  row: 23
+  col: 18
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 587831.5
+  - 6723224.0
+  - 588155.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0027.png
+  row: 23
+  col: 27
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590747.5
+  - 6723224.0
+  - 591071.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0028.png
+  row: 23
+  col: 28
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591071.5
+  - 6723224.0
+  - 591395.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0031.png
+  row: 23
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6723224.0
+  - 592367.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0034.png
+  row: 23
+  col: 34
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593015.5
+  - 6723224.0
+  - 593339.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0037.png
+  row: 23
+  col: 37
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 593987.5
+  - 6723224.0
+  - 594311.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0038.png
+  row: 23
+  col: 38
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594311.5
+  - 6723224.0
+  - 594635.5
+  - 6723548.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0039.png
+  row: 23
+  col: 39
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594635.5
+  - 6723224.0
+  - 594959.5
+  - 6723548.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0040.png
+  row: 23
+  col: 40
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594959.5
+  - 6723224.0
+  - 595283.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0041.png
+  row: 23
+  col: 41
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 595283.5
+  - 6723224.0
+  - 595607.5
+  - 6723548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0043.png
+  row: 23
+  col: 43
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 595931.5
+  - 6723224.0
+  - 596255.5
+  - 6723548.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0023_c0044.png
+  row: 23
+  col: 44
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 596255.5
+  - 6723224.0
+  - 596579.5
+  - 6723548.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0023_c0045.png
+  row: 23
+  col: 45
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 596579.5
+  - 6723224.0
+  - 596903.5
+  - 6723548.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0013.png
+  row: 24
+  col: 13
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586211.5
+  - 6722900.0
+  - 586535.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0015.png
+  row: 24
+  col: 15
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586859.5
+  - 6722900.0
+  - 587183.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0019.png
+  row: 24
+  col: 19
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 588155.5
+  - 6722900.0
+  - 588479.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0020.png
+  row: 24
+  col: 20
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 588479.5
+  - 6722900.0
+  - 588803.5
+  - 6723224.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0021.png
+  row: 24
+  col: 21
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 588803.5
+  - 6722900.0
+  - 589127.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0022.png
+  row: 24
+  col: 22
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 589127.5
+  - 6722900.0
+  - 589451.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0025.png
+  row: 24
+  col: 25
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590099.5
+  - 6722900.0
+  - 590423.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0028.png
+  row: 24
+  col: 28
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591071.5
+  - 6722900.0
+  - 591395.5
+  - 6723224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0029.png
+  row: 24
+  col: 29
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591395.5
+  - 6722900.0
+  - 591719.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0030.png
+  row: 24
+  col: 30
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591719.5
+  - 6722900.0
+  - 592043.5
+  - 6723224.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0031.png
+  row: 24
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6722900.0
+  - 592367.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0032.png
+  row: 24
+  col: 32
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592367.5
+  - 6722900.0
+  - 592691.5
+  - 6723224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0035.png
+  row: 24
+  col: 35
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593339.5
+  - 6722900.0
+  - 593663.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0038.png
+  row: 24
+  col: 38
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594311.5
+  - 6722900.0
+  - 594635.5
+  - 6723224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0039.png
+  row: 24
+  col: 39
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594635.5
+  - 6722900.0
+  - 594959.5
+  - 6723224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0040.png
+  row: 24
+  col: 40
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594959.5
+  - 6722900.0
+  - 595283.5
+  - 6723224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0024_c0041.png
+  row: 24
+  col: 41
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 595283.5
+  - 6722900.0
+  - 595607.5
+  - 6723224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0016.png
+  row: 25
+  col: 16
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 587183.5
+  - 6722576.0
+  - 587507.5
+  - 6722900.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0024.png
+  row: 25
+  col: 24
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 589775.5
+  - 6722576.0
+  - 590099.5
+  - 6722900.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0026.png
+  row: 25
+  col: 26
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590423.5
+  - 6722576.0
+  - 590747.5
+  - 6722900.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0027.png
+  row: 25
+  col: 27
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590747.5
+  - 6722576.0
+  - 591071.5
+  - 6722900.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0028.png
+  row: 25
+  col: 28
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591071.5
+  - 6722576.0
+  - 591395.5
+  - 6722900.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0029.png
+  row: 25
+  col: 29
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591395.5
+  - 6722576.0
+  - 591719.5
+  - 6722900.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0030.png
+  row: 25
+  col: 30
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591719.5
+  - 6722576.0
+  - 592043.5
+  - 6722900.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0031.png
+  row: 25
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6722576.0
+  - 592367.5
+  - 6722900.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0032.png
+  row: 25
+  col: 32
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592367.5
+  - 6722576.0
+  - 592691.5
+  - 6722900.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0037.png
+  row: 25
+  col: 37
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 593987.5
+  - 6722576.0
+  - 594311.5
+  - 6722900.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0038.png
+  row: 25
+  col: 38
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594311.5
+  - 6722576.0
+  - 594635.5
+  - 6722900.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0025_c0039.png
+  row: 25
+  col: 39
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594635.5
+  - 6722576.0
+  - 594959.5
+  - 6722900.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0016.png
+  row: 26
+  col: 16
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 587183.5
+  - 6722252.0
+  - 587507.5
+  - 6722576.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0024.png
+  row: 26
+  col: 24
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 589775.5
+  - 6722252.0
+  - 590099.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0025.png
+  row: 26
+  col: 25
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590099.5
+  - 6722252.0
+  - 590423.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0026.png
+  row: 26
+  col: 26
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590423.5
+  - 6722252.0
+  - 590747.5
+  - 6722576.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0027.png
+  row: 26
+  col: 27
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590747.5
+  - 6722252.0
+  - 591071.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0029.png
+  row: 26
+  col: 29
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591395.5
+  - 6722252.0
+  - 591719.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0030.png
+  row: 26
+  col: 30
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591719.5
+  - 6722252.0
+  - 592043.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0031.png
+  row: 26
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6722252.0
+  - 592367.5
+  - 6722576.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0032.png
+  row: 26
+  col: 32
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592367.5
+  - 6722252.0
+  - 592691.5
+  - 6722576.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0033.png
+  row: 26
+  col: 33
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592691.5
+  - 6722252.0
+  - 593015.5
+  - 6722576.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0034.png
+  row: 26
+  col: 34
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593015.5
+  - 6722252.0
+  - 593339.5
+  - 6722576.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0035.png
+  row: 26
+  col: 35
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593339.5
+  - 6722252.0
+  - 593663.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0037.png
+  row: 26
+  col: 37
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 593987.5
+  - 6722252.0
+  - 594311.5
+  - 6722576.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0040.png
+  row: 26
+  col: 40
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594959.5
+  - 6722252.0
+  - 595283.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0041.png
+  row: 26
+  col: 41
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 595283.5
+  - 6722252.0
+  - 595607.5
+  - 6722576.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0026_c0043.png
+  row: 26
+  col: 43
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 595931.5
+  - 6722252.0
+  - 596255.5
+  - 6722576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0015.png
+  row: 27
+  col: 15
+  bloc:
+  - 293
+  - 3361
+  split: train
+  bounds:
+  - 586859.5
+  - 6721928.0
+  - 587183.5
+  - 6722252.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0021.png
+  row: 27
+  col: 21
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 588803.5
+  - 6721928.0
+  - 589127.5
+  - 6722252.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0022.png
+  row: 27
+  col: 22
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 589127.5
+  - 6721928.0
+  - 589451.5
+  - 6722252.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0023.png
+  row: 27
+  col: 23
+  bloc:
+  - 294
+  - 3361
+  split: train
+  bounds:
+  - 589451.5
+  - 6721928.0
+  - 589775.5
+  - 6722252.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0026.png
+  row: 27
+  col: 26
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 590423.5
+  - 6721928.0
+  - 590747.5
+  - 6722252.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0028.png
+  row: 27
+  col: 28
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591071.5
+  - 6721928.0
+  - 591395.5
+  - 6722252.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0029.png
+  row: 27
+  col: 29
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591395.5
+  - 6721928.0
+  - 591719.5
+  - 6722252.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0030.png
+  row: 27
+  col: 30
+  bloc:
+  - 295
+  - 3361
+  split: train
+  bounds:
+  - 591719.5
+  - 6721928.0
+  - 592043.5
+  - 6722252.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0031.png
+  row: 27
+  col: 31
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592043.5
+  - 6721928.0
+  - 592367.5
+  - 6722252.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0032.png
+  row: 27
+  col: 32
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592367.5
+  - 6721928.0
+  - 592691.5
+  - 6722252.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0033.png
+  row: 27
+  col: 33
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 592691.5
+  - 6721928.0
+  - 593015.5
+  - 6722252.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0034.png
+  row: 27
+  col: 34
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593015.5
+  - 6721928.0
+  - 593339.5
+  - 6722252.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0035.png
+  row: 27
+  col: 35
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593339.5
+  - 6721928.0
+  - 593663.5
+  - 6722252.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0036.png
+  row: 27
+  col: 36
+  bloc:
+  - 296
+  - 3361
+  split: train
+  bounds:
+  - 593663.5
+  - 6721928.0
+  - 593987.5
+  - 6722252.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0037.png
+  row: 27
+  col: 37
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 593987.5
+  - 6721928.0
+  - 594311.5
+  - 6722252.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0038.png
+  row: 27
+  col: 38
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594311.5
+  - 6721928.0
+  - 594635.5
+  - 6722252.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0039.png
+  row: 27
+  col: 39
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594635.5
+  - 6721928.0
+  - 594959.5
+  - 6722252.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0040.png
+  row: 27
+  col: 40
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 594959.5
+  - 6721928.0
+  - 595283.5
+  - 6722252.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0041.png
+  row: 27
+  col: 41
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 595283.5
+  - 6721928.0
+  - 595607.5
+  - 6722252.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0042.png
+  row: 27
+  col: 42
+  bloc:
+  - 297
+  - 3361
+  split: test
+  bounds:
+  - 595607.5
+  - 6721928.0
+  - 595931.5
+  - 6722252.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 41_blois_r0027_c0047.png
+  row: 27
+  col: 47
+  bloc:
+  - 298
+  - 3361
+  split: train
+  bounds:
+  - 597227.5
+  - 6721928.0
+  - 597551.5
+  - 6722252.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0028_c0018.png
+  row: 28
+  col: 18
+  bloc:
+  - 293
+  - 3360
+  split: test
+  bounds:
+  - 587831.5
+  - 6721604.0
+  - 588155.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0021.png
+  row: 28
+  col: 21
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 588803.5
+  - 6721604.0
+  - 589127.5
+  - 6721928.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0023.png
+  row: 28
+  col: 23
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589451.5
+  - 6721604.0
+  - 589775.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0024.png
+  row: 28
+  col: 24
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589775.5
+  - 6721604.0
+  - 590099.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0025.png
+  row: 28
+  col: 25
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 590099.5
+  - 6721604.0
+  - 590423.5
+  - 6721928.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0030.png
+  row: 28
+  col: 30
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 591719.5
+  - 6721604.0
+  - 592043.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0031.png
+  row: 28
+  col: 31
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592043.5
+  - 6721604.0
+  - 592367.5
+  - 6721928.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0032.png
+  row: 28
+  col: 32
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592367.5
+  - 6721604.0
+  - 592691.5
+  - 6721928.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0034.png
+  row: 28
+  col: 34
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 593015.5
+  - 6721604.0
+  - 593339.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0036.png
+  row: 28
+  col: 36
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 593663.5
+  - 6721604.0
+  - 593987.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0037.png
+  row: 28
+  col: 37
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 593987.5
+  - 6721604.0
+  - 594311.5
+  - 6721928.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+- nom: 41_blois_r0028_c0042.png
+  row: 28
+  col: 42
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595607.5
+  - 6721604.0
+  - 595931.5
+  - 6721928.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0020.png
+  row: 29
+  col: 20
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 588479.5
+  - 6721280.0
+  - 588803.5
+  - 6721604.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0021.png
+  row: 29
+  col: 21
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 588803.5
+  - 6721280.0
+  - 589127.5
+  - 6721604.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0022.png
+  row: 29
+  col: 22
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589127.5
+  - 6721280.0
+  - 589451.5
+  - 6721604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0025.png
+  row: 29
+  col: 25
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 590099.5
+  - 6721280.0
+  - 590423.5
+  - 6721604.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0030.png
+  row: 29
+  col: 30
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 591719.5
+  - 6721280.0
+  - 592043.5
+  - 6721604.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0029_c0031.png
+  row: 29
+  col: 31
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592043.5
+  - 6721280.0
+  - 592367.5
+  - 6721604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0032.png
+  row: 29
+  col: 32
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592367.5
+  - 6721280.0
+  - 592691.5
+  - 6721604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0041.png
+  row: 29
+  col: 41
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595283.5
+  - 6721280.0
+  - 595607.5
+  - 6721604.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0042.png
+  row: 29
+  col: 42
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595607.5
+  - 6721280.0
+  - 595931.5
+  - 6721604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0029_c0043.png
+  row: 29
+  col: 43
+  bloc:
+  - 298
+  - 3360
+  split: train
+  bounds:
+  - 595931.5
+  - 6721280.0
+  - 596255.5
+  - 6721604.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0030_c0014.png
+  row: 30
+  col: 14
+  bloc:
+  - 293
+  - 3360
+  split: test
+  bounds:
+  - 586535.5
+  - 6720956.0
+  - 586859.5
+  - 6721280.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0030_c0031.png
+  row: 30
+  col: 31
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592043.5
+  - 6720956.0
+  - 592367.5
+  - 6721280.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0030_c0040.png
+  row: 30
+  col: 40
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594959.5
+  - 6720956.0
+  - 595283.5
+  - 6721280.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0030_c0041.png
+  row: 30
+  col: 41
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595283.5
+  - 6720956.0
+  - 595607.5
+  - 6721280.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0030_c0042.png
+  row: 30
+  col: 42
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595607.5
+  - 6720956.0
+  - 595931.5
+  - 6721280.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0030_c0043.png
+  row: 30
+  col: 43
+  bloc:
+  - 298
+  - 3360
+  split: train
+  bounds:
+  - 595931.5
+  - 6720956.0
+  - 596255.5
+  - 6721280.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0031_c0012.png
+  row: 31
+  col: 12
+  bloc:
+  - 293
+  - 3360
+  split: test
+  bounds:
+  - 585887.5
+  - 6720632.0
+  - 586211.5
+  - 6720956.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0031_c0024.png
+  row: 31
+  col: 24
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589775.5
+  - 6720632.0
+  - 590099.5
+  - 6720956.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0031_c0036.png
+  row: 31
+  col: 36
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 593663.5
+  - 6720632.0
+  - 593987.5
+  - 6720956.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0031_c0038.png
+  row: 31
+  col: 38
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594311.5
+  - 6720632.0
+  - 594635.5
+  - 6720956.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0031_c0039.png
+  row: 31
+  col: 39
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594635.5
+  - 6720632.0
+  - 594959.5
+  - 6720956.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0031_c0042.png
+  row: 31
+  col: 42
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595607.5
+  - 6720632.0
+  - 595931.5
+  - 6720956.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0031_c0043.png
+  row: 31
+  col: 43
+  bloc:
+  - 298
+  - 3360
+  split: train
+  bounds:
+  - 595931.5
+  - 6720632.0
+  - 596255.5
+  - 6720956.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0022.png
+  row: 32
+  col: 22
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589127.5
+  - 6720308.0
+  - 589451.5
+  - 6720632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0029.png
+  row: 32
+  col: 29
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 591395.5
+  - 6720308.0
+  - 591719.5
+  - 6720632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0032.png
+  row: 32
+  col: 32
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 592367.5
+  - 6720308.0
+  - 592691.5
+  - 6720632.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0032_c0036.png
+  row: 32
+  col: 36
+  bloc:
+  - 296
+  - 3360
+  split: train
+  bounds:
+  - 593663.5
+  - 6720308.0
+  - 593987.5
+  - 6720632.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0038.png
+  row: 32
+  col: 38
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594311.5
+  - 6720308.0
+  - 594635.5
+  - 6720632.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0039.png
+  row: 32
+  col: 39
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594635.5
+  - 6720308.0
+  - 594959.5
+  - 6720632.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0040.png
+  row: 32
+  col: 40
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594959.5
+  - 6720308.0
+  - 595283.5
+  - 6720632.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0041.png
+  row: 32
+  col: 41
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595283.5
+  - 6720308.0
+  - 595607.5
+  - 6720632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0043.png
+  row: 32
+  col: 43
+  bloc:
+  - 298
+  - 3360
+  split: train
+  bounds:
+  - 595931.5
+  - 6720308.0
+  - 596255.5
+  - 6720632.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0032_c0044.png
+  row: 32
+  col: 44
+  bloc:
+  - 298
+  - 3360
+  split: train
+  bounds:
+  - 596255.5
+  - 6720308.0
+  - 596579.5
+  - 6720632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0013.png
+  row: 33
+  col: 13
+  bloc:
+  - 293
+  - 3360
+  split: test
+  bounds:
+  - 586211.5
+  - 6719984.0
+  - 586535.5
+  - 6720308.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0033_c0022.png
+  row: 33
+  col: 22
+  bloc:
+  - 294
+  - 3360
+  split: train
+  bounds:
+  - 589127.5
+  - 6719984.0
+  - 589451.5
+  - 6720308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0028.png
+  row: 33
+  col: 28
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 591071.5
+  - 6719984.0
+  - 591395.5
+  - 6720308.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0029.png
+  row: 33
+  col: 29
+  bloc:
+  - 295
+  - 3360
+  split: train
+  bounds:
+  - 591395.5
+  - 6719984.0
+  - 591719.5
+  - 6720308.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0037.png
+  row: 33
+  col: 37
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 593987.5
+  - 6719984.0
+  - 594311.5
+  - 6720308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0038.png
+  row: 33
+  col: 38
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594311.5
+  - 6719984.0
+  - 594635.5
+  - 6720308.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0039.png
+  row: 33
+  col: 39
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594635.5
+  - 6719984.0
+  - 594959.5
+  - 6720308.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0040.png
+  row: 33
+  col: 40
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 594959.5
+  - 6719984.0
+  - 595283.5
+  - 6720308.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0041.png
+  row: 33
+  col: 41
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595283.5
+  - 6719984.0
+  - 595607.5
+  - 6720308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0033_c0042.png
+  row: 33
+  col: 42
+  bloc:
+  - 297
+  - 3360
+  split: valid
+  bounds:
+  - 595607.5
+  - 6719984.0
+  - 595931.5
+  - 6720308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0034_c0019.png
+  row: 34
+  col: 19
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 588155.5
+  - 6719660.0
+  - 588479.5
+  - 6719984.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0034_c0023.png
+  row: 34
+  col: 23
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 589451.5
+  - 6719660.0
+  - 589775.5
+  - 6719984.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0034_c0029.png
+  row: 34
+  col: 29
+  bloc:
+  - 295
+  - 3359
+  split: train
+  bounds:
+  - 591395.5
+  - 6719660.0
+  - 591719.5
+  - 6719984.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0034_c0030.png
+  row: 34
+  col: 30
+  bloc:
+  - 295
+  - 3359
+  split: train
+  bounds:
+  - 591719.5
+  - 6719660.0
+  - 592043.5
+  - 6719984.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0034_c0039.png
+  row: 34
+  col: 39
+  bloc:
+  - 297
+  - 3359
+  split: valid
+  bounds:
+  - 594635.5
+  - 6719660.0
+  - 594959.5
+  - 6719984.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0034_c0040.png
+  row: 34
+  col: 40
+  bloc:
+  - 297
+  - 3359
+  split: valid
+  bounds:
+  - 594959.5
+  - 6719660.0
+  - 595283.5
+  - 6719984.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 41_blois_r0035_c0028.png
+  row: 35
+  col: 28
+  bloc:
+  - 295
+  - 3359
+  split: train
+  bounds:
+  - 591071.5
+  - 6719336.0
+  - 591395.5
+  - 6719660.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0036_c0019.png
+  row: 36
+  col: 19
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 588155.5
+  - 6719012.0
+  - 588479.5
+  - 6719336.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0036_c0022.png
+  row: 36
+  col: 22
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 589127.5
+  - 6719012.0
+  - 589451.5
+  - 6719336.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 41_blois_r0036_c0038.png
+  row: 36
+  col: 38
+  bloc:
+  - 297
+  - 3359
+  split: valid
+  bounds:
+  - 594311.5
+  - 6719012.0
+  - 594635.5
+  - 6719336.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0037_c0023.png
+  row: 37
+  col: 23
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 589451.5
+  - 6718688.0
+  - 589775.5
+  - 6719012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 41_blois_r0037_c0042.png
+  row: 37
+  col: 42
+  bloc:
+  - 297
+  - 3359
+  split: valid
+  bounds:
+  - 595607.5
+  - 6718688.0
+  - 595931.5
+  - 6719012.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0038_c0022.png
+  row: 38
+  col: 22
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 589127.5
+  - 6718364.0
+  - 589451.5
+  - 6718688.0
+  n_annotations: 0
+  classes: []
+- nom: 41_blois_r0038_c0023.png
+  row: 38
+  col: 23
+  bloc:
+  - 294
+  - 3359
+  split: train
+  bounds:
+  - 589451.5
+  - 6718364.0
+  - 589775.5
+  - 6718688.0
+  n_annotations: 0
+  classes: []

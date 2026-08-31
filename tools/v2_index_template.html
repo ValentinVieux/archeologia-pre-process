@@ -169,7 +169,7 @@
   <section id="modeles">
     <span class="eyebrow">Production</span>
     <h2>Modèles entraînés</h2>
-    <p class="sub">Registre <code>modeles.yaml</code> à la racine (source : base Notion) — quel modèle a appris sur quelles zones.</p>
+    <p class="sub">Registre <code>modeles.yaml</code> à la racine (régénéré par <code>tableau_modeles.py --registre</code> depuis les évals outillées) — quel modèle a appris sur quelles zones. <a href="../../model-training/index.html">→ dashboard des métriques (model-training)</a></p>
     <div id="modeles-detail"></div>
   </section>
 
@@ -485,6 +485,7 @@ document.getElementById("modeles-detail").innerHTML = (D.modeles || []).length
         <span class="sub">${esc(mo.architecture || "")} · ${esc(mo.tache || "")}</span>
       </div>
       <div class="sub" style="margin-top:4px">entités : ${esc(mo.entites || "—")}</div>
+      ${mo.evaluation && mo.evaluation.f1 != null ? `<div class="sub" style="margin-top:4px">éval outillée : F1 ${esc(String(mo.evaluation.f1))} @ ${esc(String(mo.evaluation.seuil))} · AP50 ${esc(String(mo.evaluation.ap50))} · ${esc(mo.evaluation.date || "")}</div>` : ""}
       <div style="margin-top:6px">zones d'entraînement :
         ${(mo.zones || []).map(z => `<a class="chip tag" href="#z-${esc(z)}">${esc(z)}</a>`).join("")}</div>
       ${mo.notes ? `<div class="sub" style="margin-top:4px">${esc(mo.notes)}</div>` : ""}

@@ -1,0 +1,218 @@
+dataset: enclos_ie_boyne_valley_csl648_v1
+zone: irlande/ie_boyne_valley
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_boyne_valley_ld648_v1
+  gpkg: D:/veille_irlande/annotations/boyne_valley_annotations_v1.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_boyne_valley.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_boyne_valley
+grille:
+  origine:
+  - 64277.0
+  - 7447500.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 8
+  valid:
+    enclos: 5
+  test:
+    enclos: 1
+hashes_sha1:
+  train: b9f75995ab0ade772dbf23a159484d8e38d0779d
+  valid: 9fa694016dca432fbd9e84e19ef5579ec2e183c0
+  test: 146decf55104a503d022f52a84abde868299bb80
+tuiles:
+- nom: ie_boyne_valley_r0008_c0010.png
+  row: 8
+  col: 10
+  bloc:
+  - 35
+  - 3720
+  split: train
+  bounds:
+  - 70757.0
+  - 7441668.0
+  - 71405.0
+  - 7442316.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0010_c0009.png
+  row: 10
+  col: 9
+  bloc:
+  - 35
+  - 3720
+  split: train
+  bounds:
+  - 70109.0
+  - 7440372.0
+  - 70757.0
+  - 7441020.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0010_c0014.png
+  row: 10
+  col: 14
+  bloc:
+  - 36
+  - 3720
+  split: test
+  bounds:
+  - 73349.0
+  - 7440372.0
+  - 73997.0
+  - 7441020.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0011_c0010.png
+  row: 11
+  col: 10
+  bloc:
+  - 35
+  - 3720
+  split: train
+  bounds:
+  - 70757.0
+  - 7439724.0
+  - 71405.0
+  - 7440372.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0012_c0008.png
+  row: 12
+  col: 8
+  bloc:
+  - 34
+  - 3719
+  split: train
+  bounds:
+  - 69461.0
+  - 7439076.0
+  - 70109.0
+  - 7439724.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0012_c0011.png
+  row: 12
+  col: 11
+  bloc:
+  - 35
+  - 3719
+  split: valid
+  bounds:
+  - 71405.0
+  - 7439076.0
+  - 72053.0
+  - 7439724.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0013_c0010.png
+  row: 13
+  col: 10
+  bloc:
+  - 35
+  - 3719
+  split: valid
+  bounds:
+  - 70757.0
+  - 7438428.0
+  - 71405.0
+  - 7439076.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0013_c0011.png
+  row: 13
+  col: 11
+  bloc:
+  - 35
+  - 3719
+  split: valid
+  bounds:
+  - 71405.0
+  - 7438428.0
+  - 72053.0
+  - 7439076.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0016_c0018.png
+  row: 16
+  col: 18
+  bloc:
+  - 38
+  - 3718
+  split: train
+  bounds:
+  - 75941.0
+  - 7436484.0
+  - 76589.0
+  - 7437132.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0016_c0019.png
+  row: 16
+  col: 19
+  bloc:
+  - 38
+  - 3718
+  split: train
+  bounds:
+  - 76589.0
+  - 7436484.0
+  - 77237.0
+  - 7437132.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_boyne_valley_r0017_c0020.png
+  row: 17
+  col: 20
+  bloc:
+  - 38
+  - 3718
+  split: train
+  bounds:
+  - 77237.0
+  - 7435836.0
+  - 77885.0
+  - 7436484.0
+  n_annotations: 0
+  classes: []
+repeint:
+  source_dataset: enclos_ie_boyne_valley_ld648_v1
+  variante: csl
+  canaux: R:cvat_combined G:slrm_r10_e0.5 B:ld_v1
+  mnt:
+  - D:\veille_irlande\dalles\mnt_boyne_valley_mosaique\mnt_boyne_valley_mosaique.tif
+  ld: D:\veille_irlande\indices\ld\ld_boyne_valley.tif
+  date: '2026-08-20'

@@ -1,0 +1,762 @@
+dataset: enclos_ie_kerry_ld648_v1
+zone: irlande/ie_kerry
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_kerry_ld648_v1
+  gpkg: D:/veille_irlande/annotations/kerry_annotations_v1.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_kerry.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_kerry
+grille:
+  origine:
+  - -167516.0
+  - 7312465.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 39
+  valid:
+    enclos: 14
+  test:
+    enclos: 6
+hashes_sha1:
+  train: 741dc7aca56dce7e8ab6543cf4b43b9e4a48e26f
+  valid: 791922222c45cc245493e24dea350d087ac9c39e
+  test: f792e6eee6cf9f144f8b5a9a6630af5b0659d652
+tuiles:
+- nom: ie_kerry_r0003_c0013.png
+  row: 3
+  col: 13
+  bloc:
+  - -80
+  - 3655
+  split: train
+  bounds:
+  - -159092.0
+  - 7309873.0
+  - -158444.0
+  - 7310521.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0003_c0014.png
+  row: 3
+  col: 14
+  bloc:
+  - -80
+  - 3655
+  split: train
+  bounds:
+  - -158444.0
+  - 7309873.0
+  - -157796.0
+  - 7310521.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0003_c0015.png
+  row: 3
+  col: 15
+  bloc:
+  - -79
+  - 3655
+  split: train
+  bounds:
+  - -157796.0
+  - 7309873.0
+  - -157148.0
+  - 7310521.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0004_c0011.png
+  row: 4
+  col: 11
+  bloc:
+  - -81
+  - 3654
+  split: train
+  bounds:
+  - -160388.0
+  - 7309225.0
+  - -159740.0
+  - 7309873.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0004_c0013.png
+  row: 4
+  col: 13
+  bloc:
+  - -80
+  - 3654
+  split: test
+  bounds:
+  - -159092.0
+  - 7309225.0
+  - -158444.0
+  - 7309873.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0004_c0014.png
+  row: 4
+  col: 14
+  bloc:
+  - -80
+  - 3654
+  split: test
+  bounds:
+  - -158444.0
+  - 7309225.0
+  - -157796.0
+  - 7309873.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0004_c0016.png
+  row: 4
+  col: 16
+  bloc:
+  - -79
+  - 3654
+  split: train
+  bounds:
+  - -157148.0
+  - 7309225.0
+  - -156500.0
+  - 7309873.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0004_c0017.png
+  row: 4
+  col: 17
+  bloc:
+  - -79
+  - 3654
+  split: train
+  bounds:
+  - -156500.0
+  - 7309225.0
+  - -155852.0
+  - 7309873.0
+  n_annotations: 0
+  classes: []
+- nom: ie_kerry_r0006_c0010.png
+  row: 6
+  col: 10
+  bloc:
+  - -81
+  - 3654
+  split: train
+  bounds:
+  - -161036.0
+  - 7307929.0
+  - -160388.0
+  - 7308577.0
+  n_annotations: 0
+  classes: []
+- nom: ie_kerry_r0006_c0013.png
+  row: 6
+  col: 13
+  bloc:
+  - -80
+  - 3654
+  split: test
+  bounds:
+  - -159092.0
+  - 7307929.0
+  - -158444.0
+  - 7308577.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0006_c0018.png
+  row: 6
+  col: 18
+  bloc:
+  - -78
+  - 3654
+  split: test
+  bounds:
+  - -155852.0
+  - 7307929.0
+  - -155204.0
+  - 7308577.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0006_c0019.png
+  row: 6
+  col: 19
+  bloc:
+  - -78
+  - 3654
+  split: test
+  bounds:
+  - -155204.0
+  - 7307929.0
+  - -154556.0
+  - 7308577.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0007_c0015.png
+  row: 7
+  col: 15
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -157796.0
+  - 7307281.0
+  - -157148.0
+  - 7307929.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0007_c0016.png
+  row: 7
+  col: 16
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -157148.0
+  - 7307281.0
+  - -156500.0
+  - 7307929.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0007_c0017.png
+  row: 7
+  col: 17
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -156500.0
+  - 7307281.0
+  - -155852.0
+  - 7307929.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0007_c0018.png
+  row: 7
+  col: 18
+  bloc:
+  - -78
+  - 3653
+  split: valid
+  bounds:
+  - -155852.0
+  - 7307281.0
+  - -155204.0
+  - 7307929.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0008_c0015.png
+  row: 8
+  col: 15
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -157796.0
+  - 7306633.0
+  - -157148.0
+  - 7307281.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0008_c0017.png
+  row: 8
+  col: 17
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -156500.0
+  - 7306633.0
+  - -155852.0
+  - 7307281.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0008_c0018.png
+  row: 8
+  col: 18
+  bloc:
+  - -78
+  - 3653
+  split: valid
+  bounds:
+  - -155852.0
+  - 7306633.0
+  - -155204.0
+  - 7307281.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0008_c0019.png
+  row: 8
+  col: 19
+  bloc:
+  - -78
+  - 3653
+  split: valid
+  bounds:
+  - -155204.0
+  - 7306633.0
+  - -154556.0
+  - 7307281.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0009_c0012.png
+  row: 9
+  col: 12
+  bloc:
+  - -80
+  - 3653
+  split: train
+  bounds:
+  - -159740.0
+  - 7305985.0
+  - -159092.0
+  - 7306633.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0009_c0015.png
+  row: 9
+  col: 15
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -157796.0
+  - 7305985.0
+  - -157148.0
+  - 7306633.0
+  n_annotations: 0
+  classes: []
+- nom: ie_kerry_r0009_c0017.png
+  row: 9
+  col: 17
+  bloc:
+  - -79
+  - 3653
+  split: train
+  bounds:
+  - -156500.0
+  - 7305985.0
+  - -155852.0
+  - 7306633.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0010_c0013.png
+  row: 10
+  col: 13
+  bloc:
+  - -80
+  - 3652
+  split: train
+  bounds:
+  - -159092.0
+  - 7305337.0
+  - -158444.0
+  - 7305985.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0010_c0014.png
+  row: 10
+  col: 14
+  bloc:
+  - -80
+  - 3652
+  split: train
+  bounds:
+  - -158444.0
+  - 7305337.0
+  - -157796.0
+  - 7305985.0
+  n_annotations: 0
+  classes: []
+- nom: ie_kerry_r0011_c0031.png
+  row: 11
+  col: 31
+  bloc:
+  - -74
+  - 3652
+  split: train
+  bounds:
+  - -147428.0
+  - 7304689.0
+  - -146780.0
+  - 7305337.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0011_c0032.png
+  row: 11
+  col: 32
+  bloc:
+  - -74
+  - 3652
+  split: train
+  bounds:
+  - -146780.0
+  - 7304689.0
+  - -146132.0
+  - 7305337.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0011_c0034.png
+  row: 11
+  col: 34
+  bloc:
+  - -73
+  - 3652
+  split: train
+  bounds:
+  - -145484.0
+  - 7304689.0
+  - -144836.0
+  - 7305337.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0012_c0032.png
+  row: 12
+  col: 32
+  bloc:
+  - -74
+  - 3652
+  split: train
+  bounds:
+  - -146780.0
+  - 7304041.0
+  - -146132.0
+  - 7304689.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0012_c0033.png
+  row: 12
+  col: 33
+  bloc:
+  - -73
+  - 3652
+  split: train
+  bounds:
+  - -146132.0
+  - 7304041.0
+  - -145484.0
+  - 7304689.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0013_c0015.png
+  row: 13
+  col: 15
+  bloc:
+  - -79
+  - 3651
+  split: train
+  bounds:
+  - -157796.0
+  - 7303393.0
+  - -157148.0
+  - 7304041.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0013_c0030.png
+  row: 13
+  col: 30
+  bloc:
+  - -74
+  - 3651
+  split: valid
+  bounds:
+  - -148076.0
+  - 7303393.0
+  - -147428.0
+  - 7304041.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0013_c0031.png
+  row: 13
+  col: 31
+  bloc:
+  - -74
+  - 3651
+  split: valid
+  bounds:
+  - -147428.0
+  - 7303393.0
+  - -146780.0
+  - 7304041.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0014_c0015.png
+  row: 14
+  col: 15
+  bloc:
+  - -79
+  - 3651
+  split: train
+  bounds:
+  - -157796.0
+  - 7302745.0
+  - -157148.0
+  - 7303393.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0014_c0018.png
+  row: 14
+  col: 18
+  bloc:
+  - -78
+  - 3651
+  split: train
+  bounds:
+  - -155852.0
+  - 7302745.0
+  - -155204.0
+  - 7303393.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0014_c0021.png
+  row: 14
+  col: 21
+  bloc:
+  - -77
+  - 3651
+  split: valid
+  bounds:
+  - -153908.0
+  - 7302745.0
+  - -153260.0
+  - 7303393.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0014_c0024.png
+  row: 14
+  col: 24
+  bloc:
+  - -76
+  - 3651
+  split: train
+  bounds:
+  - -151964.0
+  - 7302745.0
+  - -151316.0
+  - 7303393.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0014_c0032.png
+  row: 14
+  col: 32
+  bloc:
+  - -74
+  - 3651
+  split: valid
+  bounds:
+  - -146780.0
+  - 7302745.0
+  - -146132.0
+  - 7303393.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0015_c0019.png
+  row: 15
+  col: 19
+  bloc:
+  - -78
+  - 3651
+  split: train
+  bounds:
+  - -155204.0
+  - 7302097.0
+  - -154556.0
+  - 7302745.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0015_c0028.png
+  row: 15
+  col: 28
+  bloc:
+  - -75
+  - 3651
+  split: train
+  bounds:
+  - -149372.0
+  - 7302097.0
+  - -148724.0
+  - 7302745.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0015_c0029.png
+  row: 15
+  col: 29
+  bloc:
+  - -75
+  - 3651
+  split: train
+  bounds:
+  - -148724.0
+  - 7302097.0
+  - -148076.0
+  - 7302745.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0015_c0031.png
+  row: 15
+  col: 31
+  bloc:
+  - -74
+  - 3651
+  split: valid
+  bounds:
+  - -147428.0
+  - 7302097.0
+  - -146780.0
+  - 7302745.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0015_c0032.png
+  row: 15
+  col: 32
+  bloc:
+  - -74
+  - 3651
+  split: valid
+  bounds:
+  - -146780.0
+  - 7302097.0
+  - -146132.0
+  - 7302745.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0016_c0029.png
+  row: 16
+  col: 29
+  bloc:
+  - -75
+  - 3650
+  split: train
+  bounds:
+  - -148724.0
+  - 7301449.0
+  - -148076.0
+  - 7302097.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0016_c0030.png
+  row: 16
+  col: 30
+  bloc:
+  - -74
+  - 3650
+  split: train
+  bounds:
+  - -148076.0
+  - 7301449.0
+  - -147428.0
+  - 7302097.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0016_c0031.png
+  row: 16
+  col: 31
+  bloc:
+  - -74
+  - 3650
+  split: train
+  bounds:
+  - -147428.0
+  - 7301449.0
+  - -146780.0
+  - 7302097.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_kerry_r0017_c0026.png
+  row: 17
+  col: 26
+  bloc:
+  - -76
+  - 3650
+  split: valid
+  bounds:
+  - -150668.0
+  - 7300801.0
+  - -150020.0
+  - 7301449.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_kerry_r0018_c0026.png
+  row: 18
+  col: 26
+  bloc:
+  - -76
+  - 3650
+  split: valid
+  bounds:
+  - -150668.0
+  - 7300153.0
+  - -150020.0
+  - 7300801.0
+  n_annotations: 2
+  classes:
+  - enclos

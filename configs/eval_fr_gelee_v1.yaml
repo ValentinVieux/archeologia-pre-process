@@ -1,0 +1,94 @@
+# EVAL FRANCAISE GELEE - enclos (2026-08-16). Les splits valid/test du corpus
+# enclos_fr_648_v1 (seed 42, blocs spatiaux 2 km) sont FIGES : jamais re-tires.
+# Toute extension de GT va en TRAIN uniquement. Les 4 bras du run 2 (zero-shot,
+# transfert pur, graduel, temoin COCO) se jugent exclusivement sur ces splits.
+gele_le: '2026-08-16'
+seed: 42
+corpus: enclos_fr_648_v1
+images:
+  valid:
+  - bretagne_r0008_c0076.png
+  - bretagne_r0008_c0079.png
+  - bretagne_r0009_c0076.png
+  - bretagne_r0014_c0083.png
+  - bretagne_r0028_c0066.png
+  - bretagne_r0030_c0066.png
+  - bretagne_r0050_c0111.png
+  - bretagne_r0050_c0112.png
+  - bretagne_r0063_c0265.png
+  - bretagne_r0079_c0342.png
+  - bretagne_r0080_c0344.png
+  - bretagne_r0081_c0344.png
+  - bretagne_r0081_c0345.png
+  - bretagne_r0082_c0344.png
+  - bretagne_r0083_c0344.png
+  - bretagne_r0110_c0314.png
+  - bretagne_r0111_c0311.png
+  - bretagne_r0111_c0312.png
+  - bretagne_r0114_c0298.png
+  - bretagne_r0116_c0299.png
+  - bretagne_r0116_c0300.png
+  - bretagne_r0118_c0213.png
+  - bretagne_r0119_c0314.png
+  - bretagne_r0119_c0315.png
+  - bretagne_r0120_c0213.png
+  - bretagne_r0120_c0314.png
+  - bretagne_r0120_c0315.png
+  - bretagne_r0124_c0268.png
+  - bretagne_r0124_c0269.png
+  - bretagne_r0125_c0300.png
+  - bretagne_r0128_c0314.png
+  - bretagne_r0129_c0313.png
+  - bretagne_r0135_c0001.png
+  - bretagne_r0164_c0259.png
+  - bretagne_r0164_c0260.png
+  - fontainebleau_r0002_c0003.png
+  - fontainebleau_r0002_c0004.png
+  - fontainebleau_r0003_c0005.png
+  - fontainebleau_r0004_c0002.png
+  - fontainebleau_r0020_c0002.png
+  - rambouillet_r0001_c0006.png
+  - rambouillet_r0002_c0005.png
+  - rambouillet_r0002_c0006.png
+  - rambouillet_r0002_c0013.png
+  - rambouillet_r0011_c0020.png
+  - rambouillet_r0020_c0012.png
+  - rambouillet_r0026_c0027.png
+  - rambouillet_r0026_c0028.png
+  - rambouillet_r0027_c0028.png
+  - saint_germain_r0005_c0011.png
+  - saint_germain_r0007_c0010.png
+  - saint_germain_r0007_c0011.png
+  test:
+  - bretagne_r0023_c0065.png
+  - bretagne_r0025_c0074.png
+  - bretagne_r0026_c0074.png
+  - bretagne_r0047_c0081.png
+  - bretagne_r0048_c0080.png
+  - bretagne_r0049_c0080.png
+  - bretagne_r0084_c0341.png
+  - bretagne_r0084_c0342.png
+  - bretagne_r0084_c0343.png
+  - bretagne_r0085_c0341.png
+  - bretagne_r0085_c0342.png
+  - bretagne_r0085_c0343.png
+  - bretagne_r0086_c0341.png
+  - bretagne_r0086_c0342.png
+  - bretagne_r0086_c0343.png
+  - bretagne_r0111_c0314.png
+  - bretagne_r0112_c0314.png
+  - bretagne_r0124_c0319.png
+  - bretagne_r0128_c0241.png
+  - bretagne_r0129_c0241.png
+  - bretagne_r0148_c0303.png
+  - bretagne_r0149_c0303.png
+  - fontainebleau_r0001_c0003.png
+  - fontainebleau_r0001_c0004.png
+  - rambouillet_r0010_c0012.png
+  - rambouillet_r0011_c0011.png
+  - rambouillet_r0019_c0005.png
+  - rambouillet_r0019_c0006.png
+  - rambouillet_r0020_c0005.png
+  - rambouillet_r0020_c0006.png
+  - saint_germain_r0002_c0015.png
+  - saint_germain_r0003_c0013.png

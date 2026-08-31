@@ -301,6 +301,9 @@ def charger_config(chemin):
         sys.exit("config invalide : tuile_px doit être un entier > 0")
     for cle in ("raster", "gpkg"):
         _refuser_drive(cfg[cle], cle)
+        if "<" in str(cfg[cle]):
+            sys.exit(f"config invalide : {cle} = {cfg[cle]} — placeholder "
+                     "<copie locale> à remplacer par le chemin local réel")
     for nom, spec in cfg["couches"].items():
         if not isinstance(spec, dict) or ("classe" not in spec
                                           and not spec.get("ignorer")):

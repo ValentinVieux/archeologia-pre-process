@@ -6,6 +6,8 @@
 #         datasets [--out <dossier>]
 corpus: enclos_fr_648_csl_v1
 classes: [enclos_circulaire]
+gsd_m: 1.0
+rvt: LD
 fusions: {}
 datasets:
   - enclos_fr_bretagne_csl648_v1

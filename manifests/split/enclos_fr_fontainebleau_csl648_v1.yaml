@@ -1,0 +1,339 @@
+dataset: enclos_fr_fontainebleau_csl648_v1
+zone: ile_de_france/77_fontainebleau
+seed: 42
+genere_le: '2026-08-16'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    emprises:
+      classe: enclos_circulaire
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_fr_fontainebleau_ld648_v1
+  gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/fontainebleau_emprises.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/corpus_enclos_fr/ld/fontainebleau_ld_1m.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: ile_de_france/77_fontainebleau
+grille:
+  origine:
+  - 670429.0
+  - 6823222.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos_circulaire: 10
+  valid:
+    enclos_circulaire: 5
+  test:
+    enclos_circulaire: 2
+hashes_sha1:
+  train: fda8685af8f824af8dacf61121ab22d25aef402f
+  valid: c2e5aec646aa49eb0dcde0937b9d79ebd8538842
+  test: 011b3c096b0ad2c0d56df19b60cba597c6bb5837
+tuiles:
+- nom: fontainebleau_r0001_c0003.png
+  row: 1
+  col: 3
+  bloc:
+  - 336
+  - 3411
+  split: test
+  bounds:
+  - 672373.0
+  - 6821926.0
+  - 673021.0
+  - 6822574.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0001_c0004.png
+  row: 1
+  col: 4
+  bloc:
+  - 336
+  - 3411
+  split: test
+  bounds:
+  - 673021.0
+  - 6821926.0
+  - 673669.0
+  - 6822574.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0002_c0003.png
+  row: 2
+  col: 3
+  bloc:
+  - 336
+  - 3410
+  split: valid
+  bounds:
+  - 672373.0
+  - 6821278.0
+  - 673021.0
+  - 6821926.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0002_c0004.png
+  row: 2
+  col: 4
+  bloc:
+  - 336
+  - 3410
+  split: valid
+  bounds:
+  - 673021.0
+  - 6821278.0
+  - 673669.0
+  - 6821926.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0003_c0005.png
+  row: 3
+  col: 5
+  bloc:
+  - 336
+  - 3410
+  split: valid
+  bounds:
+  - 673669.0
+  - 6820630.0
+  - 674317.0
+  - 6821278.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0003_c0006.png
+  row: 3
+  col: 6
+  bloc:
+  - 337
+  - 3410
+  split: train
+  bounds:
+  - 674317.0
+  - 6820630.0
+  - 674965.0
+  - 6821278.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0003_c0007.png
+  row: 3
+  col: 7
+  bloc:
+  - 337
+  - 3410
+  split: train
+  bounds:
+  - 674965.0
+  - 6820630.0
+  - 675613.0
+  - 6821278.0
+  n_annotations: 0
+  classes: []
+- nom: fontainebleau_r0004_c0002.png
+  row: 4
+  col: 2
+  bloc:
+  - 336
+  - 3410
+  split: valid
+  bounds:
+  - 671725.0
+  - 6819982.0
+  - 672373.0
+  - 6820630.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0006_c0016.png
+  row: 6
+  col: 16
+  bloc:
+  - 340
+  - 3409
+  split: train
+  bounds:
+  - 680797.0
+  - 6818686.0
+  - 681445.0
+  - 6819334.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0009_c0008.png
+  row: 9
+  col: 8
+  bloc:
+  - 337
+  - 3408
+  split: train
+  bounds:
+  - 675613.0
+  - 6816742.0
+  - 676261.0
+  - 6817390.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0010_c0003.png
+  row: 10
+  col: 3
+  bloc:
+  - 336
+  - 3408
+  split: train
+  bounds:
+  - 672373.0
+  - 6816094.0
+  - 673021.0
+  - 6816742.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0020_c0001.png
+  row: 20
+  col: 1
+  bloc:
+  - 335
+  - 3404
+  split: train
+  bounds:
+  - 671077.0
+  - 6809614.0
+  - 671725.0
+  - 6810262.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0020_c0002.png
+  row: 20
+  col: 2
+  bloc:
+  - 336
+  - 3404
+  split: valid
+  bounds:
+  - 671725.0
+  - 6809614.0
+  - 672373.0
+  - 6810262.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0021_c0013.png
+  row: 21
+  col: 13
+  bloc:
+  - 339
+  - 3404
+  split: train
+  bounds:
+  - 678853.0
+  - 6808966.0
+  - 679501.0
+  - 6809614.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0021_c0014.png
+  row: 21
+  col: 14
+  bloc:
+  - 339
+  - 3404
+  split: train
+  bounds:
+  - 679501.0
+  - 6808966.0
+  - 680149.0
+  - 6809614.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0022_c0009.png
+  row: 22
+  col: 9
+  bloc:
+  - 338
+  - 3404
+  split: train
+  bounds:
+  - 676261.0
+  - 6808318.0
+  - 676909.0
+  - 6808966.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0023_c0003.png
+  row: 23
+  col: 3
+  bloc:
+  - 336
+  - 3403
+  split: train
+  bounds:
+  - 672373.0
+  - 6807670.0
+  - 673021.0
+  - 6808318.0
+  n_annotations: 0
+  classes: []
+- nom: fontainebleau_r0024_c0003.png
+  row: 24
+  col: 3
+  bloc:
+  - 336
+  - 3403
+  split: train
+  bounds:
+  - 672373.0
+  - 6807022.0
+  - 673021.0
+  - 6807670.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: fontainebleau_r0025_c0004.png
+  row: 25
+  col: 4
+  bloc:
+  - 336
+  - 3403
+  split: train
+  bounds:
+  - 673021.0
+  - 6806374.0
+  - 673669.0
+  - 6807022.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+repeint:
+  source_dataset: enclos_fr_fontainebleau_ld648_v1
+  variante: csl
+  canaux: R:cvat_combined G:slrm_r10_e0.5 B:ld_v1
+  mnt:
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_fontainebleau_0.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_fontainebleau_1.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_fontainebleau_2.tif
+  ld: D:\veille_irlande\corpus_enclos_fr\ld\fontainebleau_ld_1m.vrt
+  date: '2026-08-20'

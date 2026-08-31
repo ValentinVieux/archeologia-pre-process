@@ -1,0 +1,3483 @@
+dataset: enclos_ie_sligo_crim648_v1
+zone: irlande/ie_sligo
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_sligo_ld648_v1
+  gpkg: D:/veille_irlande/annotations/sligo_annotations_v2.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_sligo.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_sligo
+grille:
+  origine:
+  - -56288.0
+  - 7516083.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 274
+  valid:
+    enclos: 84
+  test:
+    enclos: 43
+hashes_sha1:
+  train: 101f92e84b7c003a5334bdc8c63580a28c933223
+  valid: da259a9912123be0a0a389b07c7bf172c0a75acd
+  test: 487e0862d53e07b8741e98e38e034ffc372afa90
+tuiles:
+- nom: ie_sligo_r0003_c0018.png
+  row: 3
+  col: 18
+  bloc:
+  - -23
+  - 3756
+  split: train
+  bounds:
+  - -44624.0
+  - 7513491.0
+  - -43976.0
+  - 7514139.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0003_c0020.png
+  row: 3
+  col: 20
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -43328.0
+  - 7513491.0
+  - -42680.0
+  - 7514139.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0004_c0017.png
+  row: 4
+  col: 17
+  bloc:
+  - -23
+  - 3756
+  split: train
+  bounds:
+  - -45272.0
+  - 7512843.0
+  - -44624.0
+  - 7513491.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0004_c0018.png
+  row: 4
+  col: 18
+  bloc:
+  - -23
+  - 3756
+  split: train
+  bounds:
+  - -44624.0
+  - 7512843.0
+  - -43976.0
+  - 7513491.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0004_c0019.png
+  row: 4
+  col: 19
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -43976.0
+  - 7512843.0
+  - -43328.0
+  - 7513491.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0004_c0020.png
+  row: 4
+  col: 20
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -43328.0
+  - 7512843.0
+  - -42680.0
+  - 7513491.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0004_c0021.png
+  row: 4
+  col: 21
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -42680.0
+  - 7512843.0
+  - -42032.0
+  - 7513491.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0008.png
+  row: 5
+  col: 8
+  bloc:
+  - -26
+  - 3756
+  split: train
+  bounds:
+  - -51104.0
+  - 7512195.0
+  - -50456.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0009.png
+  row: 5
+  col: 9
+  bloc:
+  - -26
+  - 3756
+  split: train
+  bounds:
+  - -50456.0
+  - 7512195.0
+  - -49808.0
+  - 7512843.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0010.png
+  row: 5
+  col: 10
+  bloc:
+  - -25
+  - 3756
+  split: train
+  bounds:
+  - -49808.0
+  - 7512195.0
+  - -49160.0
+  - 7512843.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0011.png
+  row: 5
+  col: 11
+  bloc:
+  - -25
+  - 3756
+  split: train
+  bounds:
+  - -49160.0
+  - 7512195.0
+  - -48512.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0018.png
+  row: 5
+  col: 18
+  bloc:
+  - -23
+  - 3756
+  split: train
+  bounds:
+  - -44624.0
+  - 7512195.0
+  - -43976.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0019.png
+  row: 5
+  col: 19
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -43976.0
+  - 7512195.0
+  - -43328.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0020.png
+  row: 5
+  col: 20
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -43328.0
+  - 7512195.0
+  - -42680.0
+  - 7512843.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0021.png
+  row: 5
+  col: 21
+  bloc:
+  - -22
+  - 3756
+  split: train
+  bounds:
+  - -42680.0
+  - 7512195.0
+  - -42032.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0005_c0022.png
+  row: 5
+  col: 22
+  bloc:
+  - -21
+  - 3756
+  split: train
+  bounds:
+  - -42032.0
+  - 7512195.0
+  - -41384.0
+  - 7512843.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0005.png
+  row: 6
+  col: 5
+  bloc:
+  - -27
+  - 3755
+  split: test
+  bounds:
+  - -53048.0
+  - 7511547.0
+  - -52400.0
+  - 7512195.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0006.png
+  row: 6
+  col: 6
+  bloc:
+  - -27
+  - 3755
+  split: test
+  bounds:
+  - -52400.0
+  - 7511547.0
+  - -51752.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0007.png
+  row: 6
+  col: 7
+  bloc:
+  - -26
+  - 3755
+  split: train
+  bounds:
+  - -51752.0
+  - 7511547.0
+  - -51104.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0009.png
+  row: 6
+  col: 9
+  bloc:
+  - -26
+  - 3755
+  split: train
+  bounds:
+  - -50456.0
+  - 7511547.0
+  - -49808.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0013.png
+  row: 6
+  col: 13
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47864.0
+  - 7511547.0
+  - -47216.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0014.png
+  row: 6
+  col: 14
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47216.0
+  - 7511547.0
+  - -46568.0
+  - 7512195.0
+  n_annotations: 6
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0015.png
+  row: 6
+  col: 15
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -46568.0
+  - 7511547.0
+  - -45920.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0016.png
+  row: 6
+  col: 16
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -45920.0
+  - 7511547.0
+  - -45272.0
+  - 7512195.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0017.png
+  row: 6
+  col: 17
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -45272.0
+  - 7511547.0
+  - -44624.0
+  - 7512195.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0006_c0018.png
+  row: 6
+  col: 18
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -44624.0
+  - 7511547.0
+  - -43976.0
+  - 7512195.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0006_c0019.png
+  row: 6
+  col: 19
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43976.0
+  - 7511547.0
+  - -43328.0
+  - 7512195.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0020.png
+  row: 6
+  col: 20
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43328.0
+  - 7511547.0
+  - -42680.0
+  - 7512195.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0006_c0021.png
+  row: 6
+  col: 21
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -42680.0
+  - 7511547.0
+  - -42032.0
+  - 7512195.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0006_c0022.png
+  row: 6
+  col: 22
+  bloc:
+  - -21
+  - 3755
+  split: test
+  bounds:
+  - -42032.0
+  - 7511547.0
+  - -41384.0
+  - 7512195.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0007_c0006.png
+  row: 7
+  col: 6
+  bloc:
+  - -27
+  - 3755
+  split: test
+  bounds:
+  - -52400.0
+  - 7510899.0
+  - -51752.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0007.png
+  row: 7
+  col: 7
+  bloc:
+  - -26
+  - 3755
+  split: train
+  bounds:
+  - -51752.0
+  - 7510899.0
+  - -51104.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0008.png
+  row: 7
+  col: 8
+  bloc:
+  - -26
+  - 3755
+  split: train
+  bounds:
+  - -51104.0
+  - 7510899.0
+  - -50456.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0009.png
+  row: 7
+  col: 9
+  bloc:
+  - -26
+  - 3755
+  split: train
+  bounds:
+  - -50456.0
+  - 7510899.0
+  - -49808.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0010.png
+  row: 7
+  col: 10
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -49808.0
+  - 7510899.0
+  - -49160.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0011.png
+  row: 7
+  col: 11
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -49160.0
+  - 7510899.0
+  - -48512.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0012.png
+  row: 7
+  col: 12
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -48512.0
+  - 7510899.0
+  - -47864.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0013.png
+  row: 7
+  col: 13
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47864.0
+  - 7510899.0
+  - -47216.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0014.png
+  row: 7
+  col: 14
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47216.0
+  - 7510899.0
+  - -46568.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0015.png
+  row: 7
+  col: 15
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -46568.0
+  - 7510899.0
+  - -45920.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0017.png
+  row: 7
+  col: 17
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -45272.0
+  - 7510899.0
+  - -44624.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0018.png
+  row: 7
+  col: 18
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -44624.0
+  - 7510899.0
+  - -43976.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0019.png
+  row: 7
+  col: 19
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43976.0
+  - 7510899.0
+  - -43328.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0020.png
+  row: 7
+  col: 20
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43328.0
+  - 7510899.0
+  - -42680.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0021.png
+  row: 7
+  col: 21
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -42680.0
+  - 7510899.0
+  - -42032.0
+  - 7511547.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0007_c0022.png
+  row: 7
+  col: 22
+  bloc:
+  - -21
+  - 3755
+  split: test
+  bounds:
+  - -42032.0
+  - 7510899.0
+  - -41384.0
+  - 7511547.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0006.png
+  row: 8
+  col: 6
+  bloc:
+  - -27
+  - 3755
+  split: test
+  bounds:
+  - -52400.0
+  - 7510251.0
+  - -51752.0
+  - 7510899.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0008_c0010.png
+  row: 8
+  col: 10
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -49808.0
+  - 7510251.0
+  - -49160.0
+  - 7510899.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0011.png
+  row: 8
+  col: 11
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -49160.0
+  - 7510251.0
+  - -48512.0
+  - 7510899.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0012.png
+  row: 8
+  col: 12
+  bloc:
+  - -25
+  - 3755
+  split: valid
+  bounds:
+  - -48512.0
+  - 7510251.0
+  - -47864.0
+  - 7510899.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0013.png
+  row: 8
+  col: 13
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47864.0
+  - 7510251.0
+  - -47216.0
+  - 7510899.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0014.png
+  row: 8
+  col: 14
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -47216.0
+  - 7510251.0
+  - -46568.0
+  - 7510899.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0015.png
+  row: 8
+  col: 15
+  bloc:
+  - -24
+  - 3755
+  split: valid
+  bounds:
+  - -46568.0
+  - 7510251.0
+  - -45920.0
+  - 7510899.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0016.png
+  row: 8
+  col: 16
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -45920.0
+  - 7510251.0
+  - -45272.0
+  - 7510899.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0017.png
+  row: 8
+  col: 17
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -45272.0
+  - 7510251.0
+  - -44624.0
+  - 7510899.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0018.png
+  row: 8
+  col: 18
+  bloc:
+  - -23
+  - 3755
+  split: train
+  bounds:
+  - -44624.0
+  - 7510251.0
+  - -43976.0
+  - 7510899.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0019.png
+  row: 8
+  col: 19
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43976.0
+  - 7510251.0
+  - -43328.0
+  - 7510899.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0008_c0020.png
+  row: 8
+  col: 20
+  bloc:
+  - -22
+  - 3755
+  split: train
+  bounds:
+  - -43328.0
+  - 7510251.0
+  - -42680.0
+  - 7510899.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0010.png
+  row: 9
+  col: 10
+  bloc:
+  - -25
+  - 3754
+  split: valid
+  bounds:
+  - -49808.0
+  - 7509603.0
+  - -49160.0
+  - 7510251.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0011.png
+  row: 9
+  col: 11
+  bloc:
+  - -25
+  - 3754
+  split: valid
+  bounds:
+  - -49160.0
+  - 7509603.0
+  - -48512.0
+  - 7510251.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0013.png
+  row: 9
+  col: 13
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47864.0
+  - 7509603.0
+  - -47216.0
+  - 7510251.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0014.png
+  row: 9
+  col: 14
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47216.0
+  - 7509603.0
+  - -46568.0
+  - 7510251.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0016.png
+  row: 9
+  col: 16
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -45920.0
+  - 7509603.0
+  - -45272.0
+  - 7510251.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0017.png
+  row: 9
+  col: 17
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -45272.0
+  - 7509603.0
+  - -44624.0
+  - 7510251.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0018.png
+  row: 9
+  col: 18
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -44624.0
+  - 7509603.0
+  - -43976.0
+  - 7510251.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0009_c0019.png
+  row: 9
+  col: 19
+  bloc:
+  - -22
+  - 3754
+  split: train
+  bounds:
+  - -43976.0
+  - 7509603.0
+  - -43328.0
+  - 7510251.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0011.png
+  row: 10
+  col: 11
+  bloc:
+  - -25
+  - 3754
+  split: valid
+  bounds:
+  - -49160.0
+  - 7508955.0
+  - -48512.0
+  - 7509603.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0012.png
+  row: 10
+  col: 12
+  bloc:
+  - -25
+  - 3754
+  split: valid
+  bounds:
+  - -48512.0
+  - 7508955.0
+  - -47864.0
+  - 7509603.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0013.png
+  row: 10
+  col: 13
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47864.0
+  - 7508955.0
+  - -47216.0
+  - 7509603.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0014.png
+  row: 10
+  col: 14
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47216.0
+  - 7508955.0
+  - -46568.0
+  - 7509603.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0015.png
+  row: 10
+  col: 15
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -46568.0
+  - 7508955.0
+  - -45920.0
+  - 7509603.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0017.png
+  row: 10
+  col: 17
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -45272.0
+  - 7508955.0
+  - -44624.0
+  - 7509603.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0010_c0018.png
+  row: 10
+  col: 18
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -44624.0
+  - 7508955.0
+  - -43976.0
+  - 7509603.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0011_c0013.png
+  row: 11
+  col: 13
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47864.0
+  - 7508307.0
+  - -47216.0
+  - 7508955.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0011_c0014.png
+  row: 11
+  col: 14
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -47216.0
+  - 7508307.0
+  - -46568.0
+  - 7508955.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0011_c0015.png
+  row: 11
+  col: 15
+  bloc:
+  - -24
+  - 3754
+  split: train
+  bounds:
+  - -46568.0
+  - 7508307.0
+  - -45920.0
+  - 7508955.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0011_c0016.png
+  row: 11
+  col: 16
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -45920.0
+  - 7508307.0
+  - -45272.0
+  - 7508955.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0011_c0017.png
+  row: 11
+  col: 17
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -45272.0
+  - 7508307.0
+  - -44624.0
+  - 7508955.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0011_c0018.png
+  row: 11
+  col: 18
+  bloc:
+  - -23
+  - 3754
+  split: train
+  bounds:
+  - -44624.0
+  - 7508307.0
+  - -43976.0
+  - 7508955.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0012_c0013.png
+  row: 12
+  col: 13
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -47864.0
+  - 7507659.0
+  - -47216.0
+  - 7508307.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0012_c0014.png
+  row: 12
+  col: 14
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -47216.0
+  - 7507659.0
+  - -46568.0
+  - 7508307.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0012_c0015.png
+  row: 12
+  col: 15
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -46568.0
+  - 7507659.0
+  - -45920.0
+  - 7508307.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0012_c0016.png
+  row: 12
+  col: 16
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45920.0
+  - 7507659.0
+  - -45272.0
+  - 7508307.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0012_c0017.png
+  row: 12
+  col: 17
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45272.0
+  - 7507659.0
+  - -44624.0
+  - 7508307.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0012.png
+  row: 13
+  col: 12
+  bloc:
+  - -25
+  - 3753
+  split: train
+  bounds:
+  - -48512.0
+  - 7507011.0
+  - -47864.0
+  - 7507659.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0013.png
+  row: 13
+  col: 13
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -47864.0
+  - 7507011.0
+  - -47216.0
+  - 7507659.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0014.png
+  row: 13
+  col: 14
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -47216.0
+  - 7507011.0
+  - -46568.0
+  - 7507659.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0015.png
+  row: 13
+  col: 15
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -46568.0
+  - 7507011.0
+  - -45920.0
+  - 7507659.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0016.png
+  row: 13
+  col: 16
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45920.0
+  - 7507011.0
+  - -45272.0
+  - 7507659.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0017.png
+  row: 13
+  col: 17
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45272.0
+  - 7507011.0
+  - -44624.0
+  - 7507659.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0013_c0018.png
+  row: 13
+  col: 18
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -44624.0
+  - 7507011.0
+  - -43976.0
+  - 7507659.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0014_c0012.png
+  row: 14
+  col: 12
+  bloc:
+  - -25
+  - 3753
+  split: train
+  bounds:
+  - -48512.0
+  - 7506363.0
+  - -47864.0
+  - 7507011.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0014_c0013.png
+  row: 14
+  col: 13
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -47864.0
+  - 7506363.0
+  - -47216.0
+  - 7507011.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0014_c0015.png
+  row: 14
+  col: 15
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -46568.0
+  - 7506363.0
+  - -45920.0
+  - 7507011.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0014_c0016.png
+  row: 14
+  col: 16
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45920.0
+  - 7506363.0
+  - -45272.0
+  - 7507011.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0014_c0017.png
+  row: 14
+  col: 17
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45272.0
+  - 7506363.0
+  - -44624.0
+  - 7507011.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0015_c0015.png
+  row: 15
+  col: 15
+  bloc:
+  - -24
+  - 3753
+  split: train
+  bounds:
+  - -46568.0
+  - 7505715.0
+  - -45920.0
+  - 7506363.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0015_c0016.png
+  row: 15
+  col: 16
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45920.0
+  - 7505715.0
+  - -45272.0
+  - 7506363.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0015_c0017.png
+  row: 15
+  col: 17
+  bloc:
+  - -23
+  - 3753
+  split: train
+  bounds:
+  - -45272.0
+  - 7505715.0
+  - -44624.0
+  - 7506363.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0016_c0017.png
+  row: 16
+  col: 17
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -45272.0
+  - 7505067.0
+  - -44624.0
+  - 7505715.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0016_c0018.png
+  row: 16
+  col: 18
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -44624.0
+  - 7505067.0
+  - -43976.0
+  - 7505715.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0016_c0019.png
+  row: 16
+  col: 19
+  bloc:
+  - -22
+  - 3752
+  split: train
+  bounds:
+  - -43976.0
+  - 7505067.0
+  - -43328.0
+  - 7505715.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0017_c0017.png
+  row: 17
+  col: 17
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -45272.0
+  - 7504419.0
+  - -44624.0
+  - 7505067.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0017_c0018.png
+  row: 17
+  col: 18
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -44624.0
+  - 7504419.0
+  - -43976.0
+  - 7505067.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0017_c0019.png
+  row: 17
+  col: 19
+  bloc:
+  - -22
+  - 3752
+  split: train
+  bounds:
+  - -43976.0
+  - 7504419.0
+  - -43328.0
+  - 7505067.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0018_c0016.png
+  row: 18
+  col: 16
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -45920.0
+  - 7503771.0
+  - -45272.0
+  - 7504419.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0018_c0017.png
+  row: 18
+  col: 17
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -45272.0
+  - 7503771.0
+  - -44624.0
+  - 7504419.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0018_c0018.png
+  row: 18
+  col: 18
+  bloc:
+  - -23
+  - 3752
+  split: valid
+  bounds:
+  - -44624.0
+  - 7503771.0
+  - -43976.0
+  - 7504419.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0018_c0019.png
+  row: 18
+  col: 19
+  bloc:
+  - -22
+  - 3752
+  split: train
+  bounds:
+  - -43976.0
+  - 7503771.0
+  - -43328.0
+  - 7504419.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0019_c0016.png
+  row: 19
+  col: 16
+  bloc:
+  - -23
+  - 3751
+  split: train
+  bounds:
+  - -45920.0
+  - 7503123.0
+  - -45272.0
+  - 7503771.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0019_c0017.png
+  row: 19
+  col: 17
+  bloc:
+  - -23
+  - 3751
+  split: train
+  bounds:
+  - -45272.0
+  - 7503123.0
+  - -44624.0
+  - 7503771.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0019_c0021.png
+  row: 19
+  col: 21
+  bloc:
+  - -22
+  - 3751
+  split: valid
+  bounds:
+  - -42680.0
+  - 7503123.0
+  - -42032.0
+  - 7503771.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0019_c0022.png
+  row: 19
+  col: 22
+  bloc:
+  - -21
+  - 3751
+  split: train
+  bounds:
+  - -42032.0
+  - 7503123.0
+  - -41384.0
+  - 7503771.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0020_c0014.png
+  row: 20
+  col: 14
+  bloc:
+  - -24
+  - 3751
+  split: train
+  bounds:
+  - -47216.0
+  - 7502475.0
+  - -46568.0
+  - 7503123.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0020_c0016.png
+  row: 20
+  col: 16
+  bloc:
+  - -23
+  - 3751
+  split: train
+  bounds:
+  - -45920.0
+  - 7502475.0
+  - -45272.0
+  - 7503123.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0020_c0021.png
+  row: 20
+  col: 21
+  bloc:
+  - -22
+  - 3751
+  split: valid
+  bounds:
+  - -42680.0
+  - 7502475.0
+  - -42032.0
+  - 7503123.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0020_c0023.png
+  row: 20
+  col: 23
+  bloc:
+  - -21
+  - 3751
+  split: train
+  bounds:
+  - -41384.0
+  - 7502475.0
+  - -40736.0
+  - 7503123.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0008.png
+  row: 21
+  col: 8
+  bloc:
+  - -26
+  - 3751
+  split: valid
+  bounds:
+  - -51104.0
+  - 7501827.0
+  - -50456.0
+  - 7502475.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0012.png
+  row: 21
+  col: 12
+  bloc:
+  - -25
+  - 3751
+  split: train
+  bounds:
+  - -48512.0
+  - 7501827.0
+  - -47864.0
+  - 7502475.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0013.png
+  row: 21
+  col: 13
+  bloc:
+  - -24
+  - 3751
+  split: train
+  bounds:
+  - -47864.0
+  - 7501827.0
+  - -47216.0
+  - 7502475.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0015.png
+  row: 21
+  col: 15
+  bloc:
+  - -24
+  - 3751
+  split: train
+  bounds:
+  - -46568.0
+  - 7501827.0
+  - -45920.0
+  - 7502475.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0016.png
+  row: 21
+  col: 16
+  bloc:
+  - -23
+  - 3751
+  split: train
+  bounds:
+  - -45920.0
+  - 7501827.0
+  - -45272.0
+  - 7502475.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0021.png
+  row: 21
+  col: 21
+  bloc:
+  - -22
+  - 3751
+  split: valid
+  bounds:
+  - -42680.0
+  - 7501827.0
+  - -42032.0
+  - 7502475.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0021_c0023.png
+  row: 21
+  col: 23
+  bloc:
+  - -21
+  - 3751
+  split: train
+  bounds:
+  - -41384.0
+  - 7501827.0
+  - -40736.0
+  - 7502475.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0004.png
+  row: 22
+  col: 4
+  bloc:
+  - -27
+  - 3750
+  split: train
+  bounds:
+  - -53696.0
+  - 7501179.0
+  - -53048.0
+  - 7501827.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0022_c0009.png
+  row: 22
+  col: 9
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -50456.0
+  - 7501179.0
+  - -49808.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0010.png
+  row: 22
+  col: 10
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49808.0
+  - 7501179.0
+  - -49160.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0011.png
+  row: 22
+  col: 11
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49160.0
+  - 7501179.0
+  - -48512.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0012.png
+  row: 22
+  col: 12
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -48512.0
+  - 7501179.0
+  - -47864.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0013.png
+  row: 22
+  col: 13
+  bloc:
+  - -24
+  - 3750
+  split: train
+  bounds:
+  - -47864.0
+  - 7501179.0
+  - -47216.0
+  - 7501827.0
+  n_annotations: 6
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0020.png
+  row: 22
+  col: 20
+  bloc:
+  - -22
+  - 3750
+  split: valid
+  bounds:
+  - -43328.0
+  - 7501179.0
+  - -42680.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0022_c0021.png
+  row: 22
+  col: 21
+  bloc:
+  - -22
+  - 3750
+  split: valid
+  bounds:
+  - -42680.0
+  - 7501179.0
+  - -42032.0
+  - 7501827.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0003.png
+  row: 23
+  col: 3
+  bloc:
+  - -28
+  - 3750
+  split: train
+  bounds:
+  - -54344.0
+  - 7500531.0
+  - -53696.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0004.png
+  row: 23
+  col: 4
+  bloc:
+  - -27
+  - 3750
+  split: train
+  bounds:
+  - -53696.0
+  - 7500531.0
+  - -53048.0
+  - 7501179.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0007.png
+  row: 23
+  col: 7
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -51752.0
+  - 7500531.0
+  - -51104.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0008.png
+  row: 23
+  col: 8
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -51104.0
+  - 7500531.0
+  - -50456.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0009.png
+  row: 23
+  col: 9
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -50456.0
+  - 7500531.0
+  - -49808.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0010.png
+  row: 23
+  col: 10
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49808.0
+  - 7500531.0
+  - -49160.0
+  - 7501179.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0011.png
+  row: 23
+  col: 11
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49160.0
+  - 7500531.0
+  - -48512.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0012.png
+  row: 23
+  col: 12
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -48512.0
+  - 7500531.0
+  - -47864.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0013.png
+  row: 23
+  col: 13
+  bloc:
+  - -24
+  - 3750
+  split: train
+  bounds:
+  - -47864.0
+  - 7500531.0
+  - -47216.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0021.png
+  row: 23
+  col: 21
+  bloc:
+  - -22
+  - 3750
+  split: valid
+  bounds:
+  - -42680.0
+  - 7500531.0
+  - -42032.0
+  - 7501179.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0023_c0022.png
+  row: 23
+  col: 22
+  bloc:
+  - -21
+  - 3750
+  split: train
+  bounds:
+  - -42032.0
+  - 7500531.0
+  - -41384.0
+  - 7501179.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0003.png
+  row: 24
+  col: 3
+  bloc:
+  - -28
+  - 3750
+  split: train
+  bounds:
+  - -54344.0
+  - 7499883.0
+  - -53696.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0004.png
+  row: 24
+  col: 4
+  bloc:
+  - -27
+  - 3750
+  split: train
+  bounds:
+  - -53696.0
+  - 7499883.0
+  - -53048.0
+  - 7500531.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0005.png
+  row: 24
+  col: 5
+  bloc:
+  - -27
+  - 3750
+  split: train
+  bounds:
+  - -53048.0
+  - 7499883.0
+  - -52400.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0006.png
+  row: 24
+  col: 6
+  bloc:
+  - -27
+  - 3750
+  split: train
+  bounds:
+  - -52400.0
+  - 7499883.0
+  - -51752.0
+  - 7500531.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0007.png
+  row: 24
+  col: 7
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -51752.0
+  - 7499883.0
+  - -51104.0
+  - 7500531.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0008.png
+  row: 24
+  col: 8
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -51104.0
+  - 7499883.0
+  - -50456.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0009.png
+  row: 24
+  col: 9
+  bloc:
+  - -26
+  - 3750
+  split: train
+  bounds:
+  - -50456.0
+  - 7499883.0
+  - -49808.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0010.png
+  row: 24
+  col: 10
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49808.0
+  - 7499883.0
+  - -49160.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0011.png
+  row: 24
+  col: 11
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -49160.0
+  - 7499883.0
+  - -48512.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0012.png
+  row: 24
+  col: 12
+  bloc:
+  - -25
+  - 3750
+  split: train
+  bounds:
+  - -48512.0
+  - 7499883.0
+  - -47864.0
+  - 7500531.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0013.png
+  row: 24
+  col: 13
+  bloc:
+  - -24
+  - 3750
+  split: train
+  bounds:
+  - -47864.0
+  - 7499883.0
+  - -47216.0
+  - 7500531.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0020.png
+  row: 24
+  col: 20
+  bloc:
+  - -22
+  - 3750
+  split: valid
+  bounds:
+  - -43328.0
+  - 7499883.0
+  - -42680.0
+  - 7500531.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0024_c0022.png
+  row: 24
+  col: 22
+  bloc:
+  - -21
+  - 3750
+  split: train
+  bounds:
+  - -42032.0
+  - 7499883.0
+  - -41384.0
+  - 7500531.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0003.png
+  row: 25
+  col: 3
+  bloc:
+  - -28
+  - 3749
+  split: valid
+  bounds:
+  - -54344.0
+  - 7499235.0
+  - -53696.0
+  - 7499883.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0005.png
+  row: 25
+  col: 5
+  bloc:
+  - -27
+  - 3749
+  split: train
+  bounds:
+  - -53048.0
+  - 7499235.0
+  - -52400.0
+  - 7499883.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0006.png
+  row: 25
+  col: 6
+  bloc:
+  - -27
+  - 3749
+  split: train
+  bounds:
+  - -52400.0
+  - 7499235.0
+  - -51752.0
+  - 7499883.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0007.png
+  row: 25
+  col: 7
+  bloc:
+  - -26
+  - 3749
+  split: train
+  bounds:
+  - -51752.0
+  - 7499235.0
+  - -51104.0
+  - 7499883.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0009.png
+  row: 25
+  col: 9
+  bloc:
+  - -26
+  - 3749
+  split: train
+  bounds:
+  - -50456.0
+  - 7499235.0
+  - -49808.0
+  - 7499883.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0025_c0011.png
+  row: 25
+  col: 11
+  bloc:
+  - -25
+  - 3749
+  split: test
+  bounds:
+  - -49160.0
+  - 7499235.0
+  - -48512.0
+  - 7499883.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0012.png
+  row: 25
+  col: 12
+  bloc:
+  - -25
+  - 3749
+  split: test
+  bounds:
+  - -48512.0
+  - 7499235.0
+  - -47864.0
+  - 7499883.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0013.png
+  row: 25
+  col: 13
+  bloc:
+  - -24
+  - 3749
+  split: valid
+  bounds:
+  - -47864.0
+  - 7499235.0
+  - -47216.0
+  - 7499883.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0017.png
+  row: 25
+  col: 17
+  bloc:
+  - -23
+  - 3749
+  split: test
+  bounds:
+  - -45272.0
+  - 7499235.0
+  - -44624.0
+  - 7499883.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0018.png
+  row: 25
+  col: 18
+  bloc:
+  - -23
+  - 3749
+  split: test
+  bounds:
+  - -44624.0
+  - 7499235.0
+  - -43976.0
+  - 7499883.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0019.png
+  row: 25
+  col: 19
+  bloc:
+  - -22
+  - 3749
+  split: train
+  bounds:
+  - -43976.0
+  - 7499235.0
+  - -43328.0
+  - 7499883.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0021.png
+  row: 25
+  col: 21
+  bloc:
+  - -22
+  - 3749
+  split: train
+  bounds:
+  - -42680.0
+  - 7499235.0
+  - -42032.0
+  - 7499883.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0025_c0022.png
+  row: 25
+  col: 22
+  bloc:
+  - -21
+  - 3749
+  split: train
+  bounds:
+  - -42032.0
+  - 7499235.0
+  - -41384.0
+  - 7499883.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0003.png
+  row: 26
+  col: 3
+  bloc:
+  - -28
+  - 3749
+  split: valid
+  bounds:
+  - -54344.0
+  - 7498587.0
+  - -53696.0
+  - 7499235.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0007.png
+  row: 26
+  col: 7
+  bloc:
+  - -26
+  - 3749
+  split: train
+  bounds:
+  - -51752.0
+  - 7498587.0
+  - -51104.0
+  - 7499235.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0008.png
+  row: 26
+  col: 8
+  bloc:
+  - -26
+  - 3749
+  split: train
+  bounds:
+  - -51104.0
+  - 7498587.0
+  - -50456.0
+  - 7499235.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0009.png
+  row: 26
+  col: 9
+  bloc:
+  - -26
+  - 3749
+  split: train
+  bounds:
+  - -50456.0
+  - 7498587.0
+  - -49808.0
+  - 7499235.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0010.png
+  row: 26
+  col: 10
+  bloc:
+  - -25
+  - 3749
+  split: test
+  bounds:
+  - -49808.0
+  - 7498587.0
+  - -49160.0
+  - 7499235.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0013.png
+  row: 26
+  col: 13
+  bloc:
+  - -24
+  - 3749
+  split: valid
+  bounds:
+  - -47864.0
+  - 7498587.0
+  - -47216.0
+  - 7499235.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0017.png
+  row: 26
+  col: 17
+  bloc:
+  - -23
+  - 3749
+  split: test
+  bounds:
+  - -45272.0
+  - 7498587.0
+  - -44624.0
+  - 7499235.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0018.png
+  row: 26
+  col: 18
+  bloc:
+  - -23
+  - 3749
+  split: test
+  bounds:
+  - -44624.0
+  - 7498587.0
+  - -43976.0
+  - 7499235.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0023.png
+  row: 26
+  col: 23
+  bloc:
+  - -21
+  - 3749
+  split: train
+  bounds:
+  - -41384.0
+  - 7498587.0
+  - -40736.0
+  - 7499235.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0024.png
+  row: 26
+  col: 24
+  bloc:
+  - -21
+  - 3749
+  split: train
+  bounds:
+  - -40736.0
+  - 7498587.0
+  - -40088.0
+  - 7499235.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0026_c0025.png
+  row: 26
+  col: 25
+  bloc:
+  - -20
+  - 3749
+  split: train
+  bounds:
+  - -40088.0
+  - 7498587.0
+  - -39440.0
+  - 7499235.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0003.png
+  row: 27
+  col: 3
+  bloc:
+  - -28
+  - 3749
+  split: valid
+  bounds:
+  - -54344.0
+  - 7497939.0
+  - -53696.0
+  - 7498587.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0012.png
+  row: 27
+  col: 12
+  bloc:
+  - -25
+  - 3749
+  split: test
+  bounds:
+  - -48512.0
+  - 7497939.0
+  - -47864.0
+  - 7498587.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0013.png
+  row: 27
+  col: 13
+  bloc:
+  - -24
+  - 3749
+  split: valid
+  bounds:
+  - -47864.0
+  - 7497939.0
+  - -47216.0
+  - 7498587.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0018.png
+  row: 27
+  col: 18
+  bloc:
+  - -23
+  - 3749
+  split: test
+  bounds:
+  - -44624.0
+  - 7497939.0
+  - -43976.0
+  - 7498587.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0019.png
+  row: 27
+  col: 19
+  bloc:
+  - -22
+  - 3749
+  split: train
+  bounds:
+  - -43976.0
+  - 7497939.0
+  - -43328.0
+  - 7498587.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0023.png
+  row: 27
+  col: 23
+  bloc:
+  - -21
+  - 3749
+  split: train
+  bounds:
+  - -41384.0
+  - 7497939.0
+  - -40736.0
+  - 7498587.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0024.png
+  row: 27
+  col: 24
+  bloc:
+  - -21
+  - 3749
+  split: train
+  bounds:
+  - -40736.0
+  - 7497939.0
+  - -40088.0
+  - 7498587.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0027_c0025.png
+  row: 27
+  col: 25
+  bloc:
+  - -20
+  - 3749
+  split: train
+  bounds:
+  - -40088.0
+  - 7497939.0
+  - -39440.0
+  - 7498587.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0003.png
+  row: 28
+  col: 3
+  bloc:
+  - -28
+  - 3748
+  split: train
+  bounds:
+  - -54344.0
+  - 7497291.0
+  - -53696.0
+  - 7497939.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0012.png
+  row: 28
+  col: 12
+  bloc:
+  - -25
+  - 3748
+  split: valid
+  bounds:
+  - -48512.0
+  - 7497291.0
+  - -47864.0
+  - 7497939.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0013.png
+  row: 28
+  col: 13
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47864.0
+  - 7497291.0
+  - -47216.0
+  - 7497939.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0014.png
+  row: 28
+  col: 14
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47216.0
+  - 7497291.0
+  - -46568.0
+  - 7497939.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0023.png
+  row: 28
+  col: 23
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -41384.0
+  - 7497291.0
+  - -40736.0
+  - 7497939.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0028_c0024.png
+  row: 28
+  col: 24
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -40736.0
+  - 7497291.0
+  - -40088.0
+  - 7497939.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0010.png
+  row: 29
+  col: 10
+  bloc:
+  - -25
+  - 3748
+  split: valid
+  bounds:
+  - -49808.0
+  - 7496643.0
+  - -49160.0
+  - 7497291.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0011.png
+  row: 29
+  col: 11
+  bloc:
+  - -25
+  - 3748
+  split: valid
+  bounds:
+  - -49160.0
+  - 7496643.0
+  - -48512.0
+  - 7497291.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0012.png
+  row: 29
+  col: 12
+  bloc:
+  - -25
+  - 3748
+  split: valid
+  bounds:
+  - -48512.0
+  - 7496643.0
+  - -47864.0
+  - 7497291.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0013.png
+  row: 29
+  col: 13
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47864.0
+  - 7496643.0
+  - -47216.0
+  - 7497291.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0014.png
+  row: 29
+  col: 14
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47216.0
+  - 7496643.0
+  - -46568.0
+  - 7497291.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0023.png
+  row: 29
+  col: 23
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -41384.0
+  - 7496643.0
+  - -40736.0
+  - 7497291.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0029_c0024.png
+  row: 29
+  col: 24
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -40736.0
+  - 7496643.0
+  - -40088.0
+  - 7497291.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0007.png
+  row: 30
+  col: 7
+  bloc:
+  - -26
+  - 3748
+  split: train
+  bounds:
+  - -51752.0
+  - 7495995.0
+  - -51104.0
+  - 7496643.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0008.png
+  row: 30
+  col: 8
+  bloc:
+  - -26
+  - 3748
+  split: train
+  bounds:
+  - -51104.0
+  - 7495995.0
+  - -50456.0
+  - 7496643.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0012.png
+  row: 30
+  col: 12
+  bloc:
+  - -25
+  - 3748
+  split: valid
+  bounds:
+  - -48512.0
+  - 7495995.0
+  - -47864.0
+  - 7496643.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0013.png
+  row: 30
+  col: 13
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47864.0
+  - 7495995.0
+  - -47216.0
+  - 7496643.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0014.png
+  row: 30
+  col: 14
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -47216.0
+  - 7495995.0
+  - -46568.0
+  - 7496643.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0015.png
+  row: 30
+  col: 15
+  bloc:
+  - -24
+  - 3748
+  split: test
+  bounds:
+  - -46568.0
+  - 7495995.0
+  - -45920.0
+  - 7496643.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0022.png
+  row: 30
+  col: 22
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -42032.0
+  - 7495995.0
+  - -41384.0
+  - 7496643.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0030_c0023.png
+  row: 30
+  col: 23
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -41384.0
+  - 7495995.0
+  - -40736.0
+  - 7496643.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0024.png
+  row: 30
+  col: 24
+  bloc:
+  - -21
+  - 3748
+  split: train
+  bounds:
+  - -40736.0
+  - 7495995.0
+  - -40088.0
+  - 7496643.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0030_c0025.png
+  row: 30
+  col: 25
+  bloc:
+  - -20
+  - 3748
+  split: train
+  bounds:
+  - -40088.0
+  - 7495995.0
+  - -39440.0
+  - 7496643.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0031_c0007.png
+  row: 31
+  col: 7
+  bloc:
+  - -26
+  - 3747
+  split: train
+  bounds:
+  - -51752.0
+  - 7495347.0
+  - -51104.0
+  - 7495995.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0031_c0008.png
+  row: 31
+  col: 8
+  bloc:
+  - -26
+  - 3747
+  split: train
+  bounds:
+  - -51104.0
+  - 7495347.0
+  - -50456.0
+  - 7495995.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0031_c0009.png
+  row: 31
+  col: 9
+  bloc:
+  - -26
+  - 3747
+  split: train
+  bounds:
+  - -50456.0
+  - 7495347.0
+  - -49808.0
+  - 7495995.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0031_c0013.png
+  row: 31
+  col: 13
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -47864.0
+  - 7495347.0
+  - -47216.0
+  - 7495995.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0031_c0014.png
+  row: 31
+  col: 14
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -47216.0
+  - 7495347.0
+  - -46568.0
+  - 7495995.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0031_c0015.png
+  row: 31
+  col: 15
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -46568.0
+  - 7495347.0
+  - -45920.0
+  - 7495995.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0032_c0006.png
+  row: 32
+  col: 6
+  bloc:
+  - -27
+  - 3747
+  split: train
+  bounds:
+  - -52400.0
+  - 7494699.0
+  - -51752.0
+  - 7495347.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_sligo_r0032_c0007.png
+  row: 32
+  col: 7
+  bloc:
+  - -26
+  - 3747
+  split: train
+  bounds:
+  - -51752.0
+  - 7494699.0
+  - -51104.0
+  - 7495347.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0032_c0009.png
+  row: 32
+  col: 9
+  bloc:
+  - -26
+  - 3747
+  split: train
+  bounds:
+  - -50456.0
+  - 7494699.0
+  - -49808.0
+  - 7495347.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0032_c0014.png
+  row: 32
+  col: 14
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -47216.0
+  - 7494699.0
+  - -46568.0
+  - 7495347.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0033_c0013.png
+  row: 33
+  col: 13
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -47864.0
+  - 7494051.0
+  - -47216.0
+  - 7494699.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_sligo_r0033_c0014.png
+  row: 33
+  col: 14
+  bloc:
+  - -24
+  - 3747
+  split: train
+  bounds:
+  - -47216.0
+  - 7494051.0
+  - -46568.0
+  - 7494699.0
+  n_annotations: 8
+  classes:
+  - enclos
+- nom: ie_sligo_r0034_c0013.png
+  row: 34
+  col: 13
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47864.0
+  - 7493403.0
+  - -47216.0
+  - 7494051.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_sligo_r0034_c0014.png
+  row: 34
+  col: 14
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47216.0
+  - 7493403.0
+  - -46568.0
+  - 7494051.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_sligo_r0034_c0015.png
+  row: 34
+  col: 15
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -46568.0
+  - 7493403.0
+  - -45920.0
+  - 7494051.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0035_c0013.png
+  row: 35
+  col: 13
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47864.0
+  - 7492755.0
+  - -47216.0
+  - 7493403.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0035_c0014.png
+  row: 35
+  col: 14
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47216.0
+  - 7492755.0
+  - -46568.0
+  - 7493403.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_sligo_r0036_c0013.png
+  row: 36
+  col: 13
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47864.0
+  - 7492107.0
+  - -47216.0
+  - 7492755.0
+  n_annotations: 0
+  classes: []
+- nom: ie_sligo_r0036_c0014.png
+  row: 36
+  col: 14
+  bloc:
+  - -24
+  - 3746
+  split: train
+  bounds:
+  - -47216.0
+  - 7492107.0
+  - -46568.0
+  - 7492755.0
+  n_annotations: 1
+  classes:
+  - enclos
+repeint:
+  source_dataset: enclos_ie_sligo_ld648_v1
+  variante: crim
+  canaux: RGB:crim_orrd
+  mnt:
+  - D:\veille_irlande\dalles\mnt_sligo_mosaique\mnt_sligo_mosaique.tif
+  ld: D:\veille_irlande\indices\ld\ld_sligo.tif
+  date: '2026-08-20'

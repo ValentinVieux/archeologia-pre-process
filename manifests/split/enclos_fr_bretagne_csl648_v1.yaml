@@ -1,0 +1,2808 @@
+dataset: enclos_fr_bretagne_csl648_v1
+zone: bretagne/35_anomalie_lidar_bretagne
+seed: 42
+genere_le: '2026-08-16'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    emprises:
+      classe: enclos_circulaire
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_fr_bretagne_ld648_v1
+  gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/bretagne_emprises.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/corpus_enclos_fr/ld/bretagne_ld_1m.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: bretagne/35_anomalie_lidar_bretagne
+grille:
+  origine:
+  - 169000.0
+  - 6872131.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos_circulaire: 253
+  valid:
+    enclos_circulaire: 73
+  test:
+    enclos_circulaire: 35
+hashes_sha1:
+  train: 2b4354f8c204e02c5ce4947cd6aff292dde17b6d
+  valid: 12833e5f70c321ebe8c6ffbc3a333b7c770e7037
+  test: 048b1b887bcfcb43c6ba1616a9dfdff717e87721
+tuiles:
+- nom: bretagne_r0008_c0076.png
+  row: 8
+  col: 76
+  bloc:
+  - 109
+  - 3433
+  split: valid
+  bounds:
+  - 218248.0
+  - 6866299.0
+  - 218896.0
+  - 6866947.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0008_c0079.png
+  row: 8
+  col: 79
+  bloc:
+  - 110
+  - 3433
+  split: valid
+  bounds:
+  - 220192.0
+  - 6866299.0
+  - 220840.0
+  - 6866947.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0009_c0076.png
+  row: 9
+  col: 76
+  bloc:
+  - 109
+  - 3432
+  split: valid
+  bounds:
+  - 218248.0
+  - 6865651.0
+  - 218896.0
+  - 6866299.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0014_c0083.png
+  row: 14
+  col: 83
+  bloc:
+  - 111
+  - 3431
+  split: valid
+  bounds:
+  - 222784.0
+  - 6862411.0
+  - 223432.0
+  - 6863059.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0023_c0065.png
+  row: 23
+  col: 65
+  bloc:
+  - 105
+  - 3428
+  split: test
+  bounds:
+  - 211120.0
+  - 6856579.0
+  - 211768.0
+  - 6857227.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0023_c0068.png
+  row: 23
+  col: 68
+  bloc:
+  - 106
+  - 3428
+  split: train
+  bounds:
+  - 213064.0
+  - 6856579.0
+  - 213712.0
+  - 6857227.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0025_c0074.png
+  row: 25
+  col: 74
+  bloc:
+  - 108
+  - 3427
+  split: test
+  bounds:
+  - 216952.0
+  - 6855283.0
+  - 217600.0
+  - 6855931.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0026_c0074.png
+  row: 26
+  col: 74
+  bloc:
+  - 108
+  - 3427
+  split: test
+  bounds:
+  - 216952.0
+  - 6854635.0
+  - 217600.0
+  - 6855283.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0028_c0065.png
+  row: 28
+  col: 65
+  bloc:
+  - 105
+  - 3426
+  split: train
+  bounds:
+  - 211120.0
+  - 6853339.0
+  - 211768.0
+  - 6853987.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0028_c0066.png
+  row: 28
+  col: 66
+  bloc:
+  - 106
+  - 3426
+  split: valid
+  bounds:
+  - 211768.0
+  - 6853339.0
+  - 212416.0
+  - 6853987.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0029_c0080.png
+  row: 29
+  col: 80
+  bloc:
+  - 110
+  - 3426
+  split: train
+  bounds:
+  - 220840.0
+  - 6852691.0
+  - 221488.0
+  - 6853339.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0030_c0066.png
+  row: 30
+  col: 66
+  bloc:
+  - 106
+  - 3426
+  split: valid
+  bounds:
+  - 211768.0
+  - 6852043.0
+  - 212416.0
+  - 6852691.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0042_c0100.png
+  row: 42
+  col: 100
+  bloc:
+  - 117
+  - 3422
+  split: train
+  bounds:
+  - 233800.0
+  - 6844267.0
+  - 234448.0
+  - 6844915.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0043_c0094.png
+  row: 43
+  col: 94
+  bloc:
+  - 115
+  - 3421
+  split: train
+  bounds:
+  - 229912.0
+  - 6843619.0
+  - 230560.0
+  - 6844267.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0044_c0094.png
+  row: 44
+  col: 94
+  bloc:
+  - 115
+  - 3421
+  split: train
+  bounds:
+  - 229912.0
+  - 6842971.0
+  - 230560.0
+  - 6843619.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0044_c0095.png
+  row: 44
+  col: 95
+  bloc:
+  - 115
+  - 3421
+  split: train
+  bounds:
+  - 230560.0
+  - 6842971.0
+  - 231208.0
+  - 6843619.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0069.png
+  row: 45
+  col: 69
+  bloc:
+  - 107
+  - 3421
+  split: train
+  bounds:
+  - 213712.0
+  - 6842323.0
+  - 214360.0
+  - 6842971.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0084.png
+  row: 45
+  col: 84
+  bloc:
+  - 111
+  - 3421
+  split: train
+  bounds:
+  - 223432.0
+  - 6842323.0
+  - 224080.0
+  - 6842971.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0093.png
+  row: 45
+  col: 93
+  bloc:
+  - 114
+  - 3421
+  split: train
+  bounds:
+  - 229264.0
+  - 6842323.0
+  - 229912.0
+  - 6842971.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0095.png
+  row: 45
+  col: 95
+  bloc:
+  - 115
+  - 3421
+  split: train
+  bounds:
+  - 230560.0
+  - 6842323.0
+  - 231208.0
+  - 6842971.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0097.png
+  row: 45
+  col: 97
+  bloc:
+  - 116
+  - 3421
+  split: train
+  bounds:
+  - 231856.0
+  - 6842323.0
+  - 232504.0
+  - 6842971.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0045_c0098.png
+  row: 45
+  col: 98
+  bloc:
+  - 116
+  - 3421
+  split: train
+  bounds:
+  - 232504.0
+  - 6842323.0
+  - 233152.0
+  - 6842971.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0046_c0082.png
+  row: 46
+  col: 82
+  bloc:
+  - 111
+  - 3420
+  split: train
+  bounds:
+  - 222136.0
+  - 6841675.0
+  - 222784.0
+  - 6842323.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0046_c0099.png
+  row: 46
+  col: 99
+  bloc:
+  - 116
+  - 3420
+  split: train
+  bounds:
+  - 233152.0
+  - 6841675.0
+  - 233800.0
+  - 6842323.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0047_c0081.png
+  row: 47
+  col: 81
+  bloc:
+  - 110
+  - 3420
+  split: test
+  bounds:
+  - 221488.0
+  - 6841027.0
+  - 222136.0
+  - 6841675.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0047_c0082.png
+  row: 47
+  col: 82
+  bloc:
+  - 111
+  - 3420
+  split: train
+  bounds:
+  - 222136.0
+  - 6841027.0
+  - 222784.0
+  - 6841675.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0048_c0080.png
+  row: 48
+  col: 80
+  bloc:
+  - 110
+  - 3420
+  split: test
+  bounds:
+  - 220840.0
+  - 6840379.0
+  - 221488.0
+  - 6841027.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0048_c0082.png
+  row: 48
+  col: 82
+  bloc:
+  - 111
+  - 3420
+  split: train
+  bounds:
+  - 222136.0
+  - 6840379.0
+  - 222784.0
+  - 6841027.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0049_c0080.png
+  row: 49
+  col: 80
+  bloc:
+  - 110
+  - 3420
+  split: test
+  bounds:
+  - 220840.0
+  - 6839731.0
+  - 221488.0
+  - 6840379.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0050_c0111.png
+  row: 50
+  col: 111
+  bloc:
+  - 120
+  - 3419
+  split: valid
+  bounds:
+  - 240928.0
+  - 6839083.0
+  - 241576.0
+  - 6839731.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0050_c0112.png
+  row: 50
+  col: 112
+  bloc:
+  - 120
+  - 3419
+  split: valid
+  bounds:
+  - 241576.0
+  - 6839083.0
+  - 242224.0
+  - 6839731.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0063_c0265.png
+  row: 63
+  col: 265
+  bloc:
+  - 170
+  - 3415
+  split: valid
+  bounds:
+  - 340720.0
+  - 6830659.0
+  - 341368.0
+  - 6831307.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0064_c0256.png
+  row: 64
+  col: 256
+  bloc:
+  - 167
+  - 3415
+  split: train
+  bounds:
+  - 334888.0
+  - 6830011.0
+  - 335536.0
+  - 6830659.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0064_c0298.png
+  row: 64
+  col: 298
+  bloc:
+  - 181
+  - 3415
+  split: train
+  bounds:
+  - 362104.0
+  - 6830011.0
+  - 362752.0
+  - 6830659.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0065_c0256.png
+  row: 65
+  col: 256
+  bloc:
+  - 167
+  - 3414
+  split: train
+  bounds:
+  - 334888.0
+  - 6829363.0
+  - 335536.0
+  - 6830011.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0065_c0257.png
+  row: 65
+  col: 257
+  bloc:
+  - 167
+  - 3414
+  split: train
+  bounds:
+  - 335536.0
+  - 6829363.0
+  - 336184.0
+  - 6830011.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0065_c0297.png
+  row: 65
+  col: 297
+  bloc:
+  - 180
+  - 3414
+  split: train
+  bounds:
+  - 361456.0
+  - 6829363.0
+  - 362104.0
+  - 6830011.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0065_c0298.png
+  row: 65
+  col: 298
+  bloc:
+  - 181
+  - 3414
+  split: train
+  bounds:
+  - 362104.0
+  - 6829363.0
+  - 362752.0
+  - 6830011.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0079_c0342.png
+  row: 79
+  col: 342
+  bloc:
+  - 195
+  - 3410
+  split: valid
+  bounds:
+  - 390616.0
+  - 6820291.0
+  - 391264.0
+  - 6820939.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0080_c0341.png
+  row: 80
+  col: 341
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 389968.0
+  - 6819643.0
+  - 390616.0
+  - 6820291.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0080_c0342.png
+  row: 80
+  col: 342
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 390616.0
+  - 6819643.0
+  - 391264.0
+  - 6820291.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0080_c0344.png
+  row: 80
+  col: 344
+  bloc:
+  - 196
+  - 3409
+  split: valid
+  bounds:
+  - 391912.0
+  - 6819643.0
+  - 392560.0
+  - 6820291.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0080_c0347.png
+  row: 80
+  col: 347
+  bloc:
+  - 197
+  - 3409
+  split: train
+  bounds:
+  - 393856.0
+  - 6819643.0
+  - 394504.0
+  - 6820291.0
+  n_annotations: 8
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0081_c0341.png
+  row: 81
+  col: 341
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 389968.0
+  - 6818995.0
+  - 390616.0
+  - 6819643.0
+  n_annotations: 6
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0081_c0344.png
+  row: 81
+  col: 344
+  bloc:
+  - 196
+  - 3409
+  split: valid
+  bounds:
+  - 391912.0
+  - 6818995.0
+  - 392560.0
+  - 6819643.0
+  n_annotations: 6
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0081_c0345.png
+  row: 81
+  col: 345
+  bloc:
+  - 196
+  - 3409
+  split: valid
+  bounds:
+  - 392560.0
+  - 6818995.0
+  - 393208.0
+  - 6819643.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0081_c0347.png
+  row: 81
+  col: 347
+  bloc:
+  - 197
+  - 3409
+  split: train
+  bounds:
+  - 393856.0
+  - 6818995.0
+  - 394504.0
+  - 6819643.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0081_c0348.png
+  row: 81
+  col: 348
+  bloc:
+  - 197
+  - 3409
+  split: train
+  bounds:
+  - 394504.0
+  - 6818995.0
+  - 395152.0
+  - 6819643.0
+  n_annotations: 15
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0082_c0341.png
+  row: 82
+  col: 341
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 389968.0
+  - 6818347.0
+  - 390616.0
+  - 6818995.0
+  n_annotations: 7
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0082_c0343.png
+  row: 82
+  col: 343
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 391264.0
+  - 6818347.0
+  - 391912.0
+  - 6818995.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0082_c0344.png
+  row: 82
+  col: 344
+  bloc:
+  - 196
+  - 3409
+  split: valid
+  bounds:
+  - 391912.0
+  - 6818347.0
+  - 392560.0
+  - 6818995.0
+  n_annotations: 11
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0083_c0341.png
+  row: 83
+  col: 341
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 389968.0
+  - 6817699.0
+  - 390616.0
+  - 6818347.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0083_c0342.png
+  row: 83
+  col: 342
+  bloc:
+  - 195
+  - 3409
+  split: train
+  bounds:
+  - 390616.0
+  - 6817699.0
+  - 391264.0
+  - 6818347.0
+  n_annotations: 8
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0083_c0344.png
+  row: 83
+  col: 344
+  bloc:
+  - 196
+  - 3409
+  split: valid
+  bounds:
+  - 391912.0
+  - 6817699.0
+  - 392560.0
+  - 6818347.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0084_c0341.png
+  row: 84
+  col: 341
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 389968.0
+  - 6817051.0
+  - 390616.0
+  - 6817699.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0084_c0342.png
+  row: 84
+  col: 342
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 390616.0
+  - 6817051.0
+  - 391264.0
+  - 6817699.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0084_c0343.png
+  row: 84
+  col: 343
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 391264.0
+  - 6817051.0
+  - 391912.0
+  - 6817699.0
+  n_annotations: 7
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0084_c0344.png
+  row: 84
+  col: 344
+  bloc:
+  - 196
+  - 3408
+  split: train
+  bounds:
+  - 391912.0
+  - 6817051.0
+  - 392560.0
+  - 6817699.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0085_c0341.png
+  row: 85
+  col: 341
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 389968.0
+  - 6816403.0
+  - 390616.0
+  - 6817051.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0085_c0342.png
+  row: 85
+  col: 342
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 390616.0
+  - 6816403.0
+  - 391264.0
+  - 6817051.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0085_c0343.png
+  row: 85
+  col: 343
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 391264.0
+  - 6816403.0
+  - 391912.0
+  - 6817051.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0086_c0341.png
+  row: 86
+  col: 341
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 389968.0
+  - 6815755.0
+  - 390616.0
+  - 6816403.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0086_c0342.png
+  row: 86
+  col: 342
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 390616.0
+  - 6815755.0
+  - 391264.0
+  - 6816403.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0086_c0343.png
+  row: 86
+  col: 343
+  bloc:
+  - 195
+  - 3408
+  split: test
+  bounds:
+  - 391264.0
+  - 6815755.0
+  - 391912.0
+  - 6816403.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0097_c0297.png
+  row: 97
+  col: 297
+  bloc:
+  - 180
+  - 3404
+  split: train
+  bounds:
+  - 361456.0
+  - 6808627.0
+  - 362104.0
+  - 6809275.0
+  n_annotations: 7
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0097_c0298.png
+  row: 97
+  col: 298
+  bloc:
+  - 181
+  - 3404
+  split: train
+  bounds:
+  - 362104.0
+  - 6808627.0
+  - 362752.0
+  - 6809275.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0098_c0296.png
+  row: 98
+  col: 296
+  bloc:
+  - 180
+  - 3404
+  split: train
+  bounds:
+  - 360808.0
+  - 6807979.0
+  - 361456.0
+  - 6808627.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0104_c0230.png
+  row: 104
+  col: 230
+  bloc:
+  - 159
+  - 3402
+  split: train
+  bounds:
+  - 318040.0
+  - 6804091.0
+  - 318688.0
+  - 6804739.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0108_c0300.png
+  row: 108
+  col: 300
+  bloc:
+  - 181
+  - 3400
+  split: train
+  bounds:
+  - 363400.0
+  - 6801499.0
+  - 364048.0
+  - 6802147.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0108_c0302.png
+  row: 108
+  col: 302
+  bloc:
+  - 182
+  - 3400
+  split: train
+  bounds:
+  - 364696.0
+  - 6801499.0
+  - 365344.0
+  - 6802147.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0108_c0307.png
+  row: 108
+  col: 307
+  bloc:
+  - 184
+  - 3400
+  split: train
+  bounds:
+  - 367936.0
+  - 6801499.0
+  - 368584.0
+  - 6802147.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0108_c0309.png
+  row: 108
+  col: 309
+  bloc:
+  - 184
+  - 3400
+  split: train
+  bounds:
+  - 369232.0
+  - 6801499.0
+  - 369880.0
+  - 6802147.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0109_c0307.png
+  row: 109
+  col: 307
+  bloc:
+  - 184
+  - 3400
+  split: train
+  bounds:
+  - 367936.0
+  - 6800851.0
+  - 368584.0
+  - 6801499.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0109_c0308.png
+  row: 109
+  col: 308
+  bloc:
+  - 184
+  - 3400
+  split: train
+  bounds:
+  - 368584.0
+  - 6800851.0
+  - 369232.0
+  - 6801499.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0109_c0310.png
+  row: 109
+  col: 310
+  bloc:
+  - 185
+  - 3400
+  split: train
+  bounds:
+  - 369880.0
+  - 6800851.0
+  - 370528.0
+  - 6801499.0
+  n_annotations: 9
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0109_c0311.png
+  row: 109
+  col: 311
+  bloc:
+  - 185
+  - 3400
+  split: train
+  bounds:
+  - 370528.0
+  - 6800851.0
+  - 371176.0
+  - 6801499.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0110_c0311.png
+  row: 110
+  col: 311
+  bloc:
+  - 185
+  - 3400
+  split: train
+  bounds:
+  - 370528.0
+  - 6800203.0
+  - 371176.0
+  - 6800851.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0110_c0312.png
+  row: 110
+  col: 312
+  bloc:
+  - 185
+  - 3400
+  split: train
+  bounds:
+  - 371176.0
+  - 6800203.0
+  - 371824.0
+  - 6800851.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0110_c0314.png
+  row: 110
+  col: 314
+  bloc:
+  - 186
+  - 3400
+  split: valid
+  bounds:
+  - 372472.0
+  - 6800203.0
+  - 373120.0
+  - 6800851.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0111_c0299.png
+  row: 111
+  col: 299
+  bloc:
+  - 181
+  - 3399
+  split: train
+  bounds:
+  - 362752.0
+  - 6799555.0
+  - 363400.0
+  - 6800203.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0111_c0311.png
+  row: 111
+  col: 311
+  bloc:
+  - 185
+  - 3399
+  split: valid
+  bounds:
+  - 370528.0
+  - 6799555.0
+  - 371176.0
+  - 6800203.0
+  n_annotations: 9
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0111_c0312.png
+  row: 111
+  col: 312
+  bloc:
+  - 185
+  - 3399
+  split: valid
+  bounds:
+  - 371176.0
+  - 6799555.0
+  - 371824.0
+  - 6800203.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0111_c0314.png
+  row: 111
+  col: 314
+  bloc:
+  - 186
+  - 3399
+  split: test
+  bounds:
+  - 372472.0
+  - 6799555.0
+  - 373120.0
+  - 6800203.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0112_c0293.png
+  row: 112
+  col: 293
+  bloc:
+  - 179
+  - 3399
+  split: train
+  bounds:
+  - 358864.0
+  - 6798907.0
+  - 359512.0
+  - 6799555.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0112_c0298.png
+  row: 112
+  col: 298
+  bloc:
+  - 181
+  - 3399
+  split: train
+  bounds:
+  - 362104.0
+  - 6798907.0
+  - 362752.0
+  - 6799555.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0112_c0299.png
+  row: 112
+  col: 299
+  bloc:
+  - 181
+  - 3399
+  split: train
+  bounds:
+  - 362752.0
+  - 6798907.0
+  - 363400.0
+  - 6799555.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0112_c0314.png
+  row: 112
+  col: 314
+  bloc:
+  - 186
+  - 3399
+  split: test
+  bounds:
+  - 372472.0
+  - 6798907.0
+  - 373120.0
+  - 6799555.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0296.png
+  row: 113
+  col: 296
+  bloc:
+  - 180
+  - 3399
+  split: train
+  bounds:
+  - 360808.0
+  - 6798259.0
+  - 361456.0
+  - 6798907.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0298.png
+  row: 113
+  col: 298
+  bloc:
+  - 181
+  - 3399
+  split: train
+  bounds:
+  - 362104.0
+  - 6798259.0
+  - 362752.0
+  - 6798907.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0333.png
+  row: 113
+  col: 333
+  bloc:
+  - 192
+  - 3399
+  split: train
+  bounds:
+  - 384784.0
+  - 6798259.0
+  - 385432.0
+  - 6798907.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0334.png
+  row: 113
+  col: 334
+  bloc:
+  - 192
+  - 3399
+  split: train
+  bounds:
+  - 385432.0
+  - 6798259.0
+  - 386080.0
+  - 6798907.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0336.png
+  row: 113
+  col: 336
+  bloc:
+  - 193
+  - 3399
+  split: train
+  bounds:
+  - 386728.0
+  - 6798259.0
+  - 387376.0
+  - 6798907.0
+  n_annotations: 8
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0113_c0337.png
+  row: 113
+  col: 337
+  bloc:
+  - 193
+  - 3399
+  split: train
+  bounds:
+  - 387376.0
+  - 6798259.0
+  - 388024.0
+  - 6798907.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0114_c0291.png
+  row: 114
+  col: 291
+  bloc:
+  - 178
+  - 3398
+  split: train
+  bounds:
+  - 357568.0
+  - 6797611.0
+  - 358216.0
+  - 6798259.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0114_c0298.png
+  row: 114
+  col: 298
+  bloc:
+  - 181
+  - 3398
+  split: valid
+  bounds:
+  - 362104.0
+  - 6797611.0
+  - 362752.0
+  - 6798259.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0115_c0291.png
+  row: 115
+  col: 291
+  bloc:
+  - 178
+  - 3398
+  split: train
+  bounds:
+  - 357568.0
+  - 6796963.0
+  - 358216.0
+  - 6797611.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0115_c0292.png
+  row: 115
+  col: 292
+  bloc:
+  - 179
+  - 3398
+  split: train
+  bounds:
+  - 358216.0
+  - 6796963.0
+  - 358864.0
+  - 6797611.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0115_c0297.png
+  row: 115
+  col: 297
+  bloc:
+  - 180
+  - 3398
+  split: train
+  bounds:
+  - 361456.0
+  - 6796963.0
+  - 362104.0
+  - 6797611.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0116_c0291.png
+  row: 116
+  col: 291
+  bloc:
+  - 178
+  - 3398
+  split: train
+  bounds:
+  - 357568.0
+  - 6796315.0
+  - 358216.0
+  - 6796963.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0116_c0295.png
+  row: 116
+  col: 295
+  bloc:
+  - 180
+  - 3398
+  split: train
+  bounds:
+  - 360160.0
+  - 6796315.0
+  - 360808.0
+  - 6796963.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0116_c0299.png
+  row: 116
+  col: 299
+  bloc:
+  - 181
+  - 3398
+  split: valid
+  bounds:
+  - 362752.0
+  - 6796315.0
+  - 363400.0
+  - 6796963.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0116_c0300.png
+  row: 116
+  col: 300
+  bloc:
+  - 181
+  - 3398
+  split: valid
+  bounds:
+  - 363400.0
+  - 6796315.0
+  - 364048.0
+  - 6796963.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0293.png
+  row: 117
+  col: 293
+  bloc:
+  - 179
+  - 3397
+  split: train
+  bounds:
+  - 358864.0
+  - 6795667.0
+  - 359512.0
+  - 6796315.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0294.png
+  row: 117
+  col: 294
+  bloc:
+  - 179
+  - 3397
+  split: train
+  bounds:
+  - 359512.0
+  - 6795667.0
+  - 360160.0
+  - 6796315.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0296.png
+  row: 117
+  col: 296
+  bloc:
+  - 180
+  - 3397
+  split: train
+  bounds:
+  - 360808.0
+  - 6795667.0
+  - 361456.0
+  - 6796315.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0299.png
+  row: 117
+  col: 299
+  bloc:
+  - 181
+  - 3397
+  split: train
+  bounds:
+  - 362752.0
+  - 6795667.0
+  - 363400.0
+  - 6796315.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0304.png
+  row: 117
+  col: 304
+  bloc:
+  - 183
+  - 3397
+  split: train
+  bounds:
+  - 365992.0
+  - 6795667.0
+  - 366640.0
+  - 6796315.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0117_c0311.png
+  row: 117
+  col: 311
+  bloc:
+  - 185
+  - 3397
+  split: train
+  bounds:
+  - 370528.0
+  - 6795667.0
+  - 371176.0
+  - 6796315.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0118_c0213.png
+  row: 118
+  col: 213
+  bloc:
+  - 153
+  - 3397
+  split: valid
+  bounds:
+  - 307024.0
+  - 6795019.0
+  - 307672.0
+  - 6795667.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0118_c0291.png
+  row: 118
+  col: 291
+  bloc:
+  - 178
+  - 3397
+  split: train
+  bounds:
+  - 357568.0
+  - 6795019.0
+  - 358216.0
+  - 6795667.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0118_c0297.png
+  row: 118
+  col: 297
+  bloc:
+  - 180
+  - 3397
+  split: train
+  bounds:
+  - 361456.0
+  - 6795019.0
+  - 362104.0
+  - 6795667.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0118_c0299.png
+  row: 118
+  col: 299
+  bloc:
+  - 181
+  - 3397
+  split: train
+  bounds:
+  - 362752.0
+  - 6795019.0
+  - 363400.0
+  - 6795667.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0118_c0310.png
+  row: 118
+  col: 310
+  bloc:
+  - 185
+  - 3397
+  split: train
+  bounds:
+  - 369880.0
+  - 6795019.0
+  - 370528.0
+  - 6795667.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0118_c0311.png
+  row: 118
+  col: 311
+  bloc:
+  - 185
+  - 3397
+  split: train
+  bounds:
+  - 370528.0
+  - 6795019.0
+  - 371176.0
+  - 6795667.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0119_c0291.png
+  row: 119
+  col: 291
+  bloc:
+  - 178
+  - 3397
+  split: train
+  bounds:
+  - 357568.0
+  - 6794371.0
+  - 358216.0
+  - 6795019.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0119_c0307.png
+  row: 119
+  col: 307
+  bloc:
+  - 184
+  - 3397
+  split: train
+  bounds:
+  - 367936.0
+  - 6794371.0
+  - 368584.0
+  - 6795019.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0119_c0314.png
+  row: 119
+  col: 314
+  bloc:
+  - 186
+  - 3397
+  split: valid
+  bounds:
+  - 372472.0
+  - 6794371.0
+  - 373120.0
+  - 6795019.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0119_c0315.png
+  row: 119
+  col: 315
+  bloc:
+  - 186
+  - 3397
+  split: valid
+  bounds:
+  - 373120.0
+  - 6794371.0
+  - 373768.0
+  - 6795019.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0120_c0213.png
+  row: 120
+  col: 213
+  bloc:
+  - 153
+  - 3397
+  split: valid
+  bounds:
+  - 307024.0
+  - 6793723.0
+  - 307672.0
+  - 6794371.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0120_c0299.png
+  row: 120
+  col: 299
+  bloc:
+  - 181
+  - 3397
+  split: train
+  bounds:
+  - 362752.0
+  - 6793723.0
+  - 363400.0
+  - 6794371.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0120_c0307.png
+  row: 120
+  col: 307
+  bloc:
+  - 184
+  - 3397
+  split: train
+  bounds:
+  - 367936.0
+  - 6793723.0
+  - 368584.0
+  - 6794371.0
+  n_annotations: 4
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0120_c0314.png
+  row: 120
+  col: 314
+  bloc:
+  - 186
+  - 3397
+  split: valid
+  bounds:
+  - 372472.0
+  - 6793723.0
+  - 373120.0
+  - 6794371.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0120_c0315.png
+  row: 120
+  col: 315
+  bloc:
+  - 186
+  - 3397
+  split: valid
+  bounds:
+  - 373120.0
+  - 6793723.0
+  - 373768.0
+  - 6794371.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0121_c0307.png
+  row: 121
+  col: 307
+  bloc:
+  - 184
+  - 3396
+  split: train
+  bounds:
+  - 367936.0
+  - 6793075.0
+  - 368584.0
+  - 6793723.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0122_c0311.png
+  row: 122
+  col: 311
+  bloc:
+  - 185
+  - 3396
+  split: train
+  bounds:
+  - 370528.0
+  - 6792427.0
+  - 371176.0
+  - 6793075.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0122_c0317.png
+  row: 122
+  col: 317
+  bloc:
+  - 187
+  - 3396
+  split: train
+  bounds:
+  - 374416.0
+  - 6792427.0
+  - 375064.0
+  - 6793075.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0123_c0311.png
+  row: 123
+  col: 311
+  bloc:
+  - 185
+  - 3396
+  split: train
+  bounds:
+  - 370528.0
+  - 6791779.0
+  - 371176.0
+  - 6792427.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0123_c0312.png
+  row: 123
+  col: 312
+  bloc:
+  - 185
+  - 3396
+  split: train
+  bounds:
+  - 371176.0
+  - 6791779.0
+  - 371824.0
+  - 6792427.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0123_c0317.png
+  row: 123
+  col: 317
+  bloc:
+  - 187
+  - 3396
+  split: train
+  bounds:
+  - 374416.0
+  - 6791779.0
+  - 375064.0
+  - 6792427.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0123_c0318.png
+  row: 123
+  col: 318
+  bloc:
+  - 187
+  - 3396
+  split: train
+  bounds:
+  - 375064.0
+  - 6791779.0
+  - 375712.0
+  - 6792427.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0268.png
+  row: 124
+  col: 268
+  bloc:
+  - 171
+  - 3395
+  split: valid
+  bounds:
+  - 342664.0
+  - 6791131.0
+  - 343312.0
+  - 6791779.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0269.png
+  row: 124
+  col: 269
+  bloc:
+  - 171
+  - 3395
+  split: valid
+  bounds:
+  - 343312.0
+  - 6791131.0
+  - 343960.0
+  - 6791779.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0309.png
+  row: 124
+  col: 309
+  bloc:
+  - 184
+  - 3395
+  split: train
+  bounds:
+  - 369232.0
+  - 6791131.0
+  - 369880.0
+  - 6791779.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0310.png
+  row: 124
+  col: 310
+  bloc:
+  - 185
+  - 3395
+  split: train
+  bounds:
+  - 369880.0
+  - 6791131.0
+  - 370528.0
+  - 6791779.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0317.png
+  row: 124
+  col: 317
+  bloc:
+  - 187
+  - 3395
+  split: train
+  bounds:
+  - 374416.0
+  - 6791131.0
+  - 375064.0
+  - 6791779.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0318.png
+  row: 124
+  col: 318
+  bloc:
+  - 187
+  - 3395
+  split: train
+  bounds:
+  - 375064.0
+  - 6791131.0
+  - 375712.0
+  - 6791779.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0124_c0319.png
+  row: 124
+  col: 319
+  bloc:
+  - 188
+  - 3395
+  split: test
+  bounds:
+  - 375712.0
+  - 6791131.0
+  - 376360.0
+  - 6791779.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0125_c0300.png
+  row: 125
+  col: 300
+  bloc:
+  - 181
+  - 3395
+  split: valid
+  bounds:
+  - 363400.0
+  - 6790483.0
+  - 364048.0
+  - 6791131.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0125_c0318.png
+  row: 125
+  col: 318
+  bloc:
+  - 187
+  - 3395
+  split: train
+  bounds:
+  - 375064.0
+  - 6790483.0
+  - 375712.0
+  - 6791131.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0126_c0261.png
+  row: 126
+  col: 261
+  bloc:
+  - 169
+  - 3395
+  split: train
+  bounds:
+  - 338128.0
+  - 6789835.0
+  - 338776.0
+  - 6790483.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0128_c0241.png
+  row: 128
+  col: 241
+  bloc:
+  - 162
+  - 3394
+  split: test
+  bounds:
+  - 325168.0
+  - 6788539.0
+  - 325816.0
+  - 6789187.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0128_c0314.png
+  row: 128
+  col: 314
+  bloc:
+  - 186
+  - 3394
+  split: valid
+  bounds:
+  - 372472.0
+  - 6788539.0
+  - 373120.0
+  - 6789187.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0129_c0241.png
+  row: 129
+  col: 241
+  bloc:
+  - 162
+  - 3394
+  split: test
+  bounds:
+  - 325168.0
+  - 6787891.0
+  - 325816.0
+  - 6788539.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0129_c0313.png
+  row: 129
+  col: 313
+  bloc:
+  - 186
+  - 3394
+  split: valid
+  bounds:
+  - 371824.0
+  - 6787891.0
+  - 372472.0
+  - 6788539.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0130_c0329.png
+  row: 130
+  col: 329
+  bloc:
+  - 191
+  - 3393
+  split: train
+  bounds:
+  - 382192.0
+  - 6787243.0
+  - 382840.0
+  - 6787891.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0135_c0001.png
+  row: 135
+  col: 1
+  bloc:
+  - 84
+  - 3392
+  split: valid
+  bounds:
+  - 169648.0
+  - 6784003.0
+  - 170296.0
+  - 6784651.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0135_c0302.png
+  row: 135
+  col: 302
+  bloc:
+  - 182
+  - 3392
+  split: train
+  bounds:
+  - 364696.0
+  - 6784003.0
+  - 365344.0
+  - 6784651.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0135_c0303.png
+  row: 135
+  col: 303
+  bloc:
+  - 182
+  - 3392
+  split: train
+  bounds:
+  - 365344.0
+  - 6784003.0
+  - 365992.0
+  - 6784651.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0136_c0001.png
+  row: 136
+  col: 1
+  bloc:
+  - 84
+  - 3391
+  split: train
+  bounds:
+  - 169648.0
+  - 6783355.0
+  - 170296.0
+  - 6784003.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0136_c0266.png
+  row: 136
+  col: 266
+  bloc:
+  - 170
+  - 3391
+  split: train
+  bounds:
+  - 341368.0
+  - 6783355.0
+  - 342016.0
+  - 6784003.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0136_c0351.png
+  row: 136
+  col: 351
+  bloc:
+  - 198
+  - 3391
+  split: train
+  bounds:
+  - 396448.0
+  - 6783355.0
+  - 397096.0
+  - 6784003.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0137_c0351.png
+  row: 137
+  col: 351
+  bloc:
+  - 198
+  - 3391
+  split: train
+  bounds:
+  - 396448.0
+  - 6782707.0
+  - 397096.0
+  - 6783355.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0137_c0352.png
+  row: 137
+  col: 352
+  bloc:
+  - 198
+  - 3391
+  split: train
+  bounds:
+  - 397096.0
+  - 6782707.0
+  - 397744.0
+  - 6783355.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0138_c0350.png
+  row: 138
+  col: 350
+  bloc:
+  - 198
+  - 3391
+  split: train
+  bounds:
+  - 395800.0
+  - 6782059.0
+  - 396448.0
+  - 6782707.0
+  n_annotations: 5
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0143_c0261.png
+  row: 143
+  col: 261
+  bloc:
+  - 169
+  - 3389
+  split: train
+  bounds:
+  - 338128.0
+  - 6778819.0
+  - 338776.0
+  - 6779467.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0147_c0334.png
+  row: 147
+  col: 334
+  bloc:
+  - 192
+  - 3388
+  split: train
+  bounds:
+  - 385432.0
+  - 6776227.0
+  - 386080.0
+  - 6776875.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0148_c0303.png
+  row: 148
+  col: 303
+  bloc:
+  - 182
+  - 3387
+  split: test
+  bounds:
+  - 365344.0
+  - 6775579.0
+  - 365992.0
+  - 6776227.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0149_c0303.png
+  row: 149
+  col: 303
+  bloc:
+  - 182
+  - 3387
+  split: test
+  bounds:
+  - 365344.0
+  - 6774931.0
+  - 365992.0
+  - 6775579.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0149_c0354.png
+  row: 149
+  col: 354
+  bloc:
+  - 199
+  - 3387
+  split: train
+  bounds:
+  - 398392.0
+  - 6774931.0
+  - 399040.0
+  - 6775579.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0150_c0258.png
+  row: 150
+  col: 258
+  bloc:
+  - 168
+  - 3387
+  split: train
+  bounds:
+  - 336184.0
+  - 6774283.0
+  - 336832.0
+  - 6774931.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0152_c0321.png
+  row: 152
+  col: 321
+  bloc:
+  - 188
+  - 3386
+  split: train
+  bounds:
+  - 377008.0
+  - 6772987.0
+  - 377656.0
+  - 6773635.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0155_c0277.png
+  row: 155
+  col: 277
+  bloc:
+  - 174
+  - 3385
+  split: train
+  bounds:
+  - 348496.0
+  - 6771043.0
+  - 349144.0
+  - 6771691.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0161_c0285.png
+  row: 161
+  col: 285
+  bloc:
+  - 177
+  - 3383
+  split: train
+  bounds:
+  - 353680.0
+  - 6767155.0
+  - 354328.0
+  - 6767803.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0161_c0286.png
+  row: 161
+  col: 286
+  bloc:
+  - 177
+  - 3383
+  split: train
+  bounds:
+  - 354328.0
+  - 6767155.0
+  - 354976.0
+  - 6767803.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0163_c0275.png
+  row: 163
+  col: 275
+  bloc:
+  - 173
+  - 3383
+  split: train
+  bounds:
+  - 347200.0
+  - 6765859.0
+  - 347848.0
+  - 6766507.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0164_c0259.png
+  row: 164
+  col: 259
+  bloc:
+  - 168
+  - 3382
+  split: valid
+  bounds:
+  - 336832.0
+  - 6765211.0
+  - 337480.0
+  - 6765859.0
+  n_annotations: 3
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0164_c0260.png
+  row: 164
+  col: 260
+  bloc:
+  - 168
+  - 3382
+  split: valid
+  bounds:
+  - 337480.0
+  - 6765211.0
+  - 338128.0
+  - 6765859.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0164_c0265.png
+  row: 164
+  col: 265
+  bloc:
+  - 170
+  - 3382
+  split: train
+  bounds:
+  - 340720.0
+  - 6765211.0
+  - 341368.0
+  - 6765859.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0165_c0264.png
+  row: 165
+  col: 264
+  bloc:
+  - 170
+  - 3382
+  split: train
+  bounds:
+  - 340072.0
+  - 6764563.0
+  - 340720.0
+  - 6765211.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0165_c0281.png
+  row: 165
+  col: 281
+  bloc:
+  - 175
+  - 3382
+  split: train
+  bounds:
+  - 351088.0
+  - 6764563.0
+  - 351736.0
+  - 6765211.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0166_c0280.png
+  row: 166
+  col: 280
+  bloc:
+  - 175
+  - 3382
+  split: train
+  bounds:
+  - 350440.0
+  - 6763915.0
+  - 351088.0
+  - 6764563.0
+  n_annotations: 0
+  classes: []
+- nom: bretagne_r0166_c0285.png
+  row: 166
+  col: 285
+  bloc:
+  - 177
+  - 3382
+  split: train
+  bounds:
+  - 353680.0
+  - 6763915.0
+  - 354328.0
+  - 6764563.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0169_c0271.png
+  row: 169
+  col: 271
+  bloc:
+  - 172
+  - 3381
+  split: train
+  bounds:
+  - 344608.0
+  - 6761971.0
+  - 345256.0
+  - 6762619.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0182_c0258.png
+  row: 182
+  col: 258
+  bloc:
+  - 168
+  - 3376
+  split: train
+  bounds:
+  - 336184.0
+  - 6753547.0
+  - 336832.0
+  - 6754195.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0184_c0261.png
+  row: 184
+  col: 261
+  bloc:
+  - 169
+  - 3376
+  split: train
+  bounds:
+  - 338128.0
+  - 6752251.0
+  - 338776.0
+  - 6752899.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: bretagne_r0184_c0295.png
+  row: 184
+  col: 295
+  bloc:
+  - 180
+  - 3376
+  split: train
+  bounds:
+  - 360160.0
+  - 6752251.0
+  - 360808.0
+  - 6752899.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+repeint:
+  source_dataset: enclos_fr_bretagne_ld648_v1
+  variante: csl
+  canaux: R:cvat_combined G:slrm_r10_e0.5 B:ld_v1
+  mnt:
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_0.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_1.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_10.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_11.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_12.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_13.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_14.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_15.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_16.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_17.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_18.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_19.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_2.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_20.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_21.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_22.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_23.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_3.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_4.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_5.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_6.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_7.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_8.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_9.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_0.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_1.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_10.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_100.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_101.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_102.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_103.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_104.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_105.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_106.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_11.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_12.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_13.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_14.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_15.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_16.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_17.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_18.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_19.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_2.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_20.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_21.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_22.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_23.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_24.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_25.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_26.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_27.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_28.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_29.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_3.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_30.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_31.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_32.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_33.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_34.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_35.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_36.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_37.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_38.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_39.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_4.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_40.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_41.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_42.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_43.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_44.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_45.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_46.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_47.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_48.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_49.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_5.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_50.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_51.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_52.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_53.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_54.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_55.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_56.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_57.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_58.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_59.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_6.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_60.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_61.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_62.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_63.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_64.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_65.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_66.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_67.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_68.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_69.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_7.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_70.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_71.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_72.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_73.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_74.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_75.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_76.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_77.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_78.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_79.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_8.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_80.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_81.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_82.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_83.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_84.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_85.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_86.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_87.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_88.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_89.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_9.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_90.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_91.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_92.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_93.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_94.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_95.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_96.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_97.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_98.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_bretagne_totale_99.tif
+  ld: D:\veille_irlande\corpus_enclos_fr\ld\bretagne_ld_1m.vrt
+  date: '2026-08-20'

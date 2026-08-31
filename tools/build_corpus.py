@@ -4,11 +4,22 @@
 chaque image, splits spatiaux préservés tels quels.
 
 Usage : python build_corpus.py <config.yaml> <dossier_des_datasets> [--out <dossier>]
+
+Entrées de `datasets:` — un NOM (dataset entier) ou un mapping restreint :
+    datasets:
+      - enclos_fr_bretagne_ld648_v1                # entier
+      - {nom: enclos_ie_sligo_ld648_v1,            # restreint (ex. corpus graduel)
+         splits: [train], tuiles: [a.png, b.png]}
+La restriction est tracée dans corpus_manifest.yaml ; la recette complète = la
+config (commitée). Le manifeste porte aussi la provenance (date, outil+commit,
+sha1 de la config, raster/gpkg/tuile_px des sources, sha1 des COCO produits).
 """
 import argparse
+import datetime as _dt
 import hashlib
 import json
 import shutil
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
@@ -19,6 +30,31 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from slice_zone import _refuser_drive
 
 SPLITS = ("train", "valid", "test")
+
+
+def _git_head_court():
+    try:
+        r = subprocess.run(["git", "rev-parse", "--short", "HEAD"],
+                           cwd=Path(__file__).resolve().parents[1],
+                           capture_output=True, text=True)
+        return r.stdout.strip() or "?"
+    except Exception:
+        return "?"
+
+
+def specs_datasets(cfg):
+    """Normalise cfg['datasets'] : noms nus ET mappings restreints {nom, splits, tuiles}."""
+    specs = []
+    for entree in cfg["datasets"]:
+        if isinstance(entree, str):
+            specs.append({"nom": entree, "splits": None, "tuiles": None})
+        elif isinstance(entree, dict) and entree.get("nom"):
+            specs.append({"nom": entree["nom"],
+                          "splits": list(entree["splits"]) if entree.get("splits") else None,
+                          "tuiles": set(entree["tuiles"]) if entree.get("tuiles") else None})
+        else:
+            sys.exit(f"datasets : entrée invalide {entree!r} (nom nu ou mapping avec nom:)")
+    return specs
 
 
 def construire(config_path, dossier_datasets, out_dir):
@@ -37,14 +73,26 @@ def construire(config_path, dossier_datasets, out_dir):
                   for i, c in enumerate(classes)]
     cat_id = {c: i + 1 for i, c in enumerate(classes)}
 
-    manifest = {"corpus": cfg["corpus"], "classes": classes, "fusions": fusions,
+    manifest = {"corpus": cfg["corpus"],
+                "genere_le": _dt.date.today().isoformat(),
+                "outil": "tools/build_corpus.py",
+                "outil_commit": _git_head_court(),
+                "config_sha1": hashlib.sha1(
+                    Path(config_path).read_bytes()).hexdigest(),
+                "classes": classes, "fusions": fusions,
                 "datasets": {}, "splits": {}}
+    for cle in ("gsd_m", "rvt", "notes"):
+        if cfg.get(cle) is not None:
+            manifest[cle] = cfg[cle]
     for split in SPLITS:
         coco_out = {"images": [], "annotations": [], "categories": categories}
         (out_dir / split).mkdir(parents=True)
         prochain_img, prochain_ann = 1, 1
         noms_vus = set()
-        for nom_ds in cfg["datasets"]:
+        for spec in specs_datasets(cfg):
+            nom_ds = spec["nom"]
+            if spec["splits"] and split not in spec["splits"]:
+                continue
             racine = dossier_datasets / nom_ds
             coco_p = racine / split / "_annotations.coco.json"
             if not coco_p.exists():
@@ -57,6 +105,8 @@ def construire(config_path, dossier_datasets, out_dir):
             remap_img = {}
             for im in coco["images"]:
                 nom = im["file_name"]
+                if spec["tuiles"] is not None and nom not in spec["tuiles"]:
+                    continue
                 if nom in noms_vus:
                     sys.exit(f"collision de nom d'image : {nom}")
                 noms_vus.add(nom)
@@ -67,6 +117,8 @@ def construire(config_path, dossier_datasets, out_dir):
                 prochain_img += 1
             stats = Counter()
             for a in coco["annotations"]:
+                if a["image_id"] not in remap_img:
+                    continue  # image hors restriction (spec['tuiles'])
                 brut = noms_cats[a["category_id"]]
                 final = fusions.get(brut, brut)
                 if final not in cat_id:
@@ -76,17 +128,29 @@ def construire(config_path, dossier_datasets, out_dir):
                      "category_id": cat_id[final]})
                 stats[final] += 1
                 prochain_ann += 1
+            cfg_src = split_man.get("config") or {}
             entree = manifest["datasets"].setdefault(
                 nom_ds, {"zone": zone, "splits": {},
                          "split_manifest_sha1": hashlib.sha1(
                              (racine / "split_manifest.yaml")
-                             .read_bytes()).hexdigest()})
+                             .read_bytes()).hexdigest(),
+                         # provenance amont, reprise du split_manifest (audit 2026-08-31)
+                         "raster": cfg_src.get("raster"),
+                         "gpkg": cfg_src.get("gpkg"),
+                         "tuile_px": cfg_src.get("tuile_px"),
+                         "genere_le_dataset": split_man.get("genere_le")})
+            if spec["splits"] or spec["tuiles"] is not None:
+                entree["restriction"] = {
+                    "splits": spec["splits"],
+                    "tuiles": (len(spec["tuiles"]) if spec["tuiles"] is not None else None)}
             entree["splits"][split] = {"images": len(remap_img),
                                        "annotations": dict(stats)}
+        texte_coco = json.dumps(coco_out)
         (out_dir / split / "_annotations.coco.json").write_text(
-            json.dumps(coco_out), encoding="utf-8")
+            texte_coco, encoding="utf-8")
         manifest["splits"][split] = {
             "images": len(coco_out["images"]),
+            "coco_sha1": hashlib.sha1(texte_coco.encode("utf-8")).hexdigest(),
             "annotations": dict(Counter(
                 classes[a["category_id"] - 1]
                 for a in coco_out["annotations"]))}

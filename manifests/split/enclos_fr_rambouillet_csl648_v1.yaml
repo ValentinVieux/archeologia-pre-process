@@ -1,0 +1,712 @@
+dataset: enclos_fr_rambouillet_csl648_v1
+zone: ile_de_france/78_rambouillet
+seed: 42
+genere_le: '2026-08-16'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    emprises:
+      classe: enclos_circulaire
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_fr_rambouillet_ld648_v1
+  gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/rambouillet_emprises.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/corpus_enclos_fr/ld/rambouillet_ld_1m.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: ile_de_france/78_rambouillet
+grille:
+  origine:
+  - 601513.0
+  - 6854624.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos_circulaire: 28
+  valid:
+    enclos_circulaire: 9
+  test:
+    enclos_circulaire: 5
+hashes_sha1:
+  train: baf664f2b0392fc0ca241a22180df2693fd86109
+  valid: 0616bd5b5de20c3f2079c6de0bbcf9992c57d7c5
+  test: 8f3f54aba94cf3768974250db0be0431179c7f07
+tuiles:
+- nom: rambouillet_r0001_c0006.png
+  row: 1
+  col: 6
+  bloc:
+  - 302
+  - 3426
+  split: valid
+  bounds:
+  - 605401.0
+  - 6853328.0
+  - 606049.0
+  - 6853976.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0001_c0007.png
+  row: 1
+  col: 7
+  bloc:
+  - 303
+  - 3426
+  split: train
+  bounds:
+  - 606049.0
+  - 6853328.0
+  - 606697.0
+  - 6853976.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0002_c0005.png
+  row: 2
+  col: 5
+  bloc:
+  - 302
+  - 3426
+  split: valid
+  bounds:
+  - 604753.0
+  - 6852680.0
+  - 605401.0
+  - 6853328.0
+  n_annotations: 0
+  classes: []
+- nom: rambouillet_r0002_c0006.png
+  row: 2
+  col: 6
+  bloc:
+  - 302
+  - 3426
+  split: valid
+  bounds:
+  - 605401.0
+  - 6852680.0
+  - 606049.0
+  - 6853328.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0002_c0007.png
+  row: 2
+  col: 7
+  bloc:
+  - 303
+  - 3426
+  split: train
+  bounds:
+  - 606049.0
+  - 6852680.0
+  - 606697.0
+  - 6853328.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0002_c0013.png
+  row: 2
+  col: 13
+  bloc:
+  - 305
+  - 3426
+  split: valid
+  bounds:
+  - 609937.0
+  - 6852680.0
+  - 610585.0
+  - 6853328.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0004_c0017.png
+  row: 4
+  col: 17
+  bloc:
+  - 306
+  - 3425
+  split: train
+  bounds:
+  - 612529.0
+  - 6851384.0
+  - 613177.0
+  - 6852032.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0005_c0011.png
+  row: 5
+  col: 11
+  bloc:
+  - 304
+  - 3425
+  split: train
+  bounds:
+  - 608641.0
+  - 6850736.0
+  - 609289.0
+  - 6851384.0
+  n_annotations: 0
+  classes: []
+- nom: rambouillet_r0005_c0014.png
+  row: 5
+  col: 14
+  bloc:
+  - 305
+  - 3425
+  split: train
+  bounds:
+  - 610585.0
+  - 6850736.0
+  - 611233.0
+  - 6851384.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0005_c0017.png
+  row: 5
+  col: 17
+  bloc:
+  - 306
+  - 3425
+  split: train
+  bounds:
+  - 612529.0
+  - 6850736.0
+  - 613177.0
+  - 6851384.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0006_c0011.png
+  row: 6
+  col: 11
+  bloc:
+  - 304
+  - 3425
+  split: train
+  bounds:
+  - 608641.0
+  - 6850088.0
+  - 609289.0
+  - 6850736.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0006_c0016.png
+  row: 6
+  col: 16
+  bloc:
+  - 306
+  - 3425
+  split: train
+  bounds:
+  - 611881.0
+  - 6850088.0
+  - 612529.0
+  - 6850736.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0008_c0017.png
+  row: 8
+  col: 17
+  bloc:
+  - 306
+  - 3424
+  split: train
+  bounds:
+  - 612529.0
+  - 6848792.0
+  - 613177.0
+  - 6849440.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0008_c0022.png
+  row: 8
+  col: 22
+  bloc:
+  - 308
+  - 3424
+  split: train
+  bounds:
+  - 615769.0
+  - 6848792.0
+  - 616417.0
+  - 6849440.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0008_c0023.png
+  row: 8
+  col: 23
+  bloc:
+  - 308
+  - 3424
+  split: train
+  bounds:
+  - 616417.0
+  - 6848792.0
+  - 617065.0
+  - 6849440.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0009_c0021.png
+  row: 9
+  col: 21
+  bloc:
+  - 307
+  - 3424
+  split: train
+  bounds:
+  - 615121.0
+  - 6848144.0
+  - 615769.0
+  - 6848792.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0010_c0012.png
+  row: 10
+  col: 12
+  bloc:
+  - 304
+  - 3423
+  split: test
+  bounds:
+  - 609289.0
+  - 6847496.0
+  - 609937.0
+  - 6848144.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0011_c0011.png
+  row: 11
+  col: 11
+  bloc:
+  - 304
+  - 3423
+  split: test
+  bounds:
+  - 608641.0
+  - 6846848.0
+  - 609289.0
+  - 6847496.0
+  n_annotations: 0
+  classes: []
+- nom: rambouillet_r0011_c0020.png
+  row: 11
+  col: 20
+  bloc:
+  - 307
+  - 3423
+  split: valid
+  bounds:
+  - 614473.0
+  - 6846848.0
+  - 615121.0
+  - 6847496.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0015_c0005.png
+  row: 15
+  col: 5
+  bloc:
+  - 302
+  - 3422
+  split: train
+  bounds:
+  - 604753.0
+  - 6844256.0
+  - 605401.0
+  - 6844904.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0016_c0007.png
+  row: 16
+  col: 7
+  bloc:
+  - 303
+  - 3421
+  split: train
+  bounds:
+  - 606049.0
+  - 6843608.0
+  - 606697.0
+  - 6844256.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0016_c0032.png
+  row: 16
+  col: 32
+  bloc:
+  - 311
+  - 3421
+  split: train
+  bounds:
+  - 622249.0
+  - 6843608.0
+  - 622897.0
+  - 6844256.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0017_c0005.png
+  row: 17
+  col: 5
+  bloc:
+  - 302
+  - 3421
+  split: train
+  bounds:
+  - 604753.0
+  - 6842960.0
+  - 605401.0
+  - 6843608.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0017_c0006.png
+  row: 17
+  col: 6
+  bloc:
+  - 302
+  - 3421
+  split: train
+  bounds:
+  - 605401.0
+  - 6842960.0
+  - 606049.0
+  - 6843608.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0017_c0007.png
+  row: 17
+  col: 7
+  bloc:
+  - 303
+  - 3421
+  split: train
+  bounds:
+  - 606049.0
+  - 6842960.0
+  - 606697.0
+  - 6843608.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0017_c0029.png
+  row: 17
+  col: 29
+  bloc:
+  - 310
+  - 3421
+  split: train
+  bounds:
+  - 620305.0
+  - 6842960.0
+  - 620953.0
+  - 6843608.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0017_c0033.png
+  row: 17
+  col: 33
+  bloc:
+  - 311
+  - 3421
+  split: train
+  bounds:
+  - 622897.0
+  - 6842960.0
+  - 623545.0
+  - 6843608.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0018_c0004.png
+  row: 18
+  col: 4
+  bloc:
+  - 302
+  - 3421
+  split: train
+  bounds:
+  - 604105.0
+  - 6842312.0
+  - 604753.0
+  - 6842960.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0018_c0007.png
+  row: 18
+  col: 7
+  bloc:
+  - 303
+  - 3421
+  split: train
+  bounds:
+  - 606049.0
+  - 6842312.0
+  - 606697.0
+  - 6842960.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0018_c0033.png
+  row: 18
+  col: 33
+  bloc:
+  - 311
+  - 3421
+  split: train
+  bounds:
+  - 622897.0
+  - 6842312.0
+  - 623545.0
+  - 6842960.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0019_c0005.png
+  row: 19
+  col: 5
+  bloc:
+  - 302
+  - 3420
+  split: test
+  bounds:
+  - 604753.0
+  - 6841664.0
+  - 605401.0
+  - 6842312.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0019_c0006.png
+  row: 19
+  col: 6
+  bloc:
+  - 302
+  - 3420
+  split: test
+  bounds:
+  - 605401.0
+  - 6841664.0
+  - 606049.0
+  - 6842312.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0020_c0005.png
+  row: 20
+  col: 5
+  bloc:
+  - 302
+  - 3420
+  split: test
+  bounds:
+  - 604753.0
+  - 6841016.0
+  - 605401.0
+  - 6841664.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0020_c0006.png
+  row: 20
+  col: 6
+  bloc:
+  - 302
+  - 3420
+  split: test
+  bounds:
+  - 605401.0
+  - 6841016.0
+  - 606049.0
+  - 6841664.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0020_c0012.png
+  row: 20
+  col: 12
+  bloc:
+  - 304
+  - 3420
+  split: valid
+  bounds:
+  - 609289.0
+  - 6841016.0
+  - 609937.0
+  - 6841664.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0022_c0027.png
+  row: 22
+  col: 27
+  bloc:
+  - 309
+  - 3420
+  split: train
+  bounds:
+  - 619009.0
+  - 6839720.0
+  - 619657.0
+  - 6840368.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0024_c0023.png
+  row: 24
+  col: 23
+  bloc:
+  - 308
+  - 3419
+  split: train
+  bounds:
+  - 616417.0
+  - 6838424.0
+  - 617065.0
+  - 6839072.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0024_c0024.png
+  row: 24
+  col: 24
+  bloc:
+  - 308
+  - 3419
+  split: train
+  bounds:
+  - 617065.0
+  - 6838424.0
+  - 617713.0
+  - 6839072.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0026_c0027.png
+  row: 26
+  col: 27
+  bloc:
+  - 309
+  - 3418
+  split: valid
+  bounds:
+  - 619009.0
+  - 6837128.0
+  - 619657.0
+  - 6837776.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0026_c0028.png
+  row: 26
+  col: 28
+  bloc:
+  - 309
+  - 3418
+  split: valid
+  bounds:
+  - 619657.0
+  - 6837128.0
+  - 620305.0
+  - 6837776.0
+  n_annotations: 2
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0027_c0023.png
+  row: 27
+  col: 23
+  bloc:
+  - 308
+  - 3418
+  split: train
+  bounds:
+  - 616417.0
+  - 6836480.0
+  - 617065.0
+  - 6837128.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0027_c0028.png
+  row: 27
+  col: 28
+  bloc:
+  - 309
+  - 3418
+  split: valid
+  bounds:
+  - 619657.0
+  - 6836480.0
+  - 620305.0
+  - 6837128.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+- nom: rambouillet_r0027_c0030.png
+  row: 27
+  col: 30
+  bloc:
+  - 310
+  - 3418
+  split: train
+  bounds:
+  - 620953.0
+  - 6836480.0
+  - 621601.0
+  - 6837128.0
+  n_annotations: 0
+  classes: []
+- nom: rambouillet_r0028_c0029.png
+  row: 28
+  col: 29
+  bloc:
+  - 310
+  - 3418
+  split: train
+  bounds:
+  - 620305.0
+  - 6835832.0
+  - 620953.0
+  - 6836480.0
+  n_annotations: 1
+  classes:
+  - enclos_circulaire
+repeint:
+  source_dataset: enclos_fr_rambouillet_ld648_v1
+  variante: csl
+  canaux: R:cvat_combined G:slrm_r10_e0.5 B:ld_v1
+  mnt:
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_rambouillet_0.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_rambouillet_1.tif
+  - D:\veille_irlande\corpus_enclos_fr\dem\dem_rambouillet_2.tif
+  ld: D:\veille_irlande\corpus_enclos_fr\ld\rambouillet_ld_1m.vrt
+  date: '2026-08-20'

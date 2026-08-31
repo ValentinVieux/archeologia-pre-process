@@ -303,6 +303,16 @@ try:
     except SystemExit:
         pass
 
+    # garde placeholder <copie locale> (audit 2026-08-31) : config non exécutable refusée
+    cfg_ph = tmp / "cfg_placeholder.yaml"
+    cfg_ph.write_text(cfg_path.read_text(encoding="utf-8").replace(
+        str(raster), "<copie locale>\\indice_LD.vrt"), encoding="utf-8")
+    try:
+        charger_config(cfg_ph)
+        raise AssertionError("placeholder <copie locale> accepté")
+    except SystemExit:
+        pass
+
     print(f"ALL OK — pipeline slice_zone ({len(tuiles_m)} tuiles, "
           f"{n_annotees} annotées, {n_neg} négatives, "
           f"splits {sorted(set(tm['split'] for tm in tuiles_m))})")

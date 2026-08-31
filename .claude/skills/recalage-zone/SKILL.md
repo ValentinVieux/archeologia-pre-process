@@ -8,6 +8,12 @@ description: >
   l'utilisateur dit « recale la zone X », « on recale X », « corrige les
   offsets de X », « lance la revue de recalage sur X ».
 argument-hint: <zone, ex. ile_de_france/78_rambouillet>
+entrees:
+  - "training/vecteurs/<zone>_entites_l93.gpkg (v1) + raster LD local"
+  - "configs/recalage_<zone>.yaml (à créer sur gabarit sinon)"
+sorties:
+  - "training/vecteurs/<zone>_entites_l93_v2.gpkg + recalage_decisions_<zone>.yaml (Drive)"
+suivant: [prepare-zone-training]
 ---
 
 # Recaler une zone (recalage → revue humaine → calibration → application → dépôt)
@@ -59,8 +65,9 @@ référence : `docs/superpowers/specs/2026-07-28-recalage-vecteurs-design.md`
   garde `geom_origine` et `decision_humaine` sur chaque ligne.
 - Dépôt (staging + robocopy) : `training/vecteurs/<zone>_entites_l93_v2.gpkg`
   + `recalage_decisions_<zone>.yaml` (provenance) + rapport ; le GPKG v1 reste
-  en place. Manifest : note `DÉCISION:` chiffrée + `TODO:` re-slice buffer 7 m.
-  Régénérer l'index v2.
+  en place. Manifest : note `DÉCISION:` chiffrée + `TODO:` re-slice buffer 7 m
+  (le re-slice = `/prepare-zone-training` avec `lineaires_<zone>_ld_648_v2.yaml`,
+  GROUPÉ une fois TOUTES les zones recalées). Régénérer l'index v2.
 
 ## Garde-fous
 

@@ -8,6 +8,14 @@ description: >
   l'entraînement », « on passe à la zone suivante », « crée le dataset de X »,
   « slice cette zone », « prepare zone for training ».
 argument-hint: <zone, ex. ile_de_france/78_rambouillet>
+entrees:
+  - "zone data_regions_v2 AUDITÉE (0 inconnu, aliases tracés — sinon /audit-dataset)"
+  - "raster LD 0,5 m/px en copie locale (VRT) ; absent -> chaîne telecharger_dalles_ign -> mosaique_mnt -> generer_ld"
+sorties:
+  - "configs/vecteurs_<zone>.yaml + configs/<famille>_<zone_id>_ld648_v1.yaml (commitées)"
+  - "training/vecteurs/<zone>_entites_l93.gpkg + training/datasets/<dataset>/ (Drive)"
+  - "manifests/split/<dataset>.yaml (copie versionnée du split_manifest)"
+suivant: [upload-roboflow, corpus-entrainement]
 ---
 
 # Préparer une zone pour l'entraînement (GPKG → découpe → vérification → dépôt)
@@ -34,13 +42,21 @@ mémoire persistante documente les pièges déjà rencontrés (données et plate
 - `build_zone_gpkg` puis **`verif_zone_gpkg`** (boucle : corriger la config et
   reconstruire jusqu'à CONFORME). Déposer sur
   `training/vecteurs/<zone>_entites_l93.gpkg` (staging + robocopy).
+- **Routage des voies GPKG** : `vecteurs_<zone>.yaml` + build_zone_gpkg = la voie
+  des livraisons vecteur auditées (la SEULE avec contrôleur verif_zone_gpkg).
+  Autres voies existantes : `coco_a_gpkg` (zones COCO-only, contrôleur jumeau
+  `verif_coco_a_gpkg`), `build_haye/build_fontainebleau/build_gpkg_fours` (zones
+  spéciales, SANS contrôleur — le signaler à l'utilisateur), `/corpus-irlande`
+  (secteurs IE). Toute NOUVELLE zone passe par la voie contrôlée.
 
 ## Étape 3 — Config de découpe
 - Écrire `configs/lineaires_<zone>_ld_648_v1.yaml` (gabarit : zones existantes) :
   classes ENTRAÎNÉES validées par l'utilisateur ; le linéaire non entraîné passe en
-  `ignorer: true` (jamais silencieusement retiré) ; buffer par zone validé par
-  l'utilisateur (largeur totale ; historique : 4,8 m Haye/Fontainebleau, 5 m
-  Rambouillet) ; `nodata_supplementaire: 0` pour les mosaïques à fond implicite.
+  `ignorer: true` (jamais silencieusement retiré) ; buffer de lignes **STANDARD
+  7 m de largeur totale** (décision 2026-07-28) sauf dérogation validée par
+  l'utilisateur — l'historique 4,8 m (Haye/Fontainebleau) et 5 m (Rambouillet)
+  = datasets d'AVANT la décision, à régénérer au recalage ;
+  `nodata_supplementaire: 0` pour les mosaïques à fond implicite.
 
 ## Étape 4 — Découpe + boucle de vérification
 - `slice_zone` (seed 42, sortie locale). Puis **`verif_dataset`** : toute divergence
@@ -52,13 +68,16 @@ mémoire persistante documente les pièges déjà rencontrés (données et plate
   avant tout dépôt. Signaler les classes rares mal réparties (granularité des blocs).
 
 ## Étape 6 — Dépôt et comptabilité
-- Miroir vers `training/datasets/<dataset>/` (robocopy /MIR, comparer comptes + SHA1
-  du split_manifest). Note `DÉCISION:` au manifest de zone (comptes par classe,
-  splits, reproductibilité), `TODO:` pour l'upload. Régénérer index.html.
+- Dépôt vers `training/datasets/<dataset>/` (**robocopy /E** — jamais /MIR : il
+  SUPPRIME côté destination, interdit § Stockage Drive ; comparer comptes + SHA1
+  du split_manifest). Copier le split_manifest dans `manifests/split/<dataset>.yaml`
+  (versionné, règle 2026-08-31). Note `DÉCISION:` au manifest de zone (comptes par
+  classe, splits, reproductibilité), `TODO:` pour l'upload. Régénérer index.html.
 
 ## Étape 7 — Récapitulatif
 - Tableau : tuiles/splits/classes/négatifs, chemins, commits proposés (config +
-  éventuels outils). Proposer d'enchaîner sur `/upload-roboflow`.
+  éventuels outils). Proposer d'enchaîner sur `/upload-roboflow`, ou sur
+  `/corpus-entrainement` si le dataset rejoint un corpus multi-zones.
 
 ## Garde-fous
 - Boucle de vérification NON NÉGOCIABLE : aucune livraison avant verdict conforme.

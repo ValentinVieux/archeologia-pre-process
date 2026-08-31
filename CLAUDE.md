@@ -12,24 +12,27 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 ## Commands (Windows — ne jamais activer le venv, appeler son python directement)
 
 ```
+# Tous les outils répondent à --help ; seules les options MATÉRIELLES sont listées ici (gardé par tests\test_doc_cli.py)
 .venv\Scripts\python.exe -m audit "<dataset-path>" [--no-open]   # audit d'une livraison
-.venv\Scripts\python.exe tests\test_audit.py                     # auto-test complet
+.venv\Scripts\python.exe tests\run_all.py                        # TOUS les auto-tests (la porte de parité venv_onnx se lance à part, cf. bloc bench)
 .venv\Scripts\python.exe tools\dispatch_roboflow.py <attr.json> <zips> <staging>  # cf. /dispatch-roboflow
 .venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
 .venv\Scripts\python.exe tools\build_haye_gpkg.py [--out <dossier>]  # reconstruit le GPKG de 54_foret_de_haye
+.venv\Scripts\python.exe tools\build_fontainebleau_gpkg.py <source> [--out <dossier>]  # reconstruit le GPKG de 77_fontainebleau (Digit_*.shp)
 .venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N]  # tuiles 648px + split spatial (cf. configs\)
 .venv\Scripts\python.exe tools\build_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> [--out <dossier>]  # GPKG entités depuis livraison auditée
 .venv\Scripts\python.exe tools\verif_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> <gpkg>  # boucle de vérification du GPKG
 .venv\Scripts\python.exe tools\verif_dataset.py <dataset> [--gpkg <chemin>]  # boucle de vérification d'un dataset découpé
-.venv\Scripts\python.exe tools\upload_roboflow_split.py <dataset> --workspace <id> --projet <id> [--test] [--dry-run]  # upload split IMPOSÉ (clé : env ROBOFLOW_API_KEY)
+.venv\Scripts\python.exe tools\upload_roboflow_split.py <dataset> --workspace <id> --projet <id> [--suffixe-classes <site>] [--test] [--dry-run] [--eviter <ids>] [--paralleles 10]  # upload split IMPOSÉ (clé : env ROBOFLOW_API_KEY) ; JAMAIS --batch ; reste : --help
+.venv\Scripts\python.exe tools\purge_roboflow_zone.py <zone_tag> --workspace <id> --projet <id> [--dry-run] [--oui]  # purge par tag AVANT re-upload d'un lot rectifié (corbeille+dédup parées, cf. /upload-roboflow)
 .venv\Scripts\python.exe tools\recaler_lignes.py configs\recalage_<zone>.yaml <gpkg> <raster> [--out <dossier>]  # recalage des lignes sur le relief (méthode B)
 .venv\Scripts\python.exe tools\verif_recalage.py configs\recalage_<zone>.yaml <gpkg_source> <gpkg_recale> <raster>  # boucle de vérification du recalage
-.venv\Scripts\python.exe -m tools.review_recalage <gpkg_recale> <raster> [--port 5175]  # app locale de revue/édition (décisions YAML, jamais le GPKG)
+.venv\Scripts\python.exe -m tools.review_recalage <gpkg_recale> <raster> [--decisions <yaml>] [--port 5175]  # app locale de revue/édition (décisions YAML, jamais le GPKG ; --decisions = YAML jetable pour tester sans écraser)
 .venv\Scripts\python.exe tools\analyse_corrections.py <decisions.yaml> <gpkg_recale>  # typologie des corrections + suggestions de paramètres
-.venv\Scripts\python.exe tools\appliquer_decisions.py <gpkg_source> <gpkg_recale> <decisions.yaml> [--out <gpkg_final>]  # GPKG final (décisions humaines appliquées)
-.venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final>  # boucle de vérification de l'application
-.venv\Scripts\python.exe tools\coco_a_gpkg.py <payload> <sortie> --classes <c1> ... [--rasters]  # GPKG EPSG:2154 depuis un payload COCO dispatché (zones sans vecteurs source, ex. 57_fenetrange) + tuiles LD GeoTIFF ; uid=split:annotation_id, dalles LHD = coin NW (vérifié WFS IGN)
-.venv\Scripts\python.exe tools\verif_coco_a_gpkg.py <payload> <sortie>  # boucle de vérification (recompte + regéoréférencement indépendants)
+.venv\Scripts\python.exe tools\appliquer_decisions.py <gpkg_source> <gpkg_recale> <decisions.yaml> [--out <gpkg_final>] [--recale-depuis <gpkg_revu>]  # GPKG final (décisions humaines appliquées ; --recale-depuis si l'algo a re-tourné après la revue)
+.venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final> [<gpkg_reference>]  # boucle de vérification de l'application (référence = le --recale-depuis du producteur, sinon verdict faux)
+.venv\Scripts\python.exe tools\coco_a_gpkg.py <payload> <sortie> --classes <c1> ... [--forme bbox|ellipse] [--fusion SRC=DST ...] [--rasters]  # GPKG EPSG:2154 depuis un payload COCO dispatché — --forme ellipse OBLIGATOIRE pour le corpus fours ; uid=split:annotation_id, dalles LHD = coin NW (vérifié WFS IGN)
+.venv\Scripts\python.exe tools\verif_coco_a_gpkg.py <payload> <sortie> [--fusion SRC=DST ...]  # boucle de vérification (recompte + regéoréf indépendants) — RÉPÉTER les --fusion du producteur, sinon verdict faux
 .venv\Scripts\python.exe tools\telecharger_dalles_ign.py <entites.gpkg> <sortie> [--anneau 1] [--mt 4]  # dalles MNT LiDAR HD IGN (GeoTIFF 1 km 0,5 m) via la grille WFS : cellules occupées + anneau, reprise idempotente, CRS estampillé
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\auto_label_depressions.py <ld.tif> <selection.gpkg> <sortie.gpkg> --poids <ckpt>  # auto-labels circular_depression par run_rf_detr_1 @0,395 (tuiles 1 km alignées grille, parité d'inférence) ; 0 détection = garde-fou, diagnostiquer au plancher avant d'accepter
 .venv\Scripts\python.exe tools\build_gpkg_fours_charbonnieres.py <zone> <sortie.gpkg> [--source|--payload|--auto-labels]  # GPKG des zones spéciales du corpus fours/charbonnières (chailluz r=5 m, blois rayons réels, rambouillet COCO+GPKG+ignorer)
@@ -41,10 +44,12 @@ D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.p
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques) — ATTENTION : --out est le dossier DU corpus (rmtree !), défaut corpus\<nom> ; ne JAMAIS passer --out corpus
 .venv\Scripts\python.exe tools\repeindre_dataset.py <dataset_ld_v1> datasets --mnt <tif|glob> [--ld <raster>]  # datasets multicanaux (csl+crim) aux pixels recalculés, splits/COCO INTACTS — jamais re-slicer pour changer de canaux
-D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; cache = re-rendu sans ré-inférence ; autocontrôle de chargement)
+.venv\Scripts\python.exe tools\generer_slrm_cvat.py <mnt.tif> <sortie_dir> [--prefixe p]  # SLRM r10 ADAF + « cvat » (VAT general mal nommé, cf. § multicanal) 8 bits auto-vérifiés
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
+.venv\Scripts\python.exe tools\verif_courbes_eval.py <dossier_eval>  # contrôleur indépendant SANS GPU : recalcule P/R/F1/AP depuis appariements.json — CONFORME requis avant dépôt/seuils/dashboard
 .venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, runs sans mesure listés) ; régénérer après tout dépôt d'évaluation
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
-.venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ...  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain
+.venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
 docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
@@ -55,7 +60,10 @@ docker build -f tools\bench\Dockerfile.gpu -t archeologia-bench:gpu tools\bench 
 #   python3 -m tools.bench sweep   --data /data/valid --axes /harness/configs/bench/e2_un_axe.yaml --cle <cle>
 #   python3 -m tools.bench bootstrap --run e2_un_axe                             # IC95 apparié par tuile
 #   python3 -m tools.bench niveaub --data /data/test --gpkg /vec --axes .../e_niveaub.yaml
+#   python3 -m tools.bench {info|subset|comparer} --help                         # inventaire / sous-échantillon figé / IC95 A-vs-B
 #   python3 -m tools.bench.report                                                # rapport HTML
+#   python3 -m tools.bench.<module> --help  # modules : seuils_par_classe visuel superpositions postpro_{hysteresis,reattribution,trous_sahi} e1_onnx_vs_torch
+.venv\Scripts\python.exe tools\bench\deposer.py --bench D:\pipeline_results\bench --staging <dossier>  # dépôt Drive du banc (staging + robocopy /E)
 .venv\Scripts\python.exe tools\verif_bench.py --out D:\pipeline_results\bench     # contrôleur indépendant
 <venv_onnx>\python.exe tests\test_parity_bench.py    # PORTE : decode.py doit reproduire le plugin à l'identique
 # setup initial : py -3.11 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
@@ -100,9 +108,15 @@ git log ; pas de fichier de log séparé.
   → **boucle de vérification** (`verif_zone_gpkg`, `verif_dataset`) → carte de contrôle
   validée par l'utilisateur → dépôt Drive → lot de TEST Roboflow (10 img) → inspection
   humaine des masques → upload complet vérifié. Skills : `/prepare-zone-training`,
-  `/upload-roboflow`.
+  `/upload-roboflow` ; assemblage multi-zones : `/corpus-entrainement`
+  (build_corpus + verif_corpus + dépôt — le chaînon qui manquait au corpus graduel).
 - **Jamais de split aléatoire** (cf. docs/fuite_spatiale_train_test.html) : split spatial
   par blocs de 2 km, tracé dans `split_manifest.yaml`, imposé à l'upload et jamais re-tiré.
+  **Les manifests versionnés font foi** (2026-08-31) : `manifests/split/<dataset>.yaml`,
+  `manifests/corpus/<corpus>.yaml` et `configs/eval_fr_gelee_v1.yaml` sont commités —
+  re-tirer un split est interdit sans décision humaine ; pour fours/lineaires/verdun le
+  split versionné TIENT LIEU d'éval gelée. Re-copier dans manifests/ après tout
+  slice_zone/build_corpus.
   Tuiles **648 px sans chevauchement** (RF-DETR seg : résolution divisible par 24 ;
   pin `rfdetr>=1.8.3,<2.0` ; résolution d'entraînement = résolution d'export ONNX).
 - **Boucle de vérification systématique** (règle utilisateur 2026-07-27) : produire →
@@ -125,6 +139,11 @@ git log ; pas de fichier de log séparé.
   NOTE-metriques.md), `hparams.yaml`, tfevents, `visualizations/` — le contrat reste
   à la racine. Cf. skill `/installer-modele-plugin` pour la checklist complète
   (ONNX, parité binarisée, sidecar class_offset, entité catalogue).
+- **Nommage des configs de découpe** (2026-08-31) : toute NOUVELLE config suit
+  `<famille>_<zone_id>_ld648_v<N>.yaml` (zone_id = id data_regions_v2, ex.
+  `fours_charb_41_blois_ld648_v1`) ; l'existant n'est PAS renommé (référencé par les
+  manifestes). Le champ `zone:` porte l'id CANONIQUE `<region>/<dept>_<site>`
+  (jointure zone↔modèle — les ids inventés d'enclos_fr ont été patchés le 2026-08-31).
 - **Rangement model-training** (décision 2026-08-31) : UNE famille par thème à la
   racine du Drive `model-training/` (nom snake_case ASCII sans accents ni tirets —
   vérifier l'existant AVANT de créer une famille ou un run ; c'est ainsi que
@@ -146,10 +165,12 @@ git log ; pas de fichier de log séparé.
   enclos_{ie,fr}_648_{csl,crim}_v1, mêmes tuiles/splits/COCO que les v1 (datasets
   repeints par `repeindre_dataset.py`, canal B byte-identique v1, éval gelée intacte).
   CSL = R:cvat_combined (vrai VAT combined) / G:slrm r10 ±0,5 (standard ADAF) / B:LD ;
-  CRIM = RGB crim_orrd. 4 runs Colab à lancer (IE puis transfert FR par variante,
-  hyperparamètres = runs v1) : cf. `docs/google_collab/NOTES-runs-multicanal-enclos.md` ;
-  comparatif final 6 modèles par courbes_eval sur l'éval FR gelée, 3 passes (une par
-  représentation). Le « cvat » de generer_slrm_cvat.py est un VAT general mal nommé
+  CRIM = RGB crim_orrd. Les 4 runs csl/crim sont ENTRAÎNÉS (20-21/08) mais jamais
+  mesurés par l'éval outillée (« sans mesure » au dashboard) : le comparatif final
+  6 modèles par courbes_eval sur l'éval FR gelée reste à lancer, 3 passes (une par
+  représentation) — cf. `docs/google_collab/NOTES-runs-multicanal-enclos.md`.
+  Les datasets `*_csl648`/`*_crim648` n'ont PAS de config slice_zone : normal, ils
+  sortent de `repeindre_dataset` (la config de référence = celle du dataset LD v1). Le « cvat » de generer_slrm_cvat.py est un VAT general mal nommé
   (SVF 0,7965 non standard) — le vrai CVAT est dans planche_indices/repeindre_dataset.
 - **Notebook d'entraînement canonique** (règle 2026-08-20) :
   `G:\Mon Drive\Colab Notebooks\rfdetr_unified_pipeline_v2.ipynb` — c'est LUI qu'on

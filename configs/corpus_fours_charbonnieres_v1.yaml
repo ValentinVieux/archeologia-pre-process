@@ -10,6 +10,12 @@
 corpus: fours_charbonnieres_648_v1
 classes: [charbonniere, four, circular_depression]
 fusions: {}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml (build_corpus >= 2026-08-31)
+  - "ATTENTION: dépressions de Chailluz auto-labellisées run_rf_detr_1 @0,395 SANS revue humaine
+    (par_zone mesuré : P 0,207 / R 0,035 — de loin la pire des 8 zones) ; charbonnières Chailluz
+    = cercles synthétiques r=5 m"
 datasets:
   - fours_charb_57_fenetrange_ld648_v1
   - fours_charb_70_vosges_saonoises_ld648_v1

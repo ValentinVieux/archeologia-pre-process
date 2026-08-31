@@ -1,0 +1,531 @@
+dataset: enclos_ie_cork_03_crim648_v1
+zone: irlande/ie_cork_03
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_cork_03_ld648_v1
+  gpkg: D:/veille_irlande/annotations/cork_03_annotations_v1.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_cork_03.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_cork_03
+grille:
+  origine:
+  - -87268.0
+  - 7299638.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 24
+  valid:
+    enclos: 8
+  test:
+    enclos: 5
+hashes_sha1:
+  train: 022c46395e8fbab71fb8aabe21e9773381d9f2f3
+  valid: 40ae0e39b4bfff596f8c4274ee6466c0496e0698
+  test: 8c6c9dc601a7b7ddaaa892dfbb550460ae9b3904
+tuiles:
+- nom: ie_cork_03_r0003_c0005.png
+  row: 3
+  col: 5
+  bloc:
+  - -42
+  - 3648
+  split: train
+  bounds:
+  - -84028.0
+  - 7297046.0
+  - -83380.0
+  - 7297694.0
+  n_annotations: 0
+  classes: []
+- nom: ie_cork_03_r0003_c0009.png
+  row: 3
+  col: 9
+  bloc:
+  - -41
+  - 3648
+  split: train
+  bounds:
+  - -81436.0
+  - 7297046.0
+  - -80788.0
+  - 7297694.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_cork_03_r0004_c0004.png
+  row: 4
+  col: 4
+  bloc:
+  - -43
+  - 3648
+  split: train
+  bounds:
+  - -84676.0
+  - 7296398.0
+  - -84028.0
+  - 7297046.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0004_c0006.png
+  row: 4
+  col: 6
+  bloc:
+  - -42
+  - 3648
+  split: train
+  bounds:
+  - -83380.0
+  - 7296398.0
+  - -82732.0
+  - 7297046.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0004_c0008.png
+  row: 4
+  col: 8
+  bloc:
+  - -41
+  - 3648
+  split: train
+  bounds:
+  - -82084.0
+  - 7296398.0
+  - -81436.0
+  - 7297046.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0004_c0009.png
+  row: 4
+  col: 9
+  bloc:
+  - -41
+  - 3648
+  split: train
+  bounds:
+  - -81436.0
+  - 7296398.0
+  - -80788.0
+  - 7297046.0
+  n_annotations: 0
+  classes: []
+- nom: ie_cork_03_r0005_c0006.png
+  row: 5
+  col: 6
+  bloc:
+  - -42
+  - 3648
+  split: train
+  bounds:
+  - -83380.0
+  - 7295750.0
+  - -82732.0
+  - 7296398.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0006_c0005.png
+  row: 6
+  col: 5
+  bloc:
+  - -42
+  - 3647
+  split: valid
+  bounds:
+  - -84028.0
+  - 7295102.0
+  - -83380.0
+  - 7295750.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_cork_03_r0006_c0006.png
+  row: 6
+  col: 6
+  bloc:
+  - -42
+  - 3647
+  split: valid
+  bounds:
+  - -83380.0
+  - 7295102.0
+  - -82732.0
+  - 7295750.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0007_c0005.png
+  row: 7
+  col: 5
+  bloc:
+  - -42
+  - 3647
+  split: valid
+  bounds:
+  - -84028.0
+  - 7294454.0
+  - -83380.0
+  - 7295102.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0008_c0005.png
+  row: 8
+  col: 5
+  bloc:
+  - -42
+  - 3647
+  split: valid
+  bounds:
+  - -84028.0
+  - 7293806.0
+  - -83380.0
+  - 7294454.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_cork_03_r0008_c0007.png
+  row: 8
+  col: 7
+  bloc:
+  - -42
+  - 3647
+  split: valid
+  bounds:
+  - -82732.0
+  - 7293806.0
+  - -82084.0
+  - 7294454.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0009_c0003.png
+  row: 9
+  col: 3
+  bloc:
+  - -43
+  - 3646
+  split: test
+  bounds:
+  - -85324.0
+  - 7293158.0
+  - -84676.0
+  - 7293806.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0009_c0004.png
+  row: 9
+  col: 4
+  bloc:
+  - -43
+  - 3646
+  split: test
+  bounds:
+  - -84676.0
+  - 7293158.0
+  - -84028.0
+  - 7293806.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_cork_03_r0009_c0007.png
+  row: 9
+  col: 7
+  bloc:
+  - -42
+  - 3646
+  split: train
+  bounds:
+  - -82732.0
+  - 7293158.0
+  - -82084.0
+  - 7293806.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0009_c0008.png
+  row: 9
+  col: 8
+  bloc:
+  - -41
+  - 3646
+  split: train
+  bounds:
+  - -82084.0
+  - 7293158.0
+  - -81436.0
+  - 7293806.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_cork_03_r0010_c0004.png
+  row: 10
+  col: 4
+  bloc:
+  - -43
+  - 3646
+  split: test
+  bounds:
+  - -84676.0
+  - 7292510.0
+  - -84028.0
+  - 7293158.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0010_c0005.png
+  row: 10
+  col: 5
+  bloc:
+  - -42
+  - 3646
+  split: train
+  bounds:
+  - -84028.0
+  - 7292510.0
+  - -83380.0
+  - 7293158.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0010_c0007.png
+  row: 10
+  col: 7
+  bloc:
+  - -42
+  - 3646
+  split: train
+  bounds:
+  - -82732.0
+  - 7292510.0
+  - -82084.0
+  - 7293158.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_cork_03_r0010_c0008.png
+  row: 10
+  col: 8
+  bloc:
+  - -41
+  - 3646
+  split: train
+  bounds:
+  - -82084.0
+  - 7292510.0
+  - -81436.0
+  - 7293158.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0011_c0004.png
+  row: 11
+  col: 4
+  bloc:
+  - -43
+  - 3646
+  split: test
+  bounds:
+  - -84676.0
+  - 7291862.0
+  - -84028.0
+  - 7292510.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0011_c0007.png
+  row: 11
+  col: 7
+  bloc:
+  - -42
+  - 3646
+  split: train
+  bounds:
+  - -82732.0
+  - 7291862.0
+  - -82084.0
+  - 7292510.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0011_c0008.png
+  row: 11
+  col: 8
+  bloc:
+  - -41
+  - 3646
+  split: train
+  bounds:
+  - -82084.0
+  - 7291862.0
+  - -81436.0
+  - 7292510.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0014_c0004.png
+  row: 14
+  col: 4
+  bloc:
+  - -43
+  - 3645
+  split: train
+  bounds:
+  - -84676.0
+  - 7289918.0
+  - -84028.0
+  - 7290566.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0014_c0005.png
+  row: 14
+  col: 5
+  bloc:
+  - -42
+  - 3645
+  split: valid
+  bounds:
+  - -84028.0
+  - 7289918.0
+  - -83380.0
+  - 7290566.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0015_c0004.png
+  row: 15
+  col: 4
+  bloc:
+  - -43
+  - 3644
+  split: train
+  bounds:
+  - -84676.0
+  - 7289270.0
+  - -84028.0
+  - 7289918.0
+  n_annotations: 0
+  classes: []
+- nom: ie_cork_03_r0015_c0005.png
+  row: 15
+  col: 5
+  bloc:
+  - -42
+  - 3644
+  split: train
+  bounds:
+  - -84028.0
+  - 7289270.0
+  - -83380.0
+  - 7289918.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0016_c0002.png
+  row: 16
+  col: 2
+  bloc:
+  - -43
+  - 3644
+  split: train
+  bounds:
+  - -85972.0
+  - 7288622.0
+  - -85324.0
+  - 7289270.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0016_c0005.png
+  row: 16
+  col: 5
+  bloc:
+  - -42
+  - 3644
+  split: train
+  bounds:
+  - -84028.0
+  - 7288622.0
+  - -83380.0
+  - 7289270.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0017_c0005.png
+  row: 17
+  col: 5
+  bloc:
+  - -42
+  - 3644
+  split: train
+  bounds:
+  - -84028.0
+  - 7287974.0
+  - -83380.0
+  - 7288622.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0017_c0006.png
+  row: 17
+  col: 6
+  bloc:
+  - -42
+  - 3644
+  split: train
+  bounds:
+  - -83380.0
+  - 7287974.0
+  - -82732.0
+  - 7288622.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_cork_03_r0019_c0000.png
+  row: 19
+  col: 0
+  bloc:
+  - -44
+  - 3643
+  split: train
+  bounds:
+  - -87268.0
+  - 7286678.0
+  - -86620.0
+  - 7287326.0
+  n_annotations: 1
+  classes:
+  - enclos
+repeint:
+  source_dataset: enclos_ie_cork_03_ld648_v1
+  variante: crim
+  canaux: RGB:crim_orrd
+  mnt:
+  - D:\veille_irlande\dalles\mnt_cork_03_mosaique\mnt_cork_03_mosaique.tif
+  ld: D:\veille_irlande\indices\ld\ld_cork_03.tif
+  date: '2026-08-20'

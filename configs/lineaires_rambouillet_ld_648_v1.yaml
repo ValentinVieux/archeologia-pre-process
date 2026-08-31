@@ -1,3 +1,5 @@
+# PLACEHOLDER : raster/gpkg = <copie locale> À REMPLACER par les chemins locaux réels avant exécution
+# (convention délibérée — chemins propres à chaque machine ; slice_zone refuse tout chemin contenant '<')
 # Dataset v2 — structures linéaires de Rambouillet sur indice LD (run v1 gelé, dalles
 # 0,5 m/px EPSG:2154). Modèle 3 classes talus/fosse/talus_fosse (décision 2026-07-28) :
 # les trois niveaux de certitude de l'archéologue sont entraînés séparément, + voie

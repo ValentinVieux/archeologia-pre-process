@@ -75,10 +75,41 @@ assert {noms[a["category_id"]] for a in valid["annotations"]} == {
     "parcellaire", "talus_fosse"}  # voie seule -> parcellaire
 assert (corpus / "test" / "a_4.png").read_bytes() == b"PNGa_4.png"
 
+# manifeste enrichi (audit 2026-08-31) : provenance + sha1 des COCO produits
+man = yaml.safe_load((corpus / "corpus_manifest.yaml").read_text(encoding="utf-8"))
+for cle in ("genere_le", "outil", "outil_commit", "config_sha1"):
+    assert man.get(cle), f"manifeste : {cle} absent"
+assert man["outil"] == "tools/build_corpus.py"
+assert len(man["splits"]["train"]["coco_sha1"]) == 40
+assert "genere_le_dataset" in man["datasets"]["ds_a"]
+
 verif = Path(__file__).resolve().parents[1] / "tools" / "verif_corpus.py"
 r = subprocess.run([sys.executable, str(verif), str(cfg_p), str(datasets),
                     str(corpus)], capture_output=True, text=True)
 assert r.returncode == 0 and "CONFORME" in r.stdout, r.stdout + r.stderr
+
+# entrées RESTREINTES (corpus graduel) : ds_b limité au train + 1 tuile
+cfg_g = tmp / "corpus_graduel.yaml"
+cfg_g.write_text(yaml.safe_dump({
+    "corpus": "jouet_graduel", "classes": ["parcellaire", "talus", "fosse",
+                                           "talus_fosse", "chemin_creux"],
+    "fusions": {"voie": "parcellaire"},
+    "datasets": ["ds_a",
+                 {"nom": "ds_b", "splits": ["train"], "tuiles": ["b_1.png"]}]}),
+    encoding="utf-8")
+graduel = construire(cfg_g, datasets, tmp / "graduel")
+g_train = json.loads((graduel / "train" / "_annotations.coco.json")
+                     .read_text(encoding="utf-8"))
+g_valid = json.loads((graduel / "valid" / "_annotations.coco.json")
+                     .read_text(encoding="utf-8"))
+assert len(g_train["images"]) == 3          # 2 ds_a + 1 ds_b (restreint)
+assert len(g_valid["images"]) == 1          # ds_a seul (ds_b limité au train)
+man_g = yaml.safe_load((graduel / "corpus_manifest.yaml").read_text(encoding="utf-8"))
+assert man_g["corpus"] == "jouet_graduel"   # le manifeste porte le VRAI nom
+assert man_g["datasets"]["ds_b"]["restriction"] == {"splits": ["train"], "tuiles": 1}
+r_g = subprocess.run([sys.executable, str(verif), str(cfg_g), str(datasets),
+                      str(graduel)], capture_output=True, text=True)
+assert r_g.returncode == 0 and "CONFORME" in r_g.stdout, r_g.stdout + r_g.stderr
 
 # cas cassé : une annotation supprimée du corpus -> détecté
 coco_t = json.loads((corpus / "train" / "_annotations.coco.json")

@@ -1,0 +1,107 @@
+# Corpus GRADUEL enclos FR+IE — bras 'graduel' de l'expérience 4 bras (2026-08).
+# Recette RECONSTITUÉE le 2026-08-31 (audit) : le corpus déposé portait le
+# manifeste d'enclos_fr_648_v1 (164 img train déclarées vs 219 réelles, 55
+# tuiles IE non déclarées) et n'avait AUCUNE config — bras irreproductible.
+# Les 55 tuiles IE (8 datasets, listes nominatives ci-dessous) viennent du
+# COCO train réel ; valid/test = enclos_fr_648_v1 entier (éval FR gelée).
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_enclos_frie_graduel_v1.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: enclos_frie_graduel_648_v1
+classes:
+- enclos_circulaire
+gsd_m: 1.0
+rvt: LD
+fusions:
+  enclos: enclos_circulaire
+datasets:
+- enclos_fr_bretagne_ld648_v1
+- enclos_fr_rambouillet_ld648_v1
+- enclos_fr_fontainebleau_ld648_v1
+- enclos_fr_saint_germain_ld648_v1
+- nom: enclos_ie_boyne_valley_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_boyne_valley_r0010_c0009.png
+- nom: enclos_ie_galway_01_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_galway_01_r0003_c0010.png
+  - ie_galway_01_r0007_c0013.png
+  - ie_galway_01_r0010_c0023.png
+  - ie_galway_01_r0011_c0008.png
+  - ie_galway_01_r0011_c0013.png
+  - ie_galway_01_r0011_c0028.png
+  - ie_galway_01_r0012_c0010.png
+  - ie_galway_01_r0014_c0008.png
+  - ie_galway_01_r0017_c0025.png
+  - ie_galway_01_r0023_c0024.png
+  - ie_galway_01_r0024_c0024.png
+  - ie_galway_01_r0025_c0028.png
+  - ie_galway_01_r0026_c0024.png
+  - ie_galway_01_r0031_c0019.png
+- nom: enclos_ie_galway_02_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_galway_02_r0003_c0015.png
+  - ie_galway_02_r0018_c0004.png
+  - ie_galway_02_r0018_c0011.png
+  - ie_galway_02_r0018_c0017.png
+  - ie_galway_02_r0022_c0001.png
+  - ie_galway_02_r0022_c0016.png
+  - ie_galway_02_r0024_c0006.png
+  - ie_galway_02_r0024_c0011.png
+  - ie_galway_02_r0025_c0003.png
+- nom: enclos_ie_galway_b_01_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_galway_b_01_r0002_c0021.png
+  - ie_galway_b_01_r0005_c0016.png
+- nom: enclos_ie_galway_b_02_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_galway_b_02_r0024_c0001.png
+  - ie_galway_b_02_r0025_c0002.png
+- nom: enclos_ie_kerry_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_kerry_r0003_c0013.png
+  - ie_kerry_r0004_c0011.png
+- nom: enclos_ie_roscommon_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_roscommon_r0009_c0009.png
+  - ie_roscommon_r0011_c0016.png
+  - ie_roscommon_r0012_c0017.png
+  - ie_roscommon_r0024_c0006.png
+- nom: enclos_ie_sligo_ld648_v1
+  splits:
+  - train
+  tuiles:
+  - ie_sligo_r0004_c0021.png
+  - ie_sligo_r0007_c0008.png
+  - ie_sligo_r0007_c0017.png
+  - ie_sligo_r0007_c0020.png
+  - ie_sligo_r0008_c0016.png
+  - ie_sligo_r0010_c0014.png
+  - ie_sligo_r0010_c0017.png
+  - ie_sligo_r0015_c0015.png
+  - ie_sligo_r0015_c0017.png
+  - ie_sligo_r0020_c0014.png
+  - ie_sligo_r0020_c0016.png
+  - ie_sligo_r0022_c0009.png
+  - ie_sligo_r0023_c0003.png
+  - ie_sligo_r0023_c0004.png
+  - ie_sligo_r0023_c0010.png
+  - ie_sligo_r0023_c0022.png
+  - ie_sligo_r0024_c0003.png
+  - ie_sligo_r0024_c0013.png
+  - ie_sligo_r0026_c0024.png
+  - ie_sligo_r0030_c0024.png
+  - ie_sligo_r0035_c0013.png

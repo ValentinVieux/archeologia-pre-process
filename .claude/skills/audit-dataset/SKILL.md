@@ -8,6 +8,12 @@ description: >
   archéologues », « audit this dataset », « classify unknown names », ou fournit le
   chemin d'une nouvelle livraison.
 argument-hint: <chemin-du-dossier-dataset>
+entrees:
+  - "livraison vecteur brute (dossier local ou raw/ d'une zone data_regions_v2)"
+sorties:
+  - "audits/<nom-normalise>/ (audit.json + report.html, régénérables)"
+  - "taxonomy/aliases.yaml (append-only) + entités candidates (commit proposé)"
+suivant: [prepare-zone-training]
 ---
 
 # Audit d'un dataset + classification des noms inconnus
@@ -77,6 +83,8 @@ Laisser l'utilisateur accepter ou ajuster avant d'écrire quoi que ce soit.
   ignorés / inconnus restants — doit être 0).
 - Proposer (sans l'exécuter d'office) :
   `git add taxonomy && git commit -m "taxonomy: map <N> aliases from <dataset-name>"`
+- Si la zone est destinée à l'entraînement : proposer d'enchaîner sur
+  `/prepare-zone-training`.
 
 ## Garde-fous
 - Chaque mapping est validé par l'utilisateur — ne jamais écrire un alias en silence,

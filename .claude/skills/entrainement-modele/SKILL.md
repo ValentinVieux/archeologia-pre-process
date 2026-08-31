@@ -7,18 +7,25 @@ description: >
   « on lance un entraînement », « prépare le notebook », « je te donne les
   sorties de cellules », « transfert learning depuis X », « run 2/3 de X ».
 argument-hint: <cible, ex. enclos_fr_seg_v2 | corpus à utiliser>
+entrees:
+  - "corpus CONFORME (verif_corpus) déposé sur model-training/<famille>/ (cf. /corpus-entrainement)"
+  - "notebook canonique G:\\Mon Drive\\Colab Notebooks\\rfdetr_unified_pipeline_v2.ipynb"
+sorties:
+  - "runs/training/<run>/ : checkpoints, metrics.csv, config.json (provenance), params_run.yaml"
+  - "runs/training/<run>/evaluation/ : metriques_eval.json (CONFORME verif_courbes_eval) + planches"
+suivant: [installer-modele-plugin]
 ---
 
 # Entraînement d'un modèle (notebook Colab → éval → courbes → consignation)
 
 Interagir en français. Le notebook vivant est `G:\Mon Drive\Colab Notebooks\
 rfdetr_unified_pipeline_v2.ipynb` (copie du repo : docs/google_collab/) — le
-paramétrer par édition JSON de la cellule 0, TOUJOURS vérifier les invariants
+paramétrer par édition JSON de la CELLULE 2, TOUJOURS vérifier les invariants
 par relecture après écriture. Corpus : CONFORME (`verif_corpus`) et déposé sur
 `model-training/<famille>/` AVANT tout run. L'utilisateur exécute Colab et
 colle les sorties de cellules : les valider une à une.
 
-## Cellule 0 — invariants à poser et relire
+## Cellule 2 — invariants à poser et relire
 - `rfdetr==1.8.3` EXACT (1.9 change scheduler + éval segm) ; `RESOLUTION = 648`
   (multiple de 24) passée AU CONSTRUCTEUR ; variante Seg Large ; `NUM_QUERIES=200`
   (= checkpoint pré-entraîné, sinon chargement partiel).
@@ -51,6 +58,8 @@ colle les sorties de cellules : les valider une à une.
   par zone, provenance) + planches + `appariements.json` (cache à empreinte).
   Les seuils du model_card (`confidence_default` + `confidence_per_class`)
   proviennent UNIQUEMENT de metriques_eval.json — plus jamais lus sur les PNG.
+  Puis **`tools/verif_courbes_eval.py <dossier_eval>`** (.venv, sans GPU) :
+  verdict CONFORME AVANT toute lecture de seuils ou dépôt.
 - **Dashboard** : régénérer `tools/tableau_modeles.py` → `index.html` racine
   model-training après le dépôt.
 - Consigner (tracker de campagne + mémoire) : chiffres, époque best, artefacts.

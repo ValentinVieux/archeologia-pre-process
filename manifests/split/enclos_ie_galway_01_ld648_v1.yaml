@@ -1,0 +1,2059 @@
+dataset: enclos_ie_galway_01_ld648_v1
+zone: irlande/ie_galway_01
+seed: 42
+genere_le: '2026-08-13'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    annotations:
+      classe: enclos
+      buffer_m: null
+      ignorer: false
+  dataset: enclos_ie_galway_01_ld648_v1
+  gpkg: D:/veille_irlande/annotations/galway_01_annotations_v1.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/veille_irlande/indices/ld/ld_galway_01.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: irlande/ie_galway_01
+grille:
+  origine:
+  - -119790.0
+  - 7456876.0
+  gsd_m_px:
+  - 1.0
+  - 1.0
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    enclos: 129
+  valid:
+    enclos: 37
+  test:
+    enclos: 22
+hashes_sha1:
+  train: 49a845af605eecdb6c1971e811f0f9f4ed01fdc6
+  valid: e6b306a013dcf302fe26cb31f4d7ff8c6fb1d4eb
+  test: 398c9d99150b9bd6e625fe241d92dc82aca881d0
+tuiles:
+- nom: ie_galway_01_r0003_c0008.png
+  row: 3
+  col: 8
+  bloc:
+  - -58
+  - 3727
+  split: test
+  bounds:
+  - -114606.0
+  - 7454284.0
+  - -113958.0
+  - 7454932.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0003_c0009.png
+  row: 3
+  col: 9
+  bloc:
+  - -57
+  - 3727
+  split: train
+  bounds:
+  - -113958.0
+  - 7454284.0
+  - -113310.0
+  - 7454932.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0003_c0010.png
+  row: 3
+  col: 10
+  bloc:
+  - -57
+  - 3727
+  split: train
+  bounds:
+  - -113310.0
+  - 7454284.0
+  - -112662.0
+  - 7454932.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0004_c0008.png
+  row: 4
+  col: 8
+  bloc:
+  - -58
+  - 3726
+  split: train
+  bounds:
+  - -114606.0
+  - 7453636.0
+  - -113958.0
+  - 7454284.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0004_c0009.png
+  row: 4
+  col: 9
+  bloc:
+  - -57
+  - 3726
+  split: train
+  bounds:
+  - -113958.0
+  - 7453636.0
+  - -113310.0
+  - 7454284.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0004_c0010.png
+  row: 4
+  col: 10
+  bloc:
+  - -57
+  - 3726
+  split: train
+  bounds:
+  - -113310.0
+  - 7453636.0
+  - -112662.0
+  - 7454284.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0005_c0008.png
+  row: 5
+  col: 8
+  bloc:
+  - -58
+  - 3726
+  split: train
+  bounds:
+  - -114606.0
+  - 7452988.0
+  - -113958.0
+  - 7453636.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0006_c0007.png
+  row: 6
+  col: 7
+  bloc:
+  - -58
+  - 3726
+  split: train
+  bounds:
+  - -115254.0
+  - 7452340.0
+  - -114606.0
+  - 7452988.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0006_c0013.png
+  row: 6
+  col: 13
+  bloc:
+  - -56
+  - 3726
+  split: train
+  bounds:
+  - -111366.0
+  - 7452340.0
+  - -110718.0
+  - 7452988.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0006_c0014.png
+  row: 6
+  col: 14
+  bloc:
+  - -56
+  - 3726
+  split: train
+  bounds:
+  - -110718.0
+  - 7452340.0
+  - -110070.0
+  - 7452988.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0007_c0009.png
+  row: 7
+  col: 9
+  bloc:
+  - -57
+  - 3726
+  split: train
+  bounds:
+  - -113958.0
+  - 7451692.0
+  - -113310.0
+  - 7452340.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0007_c0011.png
+  row: 7
+  col: 11
+  bloc:
+  - -57
+  - 3726
+  split: train
+  bounds:
+  - -112662.0
+  - 7451692.0
+  - -112014.0
+  - 7452340.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0007_c0012.png
+  row: 7
+  col: 12
+  bloc:
+  - -56
+  - 3726
+  split: train
+  bounds:
+  - -112014.0
+  - 7451692.0
+  - -111366.0
+  - 7452340.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0007_c0013.png
+  row: 7
+  col: 13
+  bloc:
+  - -56
+  - 3726
+  split: train
+  bounds:
+  - -111366.0
+  - 7451692.0
+  - -110718.0
+  - 7452340.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0007_c0016.png
+  row: 7
+  col: 16
+  bloc:
+  - -55
+  - 3726
+  split: train
+  bounds:
+  - -109422.0
+  - 7451692.0
+  - -108774.0
+  - 7452340.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0008_c0013.png
+  row: 8
+  col: 13
+  bloc:
+  - -56
+  - 3725
+  split: test
+  bounds:
+  - -111366.0
+  - 7451044.0
+  - -110718.0
+  - 7451692.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0008_c0015.png
+  row: 8
+  col: 15
+  bloc:
+  - -55
+  - 3725
+  split: train
+  bounds:
+  - -110070.0
+  - 7451044.0
+  - -109422.0
+  - 7451692.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0009_c0008.png
+  row: 9
+  col: 8
+  bloc:
+  - -58
+  - 3725
+  split: train
+  bounds:
+  - -114606.0
+  - 7450396.0
+  - -113958.0
+  - 7451044.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0010_c0006.png
+  row: 10
+  col: 6
+  bloc:
+  - -58
+  - 3725
+  split: train
+  bounds:
+  - -115902.0
+  - 7449748.0
+  - -115254.0
+  - 7450396.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0010_c0013.png
+  row: 10
+  col: 13
+  bloc:
+  - -56
+  - 3725
+  split: test
+  bounds:
+  - -111366.0
+  - 7449748.0
+  - -110718.0
+  - 7450396.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0010_c0014.png
+  row: 10
+  col: 14
+  bloc:
+  - -56
+  - 3725
+  split: test
+  bounds:
+  - -110718.0
+  - 7449748.0
+  - -110070.0
+  - 7450396.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0010_c0015.png
+  row: 10
+  col: 15
+  bloc:
+  - -55
+  - 3725
+  split: train
+  bounds:
+  - -110070.0
+  - 7449748.0
+  - -109422.0
+  - 7450396.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0010_c0023.png
+  row: 10
+  col: 23
+  bloc:
+  - -53
+  - 3725
+  split: train
+  bounds:
+  - -104886.0
+  - 7449748.0
+  - -104238.0
+  - 7450396.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0006.png
+  row: 11
+  col: 6
+  bloc:
+  - -58
+  - 3724
+  split: train
+  bounds:
+  - -115902.0
+  - 7449100.0
+  - -115254.0
+  - 7449748.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0007.png
+  row: 11
+  col: 7
+  bloc:
+  - -58
+  - 3724
+  split: train
+  bounds:
+  - -115254.0
+  - 7449100.0
+  - -114606.0
+  - 7449748.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0008.png
+  row: 11
+  col: 8
+  bloc:
+  - -58
+  - 3724
+  split: train
+  bounds:
+  - -114606.0
+  - 7449100.0
+  - -113958.0
+  - 7449748.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0009.png
+  row: 11
+  col: 9
+  bloc:
+  - -57
+  - 3724
+  split: train
+  bounds:
+  - -113958.0
+  - 7449100.0
+  - -113310.0
+  - 7449748.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0013.png
+  row: 11
+  col: 13
+  bloc:
+  - -56
+  - 3724
+  split: train
+  bounds:
+  - -111366.0
+  - 7449100.0
+  - -110718.0
+  - 7449748.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0014.png
+  row: 11
+  col: 14
+  bloc:
+  - -56
+  - 3724
+  split: train
+  bounds:
+  - -110718.0
+  - 7449100.0
+  - -110070.0
+  - 7449748.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0022.png
+  row: 11
+  col: 22
+  bloc:
+  - -53
+  - 3724
+  split: test
+  bounds:
+  - -105534.0
+  - 7449100.0
+  - -104886.0
+  - 7449748.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0025.png
+  row: 11
+  col: 25
+  bloc:
+  - -52
+  - 3724
+  split: valid
+  bounds:
+  - -103590.0
+  - 7449100.0
+  - -102942.0
+  - 7449748.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0026.png
+  row: 11
+  col: 26
+  bloc:
+  - -52
+  - 3724
+  split: valid
+  bounds:
+  - -102942.0
+  - 7449100.0
+  - -102294.0
+  - 7449748.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0027.png
+  row: 11
+  col: 27
+  bloc:
+  - -51
+  - 3724
+  split: train
+  bounds:
+  - -102294.0
+  - 7449100.0
+  - -101646.0
+  - 7449748.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0028.png
+  row: 11
+  col: 28
+  bloc:
+  - -51
+  - 3724
+  split: train
+  bounds:
+  - -101646.0
+  - 7449100.0
+  - -100998.0
+  - 7449748.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0011_c0030.png
+  row: 11
+  col: 30
+  bloc:
+  - -51
+  - 3724
+  split: train
+  bounds:
+  - -100350.0
+  - 7449100.0
+  - -99702.0
+  - 7449748.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0012_c0004.png
+  row: 12
+  col: 4
+  bloc:
+  - -59
+  - 3724
+  split: valid
+  bounds:
+  - -117198.0
+  - 7448452.0
+  - -116550.0
+  - 7449100.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0006.png
+  row: 12
+  col: 6
+  bloc:
+  - -58
+  - 3724
+  split: train
+  bounds:
+  - -115902.0
+  - 7448452.0
+  - -115254.0
+  - 7449100.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0008.png
+  row: 12
+  col: 8
+  bloc:
+  - -58
+  - 3724
+  split: train
+  bounds:
+  - -114606.0
+  - 7448452.0
+  - -113958.0
+  - 7449100.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0009.png
+  row: 12
+  col: 9
+  bloc:
+  - -57
+  - 3724
+  split: train
+  bounds:
+  - -113958.0
+  - 7448452.0
+  - -113310.0
+  - 7449100.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0010.png
+  row: 12
+  col: 10
+  bloc:
+  - -57
+  - 3724
+  split: train
+  bounds:
+  - -113310.0
+  - 7448452.0
+  - -112662.0
+  - 7449100.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0011.png
+  row: 12
+  col: 11
+  bloc:
+  - -57
+  - 3724
+  split: train
+  bounds:
+  - -112662.0
+  - 7448452.0
+  - -112014.0
+  - 7449100.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0013.png
+  row: 12
+  col: 13
+  bloc:
+  - -56
+  - 3724
+  split: train
+  bounds:
+  - -111366.0
+  - 7448452.0
+  - -110718.0
+  - 7449100.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0012_c0022.png
+  row: 12
+  col: 22
+  bloc:
+  - -53
+  - 3724
+  split: test
+  bounds:
+  - -105534.0
+  - 7448452.0
+  - -104886.0
+  - 7449100.0
+  n_annotations: 5
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0023.png
+  row: 12
+  col: 23
+  bloc:
+  - -53
+  - 3724
+  split: test
+  bounds:
+  - -104886.0
+  - 7448452.0
+  - -104238.0
+  - 7449100.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0024.png
+  row: 12
+  col: 24
+  bloc:
+  - -52
+  - 3724
+  split: valid
+  bounds:
+  - -104238.0
+  - 7448452.0
+  - -103590.0
+  - 7449100.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0012_c0029.png
+  row: 12
+  col: 29
+  bloc:
+  - -51
+  - 3724
+  split: train
+  bounds:
+  - -100998.0
+  - 7448452.0
+  - -100350.0
+  - 7449100.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0013_c0004.png
+  row: 13
+  col: 4
+  bloc:
+  - -59
+  - 3724
+  split: valid
+  bounds:
+  - -117198.0
+  - 7447804.0
+  - -116550.0
+  - 7448452.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0013_c0011.png
+  row: 13
+  col: 11
+  bloc:
+  - -57
+  - 3724
+  split: train
+  bounds:
+  - -112662.0
+  - 7447804.0
+  - -112014.0
+  - 7448452.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0013_c0022.png
+  row: 13
+  col: 22
+  bloc:
+  - -53
+  - 3724
+  split: test
+  bounds:
+  - -105534.0
+  - 7447804.0
+  - -104886.0
+  - 7448452.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0013_c0023.png
+  row: 13
+  col: 23
+  bloc:
+  - -53
+  - 3724
+  split: test
+  bounds:
+  - -104886.0
+  - 7447804.0
+  - -104238.0
+  - 7448452.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0013_c0024.png
+  row: 13
+  col: 24
+  bloc:
+  - -52
+  - 3724
+  split: valid
+  bounds:
+  - -104238.0
+  - 7447804.0
+  - -103590.0
+  - 7448452.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0003.png
+  row: 14
+  col: 3
+  bloc:
+  - -59
+  - 3723
+  split: valid
+  bounds:
+  - -117846.0
+  - 7447156.0
+  - -117198.0
+  - 7447804.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0008.png
+  row: 14
+  col: 8
+  bloc:
+  - -58
+  - 3723
+  split: train
+  bounds:
+  - -114606.0
+  - 7447156.0
+  - -113958.0
+  - 7447804.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0009.png
+  row: 14
+  col: 9
+  bloc:
+  - -57
+  - 3723
+  split: train
+  bounds:
+  - -113958.0
+  - 7447156.0
+  - -113310.0
+  - 7447804.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0012.png
+  row: 14
+  col: 12
+  bloc:
+  - -56
+  - 3723
+  split: train
+  bounds:
+  - -112014.0
+  - 7447156.0
+  - -111366.0
+  - 7447804.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0013.png
+  row: 14
+  col: 13
+  bloc:
+  - -56
+  - 3723
+  split: train
+  bounds:
+  - -111366.0
+  - 7447156.0
+  - -110718.0
+  - 7447804.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0021.png
+  row: 14
+  col: 21
+  bloc:
+  - -53
+  - 3723
+  split: valid
+  bounds:
+  - -106182.0
+  - 7447156.0
+  - -105534.0
+  - 7447804.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0023.png
+  row: 14
+  col: 23
+  bloc:
+  - -53
+  - 3723
+  split: valid
+  bounds:
+  - -104886.0
+  - 7447156.0
+  - -104238.0
+  - 7447804.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0024.png
+  row: 14
+  col: 24
+  bloc:
+  - -52
+  - 3723
+  split: train
+  bounds:
+  - -104238.0
+  - 7447156.0
+  - -103590.0
+  - 7447804.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0014_c0025.png
+  row: 14
+  col: 25
+  bloc:
+  - -52
+  - 3723
+  split: train
+  bounds:
+  - -103590.0
+  - 7447156.0
+  - -102942.0
+  - 7447804.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0008.png
+  row: 15
+  col: 8
+  bloc:
+  - -58
+  - 3723
+  split: train
+  bounds:
+  - -114606.0
+  - 7446508.0
+  - -113958.0
+  - 7447156.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0009.png
+  row: 15
+  col: 9
+  bloc:
+  - -57
+  - 3723
+  split: train
+  bounds:
+  - -113958.0
+  - 7446508.0
+  - -113310.0
+  - 7447156.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0021.png
+  row: 15
+  col: 21
+  bloc:
+  - -53
+  - 3723
+  split: valid
+  bounds:
+  - -106182.0
+  - 7446508.0
+  - -105534.0
+  - 7447156.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0022.png
+  row: 15
+  col: 22
+  bloc:
+  - -53
+  - 3723
+  split: valid
+  bounds:
+  - -105534.0
+  - 7446508.0
+  - -104886.0
+  - 7447156.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0023.png
+  row: 15
+  col: 23
+  bloc:
+  - -53
+  - 3723
+  split: valid
+  bounds:
+  - -104886.0
+  - 7446508.0
+  - -104238.0
+  - 7447156.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0015_c0026.png
+  row: 15
+  col: 26
+  bloc:
+  - -52
+  - 3723
+  split: train
+  bounds:
+  - -102942.0
+  - 7446508.0
+  - -102294.0
+  - 7447156.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0016_c0019.png
+  row: 16
+  col: 19
+  bloc:
+  - -54
+  - 3723
+  split: train
+  bounds:
+  - -107478.0
+  - 7445860.0
+  - -106830.0
+  - 7446508.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0016_c0020.png
+  row: 16
+  col: 20
+  bloc:
+  - -54
+  - 3723
+  split: train
+  bounds:
+  - -106830.0
+  - 7445860.0
+  - -106182.0
+  - 7446508.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0016_c0024.png
+  row: 16
+  col: 24
+  bloc:
+  - -52
+  - 3723
+  split: train
+  bounds:
+  - -104238.0
+  - 7445860.0
+  - -103590.0
+  - 7446508.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0017_c0025.png
+  row: 17
+  col: 25
+  bloc:
+  - -52
+  - 3722
+  split: train
+  bounds:
+  - -103590.0
+  - 7445212.0
+  - -102942.0
+  - 7445860.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0017_c0027.png
+  row: 17
+  col: 27
+  bloc:
+  - -51
+  - 3722
+  split: valid
+  bounds:
+  - -102294.0
+  - 7445212.0
+  - -101646.0
+  - 7445860.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0018_c0020.png
+  row: 18
+  col: 20
+  bloc:
+  - -54
+  - 3722
+  split: train
+  bounds:
+  - -106830.0
+  - 7444564.0
+  - -106182.0
+  - 7445212.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0018_c0021.png
+  row: 18
+  col: 21
+  bloc:
+  - -53
+  - 3722
+  split: valid
+  bounds:
+  - -106182.0
+  - 7444564.0
+  - -105534.0
+  - 7445212.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0018_c0026.png
+  row: 18
+  col: 26
+  bloc:
+  - -52
+  - 3722
+  split: train
+  bounds:
+  - -102942.0
+  - 7444564.0
+  - -102294.0
+  - 7445212.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0019.png
+  row: 19
+  col: 19
+  bloc:
+  - -54
+  - 3722
+  split: train
+  bounds:
+  - -107478.0
+  - 7443916.0
+  - -106830.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0023.png
+  row: 19
+  col: 23
+  bloc:
+  - -53
+  - 3722
+  split: valid
+  bounds:
+  - -104886.0
+  - 7443916.0
+  - -104238.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0024.png
+  row: 19
+  col: 24
+  bloc:
+  - -52
+  - 3722
+  split: train
+  bounds:
+  - -104238.0
+  - 7443916.0
+  - -103590.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0025.png
+  row: 19
+  col: 25
+  bloc:
+  - -52
+  - 3722
+  split: train
+  bounds:
+  - -103590.0
+  - 7443916.0
+  - -102942.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0028.png
+  row: 19
+  col: 28
+  bloc:
+  - -51
+  - 3722
+  split: valid
+  bounds:
+  - -101646.0
+  - 7443916.0
+  - -100998.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0019_c0030.png
+  row: 19
+  col: 30
+  bloc:
+  - -51
+  - 3722
+  split: valid
+  bounds:
+  - -100350.0
+  - 7443916.0
+  - -99702.0
+  - 7444564.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0020_c0021.png
+  row: 20
+  col: 21
+  bloc:
+  - -53
+  - 3721
+  split: train
+  bounds:
+  - -106182.0
+  - 7443268.0
+  - -105534.0
+  - 7443916.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0020_c0025.png
+  row: 20
+  col: 25
+  bloc:
+  - -52
+  - 3721
+  split: train
+  bounds:
+  - -103590.0
+  - 7443268.0
+  - -102942.0
+  - 7443916.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0020_c0026.png
+  row: 20
+  col: 26
+  bloc:
+  - -52
+  - 3721
+  split: train
+  bounds:
+  - -102942.0
+  - 7443268.0
+  - -102294.0
+  - 7443916.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0021_c0020.png
+  row: 21
+  col: 20
+  bloc:
+  - -54
+  - 3721
+  split: train
+  bounds:
+  - -106830.0
+  - 7442620.0
+  - -106182.0
+  - 7443268.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0021_c0021.png
+  row: 21
+  col: 21
+  bloc:
+  - -53
+  - 3721
+  split: train
+  bounds:
+  - -106182.0
+  - 7442620.0
+  - -105534.0
+  - 7443268.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0021_c0025.png
+  row: 21
+  col: 25
+  bloc:
+  - -52
+  - 3721
+  split: train
+  bounds:
+  - -103590.0
+  - 7442620.0
+  - -102942.0
+  - 7443268.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0021_c0026.png
+  row: 21
+  col: 26
+  bloc:
+  - -52
+  - 3721
+  split: train
+  bounds:
+  - -102942.0
+  - 7442620.0
+  - -102294.0
+  - 7443268.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0022_c0020.png
+  row: 22
+  col: 20
+  bloc:
+  - -54
+  - 3721
+  split: train
+  bounds:
+  - -106830.0
+  - 7441972.0
+  - -106182.0
+  - 7442620.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0022_c0021.png
+  row: 22
+  col: 21
+  bloc:
+  - -53
+  - 3721
+  split: train
+  bounds:
+  - -106182.0
+  - 7441972.0
+  - -105534.0
+  - 7442620.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0022_c0022.png
+  row: 22
+  col: 22
+  bloc:
+  - -53
+  - 3721
+  split: train
+  bounds:
+  - -105534.0
+  - 7441972.0
+  - -104886.0
+  - 7442620.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0022_c0025.png
+  row: 22
+  col: 25
+  bloc:
+  - -52
+  - 3721
+  split: train
+  bounds:
+  - -103590.0
+  - 7441972.0
+  - -102942.0
+  - 7442620.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0023_c0021.png
+  row: 23
+  col: 21
+  bloc:
+  - -53
+  - 3720
+  split: train
+  bounds:
+  - -106182.0
+  - 7441324.0
+  - -105534.0
+  - 7441972.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0023_c0022.png
+  row: 23
+  col: 22
+  bloc:
+  - -53
+  - 3720
+  split: train
+  bounds:
+  - -105534.0
+  - 7441324.0
+  - -104886.0
+  - 7441972.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0023_c0023.png
+  row: 23
+  col: 23
+  bloc:
+  - -53
+  - 3720
+  split: train
+  bounds:
+  - -104886.0
+  - 7441324.0
+  - -104238.0
+  - 7441972.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0023_c0024.png
+  row: 23
+  col: 24
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -104238.0
+  - 7441324.0
+  - -103590.0
+  - 7441972.0
+  n_annotations: 4
+  classes:
+  - enclos
+- nom: ie_galway_01_r0023_c0025.png
+  row: 23
+  col: 25
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -103590.0
+  - 7441324.0
+  - -102942.0
+  - 7441972.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0024_c0023.png
+  row: 24
+  col: 23
+  bloc:
+  - -53
+  - 3720
+  split: train
+  bounds:
+  - -104886.0
+  - 7440676.0
+  - -104238.0
+  - 7441324.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0024_c0024.png
+  row: 24
+  col: 24
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -104238.0
+  - 7440676.0
+  - -103590.0
+  - 7441324.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0024_c0025.png
+  row: 24
+  col: 25
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -103590.0
+  - 7440676.0
+  - -102942.0
+  - 7441324.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0024_c0027.png
+  row: 24
+  col: 27
+  bloc:
+  - -51
+  - 3720
+  split: train
+  bounds:
+  - -102294.0
+  - 7440676.0
+  - -101646.0
+  - 7441324.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0024_c0028.png
+  row: 24
+  col: 28
+  bloc:
+  - -51
+  - 3720
+  split: train
+  bounds:
+  - -101646.0
+  - 7440676.0
+  - -100998.0
+  - 7441324.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0025_c0022.png
+  row: 25
+  col: 22
+  bloc:
+  - -53
+  - 3720
+  split: train
+  bounds:
+  - -105534.0
+  - 7440028.0
+  - -104886.0
+  - 7440676.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0025_c0024.png
+  row: 25
+  col: 24
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -104238.0
+  - 7440028.0
+  - -103590.0
+  - 7440676.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0025_c0025.png
+  row: 25
+  col: 25
+  bloc:
+  - -52
+  - 3720
+  split: train
+  bounds:
+  - -103590.0
+  - 7440028.0
+  - -102942.0
+  - 7440676.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0025_c0027.png
+  row: 25
+  col: 27
+  bloc:
+  - -51
+  - 3720
+  split: train
+  bounds:
+  - -102294.0
+  - 7440028.0
+  - -101646.0
+  - 7440676.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0025_c0028.png
+  row: 25
+  col: 28
+  bloc:
+  - -51
+  - 3720
+  split: train
+  bounds:
+  - -101646.0
+  - 7440028.0
+  - -100998.0
+  - 7440676.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0026_c0022.png
+  row: 26
+  col: 22
+  bloc:
+  - -53
+  - 3719
+  split: train
+  bounds:
+  - -105534.0
+  - 7439380.0
+  - -104886.0
+  - 7440028.0
+  n_annotations: 3
+  classes:
+  - enclos
+- nom: ie_galway_01_r0026_c0023.png
+  row: 26
+  col: 23
+  bloc:
+  - -53
+  - 3719
+  split: train
+  bounds:
+  - -104886.0
+  - 7439380.0
+  - -104238.0
+  - 7440028.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0026_c0024.png
+  row: 26
+  col: 24
+  bloc:
+  - -52
+  - 3719
+  split: train
+  bounds:
+  - -104238.0
+  - 7439380.0
+  - -103590.0
+  - 7440028.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0027_c0022.png
+  row: 27
+  col: 22
+  bloc:
+  - -53
+  - 3719
+  split: train
+  bounds:
+  - -105534.0
+  - 7438732.0
+  - -104886.0
+  - 7439380.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0027_c0023.png
+  row: 27
+  col: 23
+  bloc:
+  - -53
+  - 3719
+  split: train
+  bounds:
+  - -104886.0
+  - 7438732.0
+  - -104238.0
+  - 7439380.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0027_c0026.png
+  row: 27
+  col: 26
+  bloc:
+  - -52
+  - 3719
+  split: train
+  bounds:
+  - -102942.0
+  - 7438732.0
+  - -102294.0
+  - 7439380.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0028_c0023.png
+  row: 28
+  col: 23
+  bloc:
+  - -53
+  - 3719
+  split: train
+  bounds:
+  - -104886.0
+  - 7438084.0
+  - -104238.0
+  - 7438732.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0028_c0024.png
+  row: 28
+  col: 24
+  bloc:
+  - -52
+  - 3719
+  split: train
+  bounds:
+  - -104238.0
+  - 7438084.0
+  - -103590.0
+  - 7438732.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0028_c0025.png
+  row: 28
+  col: 25
+  bloc:
+  - -52
+  - 3719
+  split: train
+  bounds:
+  - -103590.0
+  - 7438084.0
+  - -102942.0
+  - 7438732.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0029_c0020.png
+  row: 29
+  col: 20
+  bloc:
+  - -54
+  - 3718
+  split: train
+  bounds:
+  - -106830.0
+  - 7437436.0
+  - -106182.0
+  - 7438084.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0029_c0022.png
+  row: 29
+  col: 22
+  bloc:
+  - -53
+  - 3718
+  split: train
+  bounds:
+  - -105534.0
+  - 7437436.0
+  - -104886.0
+  - 7438084.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0029_c0023.png
+  row: 29
+  col: 23
+  bloc:
+  - -53
+  - 3718
+  split: train
+  bounds:
+  - -104886.0
+  - 7437436.0
+  - -104238.0
+  - 7438084.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0029_c0024.png
+  row: 29
+  col: 24
+  bloc:
+  - -52
+  - 3718
+  split: valid
+  bounds:
+  - -104238.0
+  - 7437436.0
+  - -103590.0
+  - 7438084.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0029_c0025.png
+  row: 29
+  col: 25
+  bloc:
+  - -52
+  - 3718
+  split: valid
+  bounds:
+  - -103590.0
+  - 7437436.0
+  - -102942.0
+  - 7438084.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0030_c0020.png
+  row: 30
+  col: 20
+  bloc:
+  - -54
+  - 3718
+  split: train
+  bounds:
+  - -106830.0
+  - 7436788.0
+  - -106182.0
+  - 7437436.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0030_c0023.png
+  row: 30
+  col: 23
+  bloc:
+  - -53
+  - 3718
+  split: train
+  bounds:
+  - -104886.0
+  - 7436788.0
+  - -104238.0
+  - 7437436.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0030_c0024.png
+  row: 30
+  col: 24
+  bloc:
+  - -52
+  - 3718
+  split: valid
+  bounds:
+  - -104238.0
+  - 7436788.0
+  - -103590.0
+  - 7437436.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0030_c0025.png
+  row: 30
+  col: 25
+  bloc:
+  - -52
+  - 3718
+  split: valid
+  bounds:
+  - -103590.0
+  - 7436788.0
+  - -102942.0
+  - 7437436.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0031_c0019.png
+  row: 31
+  col: 19
+  bloc:
+  - -54
+  - 3718
+  split: train
+  bounds:
+  - -107478.0
+  - 7436140.0
+  - -106830.0
+  - 7436788.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0031_c0020.png
+  row: 31
+  col: 20
+  bloc:
+  - -54
+  - 3718
+  split: train
+  bounds:
+  - -106830.0
+  - 7436140.0
+  - -106182.0
+  - 7436788.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0031_c0023.png
+  row: 31
+  col: 23
+  bloc:
+  - -53
+  - 3718
+  split: train
+  bounds:
+  - -104886.0
+  - 7436140.0
+  - -104238.0
+  - 7436788.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0031_c0025.png
+  row: 31
+  col: 25
+  bloc:
+  - -52
+  - 3718
+  split: valid
+  bounds:
+  - -103590.0
+  - 7436140.0
+  - -102942.0
+  - 7436788.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0032_c0021.png
+  row: 32
+  col: 21
+  bloc:
+  - -53
+  - 3717
+  split: test
+  bounds:
+  - -106182.0
+  - 7435492.0
+  - -105534.0
+  - 7436140.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0032_c0023.png
+  row: 32
+  col: 23
+  bloc:
+  - -53
+  - 3717
+  split: test
+  bounds:
+  - -104886.0
+  - 7435492.0
+  - -104238.0
+  - 7436140.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0032_c0024.png
+  row: 32
+  col: 24
+  bloc:
+  - -52
+  - 3717
+  split: valid
+  bounds:
+  - -104238.0
+  - 7435492.0
+  - -103590.0
+  - 7436140.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0033_c0022.png
+  row: 33
+  col: 22
+  bloc:
+  - -53
+  - 3717
+  split: test
+  bounds:
+  - -105534.0
+  - 7434844.0
+  - -104886.0
+  - 7435492.0
+  n_annotations: 0
+  classes: []
+- nom: ie_galway_01_r0033_c0023.png
+  row: 33
+  col: 23
+  bloc:
+  - -53
+  - 3717
+  split: test
+  bounds:
+  - -104886.0
+  - 7434844.0
+  - -104238.0
+  - 7435492.0
+  n_annotations: 2
+  classes:
+  - enclos
+- nom: ie_galway_01_r0034_c0023.png
+  row: 34
+  col: 23
+  bloc:
+  - -53
+  - 3717
+  split: test
+  bounds:
+  - -104886.0
+  - 7434196.0
+  - -104238.0
+  - 7434844.0
+  n_annotations: 1
+  classes:
+  - enclos
+- nom: ie_galway_01_r0035_c0024.png
+  row: 35
+  col: 24
+  bloc:
+  - -52
+  - 3716
+  split: train
+  bounds:
+  - -104238.0
+  - 7433548.0
+  - -103590.0
+  - 7434196.0
+  n_annotations: 1
+  classes:
+  - enclos
