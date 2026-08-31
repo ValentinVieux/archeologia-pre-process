@@ -176,7 +176,10 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
 ## 8. Sections 10-15 (cellules 30-40) — chargement, éval, visualisation
 
 - Cellule 30 : auto-détection du checkpoint (ordre : best_total > best_ema >
-  best_regular), racine du run incluse.
+  best_regular) par le helper `_ckpt_le_plus_recent` (2026-08-31) : à nom égal,
+  le fichier le plus RÉCENT gagne (racine vs output/ vs checkpoints/) — la copie
+  de `checkpoints/` faite par le finally d'entraînement est PÉRIMÉE après une
+  reprise (piège mesuré sur fours : ép. 22 vs 41), le helper l'écarte en le disant.
 - Cellules 32-34 : métriques valid+test → `evaluation_results.json` (consommé par le
   packaging — ne JAMAIS écraser celui d'un modèle installé). Validation humaine des
   sorties de cellules = le protocole `/entrainement-modele`.
@@ -188,14 +191,38 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
 - Cellule 43 : produit `package/` conforme à docs/model_contract.md (args.yaml,
   model_card.yaml, classes.txt, training_params.json…). Les divergences
   imgsz/SAHI/résolution non documentées sont auto-signalées « à compléter » — les
-  compléter, pas les effacer.
+  compléter, pas les effacer. **Le poids packagé = `checkpoint_best_total.pth` en
+  tête** (même ordre que l'éval, via `_ckpt_le_plus_recent`) — bug historique
+  corrigé 2026-08-31 : l'ancien ordre prenait best_EMA alors que l'éval lisait
+  best_total (deux modèles enclos livrés sur des poids non évalués par le
+  notebook). Le sha256 du poids copié est tracé dans `config.json > weights`.
 - Cellule 44 : export ONNX **après** copie de package/ vers data/models/. `export()`
   hérite de la résolution du modèle (entrée statique 648) — ne pas passer de `shape`.
   Opset 17. Puis checklist `/installer-modele-plugin` (porte de parité binarisée,
   sidecar class_offset, entité catalogue) — et pour les modèles multicanaux : **ne pas
   installer avant le chantier de composition des canaux à l'inférence**.
-- Après tout run : courbes standard `tools/courbes_eval.py` (venv_adaf), seuil F1-max
-  → confidence_default du model_card ; traçabilité dans `entrainement/`.
+- Après tout run : éval outillée `tools/courbes_eval.py` (venv_adaf), seuil F1-max
+  (metriques_eval.json) → confidence_default du model_card ; traçabilité dans
+  `entrainement/`.
+
+## 10. Reproductibilité (retouches 2026-08-31)
+
+- **`params_run.yaml`** (cellule 20, écrit AVANT le fit) : archive automatique de
+  toutes les MAJUSCULES de la cellule 2 — la cellule 2 est un slot mutable écrasé à
+  chaque run, ce fichier fige le paramétrage de CE run et survit aux runs interrompus.
+- **`config.json > provenance`** : rfdetr_version, precision, devices, finetune_from,
+  base_weights(+sha256), aug, seed, date — tout ce que `training_config.json` (écrit
+  seulement en fin de fit) ne dit pas.
+- **Seed effectif** : `pl.seed_everything(SEED, workers=True)` + `seed=SEED` dans
+  train_kwargs (avant : `training_config.json` disait `seed: null` pendant que
+  `config.json` affirmait 42). Le régime multi_scale reste stochastique par batch —
+  reproductibilité statistique, pas bit à bit.
+- **Poids de base épinglés** : `BASE_WEIGHTS_DRIVE/_SHA256` (cellule 2) → copie Drive
+  `model-training/_poids_base/` contrôlée par sha256 en cellule 18. Si le sha est vide,
+  le run l'imprime pour l'épingler. Sans ça, un run TYPE A dépend d'une release GitHub
+  Roboflow qui peut disparaître.
+- Secrets Colab (`HF_TOKEN`, `ROBOFLOW_API_KEY`) : absents = warning, plus de crash
+  (aucune famille active n'utilise Roboflow).
 
 ---
 
