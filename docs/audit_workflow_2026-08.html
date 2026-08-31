@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit du workflow — consolidation 2026-08</title>
+<style>
+  :root {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E;
+    --accent: #5A6B3C; --accent-ink: #42502B; --line: #DDDCD4;
+    --crit-bg: #F6E3E0; --crit-ink: #A83226;
+    --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+    --info-bg: #E4EAF0; --info-ink: #3E5E7A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+      --ink: #E8E6DD; --muted: #A5A395;
+      --accent: #9DB16E; --accent-ink: #B5C68C; --line: #3A3D33;
+      --crit-bg: #43231F; --crit-ink: #E89A8C;
+      --warn-bg: #423414; --warn-ink: #DBB562;
+      --ok-bg: #24382A; --ok-ink: #8FC79D;
+      --info-bg: #23313E; --info-ink: #8FB3D4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395;
+    --accent: #9DB16E; --accent-ink: #B5C68C; --line: #3A3D33;
+    --crit-bg: #43231F; --crit-ink: #E89A8C;
+    --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+    --info-bg: #23313E; --info-ink: #8FB3D4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.62 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 44px 24px 90px; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 6px 0 8px; }
+  h2 { font-size: 21px; margin: 44px 0 10px; border-bottom: 2px solid var(--accent);
+       padding-bottom: 6px; }
+  h3 { font-size: 16.5px; margin: 26px 0 6px; color: var(--accent-ink); }
+  p, li { max-width: 70ch; }
+  .lede { font-size: 16.5px; max-width: 64ch; color: var(--muted); }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; }
+  code { background: var(--panel2); padding: 1px 5px; border-radius: 3px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.09em; font-size: 12px;
+             color: var(--accent-ink); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0 8px; font-size: 13.5px; }
+  th, td { border: 1px solid var(--line); padding: 6px 9px; text-align: left;
+           vertical-align: top; }
+  th { background: var(--panel2); font-size: 12.5px; text-transform: uppercase;
+       letter-spacing: 0.04em; }
+  td { background: var(--panel); }
+  .scroll { overflow-x: auto; }
+  .chip { display: inline-block; padding: 1px 8px; border-radius: 10px;
+          font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+  .crit { background: var(--crit-bg); color: var(--crit-ink); }
+  .warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .ok   { background: var(--ok-bg);  color: var(--ok-ink); }
+  .info { background: var(--info-bg); color: var(--info-ink); }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+           padding: 14px 18px; margin: 16px 0; }
+  .panel.verdict { border-left: 4px solid var(--accent); }
+  ul { padding-left: 22px; } li { margin: 3px 0; }
+  .muted { color: var(--muted); }
+  a { color: var(--accent-ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="eyebrow">Audit exhaustif · 2026-08-31</span>
+<h1>Audit du workflow — consolidation 2026-08</h1>
+<p class="lede">Audit transversal des composantes du pipeline (repo training-models,
+skills <code>.claude</code>, Drive <code>model-training</code> + <code>data_regions_v2</code>,
+notebook Colab, plugin QGIS <code>archeologia-pipeline</code>), mené sur trois fronts
+par agents indépendants, suivi de la campagne de consolidation exécutée le jour même.
+Objectif : des entraînements et des évaluations <strong>reproductibles</strong>, des
+composantes <strong>connectées</strong>, zéro angle mort.</p>
+
+<div class="panel verdict">
+<strong>Verdict d'ensemble.</strong> La couche <em>données</em> (splits spatiaux
+anti-fuite, manifestes, boucles de vérification) était rigoureuse. Les angles morts
+étaient concentrés sur trois plans : <strong>tout vivait sur un seul laptop</strong>
+(git non poussé depuis le 17/08, recettes non versionnées, 24 Go d'intrants sans
+copie), la couche <em>entraînement</em> n'était <strong>pas reproductible</strong>
+(paramétrage écrasé à chaque run, seed non transmis, packaging sur les mauvais
+poids), et la <strong>fin de chaîne plugin</strong> divergeait de sa propre doctrine
+(binaire figé 2 mois ½, seuils mesurés jamais appliqués en production, porte de
+parité débranchée, validateur aveugle aux valeurs).</div>
+
+<h2>1 — Les dix constats majeurs, et leur état</h2>
+<div class="scroll"><table>
+<tr><th>#</th><th>Constat</th><th>Gravité</th><th>État</th></tr>
+<tr><td>1</td><td>origin/dev à 116 commits de retard ; notebook canonique, 25 configs,
+8 outils documentés dans CLAUDE.md, docs et tests <strong>non versionnés</strong> ;
+<code>corpus/</code> (4 Go) non gitignoré</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — tout commité et poussé, gitignore complété</td></tr>
+<tr><td>2</td><td><code>datasets/</code> (3,9 Go, unique intrant de build_corpus) et
+~20 Go de sources D: (GPKG digitalisés, rasters) <strong>sans aucune copie</strong></td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — sauvegardes Drive <code>_datasets/</code> +
+<code>backups/d/</code>, vérifiées (comptes, octets, sha1 échantillon)</td></tr>
+<tr><td>3</td><td>Mémoire persistante orpheline sous l'ancien nom de projet
+(<code>pre-process-data</code>) : 4 skills lisaient un dossier vide</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — 19 fiches rapatriées, index rafraîchi</td></tr>
+<tr><td>4</td><td><strong>Packaging sur best_EMA alors que l'éval notebook lisait
+best_TOTAL</strong> : deux modèles enclos livrés sur des poids non évalués par le
+notebook ; piège <code>checkpoints/</code> périmé après reprise</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — cellule 43 : best_total en tête, helper
+mtime partagé éval/packaging, sha256 du poids tracé. (Le
+<code>metriques_eval.json</code> canonique du 31/08 mesurait déjà les poids
+réellement déployés.)</td></tr>
+<tr><td>5</td><td>Seed jamais transmis à l'entraîneur (<code>training_config.json :
+seed null</code> vs <code>config.json : 42</code>) ; paramétrage = slot mutable
+écrasé à chaque run ; version rfdetr/précision/finetune_from non tracées ; poids de
+base COCO non épinglés</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — <code>seed_everything</code> +
+<code>train_kwargs.seed</code>, <code>params_run.yaml</code> archivé AVANT le fit,
+bloc <code>provenance</code> dans config.json, <code>_poids_base/</code> + sha256</td></tr>
+<tr><td>6</td><td>Corpus <code>enclos_frie_graduel</code> : manifeste FAUX (164 img
+déclarées / 219 réelles), aucune recette — bras d'expérience irreproductible</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — recette reconstituée (55 tuiles IE
+nominatives), rebuild prouvé IDENTIQUE (sha1 des 303 PNG), config commitée</td></tr>
+<tr><td>7</td><td>Plugin : <code>confidence_per_class</code> (seuils F1-max mesurés)
+<strong>ignoré par le binaire de production</strong> ; binaire figé au 16/06 (4
+commits de correctifs CV morts) ; + bug préexistant : le CLI importait une fonction
+inexistante → <code>class_names</code> toujours None dans l'exe</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — helper partagé fallback/CLI, import
+réparé, exe recompilé ×2, <code>build_info.json</code> + test de fraîcheur
+(rouge si binaire périmé), smoke run vérifié (« seuils par classe →
+chemin_creux=0.15 », 85 détections)</td></tr>
+<tr><td>8</td><td>Porte de parité ONNX débranchée (verdict jeté aux 4 sites d'appel :
+une DIVERGENCE sortait en code 0) ; faux positif atol bf16 géré à la main</td>
+<td><span class="chip crit">critique</span></td>
+<td><span class="chip ok">corrigé</span> — verdict bloquant (+ comptes et classes),
+sorties spatiales jugées sur la DÉCISION binarisée/argmax (le contrôle manuel est
+intégré à la porte)</td></tr>
+<tr><td>9</td><td>Validateur aveugle aux VALEURS : <code>cratere_circulaire_2</code>
+déclarait SAHI 350 pour un args.yaml à 140 — l'UI relayait le mensonge en vert ;
+seuils/thresholds/catalogue/derived_targets jamais validés</td>
+<td><span class="chip warn">élevé</span></td>
+<td><span class="chip ok">corrigé</span> — validateur v2 (7 contrôles, branché au
+pre-push), la carte de cratere corrigée (140 justifié par le diagnostic mesuré)</td></tr>
+<tr><td>10</td><td>Zone ids enclos_fr inventés (<code>bretagne/bretagne</code>…) :
+jointure zone↔modèle impossible ; registre <code>modeles.yaml</code> figé au 16/07 ;
+les deux index ne se référençaient pas</td>
+<td><span class="chip warn">élevé</span></td>
+<td><span class="chip ok">corrigé</span> — ids canonisés partout (configs,
+split_manifests, 4 corpus reconstruits CONFORMES, metriques patchées), registre
+régénéré par <code>tableau_modeles --registre</code>, liens croisés entre index</td></tr>
+</table></div>
+
+<h2>2 — Front repo / skills / boucles de vérification</h2>
+<h3>Constats</h3>
+<ul>
+<li>CLAUDE.md § Commands divergeait des argparse réels sur 8 commandes (flags
+matériels absents : <code>--forme ellipse</code> obligatoire du corpus fours,
+<code>--fusion</code> des vérificateurs, <code>--recale-depuis</code>…) et 4 outils +
+8 modules bench n'étaient pas documentés du tout.</li>
+<li>Le producteur le plus en aval — <code>courbes_eval</code>, source des seuils de
+production — était le seul maillon majeur SANS contrôleur indépendant.</li>
+<li>5 CLI (4 vérificateurs + dispatch) lisaient <code>sys.argv</code> nu, sans
+<code>--help</code>.</li>
+<li>Skills : « cellule 0 » (faux, 4 sources disent cellule 2), robocopy
+<code>/MIR</code> (supprime — interdit), buffer 7 m standard absent, passerelles
+inter-skills manquantes ; AUCUNE skill ne couvrait l'assemblage de corpus — le
+maillon exact où le corpus graduel a dérapé.</li>
+<li><code>requirements.txt</code> sans pins et contenant <code>httpx2</code> — un
+paquet PyPI <strong>vide</strong> (typosquat probable), désinstallé.</li>
+</ul>
+<h3>Corrections</h3>
+<ul>
+<li><code>tools/verif_courbes_eval.py</code> : contrôleur sans GPU, implémentation
+volontairement différente (python pur), verdict CONFORME sur les 3 évals canoniques.</li>
+<li><code>tests/test_doc_cli.py</code> (AST, 3 étages dont couverture de tout
+<code>tools/*.py</code>) : la doc↔CLI ne peut plus pourrir en silence ;
+<code>tests/run_all.py</code> lance TOUS les auto-tests (10/11 OK, parité à part).</li>
+<li>Argparse uniforme sur les 5 CLI nus ; § Commands entièrement mis à niveau.</li>
+<li>9 skills retouchées (+ front-matter <code>entrees/sorties/suivant</code>) et la
+nouvelle skill <code>/corpus-entrainement</code> ferme le trou d'assemblage.</li>
+<li><code>manifests/</code> versionnés (47 split + 8 corpus + éval FR gelée) : les
+garde-fous anti-fuite ne vivent plus que sur un disque.</li>
+</ul>
+
+<h2>3 — Front entraînement / Drive</h2>
+<h3>Constats → corrections (notebook <code>rfdetr_unified_pipeline_v2</code>)</h3>
+<div class="scroll"><table>
+<tr><th>Trou</th><th>Correction (14 retouches, cellules 2/4/10/12/18/20/22/30/43)</th></tr>
+<tr><td>Poids packagés ≠ poids évalués (best_ema vs best_total)</td>
+<td>best_total EN TÊTE des deux chemins, via le même helper</td></tr>
+<tr><td><code>checkpoints/</code> périmé chargé en silence après reprise</td>
+<td><code>_ckpt_le_plus_recent</code> (mtime) + avertissement explicite</td></tr>
+<tr><td>seed affirmé mais jamais transmis</td>
+<td><code>pl.seed_everything(SEED, workers=True)</code> + <code>seed=SEED</code></td></tr>
+<tr><td>paramétrage écrasé à chaque run</td>
+<td><code>params_run.yaml</code> (toutes les MAJUSCULES, écrit AVANT le fit)</td></tr>
+<tr><td>version rfdetr, précision, finetune_from, corpus non tracés</td>
+<td>bloc <code>config.provenance</code> + <code>corpus_manifest_sha1</code></td></tr>
+<tr><td>poids de base COCO téléchargés d'une release supprimable</td>
+<td><code>model-training/_poids_base/</code> + assert sha256 (cellule 18)</td></tr>
+<tr><td>OOM avalé, NameError dans le finally, secrets Colab bloquants</td>
+<td>OOM re-levé, variable corrigée, secrets optionnels</td></tr>
+<tr><td>config.json livré au plugin amputé du corpus</td>
+<td>dataset_dir/category_mapping/manifest_sha1 restaurés + sha256 du poids</td></tr>
+</table></div>
+<p class="muted">Le GUIDE est corrigé (§6 redevient vrai) + nouvelle section 10
+« Reproductibilité ». Notebook redéposé sur G:, sources sha1-identiques.</p>
+<h3>Drive</h3>
+<ul>
+<li><code>build_corpus</code> : manifeste enrichi (date, commit, config_sha1,
+raster/gpkg/tuile_px des sources, coco_sha1 par split, notes — dont l'ATTENTION
+Chailluz : auto-labels non revus, P 0,207 / R 0,035) et entrées restreintes
+<code>{nom, splits, tuiles}</code> ; <code>verif_corpus</code> miroir.</li>
+<li>Registre <code>modeles.yaml</code> régénéré (7 modèles, blocs
+<code>evaluation</code>), index v2 ↔ index model-training reliés ;
+<code>package/</code> du Drive resynchronisés depuis les model_cards corrigés du
+plugin (la seule copie correcte était gitignorée sur le laptop).</li>
+<li>Environnements : requirements épinglés, gels <code>envs/*-freeze.txt</code>
+(venv 74, venv_adaf 179, venv_sam 51 paquets), <code>build.lock</code> côté plugin.</li>
+</ul>
+
+<h2>4 — Front plugin (fin de chaîne)</h2>
+<ul>
+<li><span class="chip ok">fermé</span> <strong>T1</strong> — les seuils par classe
+mesurés s'appliquent désormais dans le binaire de production (helper
+<code>confidence_per_class_ids</code> partagé, vérifié au smoke run).</li>
+<li><span class="chip ok">fermé</span> <strong>T2</strong> — binaire recompilé
+(l'exe fige un instantané de <code>src/</code> : un rebuild a ramassé 2 mois ½ de
+correctifs) ; <code>build_info.json</code> + <code>test_runner_binary_fresh</code>
+rendent la récidive impossible ; politique documentée.</li>
+<li><span class="chip ok">fermé</span> <strong>T3</strong> — packaging monolithe
+conservé (décision), garde 800 → 1600 Mo, exclusions <code>entrainement/</code> +
+<code>desktop.ini</code> ; build vérifié : <strong>1 016,7 Mo</strong>, 7 modèles.</li>
+<li><span class="chip ok">fermé</span> — sidecar strict (<code>class_offset</code>/
+<code>task</code>/<code>model_type</code> OBLIGATOIRES : plus de défauts devinés qui
+décalaient les classes) ; défauts UNIFIÉS (confiance 0,3, SAHI 640, IoU 0,5 — avant :
+0,2/0,3/0,5 selon le chemin, binaire à 750) gardés par
+<code>test_defauts_cv_unifies</code>.</li>
+<li><span class="chip ok">fermé</span> — élection du modèle par défaut : à statut
+égal, les seuils MESURÉS gagnent (lineaires_seg_v2_1 reste beta — décision) ;
+garde conservatoire RVT (warning si params divergents sur un même type).</li>
+<li><span class="chip ok">fermé</span> — contrat <code>model_contract.md</code> au
+niveau du code : <code>entrainement/evaluation/</code> et
+<code>metriques_eval.json</code> (source des seuils) au contrat, derived_targets,
+per_class, 6 clés du sidecar (écrasement du seuil UI documenté), statut honnête des
+fichiers jamais lus. 1 348 tests unitaires verts.</li>
+</ul>
+
+<h2>5 — Ce qui était déjà solide (à ne pas casser)</h2>
+<ul>
+<li>L'assertion anti-fuite de <code>verif_dataset</code> (« bloc multi-split =
+FUITE ») rend la fuite spatiale structurellement impossible.</li>
+<li><code>test_parity_bench</code> : vraie porte d'égalité exacte banc↔plugin.</li>
+<li>Le scénario « Roboflow ferme » coûte une demi-journée et zéro donnée : la
+source de vérité locale est réellement tenue.</li>
+<li>Les décisions de recalage humaines (revue) sont sur le Drive.</li>
+<li>Les commits d'hypothèses réfutées (« NÉGATIF ») et
+<code>configs/recalage_haye.yaml</code> (chaque paramètre justifié par une mesure)
+sont des gabarits à généraliser.</li>
+</ul>
+
+<h2>6 — Reste-à-faire assumé</h2>
+<div class="scroll"><table>
+<tr><th>Sujet</th><th>Pourquoi différé</th></tr>
+<tr><td>Comparatif multicanal 6 modèles (4 runs csl/crim « sans mesure »)</td>
+<td>Chantier suivant — il profitera de l'outillage (courbes_eval + contrôleur +
+dashboard) ; visible au dashboard</td></tr>
+<tr><td>Installation plugin de <code>fours_charbonnieres_seg_ld_v1</code></td>
+<td><code>/installer-modele-plugin</code> dédié (ONNX + parité + catalogue) ; son
+metriques_eval.json CONFORME l'attend</td></tr>
+<tr><td>Fusion taxonomique <code>enclos</code>/<code>enclos_circulaire</code> et
+double définition de <code>talus_fosse</code></td>
+<td>Décision métier utilisateur ; le validateur v2 rend l'incohérence visible</td></tr>
+<tr><td>Regroupement RVT par (type, params) complet + refonte des overrides UI
+(surcharge qui écrase les seuils mesurés, min_area global)</td>
+<td>Chantier UI risqué ; warning conservatoire + validateur réduisent l'exposition</td></tr>
+<tr><td>Cosmétique du parc (run_name ≠ dossier ×4, model_card lineaires vide côté
+utilisateur, <code>run_rf_detr_1</code> sans best.pth)</td>
+<td>WARN du validateur ; au fil de l'eau, aux prochaines installations</td></tr>
+<tr><td>Runs YOLO 2025 de <code>tranchees/</code> encore mêlés au segformer 2026</td>
+<td>Même geste que legacy_2025/, à confirmer</td></tr>
+</table></div>
+
+<h2>7 — Vérifications de clôture</h2>
+<ul>
+<li><span class="chip ok">CONFORME</span> <code>tests/run_all.py</code> : 10/11 OK
+(porte de parité venv_onnx lancée à part) — dont doc↔CLI, build_corpus restreint,
+garde placeholder.</li>
+<li><span class="chip ok">CONFORME</span> <code>verif_courbes_eval</code> sur les
+3 évals canoniques (fours en adoption legacy, enclos ie, enclos fr patchée).</li>
+<li><span class="chip ok">CONFORME</span> corpus graduel : rebuild identique
+(noms, sha1 des 303 PNG, annotations) ; éval FR gelée intacte (52+32 nominatives).</li>
+<li><span class="chip ok">CONFORME</span> sauvegardes : inventaires et sha1 égaux
+des deux côtés (seuls écarts : <code>desktop.ini</code>, bruit Explorer).</li>
+<li><span class="chip ok">vert</span> plugin : 1 348 tests, fraîcheur du binaire,
+smoke run exe (85 détections, seuils par classe actifs), ZIP 1 016,7 Mo.</li>
+<li><span class="chip ok">à jour</span> git : les deux repos commités,
+training-models poussé (origin/dev synchrone).</li>
+</ul>
+
+<p class="muted" style="margin-top: 40px">Généré le 2026-08-31 — chantier
+« consolidation du workflow » (audit 3 fronts par agents indépendants + exécution).
+Sources de détail : rapports d'agents en session, commits du 2026-08-31 sur les deux
+repos, CLAUDE.md révisé.</p>
+
+</div>
+</body>
+</html>

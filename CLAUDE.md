@@ -231,6 +231,8 @@ Cinq variantes de livraison cassées rencontrées en une semaine (2026-08) ; rè
 Racine : `G:\Mon Drive\Archeologia\Archeologia_Shared\data\data_regions_v2`.
 L'ancien `data_regions` (même parent) est **GELÉ** : lecture seule, ne jamais y écrire.
 Rapport d'audit fondateur : https://claude.ai/code/artifact/c1ccfd2e-37b0-4bfc-bf8e-7c853b3bfb03
+Audit du workflow + consolidation (2026-08-31) : `docs/audit_workflow_2026-08.html`
+(artifact : https://claude.ai/code/artifact/a20c288a-b872-4abe-8a3a-119ab8133f81)
 
 - Par zone `<region>/<dept>_<site>[_<annee>]` (snake_case ASCII) : `manifest.yaml` +
   `raw/` (**sources** — données livrées par l'archéologue ET données de base produites par
