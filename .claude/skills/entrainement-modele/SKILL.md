@@ -43,9 +43,16 @@ colle les sorties de cellules : les valider une à une.
 ## Après le run
 - Best = post-hoc sur `ema_segm_mAP_50` depuis metrics.csv (PAS le best
   automatique) ; loss_ce qui monte sous IA-BCE = normal.
-- **Courbes standard OBLIGATOIRES** : `tools/courbes_eval.py` (venv_adaf), le
-  nouveau modèle SUPERPOSÉ au précédent/à la baseline sur la MÊME éval gelée.
-  Seuil F1-max mesuré → `confidence_default`.
+- **Éval outillée OBLIGATOIRE** : `tools/courbes_eval.py` (venv_adaf — détection
+  bbox ET segmentation, tâche auto-détectée), le nouveau modèle SUPERPOSÉ au
+  précédent/à la baseline sur la MÊME éval gelée. Sorties déposées dans
+  `runs/training/<run>/evaluation/` du Drive (staging + robocopy) :
+  `metriques_eval.json` (CANONIQUE — seuils F1-max global + par classe, AP@50,
+  par zone, provenance) + planches + `appariements.json` (cache à empreinte).
+  Les seuils du model_card (`confidence_default` + `confidence_per_class`)
+  proviennent UNIQUEMENT de metriques_eval.json — plus jamais lus sur les PNG.
+- **Dashboard** : régénérer `tools/tableau_modeles.py` → `index.html` racine
+  model-training après le dépôt.
 - Consigner (tracker de campagne + mémoire) : chiffres, époque best, artefacts.
 - Installation plugin : skill `/installer-modele-plugin`.
 
@@ -55,3 +62,7 @@ colle les sorties de cellules : les valider une à une.
   mesure sur elle.
 - Un seul facteur change par run comparatif ; verdict = mesure, jamais l'œil.
 - CSVLogger écrase metrics.csv à la reprise : sauvegardes numérotées (9ter).
+- Lancement raté = supprimer TOUT DE SUITE le dossier horodaté résiduel
+  (`runs/training/<cible>_<horodatage>` ET son miroir `runs/inference/`) avant de
+  relancer. Une famille = un thème à la racine de model-training (snake_case
+  ASCII, vérifier l'existant avant d'en créer une — règle CLAUDE.md 2026-08-31).

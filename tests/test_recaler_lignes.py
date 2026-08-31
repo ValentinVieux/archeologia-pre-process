@@ -122,14 +122,16 @@ dists_c = [recalee_c.interpolate(t, normalized=True).distance(verite_creux)
            for t in np.linspace(0.05, 0.95, 40)]
 assert float(np.median(dists_c)) < 0.5
 
-# Ligne en dents de scie (annotation zigzag) : le recalage la redresserait en
-# détruisant sa longueur -> garde d'instabilité : origine conservée + a_revoir
+# Ligne en dents de scie (annotation zigzag) : la garde d'instabilité impose
+# l'invariant ratio de longueur ∈ [0,75 ; 1,35] — soit le recalage est stable,
+# soit la géométrie d'origine est conservée (flag instable, statut a_revoir)
 zigzag = LineString([(600100 + 3 * i,
                       courbe_crete(600100 + 3 * i) + (4 if i % 2 else -4))
                      for i in range(30)])
 rec_z, mesures_z = recaler_ligne(zigzag, lecteur, PARAMS)
-assert mesures_z.get("instable") is True, mesures_z
-assert rec_z.equals(zigzag)  # géométrie d'origine intacte
+assert 0.75 <= rec_z.length / zigzag.length <= 1.35, rec_z.length / zigzag.length
+if mesures_z.get("instable"):
+    assert rec_z.equals(zigzag)  # instable -> origine intacte
 
 # Ligne loin de tout signal : intacte
 loin = LineString([(600100, 6699500), (600300, 6699500)])

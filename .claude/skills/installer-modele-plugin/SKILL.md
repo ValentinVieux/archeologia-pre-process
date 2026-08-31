@@ -24,18 +24,24 @@ compléments 2026-08).
 - **Traçabilité entraînement (dans `entrainement/`)** : `metrics.csv`
   (+ historiques numérotés si reprises, avec NOTE-metriques.md disant quel CSV
   = le checkpoint déployé), `hparams.yaml`, tfevents, `visualizations/`
-  (training_curves + dashboards du run Drive), et les **courbes standard**
-  `comparaison_<vs>/` (tools/courbes_eval.py — planches + appariements.json ;
-  convention utilisateur 2026-08-17 : dans entrainement/). Ne JAMAIS écraser
-  l'`evaluation_results.json` de référence d'un modèle existant ;
+  (training_curves + dashboards du run Drive), **`evaluation/`**
+  (metriques_eval.json + planches + appariements.json du modèle DÉPLOYÉ,
+  copiés depuis `runs/training/<run>/evaluation/` du Drive) et les
+  superpositions `comparaison_<vs>/` (tools/courbes_eval.py ; convention
+  2026-08-17 : toujours dans entrainement/). `evaluation_results.json` racine
+  = legacy notebook, documentaire, ne JAMAIS l'écraser ni s'en servir comme
+  source de seuils ;
 - `weights/` : `best.pth`, `best.onnx`, `best.json`.
 
 ## Étapes
 1. Copier `package/` du run Drive → `data/models/<id>/` + compléments ci-dessus.
 2. Cohérence des métadonnées : `classes.txt` = ids d'ENTITÉ du catalogue ;
-   `thresholds.confidence_default` = seuil F1-max MESURÉ (balayage, jamais 0,3
-   par défaut) ; version/description/known_limitations remplis ; bloc RVT/MNT
-   = GSD et rayons LD du corpus d'entraînement.
+   `thresholds.confidence_default` + `confidence_per_class` = valeurs de
+   `entrainement/evaluation/metriques_eval.json` (jamais 0,3 par défaut),
+   champ `thresholds.seuils_provenance` renseigné (chemin + date) ; vérifier
+   clés `par_classe` de metriques_eval.json == classes.txt (piège du mapping
+   croisé enclos ie/fr) ; version/description/known_limitations remplis ;
+   bloc RVT/MNT = GSD et rayons LD du corpus d'entraînement.
 3. Export ONNX : `dev/runner_onnx/.venv_onnx` du PROFIL, avec
    `PYTHONIOENCODING=utf-8` (sinon crash charmap en validation) :
    `export_to_onnx.py --model …best.pth --output …best.onnx --type rfdetr
@@ -60,4 +66,5 @@ compléments 2026-08).
 - Résolution d'entraînement = résolution d'export = résolution d'inférence.
 - Ancien mécanisme remplacé : COMMENTER (model_card/args), jamais supprimer.
 - Tout chiffre affiché dans model_card provient d'une mesure tracée
-  (evaluation_results.json ou courbes) — pas de valeur héritée d'un autre modèle.
+  (`entrainement/evaluation/metriques_eval.json`) — pas de valeur héritée d'un
+  autre modèle, pas de chiffre lu sur un PNG.
