@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Test des modèles ADAF — données irlandaises et françaises</title>
+<style>
+  :root { --encre:#1a1d21; --papier:#fbfaf7; --accent:#205072; --ok:#2c6e49; --alerte:#a4243b; --doux:#e8eef2; }
+  body { font-family: Georgia, 'Times New Roman', serif; background:var(--papier); color:var(--encre);
+         max-width: 980px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.55; }
+  h1 { font-size: 1.65rem; border-bottom: 3px solid var(--accent); padding-bottom:.4rem; }
+  h2 { font-size: 1.25rem; color: var(--accent); margin-top: 2.2rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .9rem; font-family: system-ui, sans-serif; }
+  th, td { border: 1px solid #b9c4cc; padding: .45rem .6rem; text-align: left; }
+  th { background: var(--doux); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .verdict { background: #eaf3ec; border-left: 5px solid var(--ok); padding: .8rem 1rem; margin: 1.2rem 0; }
+  .attention { background: #f9ecee; border-left: 5px solid var(--alerte); padding: .8rem 1rem; margin: 1.2rem 0; }
+  .note { background: var(--doux); border-left: 5px solid var(--accent); padding: .8rem 1rem; margin: 1.2rem 0; }
+  code { font-family: Consolas, monospace; font-size: .88em; background: #eef0ee; padding: .05rem .3rem; border-radius: 3px; }
+  .src { font-size: .85rem; color: #555; }
+  .pire { color: var(--alerte); font-weight: bold; }
+  .mieux { color: var(--ok); font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Test des modèles ADAF sur nos données irlandaises et françaises</h1>
+<p class="src">2026-08-07 — banc exécuté localement (venv dédié, GPU CUDA), modèles officiels
+<a href="https://zenodo.org/records/15848663">Zenodo 15848663</a> tels que livrés
+(HRNet segmentation « ringfort » + « enclosure », seuil 0,5, aire min 40 m², rondeur min 0,5 —
+défauts du widget officiel). ADAF fait sa propre visualisation SLRM depuis le MNT fourni.
+Référence : <a href="https://doi.org/10.1016/j.jasrep.2026.105733">Čož et al. 2026</a>,
+modèles entraînés sur 10 718 monuments irlandais.</p>
+
+<h2>1. Protocole</h2>
+<ul>
+<li><b>Irlande — Sligo</b> : mosaïque GSI 1 m complète (122 km² de données valides).
+Vérité terrain : nos <b>398 annotations</b> (<code>sligo_annotations_v2</code>, 100 % revues,
+330 ringforts + 68 enclosures).</li>
+<li><b>France — Rambouillet</b> : fenêtre de 12×12 km la plus dense (16 enclos GT sur 30),
+MNT LiDAR HD IGN, testé en <b>0,5 m natif</b> ET <b>ré-échantillonné 1 m</b> (le GSD natif d'ADAF).</li>
+<li><b>France — Bretagne</b> : fenêtre 12×12 km la plus dense (18 emprises GT fermées
+sur 86), mêmes deux bras 0,5 m / 1 m.</li>
+<li><b>Métriques</b> (classes fusionnées, décision 2026-08-07) : rappel « lâche » (GT recouvert
+à ≥30 % ou centroïde dans une prédiction), rappel strict (IoU ≥ 0,30), IoU médian des appariés,
+et prédictions ne recouvrant aucun GT.</li>
+</ul>
+
+<h2>2. Résultats</h2>
+<table>
+<tr><th>Test</th><th class="num">GT</th><th class="num">Rappel lâche</th><th class="num">Rappel IoU≥0,3</th><th class="num">IoU médian appariés</th><th class="num">Prédictions</th><th class="num">Hors GT</th><th class="num">Bruit /km²</th></tr>
+<tr><td><b>Sligo 1 m</b> (domaine natif ADAF)</td><td class="num">398</td><td class="num"><b>45,7 %</b></td><td class="num">32,4 %</td><td class="num">0,43</td><td class="num">357</td><td class="num">50 %</td><td class="num">1,5</td></tr>
+<tr><td>Rambouillet 1 m (ré-éch.)</td><td class="num">16</td><td class="num">25,0 %</td><td class="num">18,8 %</td><td class="num">0,69</td><td class="num">178</td><td class="num pire">97 %</td><td class="num">1,2</td></tr>
+<tr><td>Rambouillet 0,5 m (natif)</td><td class="num">16</td><td class="num">31,2 %</td><td class="num">31,2 %</td><td class="num">0,73</td><td class="num">430</td><td class="num pire">99 %</td><td class="num">3,0</td></tr>
+<tr><td>Bretagne 1 m (ré-éch.)</td><td class="num">18</td><td class="num">27,8 %</td><td class="num">11,1 %</td><td class="num">0,56</td><td class="num">77</td><td class="num pire">94 %</td><td class="num">0,5</td></tr>
+<tr><td>Bretagne 0,5 m (natif)</td><td class="num">18</td><td class="num">33,3 %</td><td class="num">16,7 %</td><td class="num">0,50</td><td class="num">161</td><td class="num pire">95 %</td><td class="num">1,1</td></tr>
+</table>
+
+<p>Compléments mesurés sur Sligo :</p>
+<ul>
+<li><b>Le modèle « enclosure » ne produit RIEN</b> qui survive à ses propres filtres par
+défaut — toutes les détections viennent du modèle « ringfort », partout (Irlande comme France).
+Rappel sur nos enclosures Sligo : 22,1 % (contre 50,6 % pour les ringforts).</li>
+<li><b>Aucun biais de forme envers nos annotations pipeline</b> : rappel identique sur les
+GT 100 % humaines (46,0 %) et sur les GT issues de notre pipeline revues (45,2 %) —
+ADAF rate la moitié de tout, uniformément.</li>
+<li><b>Masques 4× trop gros</b> : aire médiane des prédictions 2 574 m² contre 656 m² pour
+la GT — d'où l'IoU médian de 0,43 en domaine natif. À titre de comparaison, notre pipeline
+guidé cercle+SAM fait 0,80 d'IoU médian sur éval gelée.</li>
+<li><b>Vitesse remarquable</b> : 3,1 min pour les 122 km² de Sligo sur GPU (SLRM compris).</li>
+</ul>
+
+<h2>3. Lecture</h2>
+
+<div class="note"><b>Précaution de lecture :</b> ADAF fait de la <i>prospection aveugle</i>
+(trouver des monuments sur un territoire), notre pipeline fait de l'<i>annotation guidée</i>
+(segmenter un monument à partir d'un point recalé à la main). Les IoU ne sont donc pas
+directement comparables — mais le rappel, lui, mesure bien ce qu'ADAF apporterait comme
+outil d'aide, et les « hors GT » son coût de tri. Par ailleurs nos GT françaises ne sont
+pas exhaustives : une partie des « hors GT » français peut être réelle (archéologie non
+digitalisée), mais l'ordre de grandeur (94-99 %) ne laisse pas de doute sur la dominance
+du bruit — haies, parcellaire moderne, mares et carrières circulaires.</div>
+
+<ol>
+<li><b>Même chez lui, ADAF est loin de nos besoins d'annotation.</b> 46 % de rappel sur des
+monuments dont nous savons qu'ils sont visibles sur le LD (vérifiés humainement), masques
+grossiers 4× trop larges : comme générateur d'annotations, il est nettement derrière notre
+pipeline guidé — qui, lui, exploite le recalage humain du point.</li>
+<li><b>Le transfert zéro-shot vers la France est faible, comme la littérature le prédit.</b>
+Rappel 25-33 %, précision quasi nulle vis-à-vis des GT. C'est une confirmation empirique
+directe de l'asymétrie décrite dans
+<a href="https://arxiv.org/html/2307.03512">l'étude Chactún/Veluwe</a> et de notre choix
+stratégique (<code>docs/strategie_entrainement_enclos.html</code>) : pas de transfert gratuit
+inter-régional, il faut du co-entraînement + affinage sur données cibles.</li>
+<li><b>Sur la question du GSD</b> : ré-échantillonner la France à 1 m (le GSD d'entraînement
+d'ADAF) n'a PAS amélioré son rappel zéro-shot (léger avantage au 0,5 m natif, non significatif
+sur 16-18 GT). L'écart dominant est morphologique et contextuel, pas résolutif. Cela ne remet
+pas en cause notre plan « entraîner NOTRE modèle à 1 m » (qui vise l'alignement des
+distributions de taille à l'<i>entraînement</i>), mais cela confirme qu'aucun ré-échantillonnage
+ne sauvera un modèle jamais exposé aux formes françaises.</li>
+<li><b>Le point réellement exploitable : la prospection en Irlande.</b> 179 prédictions Sligo
+ne recouvrent ni nos GT ni un point SMR (66/357 seulement sont à &lt;30 m d'un point SMR).
+Vous avez trouvé 9 monuments hors inventaire à l'œil sur 3 secteurs — une passe de tri de ces
+179 candidates (1,5/km²) pourrait en révéler d'autres et enrichir le corpus à faible coût.
+Optionnel, à votre discrétion : la couche est prête
+(<code>D:\veille_irlande\adaf_test\resultats\mnt_sligo_mosaique_*_seg\semantic_segmentation.gpkg</code>).</li>
+</ol>
+
+<h2>4. Verdict</h2>
+<div class="verdict">
+<b>ADAF ne remplace ni notre pipeline d'annotation, ni un futur modèle entraîné sur nos
+données — et son échec zéro-shot en France valide notre stratégie d'entraînement</b>
+(co-entraînement classes séparées + affinage France, cf.
+<code>docs/strategie_entrainement_enclos.html</code>). Usage retenu possible : filet de
+prospection d'appoint en Irlande (tri humain des candidates hors inventaire), et point de
+comparaison publié pour situer notre futur modèle (battre 46 %/0,43 en Irlande sera le
+minimum ; en France, ADAF fixe un plancher très bas — 25-33 % avec 94-99 % de bruit).
+</div>
+
+<h2>5. Reproductibilité</h2>
+<ul class="src">
+<li>Environnement : <code>D:\veille_irlande\venv_adaf</code> (Python 3.11, torch 2.5.1+cu124,
+aitlas 0.0.1 installé --no-deps + dépendances d'inférence ; épingles nécessaires :
+<code>marshmallow&lt;4</code>, <code>matplotlib&lt;3.9</code> ; h5py/eo-learn/faiss inutiles à l'inférence).</li>
+<li>Dépôt : <code>D:\veille_irlande\adaf_repo</code> (clone officiel + 2 tars HRNet dans <code>adaf\ml_models</code>).</li>
+<li>Driver et métriques : <code>adaf_driver.py</code> / <code>adaf_metriques.py</code> (scratchpad session) ;
+piège Windows : garde <code>__main__</code> obligatoire (pool multiprocessing de la visualisation).</li>
+<li>DEM de test et GT fenêtrées : <code>D:\veille_irlande\adaf_test\</code> ; résultats bruts :
+<code>adaf_test\resultats\*_seg\semantic_segmentation.gpkg</code>.</li>
+</ul>
+
+</body>
+</html>

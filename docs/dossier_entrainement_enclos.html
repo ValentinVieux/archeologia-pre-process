@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entraînement enclos — dossier de préparation</title>
+<style>
+:root {
+  --ground: #F4F3EE; --panel: #FCFBF8; --panel2: #ECEBE3;
+  --ink: #232720; --muted: #6B7062; --line: #DAD9CE;
+  --accent: #4E6A3D; --accent-soft: #E4E9DB;
+  --warn: #A66A21; --warn-soft: #F4E8D4;
+  --crit: #9C3F2E; --crit-soft: #F3DFD9;
+  --ok: #3E6B4F; --ok-soft: #DFEAE0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #191B17; --panel: #22251F; --panel2: #2B2F27;
+    --ink: #E6E4DA; --muted: #9AA08E; --line: #383C32;
+    --accent: #93B173; --accent-soft: #2E3826;
+    --warn: #D19A55; --warn-soft: #3B3021;
+    --crit: #D07B66; --crit-soft: #3D2822;
+    --ok: #7FAE8E; --ok-soft: #24352A;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #191B17; --panel: #22251F; --panel2: #2B2F27;
+  --ink: #E6E4DA; --muted: #9AA08E; --line: #383C32;
+  --accent: #93B173; --accent-soft: #2E3826;
+  --warn: #D19A55; --warn-soft: #3B3021;
+  --crit: #D07B66; --crit-soft: #3D2822;
+  --ok: #7FAE8E; --ok-soft: #24352A;
+}
+:root[data-theme="light"] {
+  --ground: #F4F3EE; --panel: #FCFBF8; --panel2: #ECEBE3;
+  --ink: #232720; --muted: #6B7062; --line: #DAD9CE;
+  --accent: #4E6A3D; --accent-soft: #E4E9DB;
+  --warn: #A66A21; --warn-soft: #F4E8D4;
+  --crit: #9C3F2E; --crit-soft: #F3DFD9;
+  --ok: #3E6B4F; --ok-soft: #DFEAE0;
+}
+body {
+  background: var(--ground); color: var(--ink);
+  font: 15.5px/1.6 "Segoe UI", system-ui, sans-serif;
+  margin: 0; padding: 40px 20px 80px;
+}
+.wrap { max-width: 920px; margin: 0 auto; }
+h1, h2 { font-family: Cambria, Georgia, serif; text-wrap: balance; line-height: 1.2; }
+h1 { font-size: 34px; margin: 6px 0 4px; font-weight: 700; }
+h2 { font-size: 23px; margin: 0 0 14px; }
+.eyebrow {
+  font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--accent); font-weight: 600;
+}
+.date { color: var(--muted); font-size: 13.5px; }
+section {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  padding: 26px 30px; margin-top: 22px;
+}
+.kpis { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 4px; }
+.kpi {
+  flex: 1 1 150px; background: var(--panel2); border-radius: 5px; padding: 12px 16px;
+}
+.kpi b { display: block; font-size: 25px; font-variant-numeric: tabular-nums; font-family: Cambria, Georgia, serif; }
+.kpi span { font-size: 12.5px; color: var(--muted); line-height: 1.35; display: block; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.scroll { overflow-x: auto; }
+th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; padding: 7px 10px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+code { font-family: Consolas, monospace; font-size: 0.92em; background: var(--panel2); padding: 1px 5px; border-radius: 3px; }
+.chip { display: inline-block; border-radius: 3px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.chip.ok   { background: var(--ok-soft); color: var(--ok); }
+.chip.todo { background: var(--warn-soft); color: var(--warn); }
+.chip.dec  { background: var(--crit-soft); color: var(--crit); }
+.chip.info { background: var(--panel2); color: var(--muted); }
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: baseline; padding: 10px 12px; background: var(--panel2); border-radius: 5px; }
+.steps li::before { content: counter(s, decimal-leading-zero); font-family: Consolas, monospace; color: var(--accent); font-weight: 700; font-size: 15px; }
+.steps .t b { display: block; }
+.steps .t small { color: var(--muted); font-size: 13px; }
+.note { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 16px; border-radius: 0 5px 5px 0; margin: 14px 0; font-size: 14px; }
+.note.warn { border-color: var(--warn); background: var(--warn-soft); }
+ul.tight { margin: 8px 0; padding-left: 20px; }
+ul.tight li { margin: 5px 0; }
+.q { display: grid; grid-template-columns: 26px 1fr; gap: 10px; margin: 14px 0; }
+.q .qm { font-family: Cambria, Georgia, serif; font-weight: 700; color: var(--accent); font-size: 18px; }
+.q b { display: block; }
+.q small { color: var(--muted); }
+.src { color: var(--muted); font-size: 12.5px; margin-top: 26px; line-height: 1.7; }
+a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">ArcheologIA · dossier de préparation — document interne</div>
+  <h1>Entraîner un modèle « enclos »</h1>
+  <div class="date">État des données au 4 août 2026 · zones <code>data_regions_v2</code> · pipeline calqué sur l'entraînement linéaires v2</div>
+
+  <section>
+    <h2>L'essentiel</h2>
+    <div class="kpis">
+      <div class="kpi"><b>295</b><span>objets annotés, 4 zones (dont 245 en Bretagne)</span></div>
+      <div class="kpi"><b>~215</b><span>tuiles positives 648 px estimées (centroïdes)</span></div>
+      <div class="kpi"><b>0,235</b><span>F1 de la brique heuristique actuelle — la référence à battre</span></div>
+      <div class="kpi"><b>0,35–0,45</b><span>plafond réaliste estimé de cette brique (rapport calibration)</span></div>
+    </div>
+    <ul class="tight">
+      <li>La détection d'enclos existe déjà dans le plugin sous forme <b>heuristique</b> (fermeture des fragments parcellaires détectés). La campagne Bretagne l'a mesurée : F1 0,235 après recalibration (moteur enveloppe V2). Son rapport recommandait déjà en <b>R3</b> : « entraînement dédié enclos — les annotations bretonnes sont un jeu d'entraînement tout trouvé ».</li>
+      <li>Le modèle linéaires actuel <b>voit déjà les fossés d'enclos</b> : couverture médiane de 77 % du tracé par les détections parcellaire. C'est à la fois le risque principal (confusion enclos / parcellaire) et l'argument du transfert (le backbone connaît déjà la texture).</li>
+      <li>La vraie valeur ajoutée d'un modèle dédié : les <b>81 enclos sans parcellaire détecté autour</b> + ~20 mal couverts, hors de portée de toute heuristique de fermeture.</li>
+      <li>Décisions déjà actées (2026-08-03) : tout en <b>lignes</b> ; <code>enclos</code> / <code>enceinte</code> / <code>enclos_funeraire</code> restent 3 entités distinctes dans les vecteurs ; fusion en <code>enclos_enceinte</code> uniquement à la génération Roboflow (mécanisme <code>fusions:</code> du corpus, comme voie→parcellaire).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Données disponibles</h2>
+    <div class="scroll"><table>
+      <tr><th>Zone</th><th>Objets</th><th>Géométrie</th><th>GPKG entités</th><th>Raster LD</th><th>Taille des objets</th></tr>
+      <tr>
+        <td><b>35_anomalie_lidar_bretagne</b><br><small>sites dispersés, dépts 35/22/29/56 — 203 enclos sur 213 objets dans le seul dépt 35</small></td>
+        <td class="num">211 enclos<br>31 enceintes<br>3 funéraires</td>
+        <td>lignes (55 anneaux fermés, 177 tracés simples, 37 multiples, 9 dégénérées)</td>
+        <td><span class="chip ok">fait 2026-08-03</span></td>
+        <td><span class="chip ok">déposé</span><br><small>201 dalles, MNT + 10 indices, couvre 212/214 GT</small></td>
+        <td class="num">méd. 1 609 m²<br>dim. méd. 54 m</td>
+      </tr>
+      <tr>
+        <td><b>78_rambouillet</b></td>
+        <td class="num">30 enclos</td>
+        <td>polygones <span class="chip todo">à convertir en lignes</span></td>
+        <td><span class="chip ok">couche enclos (v2)</span></td>
+        <td><span class="chip ok">raw/Rambouillet_MNT_IGN</span></td>
+        <td class="num">méd. 6 772 m²<br>dim. méd. 108 m</td>
+      </tr>
+      <tr>
+        <td><b>78_saint_germain_marly</b></td>
+        <td class="num">9 enclos</td>
+        <td>polygones <span class="chip todo">à convertir</span></td>
+        <td><span class="chip ok">couche enclos (v2)</span></td>
+        <td><span class="chip todo">LD localisé en local</span><br><small><code>D:\pipeline_results\output_78_…Saint-Germain_lidar_HD\indices</code> (MNT, LD, SLRM, LD_A15 — 2,3 Go, VRT sains). Dépôt Drive en attente sur consigne (2026-08-04)</small></td>
+        <td class="num">méd. 4 277 m²<br>dim. méd. 93 m</td>
+      </tr>
+      <tr>
+        <td><b>77_fontainebleau</b></td>
+        <td class="num">11 enclos<br><small>+ 9 candidats non typés (« buttes dans enclos ? », formes quadrangulaires)</small></td>
+        <td>polygones <span class="chip todo">à convertir</span></td>
+        <td><span class="chip ok">couche enclos (v2)</span></td>
+        <td><span class="chip ok">raw/MNT/indices</span></td>
+        <td class="num">méd. 6 579 m²<br>dim. méd. 116 m</td>
+      </tr>
+    </table></div>
+    <div class="note">Toutes les autres zones du parc (10) sont vierges d'enclos — vérifié par scan complet le 2026-08-03. Ni Roboflow ni Roboflow Universe n'offrent de raccourci (0 classe enclos, pas de dataset LiDAR public exploitable). Un seul objet breton dépasse une tuile de 324 m ; tout le reste tient dans une tuile — le format 648 px à 0,5 m/px convient sans changement.</div>
+    <div class="note warn">Vérité terrain <b>non exhaustive</b> (le rapport de calibration l'a acté : un « publié sans GT » peut être une découverte). Conséquence : la précision mesurée sera toujours sous-estimée ; prévoir une revue visuelle des faux positifs avant d'en conclure quoi que ce soit.</div>
+  </section>
+
+  <section>
+    <h2>Ce que la campagne Bretagne a déjà appris (rapport calibration, 24-25/07)</h2>
+    <div class="scroll"><table>
+      <tr><th>Approche</th><th>Rappel</th><th>Précision</th><th>F1</th><th>Lecture</th></tr>
+      <tr><td>Brique dilatation (v1)</td><td class="num">0,15</td><td class="num">0,18</td><td class="num">0,16</td><td>plafond structurel : les petits enclos très ouverts ne se ferment jamais</td></tr>
+      <tr><td>Brique enveloppe convexe (V2, implémentée + recalibrée)</td><td class="num">0,28</td><td class="num">0,21</td><td class="num"><b>0,235</b></td><td>la référence actuelle en production ; objectif réaliste 0,35–0,45 avec scoring complet</td></tr>
+      <tr><td>Plafond théorique de toute heuristique de fermeture</td><td class="num">≈ 0,62</td><td class="num">—</td><td class="num">—</td><td>rappel max du générateur enveloppe avant scoring — et seulement là où le parcellaire est détecté</td></tr>
+    </table></div>
+    <ul class="tight">
+      <li><b>Le goulot n'est pas le réglage, c'est l'amont</b> : 81 GT sur 212 n'ont aucun parcellaire détecté autour, ~20 autres sont trop mal couvertes. Aucune heuristique de fermeture ne les atteindra — seul un détecteur qui voit l'enclos lui-même le peut. C'est l'espace où un modèle entraîné joue.</li>
+      <li><b>Actif réutilisable majeur</b> : le labo de calibration (GT étiquetée, appariement tampon 20 m, périmètres) est réutilisable tel quel — le futur modèle se mesurera sur exactement la même campagne, comparaison directe avec les 0,235.</li>
+      <li>13 candidats publiés se sont appariés à d'autres structures GT (enceintes, murs, fossés) : la frontière enclos/enceinte/parcellaire est poreuse aussi pour l'heuristique.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Ce que dit la littérature (recherche du 2026-08-04)</h2>
+    <div class="scroll"><table>
+      <tr><th>Travail</th><th>Méthode / données</th><th>Résultat</th><th>Leçon pour nous</th></tr>
+      <tr>
+        <td><b>ADAF — Irlande</b> (Čož et al. 2026, <a href="https://github.com/EarthObservation/adaf">code</a>, <a href="https://zenodo.org/records/15848663">poids</a>)</td>
+        <td>HRNet + Faster R-CNN sur SLRM 512 px ; 10 718 monuments en <b>polygones d'emprise pleine</b>, classes dont <b>enclosure</b></td>
+        <td class="num">rappel 84 %, 116 sites inédits</td>
+        <td>seul modèle « enclos » public au monde (CC-BY-SA) ; classe rare (barrows) résolue en ajoutant des exemples d'une autre région</td>
+      </tr>
+      <tr>
+        <td><b>Guyot et al. 2021 — Carnac</b> (<a href="https://journal.caa-international.org/articles/10.5334/jcaa.64">JCAA</a>)</td>
+        <td>Mask R-CNN, eMSTP 0,5 m, masques surfaciques, <b>195 objets seulement</b></td>
+        <td class="num">mAP 0,64 → 0,75 grâce à l'augmentation</td>
+        <td>le meilleur analogue : notre régime (~300 objets, 0,5 m/px, Bretagne) est prouvé viable, à condition d'augmentation géométrique</td>
+      </tr>
+      <tr>
+        <td><b>WODAN 1/2 — Pays-Bas</b> (<a href="https://journal.caa-international.org/articles/10.5334/jcaa.32">JCAA</a>)</td>
+        <td>Faster R-CNN, barrows / Celtic fields / charbonnières</td>
+        <td class="num">rappel ~50 % sur test aléatoire (vs 71 % sur test choisi)</td>
+        <td>évaluer sur tuiles tirées au hasard — les scores sur tuiles « à objets » sont trompeurs</td>
+      </tr>
+      <tr>
+        <td><b>Hillforts Europe 2025</b> (<a href="https://journal.caa-international.org/articles/10.5334/jcaa.178">JCAA</a>) ; Trier 2021 (Norvège)</td>
+        <td>CNN enceintes sur 180 000 km² ; Faster R-CNN tumulus</td>
+        <td class="num">F1 34–38 % en zones nouvelles ; rappel 38 % hors zone d'entraînement</td>
+        <td>le mur réel est le transfert géographique — nos métriques par zone au banc sont la bonne réponse</td>
+      </tr>
+      <tr>
+        <td><b>Białowieża 2022</b> (<a href="https://www.mdpi.com/2072-4292/14/4/995">Remote Sensing</a>)</td>
+        <td>U-Net multiclasse : talus parcellaires (linéaire) ET parcelles (surface) dans le même jeu</td>
+        <td class="num">IoU 0,41 linéaire vs 0,62 surfaces</td>
+        <td>l'indice mesuré le plus proche d'un A/B contour-vs-surface (aucun A/B rigoureux publié n'existe)</td>
+      </tr>
+      <tr>
+        <td><b>Transfert entre modèles archéo</b> (<a href="https://arxiv.org/html/2307.03512">arXiv 2307.03512</a>) ; <b>DINO-CV</b> (<a href="https://arxiv.org/abs/2510.17644">arXiv 2510.17644</a>)</td>
+        <td>ablations transfert ; SSL hillshade↔VAT sur MNT</td>
+        <td class="num">« aucun gain systématique » ; mIoU 63,8 % avec 10 % des étiquettes</td>
+        <td>partir du checkpoint linéaires : à essayer (gratuit) mais sans garantie ; le SSL sur nos MNT est la piste forte si plateau</td>
+      </tr>
+    </table></div>
+    <div class="note"><b>Le point le plus tranché : la représentation.</b> Tous les travaux publiés sur les enclos annotent l'<b>emprise surfacique pleine</b> (polygone rempli, cour incluse), jamais l'anneau bufferisé. Raisons convergentes : un anneau de 7 m ressemble pixel à pixel à du parcellaire courbe (notre risque n° 1 de confusion), l'aire d'un anneau fin est minuscule pour le matching d'instances de RF-DETR, et c'est la représentation d'ADAF/Guyot qui a fait ses preuves. Réserve : les enclos pénannulaires/ouverts ne se ferment pas seuls — prévoir une règle de fermeture (l'enveloppe convexe de la brique V2 fait exactement ça). Cette conclusion vient nuancer la décision « tout en lignes » : elle reste valable pour le <em>stockage vecteur</em>, mais la <em>rasterisation d'entraînement</em> gagnerait à être un remplissage.</div>
+    <ul class="tight">
+      <li><b>Ressources réutilisables</b> : poids ADAF « enclosure » (<a href="https://zenodo.org/records/15848663">Zenodo</a>, CC-BY-SA-4.0, ~5,5 Go, téléchargement direct vérifié — zero-shot probablement faible : SLRM ≠ LD, raths irlandais en relief positif vs nos enclos fossoyés en creux, mais réentraînable) ; <a href="https://arxiv.org/pdf/2412.05203">Archaeoscape</a> (benchmark ALS, Cambodge — données <b>sur demande</b>, licence EFEO restrictive) ; dataset WODAN non public ; LandArchIE (Irlande, à surveiller). Détail des modes d'accès : voir Q7.</li>
+      <li><b>Métriques</b> : Fiorucci et al. 2022 montrent que le mAP COCO est mal adapté aux objets archéologiques discrets (appariement par centroïde préférable) — cohérent avec notre choix « F1 longueur » au banc ; ici un F1 par appariement centroïde/tampon 20 m (celui du rapport calibration) est la bonne métrique.</li>
+      <li>« ODYSSEE » : aucun projet publié trouvé sous ce nom. Le paysage français publié se résume à Guyot et al. (Carnac) et… Archéolog'IA lui-même.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Déroulé proposé — calqué sur le pipeline linéaires v2</h2>
+    <ol class="steps">
+      <li><div class="t"><b>Compléter les vecteurs</b><small>Décidé (Q4 : masque plein) — fermer les tracés bretons ouverts en polygones (enveloppe convexe, seuil d'ouverture à définir et à vérifier visuellement) ; les polygones IdF restent tels quels. GPKG régénérés + boucle de vérification (<code>verif_zone_gpkg</code>).</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Contrôle visuel du calage breton</b><small>Décidé (Q3) — carte de contrôle d'abord ; recalage méthode B seulement si offset avéré (polarité enclos fossoyé = sombre).</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Configs de découpe</b><small><code>configs/enclos_&lt;zone&gt;_ld_648_v1.yaml</code> : tuiles 648 px sans chevauchement, buffer 7 m, split spatial par blocs 2 km (<code>split_manifest.yaml</code>, jamais re-tiré), ~10 % de négatifs. Couches linéaires non entraînées en <code>ignorer:</code> pour bloquer les faux négatifs (le parcellaire autour des enclos ne doit pas devenir du « fond »).</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Boucles de vérification + carte de contrôle</b><small><code>verif_dataset</code> par contrôleur indépendant, carte validée par vous — aucune livraison avant verdict conforme (règle 2026-07-27).</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Dépôt Drive + Roboflow</b><small>Dépôt <code>training/datasets/</code>, lot de TEST 10 images, inspection humaine des masques, puis upload complet vérifié (<code>upload_roboflow_split</code>, split imposé). Classes plateforme : <code>enclos_enceinte_&lt;site&gt;</code>.</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Corpus multi-zones</b><small><code>configs/corpus_enclos_v1.yaml</code> : classe canonique unique <code>enclos_enceinte</code>, <code>fusions: {enclos: enclos_enceinte, enceinte: enclos_enceinte, enclos_funeraire: enclos_enceinte}</code> — la distinction reste dans les GPKG.</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Entraînement RF-DETR segmentation</b><small>Modèle dédié mono-classe (recommandation, cf. questions) ; <code>rfdetr&gt;=1.8.3</code>, résolution d'entraînement = résolution d'export ONNX ; leçons v2_1 : surveiller la fin de run (34/60 jamais terminé), scores IA-BCE écrasés structurels → calibrer le seuil au banc, pas à l'intuition.</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Évaluation contre la référence</b><small>Rejouer la campagne Bretagne : même GT, même appariement (tampon 20 m) → F1 directement comparable au 0,235 de la brique. Mesurer séparément sur les 81 « sans parcellaire autour » (là où l'heuristique est aveugle). Banc <code>tools/bench</code> : porte de parité obligatoire avant toute conclusion.</small></div><span class="chip todo">à faire</span></li>
+      <li><div class="t"><b>Intégration plugin</b><small>Décider du sort de la brique heuristique : remplacée, ou conservée en aval du modèle (le contrat de briques absorbe les deux). <code>plugin_entity_id</code> à câbler (décision humaine).</small></div><span class="chip dec">décision</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Risques et parades</h2>
+    <div class="scroll"><table>
+      <tr><th>Risque</th><th>Réalité mesurée</th><th>Parade</th></tr>
+      <tr><td><b>Peu d'exemples</b></td><td>~215 tuiles positives, contre des milliers pour le parcellaire</td><td>modèle mono-classe dédié ; envisager l'initialisation depuis le checkpoint linéaires (backbone déjà accoutumé au LD) ; augmentation prudente (rotations/miroirs valides en vue zénithale)</td></tr>
+      <tr><td><b>Confusion avec le parcellaire</b></td><td>77 % du tracé des enclos déjà « vu » comme parcellaire ; 13 candidats heuristiques appariés à d'autres structures</td><td>couches linéaires en <code>ignorer:</code> dans la découpe ; éval dédiée de la confusion au banc ; c'est aussi l'argument pour un modèle séparé plutôt qu'une 6ᵉ classe du modèle linéaires</td></tr>
+      <tr><td><b>Déséquilibre zone</b></td><td>83 % des objets dans une seule zone (Bretagne) ; leçon v2_1 : classe×zone confondues</td><td>tags zone systématiques, métriques par zone au banc, split spatial par blocs dans chaque zone</td></tr>
+      <tr><td><b>GT non exhaustive</b></td><td>acté par le rapport calibration (découvertes possibles)</td><td>revue humaine des « faux positifs » avant verdict ; précision = borne basse</td></tr>
+      <tr><td><b>Éval externe du corpus linéaires</b></td><td>Bretagne était réservée « jamais entraînée » pour l'éval du modèle linéaires</td><td>un modèle enclos séparé n'y touche pas ; si un jour enclos rejoint le modèle linéaires, l'éval externe linéaire saute — à arbitrer</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Décisions et questions ouvertes</h2>
+    <div class="note"><b>DÉCISIONS actées le 2026-08-04</b> (validées interactivement) :
+      <b>Q1</b> — modèle dédié mono-classe <code>enclos_enceinte</code> (init possible depuis le checkpoint linéaires) ·
+      <b>Q2</b> — split spatial par blocs 2 km seul, plus rejeu de la campagne calibration complète comme éval comparative (vs F1 0,235 de la brique) ·
+      <b>Q3</b> — recalage Bretagne : contrôle visuel d'abord, méthode B seulement si offset avéré ·
+      <b>Q4</b> — représentation d'entraînement en <b>masque plein</b> (fermeture des tracés ouverts par enveloppe convexe ; le stockage vecteur reste en lignes).</div>
+    <div class="q"><span class="qm">Q5</span><div><b>Sort de la brique heuristique une fois le modèle en place ?</b><small>Remplacement sec, ou garde-fou aval (le modèle propose, l'enveloppe + scoring confirme) ?</small></div></div>
+    <div class="q"><span class="qm">Q6</span><div><b>Les 9 candidats non typés de Fontainebleau et les 12 enregistrements corrompus du shapefile breton :</b><small>faire vérifier par les archéologues ? (le rapport calibration recommandait déjà de leur signaler — R4③, jamais fait).</small></div></div>
+    <div class="q"><span class="qm">Q7</span><div><b>À FAIRE — veille internet : chercher des projets similaires, des données réutilisables, des idées.</b><small>Première passe le 2026-08-04 (section « littérature ») ; à poursuivre. Pistes identifiées, avec <b>mode d'accès vérifié le 2026-08-04</b> :</small>
+      <div class="scroll"><table style="margin-top:8px">
+        <tr><th>Piste</th><th>Accès</th><th>Détail</th></tr>
+        <tr><td><b>Poids ADAF « enclosure »</b> (<a href="https://zenodo.org/records/15848663">Zenodo</a>)</td><td><span class="chip ok">téléchargement direct</span></td><td>vérifié : accès ouvert sans demande, CC-BY-SA-4.0, 5,5 Go — dont <code>enclosure_HRNet_SLRM_512px</code> (861 Mo, segmentation) et <code>OD_enclosure</code> (518 Mo, détection). Premier test zero-shot possible immédiatement.</td></tr>
+        <tr><td><b>SMR irlandais</b> (<a href="https://data.gov.ie/dataset/national-monuments-service-archaeological-survey-of-ireland">data.gov.ie</a>)</td><td><span class="chip ok">téléchargement direct</span></td><td>vérifié : CSV national + shapefiles (points SMR et polygones « SMRZone »), CC-BY-4.0, + FeatureServer ArcGIS. Réserve : points et zones administratives — PAS les emprises délimitées par les experts qu'ADAF a utilisées pour l'entraînement.</td></tr>
+        <tr><td><b>Annotations d'entraînement ADAF</b> (10 718 polygones d'emprise experts)</td><td><span class="chip dec">indisponibles</span></td><td>non publiées ; c'est LandArchIE qui doit les rendre FAIR — sinon demande directe à ZRC SAZU / TII à tenter.</td></tr>
+        <tr><td><b>LandArchIE</b> (<a href="https://iaps.zrc-sazu.si/en/programi-in-projekti/landarchie-fair-and-ai-ready-landscape-archaeology-data-for-ireland">ZRC SAZU</a>)</td><td><span class="chip todo">pas encore sorti</span></td><td>« AI-ready » irlandais annoncé — à surveiller, c'est la vraie source de milliers d'enclos annotés.</td></tr>
+        <tr><td><b>Archaeoscape</b> (<a href="https://archaeoscape.ai/data/2024/">EFEO</a>)</td><td><span class="chip todo">sur demande</span></td><td>vérifié : formulaire + licence EFEO restrictive (non-commercial recherche/éducation, interdiction de re-géolocaliser et de partager l'accès). Pas du CC-BY côté données, contrairement au papier.</td></tr>
+        <tr><td><b>Dataset WODAN</b> (Pays-Bas)</td><td><span class="chip dec">non public</span></td><td>aucun accès trouvé.</td></tr>
+        <tr><td><b>Données Guyot / Carnac</b> (195 annotations)</td><td><span class="chip todo">sur demande</span></td><td>aucun dépôt public trouvé (positions de sites sensibles, comme chez nous) → contact direct équipe Rennes LETG/CReAAH, d'autant plus pertinent que leur terrain est breton.</td></tr>
+      </table></div></div></div>
+  </section>
+
+  <div class="src">
+    Sources : scan complet des 14 zones (2026-08-03) · GPKG <code>anomalie_lidar_bretagne_entites_l93.gpkg</code> (build vérifié CONFORME) et GPKG v2 des zones IdF ·
+    <code>rapport_calibration_enclos.html</code> (campagne Bretagne, runs 2026-07-24/26) · CLAUDE.md et configs du pipeline linéaires v2 (<code>corpus_lineaires_v2.yaml</code>, <code>lineaires_*_648_v2.yaml</code>) ·
+    rétrospective entraînement v2_1. Aucune position de site ne figure dans ce document.
+  </div>
+</div>
+
+</body>
+</html>

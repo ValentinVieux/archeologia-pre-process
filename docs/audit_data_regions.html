@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit data_regions — critique &amp; réorganisation</title>
+<style>
+  :root {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E; --faint: #98968A;
+    --accent: #5A6B3C; --accent-ink: #42502B;
+    --line: #DDDCD4;
+    --crit-bg: #F6E4E1; --crit-ink: #A83226;
+    --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+    --info-bg: #E5E9DB; --info-ink: #42502B;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395; --faint: #7A786C;
+    --accent: #9DB16E; --accent-ink: #B5C68C;
+    --line: #3A3D33;
+    --crit-bg: #46261F; --crit-ink: #E89A8C;
+    --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+    --info-bg: #2E3524; --info-ink: #B5C68C;
+  } }
+  :root[data-theme="dark"] {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395; --faint: #7A786C;
+    --accent: #9DB16E; --accent-ink: #B5C68C;
+    --line: #3A3D33;
+    --crit-bg: #46261F; --crit-ink: #E89A8C;
+    --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+    --info-bg: #2E3524; --info-ink: #B5C68C;
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E; --faint: #98968A;
+    --accent: #5A6B3C; --accent-ink: #42502B;
+    --line: #DDDCD4;
+    --crit-bg: #F6E4E1; --crit-ink: #A83226;
+    --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+    --info-bg: #E5E9DB; --info-ink: #42502B;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.6 system-ui, "Segoe UI", sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
+  h1 { font-size: 30px; line-height: 1.25; margin: 8px 0 4px; font-weight: 600; }
+  h2 { font-size: 21px; margin: 0 0 4px; font-weight: 600; }
+  h3 { font-size: 16.5px; margin: 22px 0 6px; font-weight: 600; }
+  .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px;
+             color: var(--accent-ink); font-weight: 600; }
+  .sub { color: var(--muted); font-size: 13.5px; }
+  section { margin-top: 44px; }
+  section > .eyebrow { display: block; border-top: 2px solid var(--accent);
+                       padding-top: 10px; margin-bottom: 6px; }
+  p { max-width: 66ch; }
+  .lede { font-size: 16px; max-width: 62ch; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+           gap: 10px; margin: 26px 0 0; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+          padding: 12px 14px; }
+  .stat .n { font-size: 22px; font-weight: 650; letter-spacing: -0.3px;
+             font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 11.5px; color: var(--muted); text-transform: uppercase;
+             letter-spacing: 0.6px; margin-top: 2px; }
+  .stat.crit .n { color: var(--crit-ink); }
+  .chip { display: inline-block; border-radius: 3px; padding: 1px 8px; font-size: 11.5px;
+          font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+          vertical-align: 2px; margin-right: 8px; }
+  .chip.crit { background: var(--crit-bg); color: var(--crit-ink); }
+  .chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .chip.ok   { background: var(--ok-bg); color: var(--ok-ink); }
+  .chip.info { background: var(--info-bg); color: var(--info-ink); }
+  .finding { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--line);
+             border-radius: 6px; padding: 14px 18px; margin: 12px 0; }
+  .finding.crit { border-left-color: var(--crit-ink); }
+  .finding.warn { border-left-color: var(--warn-ink); }
+  .finding h3 { margin: 0 0 6px; }
+  .finding p { margin: 6px 0; }
+  .finding .fix { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+  .finding .fix strong { color: var(--ink); }
+  code, pre { font-family: Consolas, "Cascadia Mono", monospace; }
+  code { background: var(--panel2); border-radius: 3px; padding: 1px 5px; font-size: 13px; }
+  pre { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+        padding: 14px 18px; overflow-x: auto; font-size: 12.5px; line-height: 1.55; }
+  pre code { background: none; padding: 0; }
+  pre .c { color: var(--muted); }
+  pre .hl { color: var(--accent-ink); font-weight: 600; }
+  .tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line);
+         border-radius: 6px; margin: 14px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 14px; border-top: 1px solid var(--line);
+           vertical-align: top; }
+  thead th { border-top: none; font-size: 11px; text-transform: uppercase;
+             letter-spacing: 0.6px; color: var(--muted); white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mono { font-family: Consolas, monospace; font-size: 12.5px; }
+  ul { padding-left: 22px; } li { margin: 5px 0; max-width: 66ch; }
+  .note { background: var(--panel2); border-radius: 6px; padding: 12px 16px;
+          font-size: 13.5px; color: var(--muted); max-width: none; }
+  .note strong { color: var(--ink); }
+  ol.plan { counter-reset: p; list-style: none; padding: 0; }
+  ol.plan > li { counter-increment: p; margin: 14px 0; padding: 14px 18px 14px 54px;
+                 background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+                 position: relative; max-width: none; }
+  ol.plan > li::before { content: counter(p); position: absolute; left: 16px; top: 13px;
+                 font-family: Georgia, serif; font-size: 19px; font-weight: 600;
+                 color: var(--accent-ink); }
+  ol.plan strong:first-child { display: block; margin-bottom: 3px; }
+  .foot { margin-top: 56px; border-top: 1px solid var(--line); padding-top: 14px;
+          font-size: 12.5px; color: var(--faint); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Archéolog'IA · pré-traitement des données · 16 juillet 2026</span>
+    <h1>Audit du stockage <span class="mono">data_regions</span> — retour critique et plan de réorganisation</h1>
+    <p class="sub">Périmètre : <span class="mono">G:\Mon Drive\Archeologia\Archeologia_Shared\data\data_regions</span> — stockage principal des livraisons brutes d'archéologues.
+    Méthode : parcours exhaustif des métadonnées (222 dossiers), 4 analyses spécialisées + contrôle contradictoire de complétude. Aucun contenu lu, rien modifié, rien supprimé.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">18</div><div class="l">livraisons · 9 régions</div></div>
+      <div class="stat"><div class="n">59 685</div><div class="l">fichiers · 272 Gio</div></div>
+      <div class="stat"><div class="n">95,8 %</div><div class="l">fichiers régénérables</div></div>
+      <div class="stat crit"><div class="n">~30 Mo</div><div class="l">irremplaçable, noyé</div></div>
+      <div class="stat crit"><div class="n">4</div><div class="l">pertes / trous avérés</div></div>
+    </div>
+  </header>
+
+  <section>
+    <span class="eyebrow">Lecture d'ensemble</span>
+    <h2>Le diagnostic en une phrase</h2>
+    <p class="lede">Le dossier s'appelle « données brutes », mais <strong>95,8 % de ses fichiers sont des produits dérivés régénérables</strong> (sorties du plugin, dalles IGN re-téléchargeables, exports de datasets) — pendant que la donnée réellement irremplaçable, les ~30 Mo de digitalisations d'archéologues, y est noyée, dupliquée, parfois mélangée à des prédictions de modèle, et dans un cas <strong>perdue</strong>.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Catégorie</th><th class="num">Fichiers</th><th class="num">Volume</th><th>Régénérable ?</th></tr></thead>
+      <tbody>
+        <tr><td>Sorties de pipeline <span class="mono">output_pipeline_plugin_*</span> (9 dossiers)</td><td class="num">45 882</td><td class="num">182,0 Gio</td><td>Oui — le plugin les reproduit</td></tr>
+        <tr><td>— dont dalles MNT IGN LiDAR HD</td><td class="num">≈4 240</td><td class="num">143,7 Gio</td><td>Oui — open data IGN (re-télécharger ≠ bit-identique : consigner version produit)</td></tr>
+        <tr><td>Datasets d'entraînement Alès <span class="mono">dataset_*</span></td><td class="num">11 313</td><td class="num">33,0 Gio</td><td>Oui — Roboflow est la source de vérité déclarée</td></tr>
+        <tr><td><strong>Vérité terrain (digitalisations, labels)</strong></td><td class="num">≈250</td><td class="num"><strong>≈30 Mo</strong></td><td><strong>Non — irremplaçable</strong></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Priorité zéro</span>
+    <h2>Alertes d'intégrité — à traiter avant toute réorganisation</h2>
+
+    <div class="finding crit">
+      <h3><span class="chip crit">Perte avérée</span>Verdun : les 9 couches vecteur ont perdu leur géométrie</h3>
+      <p><span class="mono">Grand-Est\data_Verdun\Verdun_Shp</span> (57 fichiers) ne contient <strong>aucun <code>.shp</code></strong> et un seul <code>.dbf</code> (d7). Les <code>.shx</code> présents prouvent que les <code>.shp</code> ont existé ; leur taille permet d'estimer <strong>≈ 90 000 entités perdues</strong> (tranchées et boyaux WWI inclus). Même motif à la racine : 4 <code>.tif.aux.xml</code> orphelins — les rasters 2013 (MNT, ombrage, sky-view factor) sont absents du Drive. Les fichiers manquants n'existent nulle part ailleurs dans l'arbre. Cause probable : synchronisation Drive interrompue (à confirmer via l'historique d'activité Drive web — les mtimes locaux ne sont pas fiables).</p>
+      <p class="fix"><strong>Action :</strong> re-demander la livraison à l'archéologue source. Récupération partielle possible en attendant : les <code>.txt</code> d3/d5/d6/d7 sont de probables exports d'attributs, et le PDF d'interprétation décrit les classes d1…d8.</p>
+    </div>
+
+    <div class="finding crit">
+      <h3><span class="chip crit">Livraison vide</span>Loire-Atlantique : la digitalisation promise n'est pas là</h3>
+      <p><span class="mono">data_Yann_Lejeune\data\Digitalisation_dept_44</span> et <span class="mono">Dalles_Km_LiDAR_44_2020_MNT_RST_L93_50cm</span> ne contiennent que <code>desktop.ini</code>. La livraison se résume à 12,6 Gio de rapports PDF — le livrable irremplaçable (vecteurs du département 44) est absent. Upload raté ou jamais fait : sans manifeste, personne ne pouvait le voir.</p>
+      <p class="fix"><strong>Action :</strong> relancer le contact pour re-dépôt.</p>
+    </div>
+
+    <div class="finding crit">
+      <h3><span class="chip crit">Contamination</span>Alès : prédictions de modèle rangées avec la vérité terrain</h3>
+      <p><span class="mono">Occitanie\data_Ales_Gard_GuarrigueNE\shapefiles_labels\</span> mélange les labels terrain (<code>charbonnieres</code>, <code>fours_a_chaux</code>, <code>all_fours</code>) et <code>predictions_GARD_40e_data6.*</code> — des sorties de modèle. Quiconque régénère un dataset depuis « le dossier labels » entraîne le RF-DETR sur ses propres prédictions.</p>
+      <p class="fix"><strong>Action :</strong> marquer <code>predictions_*</code> « exclu de l'entraînement » dans le mapping (aucune suppression) ; dans l'architecture cible, les prédictions n'entrent jamais dans <code>ground_truth/</code>.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3><span class="chip warn">À vérifier</span>Trois trous secondaires</h3>
+      <ul>
+        <li><span class="mono">all_fours.dbf</span> absent (géométries lisibles, attributs a priori récupérables via le <code>all_fours.gpkg</code> jumeau — à vérifier).</li>
+        <li><span class="mono">dataset_MDH_HG+G_jpg\labels</span> : vide pour 1 284 images.</li>
+        <li>3 450 labels <code>.txt</code> de 0 octet dans les <span class="mono">dataset_*</span> : convention « tuile négative » plausible, à confirmer contre Roboflow avant tout réusage.</li>
+      </ul>
+      <p class="fix">Au global : <strong>10 des 50 shapefiles bruts (20 %) sont incomplets.</strong> La panne Verdun est restée invisible longtemps — c'est le rôle du futur contrôle d'intégrité automatique.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Constats</span>
+    <h2>Ce qui ne fonctionne pas dans l'organisation actuelle</h2>
+
+    <h3><span class="chip warn">Structure</span>Brut, dérivé, docs et datasets : tout au même endroit</h3>
+    <ul>
+      <li>Les sorties de pipeline vivent <em>dans</em> les livraisons, sous <strong>trois générations d'arborescences incompatibles</strong> (<span class="mono">results/MNT|RVT</span> ; <span class="mono">indices/ + detections/</span> ; <span class="mono">MNT/ + RVT/</span> nus) — aucun script ne localise les produits sans cas particulier par livraison.</li>
+      <li>De la vérité terrain est stockée <em>dans</em> des dossiers de sortie : la digitalisation Rambouillet est <strong>dupliquée à l'identique</strong> (40/40 fichiers, plus un PDF de 256 Mo en double) dont une copie dans l'output ; la <span class="mono">GT/</span> de Fenétrange vit dans un run de détection. Première édition d'une copie = plus de version canonique.</li>
+      <li><strong>19 projets <code>detections_validation.qgs</code></strong> (tailles toutes différentes) : du travail humain de validation stocké dans la zone « régénérable ». Toute purge naïve des outputs les détruirait — règle d'exfiltration obligatoire.</li>
+      <li><span class="mono">Haye_MNT_INDICES</span> (~16 Gio de dérivés RVT) vit dans la livraison brute, hors <span class="mono">output_pipeline_*</span> : la dichotomie simple brut/dérivé ne le couvre pas.</li>
+      <li><strong>Aucun <code>.laz/.las</code> sur tout l'arbre</strong> : le « brut » est déjà du dérivé (MNT). À assumer explicitement dans l'architecture (le nuage de points source vit ailleurs — IGN).</li>
+      <li>33 Gio de datasets train/val/test sur le Drive alors que Roboflow est la source de vérité : snapshots non versionnés, sans lien vers la version Roboflow (<code>data6</code> ? <code>40e</code> ?).</li>
+    </ul>
+
+    <h3><span class="chip warn">Nommage</span>Le rangement géographique est faux et les noms ne portent pas le sens</h3>
+    <ul>
+      <li><strong>Régions erronées</strong> (hypothèses fondées sur les préfixes de départements des dossiers, à confirmer) : la « bataille de la Marne » (préfixe 77 = Seine-et-Marne) est sous Hauts-de-France ; les « Vosges saônoises » (70 = Haute-Saône) sous Grand-Est ; « Rhône-Alpes » n'existe plus depuis 2016. Le niveau région n'est validé contre aucun référentiel.</li>
+      <li><strong>Contradiction blois/aude non résolue</strong> : « data_aude » = prénom (projet SOLiDAR Blois/Chambord, 41) selon le contenu, mais le <code>metadata.json</code> de l'output blois pointe <code>zone_aude_ign.shp</code> et <code>D:/data_aude/MNT</code> (département 11 ?). À trancher avec le livreur avant tout renommage.</li>
+      <li>Accents et espaces dans <strong>toutes</strong> les racines (<span class="mono">Île-de-France</span>, <span class="mono">Centre-Val de Loire</span>), casse aléatoire (<span class="mono">data_Verdun</span> vs <span class="mono">data_vosges</span>), préfixe <code>data_</code> récursif jusqu'à trois niveaux (<span class="mono">data_Loire_Atlantique\data_Yann_Lejeune\data\</span>).</li>
+      <li>Noms sans sémantique : <code>d1…d8</code> (Verdun), <code>patates.shp</code> (Rambouillet), <code>Download.zip</code> (15,8 Go !), <code>fichier .zip</code> (espace avant l'extension — l'unique livraison de Bretagne).</li>
+      <li>La sémantique d'entité change de porteur selon la livraison : dans le nom de fichier (<span class="mono">Haye_lidar_chaussee</span>), dans la géométrie (<span class="mono">digit_lignes2/points/poly</span>, trois orthographes du même concept en Île-de-France), ou dans les attributs — impossible d'industrialiser la classification sans traitement au cas par cas.</li>
+      <li>Entités fusionnées (<span class="mono">fossébutte</span>), suffixes parasites (<span class="mono">fours_a_chaux_dou</span>), versions côte à côte sans contrat (<span class="mono">parcellaire_v1/_v2</span> ; <span class="mono">02_MNT_v1</span> vs <span class="mono">02_MNT_v2</span> dont les fichiers internes s'appellent <code>05_MNT_*</code>), collision de casse <span class="mono">Fours_a_chaux.gpkg</span> / <span class="mono">fours_a_chaux.shp</span> (même clé normalisée, formats mixtes).</li>
+      <li>Pollution : 222 <code>desktop.ini</code>, verrous ArcGIS <code>.sr.lock</code> livrés (preuve qu'un poste de travail édite en direct sur le partage), <code>.lyr</code> ArcGIS porteur de la périodisation (illisible nativement dans QGIS), doubles extensions <code>.pdf.pdf</code>, entité HTML fossilisée dans un nom de PDF, doublons de sync <span class="mono">*_detections (1).jpg</span>, ~4,9 Gio de duplication interne aux outputs.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Cible</span>
+    <h2>Architecture proposée : RAW / TRANSFORMED par zone</h2>
+    <p>Conforme au schéma que vous avez fixé : chaque zone livrée par un archéologue sépare le <strong>brut immuable</strong> du <strong>transformé</strong>, ce dernier en deux étages — vecteurs nettoyés (taxonomie normalisée), puis payload exact d'upload Roboflow. L'ancien arbre n'est <strong>jamais modifié</strong> : il est gelé, la v2 naît propre à côté.</p>
+
+<pre><code><span class="hl">data_regions_v2/</span>
+  &lt;region&gt;/&lt;dept&gt;_&lt;site&gt;[_&lt;annee&gt;]/          <span class="c"># ex. grand_est/55_verdun/ · noms 100 % normalize()</span>
+    <span class="hl">manifest.yaml</span>                            <span class="c"># OBLIGATOIRE — la carte d'identité de la zone</span>
+    <span class="hl">raw/</span>                                     <span class="c"># livraison intacte, zip d'origine inclus — écriture unique, plus jamais touché</span>
+    <span class="hl">transformed/</span>
+      vecteurs/                              <span class="c"># couches nettoyées : GPKG, EPSG:2154, entités = taxonomy/entities.yaml</span>
+      roboflow/                              <span class="c"># payload d'upload : tuiles + _annotations.coco.json + upload_manifest.yaml</span>
+    docs/                                    <span class="c"># rapports, thèses, autorisations DRAC (licence d'usage !)</span>
+
+<span class="hl">hors data_regions_v2 :</span>
+  sorties de pipeline → local (D:) ; sur le Drive, seulement les livrables légers d'un run
+  (shapefiles de détections, configs, metadata, logs, .qgs de validation) — jamais les
+  milliers de jpg/tif intermédiaires. Layout unique : indices/ + detections/&lt;model&gt;/.
+  exports d'entraînement → Roboflow (source de vérité) ; tout export local est un cache
+  daté portant sa référence de version Roboflow.</code></pre>
+
+    <h3>Le manifest.yaml (généré à ~80 % par l'outillage)</h3>
+<pre><code>zone_id: 55_verdun                      <span class="c"># = nom du dossier = tag Roboflow</span>
+region: grand_est                       <span class="c"># validé contre le référentiel des 13 régions</span>
+departement: 55
+source: { contact: "Nom &lt;email&gt;", organisme: "", date_reception: 2026-07-16, licence: "" }
+donnees:
+  crs: EPSG:2154
+  contenu:
+    - { path: raw/…, type: mnt, resolution_m: 0.5 }
+    - { path: transformed/vecteurs/…, type: labels, entites: [charbonniere, four] }
+integrite: { nb_fichiers: 0, taille_octets: 0, checksums: checksums.sha256 }
+roboflow:
+  projet: &lt;projet-par-modele&gt;
+  tags: [55_verdun, grand_est]          <span class="c"># zone + région, charset [a-z0-9_] conforme</span>
+  upload_manifest: transformed/roboflow/upload_manifest.yaml   <span class="c"># image_id ↔ filename ↔ tags</span></code></pre>
+
+    <h3>La mécanique Roboflow (vérifiée dans la doc officielle)</h3>
+    <ul>
+      <li><strong>Upload par image</strong> — <code>project.single_upload(image_path=…, annotation_path=coco, tag_names=["55_verdun","grand_est"], batch_name="55_verdun_2026-07", split=…)</code>. L'upload de dossier (<code>workspace.upload_dataset</code>) ne supporte pas les tags : notre outillage bouclera par image. Batch = trace d'upload ; tags = le vrai véhicule.</li>
+      <li><strong>Correction en masse a posteriori</strong> — lister par l'API Search (<code>query: "tag:x", fields: [id, filename, tags]</code>), corriger par lots (<code>updates[].addTags/removeTags</code>) ou remplacer intégralement (<code>operation: "set"</code>). La session de rattrapage des tags existants est entièrement scriptable.</li>
+      <li><strong>Entraîner par sous-ensemble de zones</strong> — génération de version avec <code>preprocessing: {"filter-tags": …}</code> (Require/Exclude) : un projet par modèle + tags suffit, pas de duplication de projets.</li>
+      <li><strong>Piège central : l'export COCO ne préserve pas les tags.</strong> Le <code>upload_manifest.yaml</code> local (image_id ↔ filename ↔ tags), alimenté à chaque upload et correction, est la seule voie fiable de réconciliation — c'est une pièce obligatoire du volet <code>transformed/roboflow/</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Migration</span>
+    <h2>Plan additif — zéro suppression, zéro déplacement</h2>
+    <ol class="plan">
+      <li><strong>Réclamer les données manquantes (humain, urgent)</strong>Vecteurs et rasters Verdun, digitalisation du 44, <code>all_fours.dbf</code> (ou confirmation gpkg), labels MDH_jpg. Trancher blois/aude avec le livreur. Un renommage parfait de données absentes ne sert à rien.</li>
+      <li><strong>Assurance-vie immédiate</strong>Committer dans <span class="mono">pre-process-data</span> l'inventaire complet (walk métadonnées re-jouable) + les checksums des ~30 Mo de vérité terrain. Le scénario Verdun devient détectable par simple diff.</li>
+      <li><strong>Geler l'ancien arbre</strong>Convention d'équipe : plus aucune écriture sous <span class="mono">data_regions</span> (et plus jamais d'édition ArcGIS/QGIS directement sur G: — les <code>.sr.lock</code> montrent que ça arrive). Tout nouvel artefact naît en v2 ; les manifestes des livraisons historiques vivent dans le repo (<span class="mono">taxonomy/livraisons.yaml</span>), pas dans l'ancien arbre.</li>
+      <li><strong>Sauver le précieux d'abord</strong>Copier (jamais déplacer) les ~30 Mo de digitalisations vers <span class="mono">data_regions_v2/&lt;zone&gt;/raw/</span> avec manifeste — en excluant <code>predictions_*</code>. Une demi-journée, couvre 100 % de l'irremplaçable. La copie v2 devient l'unique canonique ; les copies historiques sont archives gelées.</li>
+      <li><strong>Table de correspondance</strong><span class="mono">livraisons.yaml</span> : ancien chemin → zone_id v2, région corrigée, contact, statut (voir table ci-dessous). Le mapping d'abord ; le renommage physique de l'ancien arbre n'est pas nécessaire, la v2 naît avec les bons noms.</li>
+      <li><strong>Basculer le flux entrant + outillage</strong>Toute nouvelle livraison arrive en v2 via la checklist d'intake (zip d'origine dans <code>raw/</code>, 6 champs de manifeste). Dans le repo : <code>check_integrity</code> (stems shapefile incomplets, sidecars orphelins, dossiers vides, verrous — en cron), linter de nommage dans l'audit, générateur de manifeste, uploader Roboflow par image avec tags + upload_manifest.</li>
+      <li><strong>Plus tard seulement</strong>Le sort des ~215 Gio régénérables (archivage froid, purge) — décision humaine, jamais avant les étapes 1-6, et jamais sans exfiltration préalable des <code>.qgs</code> de validation et des <code>GT/</code>.</li>
+    </ol>
+    <div class="note"><strong>Arbitrages restants (3)</strong> — à valider avec vous : ① l'identifiant de zone <code>&lt;dept&gt;_&lt;site&gt;[_&lt;annee&gt;]</code> ; ② les réaffectations de régions (77 → Île-de-France, 70 → Bourgogne-Franche-Comté) fondées sur les préfixes de dossiers, à confirmer par le contenu ; ③ le cas blois/aude, indéterminable sans le livreur.</div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Annexe</span>
+    <h2>Table de correspondance proposée (18 livraisons)</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Ancien chemin</th><th>zone_id v2 proposé</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">Bourgogne-FC/data_foret_de_chailluz</td><td class="mono">bourgogne_franche_comte/25_foret_de_chailluz</td><td>contenu = Download.zip 15,8 Go à inventorier</td></tr>
+        <tr><td class="mono">Bourgogne-FC/data_haut_doubs</td><td class="mono">bourgogne_franche_comte/25_haut_doubs</td><td></td></tr>
+        <tr><td class="mono">Bourgogne-FC/data_mont_de_la_croix</td><td class="mono">bourgogne_franche_comte/xx_mont_de_la_croix</td><td>département à confirmer</td></tr>
+        <tr><td class="mono">Bretagne/data_bretagne_1</td><td class="mono">bretagne/35_anomalie_lidar_bretagne</td><td>d'après le contenu du zip (dépts 35/22/29/56)</td></tr>
+        <tr><td class="mono">Centre-VdL/data_blois</td><td class="mono">centre_val_de_loire/41_blois</td><td></td></tr>
+        <tr><td class="mono">Centre-VdL/data_blois/data_aude</td><td class="mono">41_solidar_blois_chambord <em>ou</em> occitanie/11_*</td><td><strong>à trancher avec le livreur</strong></td></tr>
+        <tr><td class="mono">Centre-VdL/data_dreux</td><td class="mono">centre_val_de_loire/28_dreux</td><td></td></tr>
+        <tr><td class="mono">Grand-Est/data_Verdun</td><td class="mono">grand_est/55_verdun</td><td>⚠ données à réclamer</td></tr>
+        <tr><td class="mono">Grand-Est/data_fenetrange</td><td class="mono">grand_est/57_fenetrange</td><td></td></tr>
+        <tr><td class="mono">Grand-Est/data_foret_de_Hayes</td><td class="mono">grand_est/54_foret_de_haye</td><td>« Hayes » = coquille (contenu : Haye)</td></tr>
+        <tr><td class="mono">Grand-Est/data_vosges</td><td class="mono">bourgogne_franche_comte/70_vosges_saonoises</td><td>changement de région à confirmer</td></tr>
+        <tr><td class="mono">Hauts-de-France/data_bataille_de_la_marne</td><td class="mono">ile_de_france/77_bataille_de_la_marne</td><td>changement de région à confirmer</td></tr>
+        <tr><td class="mono">Occitanie/data_Ales_Gard_GuarrigueNE</td><td class="mono">occitanie/30_ales_garrigues_ne</td><td>corrige « Guarrigue »</td></tr>
+        <tr><td class="mono">Occitanie/data_la_capelle_et_masmolene</td><td class="mono">occitanie/30_la_capelle_et_masmolene</td><td>seul nom déjà conforme</td></tr>
+        <tr><td class="mono">Pays de la Loire/data_Loire_Atlantique</td><td class="mono">pays_de_la_loire/44_loire_atlantique_2020</td><td>contact = Yann Lejeune ; niveaux data_ aplatis</td></tr>
+        <tr><td class="mono">Rhône-Alpes/data_hautes_chaumes_forez</td><td class="mono">auvergne_rhone_alpes/42_hautes_chaumes_forez</td><td>région renommée (2016)</td></tr>
+        <tr><td class="mono">IdF/data_Fontainebleau</td><td class="mono">ile_de_france/77_fontainebleau</td><td></td></tr>
+        <tr><td class="mono">IdF/data_Rambouillet</td><td class="mono">ile_de_france/78_rambouillet</td><td>duplication interne à résoudre par la copie v2</td></tr>
+        <tr><td class="mono">IdF/data_Saint-Germain_Marly</td><td class="mono">ile_de_france/78_saint_germain_marly</td><td>v1/v2/test MNT à documenter au manifeste</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub">Après réaffectations, Hauts-de-France ne compte plus aucune livraison et Grand-Est en perd une : la couverture réelle est de 7-8 régions, pas 9.</p>
+  </section>
+
+  <div class="foot">Audit du 16 juillet 2026 — 4 agents d'analyse + contrôle contradictoire · parcours métadonnées uniquement (aucun contenu lu, aucune écriture sous G:) · chiffres re-vérifiés indépendamment sur le dump d'inventaire · les datations par mtime sous Drive for Desktop sont indicatives (vérifier l'historique d'activité Drive web).</div>
+</div>
+
+</body>
+</html>

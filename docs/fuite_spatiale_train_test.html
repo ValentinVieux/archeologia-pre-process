@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fuite spatiale train/test — analyse &amp; remèdes</title>
+<style>
+  :root {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E;
+    --accent: #5A6B3C; --accent-ink: #42502B; --line: #DDDCD4;
+    --train: #7A8C55; --valid: #5E7F9E; --test: #C08A3E;
+    --crit-ink: #A83226; --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395;
+    --accent: #9DB16E; --accent-ink: #B5C68C; --line: #3A3D33;
+    --train: #7A8C55; --valid: #6E93B5; --test: #D09A4E;
+    --crit-ink: #E89A8C; --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+  } }
+  :root[data-theme="dark"] {
+    --bg: #1E2019; --panel: #262922; --panel2: #2E312A;
+    --ink: #E8E6DD; --muted: #A5A395;
+    --accent: #9DB16E; --accent-ink: #B5C68C; --line: #3A3D33;
+    --train: #7A8C55; --valid: #6E93B5; --test: #D09A4E;
+    --crit-ink: #E89A8C; --warn-bg: #423414; --warn-ink: #DBB562;
+    --ok-bg: #24382A; --ok-ink: #8FC79D;
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F4F1; --panel: #FCFCFA; --panel2: #EDEDE7;
+    --ink: #26251F; --muted: #6B695E;
+    --accent: #5A6B3C; --accent-ink: #42502B; --line: #DDDCD4;
+    --train: #7A8C55; --valid: #5E7F9E; --test: #C08A3E;
+    --crit-ink: #A83226; --warn-bg: #F4EAD3; --warn-ink: #8F6212;
+    --ok-bg: #E2EEE4; --ok-ink: #3E7A4E;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.6 system-ui, "Segoe UI", sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 44px 24px 90px; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; }
+  h1 { font-size: 28px; margin: 8px 0 4px; font-weight: 600; }
+  h2 { font-size: 20px; margin: 0 0 8px; font-weight: 600; }
+  h3 { font-size: 16px; margin: 18px 0 6px; }
+  .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px;
+             color: var(--accent-ink); font-weight: 600; }
+  section > .eyebrow { display: block; border-top: 2px solid var(--accent);
+                       padding-top: 10px; margin-bottom: 6px; }
+  .sub { color: var(--muted); font-size: 13px; }
+  section { margin-top: 42px; }
+  p, li { max-width: 70ch; }
+  .lede { font-size: 16.5px; max-width: 64ch; }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; }
+  code { background: var(--panel2); border-radius: 3px; padding: 1px 5px; }
+  .fig { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+         padding: 18px 20px 10px; margin: 16px 0; overflow-x: auto; }
+  .fig svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  .cap { font-size: 12.5px; color: var(--muted); margin-top: 10px; max-width: none; }
+  .legend { display: flex; gap: 18px; font-size: 12.5px; color: var(--muted);
+            justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px;
+        vertical-align: -1px; margin-right: 5px; }
+  .tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line);
+         border-radius: 8px; margin: 14px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+  thead th { border-top: none; font-size: 11px; text-transform: uppercase;
+             letter-spacing: 0.6px; color: var(--muted); }
+  .note { background: var(--warn-bg); color: var(--warn-ink); border-radius: 6px;
+          padding: 12px 16px; font-size: 14px; max-width: none; }
+  .good { background: var(--ok-bg); color: var(--ok-ink); border-radius: 6px;
+          padding: 12px 16px; font-size: 14px; max-width: none; }
+  ol.src { padding-left: 22px; font-size: 13.5px; }
+  ol.src li { margin: 9px 0; max-width: none; }
+  ol.src a { color: var(--accent-ink); }
+  .foot { margin-top: 50px; border-top: 1px solid var(--line); padding-top: 12px;
+          font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Archéolog'IA · méthodologie d'entraînement · 16 juillet 2026</span>
+    <h1>Fuite spatiale train/test : pourquoi le prochain entraînement doit utiliser un split spatial</h1>
+    <p class="lede">Le dataset de formes linéaires en production a été découpé en tuiles <b>se chevauchant à 20 %</b>, puis réparti <b>aléatoirement</b> entre train, validation et test. Cette page explique pourquoi cette combinaison gonfle artificiellement les métriques, chiffre le phénomène sur nos propres données, et décrit le remède prévu pour la recréation des datasets.</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">Le principe</span>
+    <h2>Un score de test ne vaut que si le test est vraiment inconnu</h2>
+    <p>En vision géospatiale, « inconnu » ne signifie pas « une autre image » mais <b>un autre terrain</b>. C'est la première loi de la géographie (Tobler, 1970) : <em>tout est lié à tout, mais les choses proches le sont davantage</em> — deux tuiles voisines partagent les morceaux des mêmes objets, la même texture forestière, le même style de digitalisation, le même vol LiDAR. Cette dépendance s'appelle l'<b>autocorrélation spatiale</b>. Un split aléatoire suppose des tuiles indépendantes ; nos tuiles ne le sont pas.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Mécanisme 1</span>
+    <h2>Le chevauchement de 20 % : des pixels identiques des deux côtés</h2>
+    <p>Le découpage historique (<code>tif_slicer</code>, <code>margin: 20%</code>) fait que chaque tuile partage une bande de pixels avec ses voisines — choix pertinent pour ne pas perdre les objets en bord de tuile, mais fatal quand le split est aléatoire.</p>
+    <div class="fig">
+      <svg viewBox="0 0 560 210" role="img" aria-label="Deux tuiles se chevauchant, bande partagée entre train et test">
+        <rect x="40" y="30" width="220" height="150" fill="var(--train)" opacity="0.25" stroke="var(--train)" stroke-width="2"/>
+        <rect x="216" y="30" width="220" height="150" fill="var(--test)" opacity="0.25" stroke="var(--test)" stroke-width="2"/>
+        <rect x="216" y="30" width="44" height="150" fill="var(--crit-ink)" opacity="0.45"/>
+        <text x="150" y="20" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">tuile A → TRAIN</text>
+        <text x="326" y="20" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">tuile B → TEST</text>
+        <line x1="238" y1="185" x2="238" y2="200" stroke="var(--crit-ink)" stroke-width="1.5"/>
+        <text x="244" y="203" font-size="12.5" fill="var(--crit-ink)">bande de 20 % : pixels STRICTEMENT identiques dans A et B</text>
+        <path d="M 80 120 Q 180 70 300 110 Q 380 135 420 100" fill="none" stroke="var(--accent-ink)" stroke-width="3" stroke-dasharray="1 0"/>
+        <text x="86" y="140" font-size="12" fill="var(--accent-ink)">talus (objet annoté)</text>
+      </svg>
+      <p class="cap">Fig. 1 — Avec 20 % de marge, la tuile de test B contient une bande apprise par cœur dans la tuile de train A — et l'objet qui la traverse est annoté dans les deux.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Mécanisme 2</span>
+    <h2>Les objets linéaires sont fragmentés entre les splits</h2>
+    <p>Important : personne ne « découpe les objets ». On pose une <b>grille fixe de tuiles</b> sur toute la zone (640 px = 320 m de côté), car le modèle exige des entrées de taille constante — c'est le territoire qu'on découpe. Un four de 15 m tient dans une tuile ; un talus de 2 km, plus long que n'importe quelle tuile, <b>traverse mécaniquement</b> plusieurs cellules de la grille. Mesuré sur nos exports : <b>~5 000 lignes sources → ~19 500 annotations</b>, soit <b>3,5 à 4 fragments par objet réel</b> (jusqu'à ~10 pour les plus longs). Un split aléatoire appliqué aux tuiles ne répartit donc pas des objets : il répartit des <em>fragments d'objets</em>.</p>
+    <div class="fig">
+      <svg viewBox="0 0 560 150" role="img" aria-label="Un talus traversant 10 tuiles réparties aléatoirement entre train, valid et test">
+        <g font-size="11" text-anchor="middle">
+          <rect x="20"  y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="72"  y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="124" y="40" width="48" height="48" fill="var(--valid)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="176" y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="228" y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="280" y="40" width="48" height="48" fill="var(--test)"  opacity="0.6" stroke="var(--crit-ink)" stroke-width="2"/>
+          <rect x="332" y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="384" y="40" width="48" height="48" fill="var(--valid)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="436" y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+          <rect x="488" y="40" width="48" height="48" fill="var(--train)" opacity="0.5" stroke="var(--line)"/>
+        </g>
+        <path d="M 24 76 C 120 50 240 88 320 62 C 400 40 480 70 532 56" fill="none" stroke="var(--accent-ink)" stroke-width="3.5"/>
+        <text x="278" y="26" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">le MÊME talus de 2 km, découpé en 10 tuiles</text>
+        <text x="304" y="112" text-anchor="middle" font-size="12" fill="var(--crit-ink)">« test » = le segment 6 d'un objet appris aux segments 1-5 et 7-10</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--train)"></span>train (7)</span>
+        <span><span class="sw" style="background:var(--valid)"></span>valid (2)</span>
+        <span><span class="sw" style="background:var(--test)"></span>test (1)</span>
+      </div>
+      <p class="cap">Fig. 2 — Un talus de 2 km traverse ici 10 cellules de la grille fixe (ce n'est pas un choix de découpage : la grille préexiste aux objets). Le split aléatoire 70/20/10, appliqué aux tuiles, éparpille les fragments : le modèle est « testé » sur un morceau d'un talus qu'il connaît déjà — même orientation, même largeur, même contexte. Avec un split par blocs de 2×2 km, les 10 fragments resteraient ensemble.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Mécanisme 3</span>
+    <h2>Même sans chevauchement, la proximité suffit</h2>
+    <p>La similarité entre tuiles décroît avec la distance. Le split aléatoire place le test dans la zone où la similarité est maximale ; le split spatial le place là où elle est retombée.</p>
+    <div class="fig">
+      <svg viewBox="0 0 560 190" role="img" aria-label="Courbe de similarité décroissante avec la distance">
+        <line x1="50" y1="150" x2="530" y2="150" stroke="var(--muted)" stroke-width="1.2"/>
+        <line x1="50" y1="150" x2="50" y2="25" stroke="var(--muted)" stroke-width="1.2"/>
+        <path d="M 50 40 C 140 45 180 90 250 120 C 330 148 430 149 528 150" fill="none" stroke="var(--accent-ink)" stroke-width="3"/>
+        <circle cx="85" cy="47" r="6" fill="var(--crit-ink)"/>
+        <text x="97" y="42" font-size="12.5" fill="var(--crit-ink)">tuile voisine (split aléatoire) : quasi-copie</text>
+        <circle cx="420" cy="148" r="6" fill="var(--ok-ink)"/>
+        <text x="300" y="136" font-size="12.5" fill="var(--ok-ink)">bloc distant (split spatial) : terrain réellement nouveau</text>
+        <text x="290" y="172" text-anchor="middle" font-size="12" fill="var(--muted)">distance entre train et test →</text>
+        <text x="42" y="30" text-anchor="end" font-size="12" fill="var(--muted)" transform="rotate(-90 42 30)"></text>
+        <text x="34" y="95" font-size="12" fill="var(--muted)" transform="rotate(-90 34 95)">similarité</text>
+      </svg>
+      <p class="cap">Fig. 3 — L'autocorrélation spatiale : évaluer à courte distance mesure la mémorisation, évaluer à longue distance mesure la généralisation.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Le remède</span>
+    <h2>Split spatial : affecter des blocs de terrain, pas des tuiles</h2>
+    <div class="fig">
+      <svg viewBox="0 0 560 240" role="img" aria-label="Comparaison split aléatoire, split par blocs et leave-one-zone-out">
+        <g font-size="9.5">
+          <!-- grille aléatoire -->
+          <g>
+            <rect x="20" y="35" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="44" y="35" width="22" height="22" fill="var(--test)" opacity=".55"/><rect x="68" y="35" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="92" y="35" width="22" height="22" fill="var(--valid)" opacity=".55"/><rect x="116" y="35" width="22" height="22" fill="var(--train)" opacity=".55"/>
+            <rect x="20" y="59" width="22" height="22" fill="var(--valid)" opacity=".55"/><rect x="44" y="59" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="68" y="59" width="22" height="22" fill="var(--test)" opacity=".55"/><rect x="92" y="59" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="116" y="59" width="22" height="22" fill="var(--train)" opacity=".55"/>
+            <rect x="20" y="83" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="44" y="83" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="68" y="83" width="22" height="22" fill="var(--valid)" opacity=".55"/><rect x="92" y="83" width="22" height="22" fill="var(--test)" opacity=".55"/><rect x="116" y="83" width="22" height="22" fill="var(--train)" opacity=".55"/>
+            <rect x="20" y="107" width="22" height="22" fill="var(--test)" opacity=".55"/><rect x="44" y="107" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="68" y="107" width="22" height="22" fill="var(--train)" opacity=".55"/><rect x="92" y="107" width="22" height="22" fill="var(--valid)" opacity=".55"/><rect x="116" y="107" width="22" height="22" fill="var(--train)" opacity=".55"/>
+            <text x="79" y="150" text-anchor="middle" font-size="12.5" fill="var(--crit-ink)" font-weight="600">✗ aléatoire</text>
+            <text x="79" y="166" text-anchor="middle" font-size="11" fill="var(--muted)">chaque tuile test est</text>
+            <text x="79" y="179" text-anchor="middle" font-size="11" fill="var(--muted)">cernée de train</text>
+          </g>
+          <!-- blocs -->
+          <g>
+            <rect x="215" y="35" width="70" height="46" fill="var(--train)" opacity=".55"/><rect x="287" y="35" width="46" height="46" fill="var(--valid)" opacity=".55"/>
+            <rect x="215" y="83" width="46" height="46" fill="var(--test)" opacity=".6"/><rect x="263" y="83" width="70" height="46" fill="var(--train)" opacity=".55"/>
+            <text x="274" y="150" text-anchor="middle" font-size="12.5" fill="var(--ok-ink)" font-weight="600">✓ blocs spatiaux</text>
+            <text x="274" y="166" text-anchor="middle" font-size="11" fill="var(--muted)">des km² entiers par split,</text>
+            <text x="274" y="179" text-anchor="middle" font-size="11" fill="var(--muted)">équilibrés par classe</text>
+          </g>
+          <!-- LOZO -->
+          <g>
+            <ellipse cx="435" cy="60" rx="42" ry="26" fill="var(--train)" opacity=".55"/>
+            <text x="435" y="64" text-anchor="middle" font-size="10.5" fill="var(--ink)">Rambouillet</text>
+            <ellipse cx="500" cy="95" rx="34" ry="22" fill="var(--train)" opacity=".55"/>
+            <text x="500" y="99" text-anchor="middle" font-size="10.5" fill="var(--ink)">Haye</text>
+            <ellipse cx="440" cy="115" rx="30" ry="20" fill="var(--test)" opacity=".6" stroke="var(--crit-ink)"/>
+            <text x="440" y="119" text-anchor="middle" font-size="10.5" fill="var(--ink)">Bretagne</text>
+            <text x="468" y="150" text-anchor="middle" font-size="12.5" fill="var(--ok-ink)" font-weight="600">✓✓ leave-one-zone-out</text>
+            <text x="468" y="166" text-anchor="middle" font-size="11" fill="var(--muted)">tester une zone entière</text>
+            <text x="468" y="179" text-anchor="middle" font-size="11" fill="var(--muted)">jamais vue</text>
+          </g>
+        </g>
+        <text x="280" y="20" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">trois façons de répartir le même territoire</text>
+        <g class="legend" font-size="11">
+          <rect x="150" y="205" width="11" height="11" fill="var(--train)" opacity=".55"/><text x="165" y="215" fill="var(--muted)" font-size="11">train</text>
+          <rect x="205" y="205" width="11" height="11" fill="var(--valid)" opacity=".55"/><text x="220" y="215" fill="var(--muted)" font-size="11">valid</text>
+          <rect x="262" y="205" width="11" height="11" fill="var(--test)" opacity=".6"/><text x="277" y="215" fill="var(--muted)" font-size="11">test</text>
+        </g>
+      </svg>
+      <p class="cap">Fig. 4 — Le split spatial garantit la distance train/test ; le leave-one-zone-out ajoute le changement de forêt, de digitaliseur et d'acquisition LiDAR — la condition réelle de déploiement du plugin.</p>
+    </div>
+
+    <div class="tbl"><table>
+      <thead><tr><th>Stratégie</th><th>Question réellement mesurée</th><th>Pertinence pour un outil national</th></tr></thead>
+      <tbody>
+        <tr><td>Aléatoire par tuile</td><td>« reconnais-tu le fragment 6 d'un objet appris aux fragments 1-5 ? »</td><td>trompeuse — surestime</td></tr>
+        <tr><td>Blocs spatiaux (2×2 km / dalles IGN)</td><td>« reconnais-tu un parcellaire dans un secteur jamais vu ? »</td><td>correcte</td></tr>
+        <tr><td>Leave-one-zone-out</td><td>« fonctionnes-tu dans une autre forêt, digitalisée par quelqu'un d'autre ? »</td><td>le vrai test terrain</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Littérature</span>
+    <h2>Ce que dit la recherche</h2>
+    <ul>
+      <li><b>Jusqu'à 28 % de surestimation mesurée</b> pour des CNN de segmentation en télédétection évalués en validation aléatoire plutôt que spatiale — le cas le plus proche du nôtre (Kattenborn et al., 2022 <a href="#src">[1]</a>).</li>
+      <li>La dépendance spatiale entre train et test est identifiée comme un <b>piège récurrent de l'évaluation en télédétection</b> ; la validation « spatial leave-one-out » donne les estimations les moins biaisées (Karasiak et al., 2022 <a href="#src">[2]</a>).</li>
+      <li>La validation croisée <b>par blocs</b> est la recommandation de référence pour toute donnée à structure spatiale (Roberts et al., 2017 <a href="#src">[3]</a> ; outil : Valavi et al., 2019 <a href="#src">[4]</a>).</li>
+      <li>À grande échelle, ignorer l'autocorrélation peut faire passer un modèle de « excellent » (R² élevé) à « à peine mieux que le hasard » une fois validé spatialement (Ploton et al., 2020 <a href="#src">[5]</a>).</li>
+      <li>En <b>archéologie LiDAR</b> précisément, la difficulté des modèles à généraliser d'une région d'entraînement à de nouveaux territoires est documentée depuis les premiers travaux R-CNN (Verschoof-van der Vaart &amp; Lambers, 2019 <a href="#src">[6]</a>) et se retrouve dans les études de détection sur MNT en France (Guyot et al., 2021 <a href="#src">[7]</a>).</li>
+    </ul>
+    <p class="note">Traduction pratique : un mAP de 0,55 mesuré spatialement vaut mieux qu'un 0,75 mesuré aléatoirement — le second s'effondrera chez les béta-testeurs ; le premier prédit le terrain.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Application</span>
+    <h2>Le plan pour la recréation des datasets</h2>
+    <ol>
+      <li><b>Tuilage sans chevauchement</b> pour l'entraînement — le chevauchement reste réservé à l'inférence (SAHI du plugin), qui en a réellement besoin.</li>
+      <li><b>Split spatial par blocs</b> (dalles IGN ou carrés ~2 km), blocs affectés en 70/20/10 et <b>équilibrés par classe</b> — indispensable pour les classes rares localisées (tous les <code>chemin_creux</code> de Rambouillet peuvent tenir dans quelques vallons).</li>
+      <li><b>Le split est imposé à l'upload</b> (<code>single_upload(split=…)</code>) — Roboflow ne tire plus au hasard ; le split de chaque image est tracé dans les <code>upload_manifest.yaml</code>.</li>
+      <li><b>Évaluation leave-one-zone-out</b> : la Bretagne (170 entités linéaires, trop petite pour entraîner) devient la zone d'évaluation externe idéale.</li>
+      <li>Faisable dès maintenant : chaque image dispatchée porte ses coordonnées (dalles LHD) ou sa grille géoréférencée (mosaïque Haye, calée au mètre) — le split spatial est un calcul, plus une impossibilité.</li>
+    </ol>
+    <p class="good">À retenir : les scores vont mécaniquement baisser à la recréation — ce n'est pas une régression du modèle, c'est la fin d'une illusion de mesure.</p>
+  </section>
+
+  <section id="src">
+    <span class="eyebrow">Sources</span>
+    <h2>Références</h2>
+    <ol class="src">
+      <li>Kattenborn, T., Schiefer, F., Frey, J., Feilhauer, H., Mahecha, M.D., Dormann, C.F. (2022). <i>Spatially autocorrelated training and validation samples inflate performance assessment of convolutional neural networks.</i> ISPRS Open Journal of Photogrammetry and Remote Sensing, 5, 100018. <a href="https://www.sciencedirect.com/science/article/pii/S2667393222000072">sciencedirect.com/…/S2667393222000072</a> ✓ vérifiée en ligne le 16/07/2026 — surestimation jusqu'à 28 % en validation aléatoire vs spatiale.</li>
+      <li>Karasiak, N., Dejoux, J.-F., Monteil, C., Sheeren, D. (2022). <i>Spatial dependence between training and test sets: another pitfall of classification accuracy assessment in remote sensing.</i> Machine Learning, 111, 2715–2740. <a href="https://link.springer.com/article/10.1007/s10994-021-05972-1">doi:10.1007/s10994-021-05972-1</a> ✓ vérifiée en ligne le 16/07/2026.</li>
+      <li>Roberts, D.R., et al. (2017). <i>Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure.</i> Ecography, 40(8), 913–929. <a href="https://doi.org/10.1111/ecog.02881">doi:10.1111/ecog.02881</a> — l'article de référence de la validation par blocs.</li>
+      <li>Valavi, R., Elith, J., Lahoz-Monfort, J.J., Guillera-Arroita, G. (2019). <i>blockCV: An R package for generating spatially or environmentally separated folds for k-fold cross-validation.</i> Methods in Ecology and Evolution, 10(2), 225–232. <a href="https://doi.org/10.1111/2041-210X.13107">doi:10.1111/2041-210X.13107</a>.</li>
+      <li>Ploton, P., et al. (2020). <i>Spatial validation reveals poor predictive performance of large-scale ecological mapping models.</i> Nature Communications, 11, 4540. <a href="https://doi.org/10.1038/s41467-020-18321-y">doi:10.1038/s41467-020-18321-y</a>.</li>
+      <li>Verschoof-van der Vaart, W.B., Lambers, K. (2019). <i>Learning to Look at LiDAR: The Use of R-CNN in the Automated Detection of Archaeological Objects in LiDAR Data from the Netherlands.</i> Journal of Computer Applications in Archaeology, 2(1), 31–40. <a href="https://journal.caa-international.org/articles/10.5334/jcaa.32">doi:10.5334/jcaa.32</a> ✓ vérifiée en ligne le 16/07/2026.</li>
+      <li>Guyot, A., Lennon, M., Hubert-Moy, L. (2021). <i>Combined Detection and Segmentation of Archeological Structures from LiDAR Data Using a Deep Learning Approach.</i> Journal of Computer Applications in Archaeology, 4(1). <a href="https://journal.caa-international.org/articles/10.5334/jcaa.64">doi:10.5334/jcaa.64</a>.</li>
+      <li>Tobler, W.R. (1970). <i>A Computer Movie Simulating Urban Growth in the Detroit Region.</i> Economic Geography, 46, 234–240 — « première loi de la géographie ».</li>
+    </ol>
+  </section>
+
+  <div class="foot">Analyse produite le 16 juillet 2026 sur les données du projet (dataset <span class="mono">formes_lineaires_ld_a15_rmin10_rm</span> v1 : 4 019 images, 37 212 annotations, 2 zones ; ratio mesuré ~3,5-4 annotations par ligne source ; découpage <span class="mono">tif_slicer</span> à 20 % de marge). Les références [1], [2] et [6] ont été vérifiées en ligne ce jour ; les autres sont des références standard du domaine, DOI fournis.</div>
+</div>
+
+</body>
+</html>

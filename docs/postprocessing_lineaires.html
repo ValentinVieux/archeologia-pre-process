@@ -1,0 +1,235 @@
+<title>Post-processing des linéaires</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --fond:#f2f4f1; --carte:#ffffff; --encre:#20261f; --encre2:#5a635a;
+  --trait:#d8ddd6; --accent:#2f6f4f; --accent-fond:#e7efe9;
+  --ok:#2f6f4f; --ok-fond:#e2efe7; --non:#a03434; --non-fond:#f4e3e3;
+  --doute:#8a6318; --doute-fond:#f5ecd8; --code:#eceeeb;
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fond:#181b17; --carte:#20241f; --encre:#e4e8e2; --encre2:#9aa398;
+    --trait:#39403a; --accent:#7dbd9a; --accent-fond:#24322a;
+    --ok:#7dbd9a; --ok-fond:#243b2f; --non:#d98c8c; --non-fond:#3d2626;
+    --doute:#d9b26a; --doute-fond:#3a3021; --code:#272b26;
+  }
+}
+:root[data-theme="dark"]{
+  --fond:#181b17; --carte:#20241f; --encre:#e4e8e2; --encre2:#9aa398;
+  --trait:#39403a; --accent:#7dbd9a; --accent-fond:#24322a;
+  --ok:#7dbd9a; --ok-fond:#243b2f; --non:#d98c8c; --non-fond:#3d2626;
+  --doute:#d9b26a; --doute-fond:#3a3021; --code:#272b26;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);
+  font:16px/1.55 system-ui,"Segoe UI",Roboto,sans-serif}
+main{max-width:920px;margin:0 auto;padding:2.2rem 1.4rem 4rem}
+h1,h2,h3{font-family:"Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;text-wrap:balance}
+h1{font-size:2rem;margin:.2rem 0 .3rem}
+h2{font-size:1.35rem;margin:2.6rem 0 .8rem;border-bottom:2px solid var(--accent);padding-bottom:.35rem}
+h3{font-size:1.06rem;margin:1.4rem 0 .5rem}
+p{max-width:72ch}
+.sous{color:var(--encre2);margin:0 0 1.6rem;font-size:.95rem}
+.k{font-variant-numeric:tabular-nums;font-family:Consolas,ui-monospace,monospace;font-size:.92em}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:.42rem .6rem;text-align:left;border-bottom:1px solid var(--trait);vertical-align:top}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--encre2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:Consolas,ui-monospace,monospace;font-size:.86rem}
+.defile{overflow-x:auto;background:var(--carte);border:1px solid var(--trait);border-radius:6px;padding:.4rem .6rem;margin:.8rem 0}
+.chip{display:inline-block;padding:.12rem .55rem;border-radius:999px;font-size:.74rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.chip.fait{background:var(--ok-fond);color:var(--ok)}
+.chip.oui{background:var(--accent-fond);color:var(--accent)}
+.chip.mesurer{background:var(--doute-fond);color:var(--doute)}
+.chip.non{background:var(--non-fond);color:var(--non)}
+.cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.carte{background:var(--carte);border:1px solid var(--trait);border-radius:8px;padding:1rem 1.1rem}
+.carte h3{margin:.1rem 0 .6rem}
+.gros{font-size:1.7rem;font-weight:700;font-variant-numeric:tabular-nums;
+  font-family:Consolas,ui-monospace,monospace}
+.gros small{font-size:.85rem;font-weight:400;color:var(--encre2);font-family:system-ui,sans-serif}
+.piste{background:var(--carte);border:1px solid var(--trait);border-left:4px solid var(--trait);
+  border-radius:8px;padding:1rem 1.2rem;margin:.9rem 0}
+.piste.fait{border-left-color:var(--ok)} .piste.oui{border-left-color:var(--accent)}
+.piste.mesurer{border-left-color:var(--doute)} .piste.non{border-left-color:var(--non)}
+.piste h3{display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;margin-top:0}
+.ancre{background:var(--code);border-radius:6px;padding:.55rem .8rem;font-size:.88rem;margin:.5rem 0}
+.ancre b{color:var(--accent)}
+ul{padding-left:1.2rem} li{margin:.25rem 0;max-width:70ch}
+a{color:var(--accent)}
+.note{border:1px dashed var(--trait);border-radius:8px;padding:.8rem 1rem;color:var(--encre2);
+  font-size:.9rem;margin:1.2rem 0;max-width:none}
+.src{font-size:.82rem;color:var(--encre2);columns:2;column-gap:2rem}
+.src li{break-inside:avoid}
+@media (max-width:640px){.src{columns:1}}
+</style>
+<main>
+<h1>Post-processing des linéaires</h1>
+<p class="sous">Pistes d'amélioration du rendu de <span class="k">lineaires_seg_v2_1</span> (ép.34, déployé),
+classe par classe — chaque verdict est ancré dans une mesure sur les 5 mosaïques de test
+(18,3 km², vérité terrain v2 recalée, F1 longueur à 5 m). 13 août 2026.</p>
+
+<h2>1 · L'acquis de la journée : seuils par classe, mesurés et déployés</h2>
+<p>Les optima de seuil par classe divergent (0,15 à 0,30). Chaque effet a été isolé <em>un par un</em>
+(campagnes e9/e10, plancher de cache 0,05) puis combiné ; les gains sont additifs. Le profil retenu
+est écrit dans le <span class="k">model_card.yaml</span> du plugin et actif par défaut :</p>
+<div class="cartes">
+<div class="carte"><h3>chemin_creux → 0,15</h3>
+<div class="gros">0,177 → 0,321 <small>F1 classe, +81 %</small></div>
+<p style="font-size:.88rem">Optimum intérieur vérifié : 0,12 → 0,281 · <b>0,15 → 0,321</b> · 0,18 → 0,254.
+Cohérent avec la sous-confiance structurelle des classes rares (loss IA-BCE).</p></div>
+<div class="carte"><h3>talus_fosse → 0,30</h3>
+<div class="gros">0,752 → 0,768 <small>F1 classe</small></div>
+<p style="font-size:.88rem">Le reste demeure à 0,25. Écartés par la mesure : talus 0,20 (aucun effet),
+fosse 0,15 (−0,0045 : les optima du niveau A ne se transfèrent pas — en argmax les classes interagissent).</p></div>
+<div class="carte"><h3>Global</h3>
+<div class="gros">0,6519 → 0,6568</div>
+<p style="font-size:.88rem"><b>+0,0049, IC95 [+0,0003 ; +0,0098], significatif</b>
+(bootstrap apparié par tuile, 4 000 tirages). Charge de relecture : 42,9 → 43,9 polygones/km² (+2 %).</p></div>
+</div>
+
+<h2>2 · Ce que l'anatomie des erreurs mesure vraiment</h2>
+<p>Analyse géométrique des sorties production contre la vérité terrain (échantillonnage à 1 m le long
+des lignes ; méthode validée contre le banc : correction 0,580/0,687 retrouvée contre 0,580/0,689).
+Trois faits structurent tout le reste :</p>
+
+<div class="defile"><table>
+<tr><th>classe</th><th class="n">GT (km)</th><th class="n">compl. τ=5 m</th><th class="n">τ=10 m</th>
+<th class="n">compl. vs UNION toutes classes</th><th class="n">trous : médiane</th><th class="n">oracle pontage ≤50 m</th></tr>
+<tr><td>parcellaire</td><td class="n">117,4</td><td class="n">0,620</td><td class="n">0,661</td>
+<td class="n">0,659</td><td class="n">30 m</td><td class="n">+0,015</td></tr>
+<tr><td>talus_fosse</td><td class="n">49,2</td><td class="n">0,845</td><td class="n">0,861</td>
+<td class="n">0,875</td><td class="n">35,5 m</td><td class="n">+0,007</td></tr>
+<tr><td>chemin_creux</td><td class="n">6,1</td><td class="n">0,166</td><td class="n">0,186</td>
+<td class="n"><b>0,583</b></td><td class="n">4 m</td><td class="n">+0,002</td></tr>
+</table></div>
+
+<ul>
+<li><b>Le produit n'est pas fragmenté.</b> La fusion géo absorbe déjà 88 % des instances brutes
+(6 043 → 748 polygones) et rend <span class="k">1,06</span> segment par segment GT. Les trous du
+parcellaire sont <em>grands</em> (médiane 30 m, p90 111 m) : ce sont des tronçons entiers que le
+modèle ne propose pas, pas des coupures à recoudre.</li>
+<li><b>chemin_creux est vu, mais mal nommé.</b> 58 % de sa longueur GT est couverte par <em>une</em>
+prédiction — mais 17 % seulement par une prédiction <em>chemin_creux</em>. Le plafond d'une
+réattribution de classe est ×3,5.</li>
+<li><b>Les faux positifs dominent le déficit restant, et ils sont opaques.</b> Parcellaire :
+77 % de la longueur des FP ne correspond à aucune couche digitalisée, 17 % est un décalage de
+5–10 m de sa propre GT ; confiance médiane des FP 0,297, élongation médiane 6,7 — ils ressemblent
+à des vrais positifs. Talus_fosse (correction 0,689, son seul point faible) : 93 % des FP inexpliqués.
+Une partie est probablement de l'archéologie réelle non digitalisée — la précision mesurée est un plancher.</li>
+</ul>
+
+<h2>3 · Verdict des pistes, par valeur décroissante</h2>
+
+<div class="piste fait"><h3><span class="chip fait">Fait · mesuré</span> Seuils de confiance par classe</h3>
+<div class="ancre"><b>+0,0049 global significatif, chemin_creux +81 %</b> — déployé aujourd'hui (§1).</div>
+<p>C'était la piste n°1 de la littérature long-tail (LRP, NorCal) et la seule à coût de code nul.
+Faite, mesurée, en production.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Testée le 13/08 · réfutée</span> Réattribution de classe du chemin_creux par polarité du relief</h3>
+<div class="ancre">Test 01 : dégradation à TOUS les seuils de polarité (chemin_creux 0,321 → 0,300-0,316).
+Diagnostic : les polygones posés sur de vrais chemins creux ont un intérieur plus <b>clair</b> que leur
+voisinage (médiane −6,0), indiscernable des autres.</div>
+<p>Le plafond ×3,5 (union : 0,583) reste réel, mais la prémisse physique échoue sur nos polygones :
+un chemin creux est flanqué de deux talus lumineux, et le masque (~7 m) couvre surtout les flancs —
+la médiane intérieure ressort claire même au-dessus d'un creux. S'ajoute la granularité : les
+polygones couvrants ne sont posés qu'à ~47 % sur le chemin. Un discriminateur par profil
+<em>transversal</em> au niveau segment (machinerie du recalage) resterait envisageable — coût élevé,
+gain non garanti. Dossier : <span class="k">postpro\01_reattribution_chemin_creux\</span>.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Testée le 13/08 · réfutée</span> Hystérésis à deux seuils sur les instances</h3>
+<div class="ancre">Test 02 : F1 0,6568 → 0,5623 (bas 0,15) et 0,4536 (bas 0,10). D=1 m et D=5 m identiques
+à la 4ᵉ décimale : le critère de continuité ne sélectionne rien.</div>
+<p>Dans un réseau dense aux instances SAHI quasi dupliquées, toute candidate touche déjà une détection
+sûre — l'hystérésis dégénère en simple abaissement de seuil. Et la mesure ferme aussi les variantes :
+la bande 0,15-0,25 est vraie à ~15-20 % en longueur marginale (+10 pts de complétude pour −20 de
+correction, +71 % de polygones). Le seuil 0,25 est la frontière réelle du contenu, pas un artefact de
+calibration ; la complétude manquante n'est pas sous le seuil, elle n'est pas dans les sorties du
+modèle (E0). Contrôles inclus : la pollution argmax par les instances basses est négligeable (−0,001).
+Dossier : <span class="k">postpro\02_hysteresis\</span>.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Testée le 13/08 · effet réel, trop petit</span> Trous aux bords de fenêtres SAHI</h3>
+<div class="ancre">Test 03 : 40,6 % des trous du parcellaire à ≤10 m d'un joint contre 31,4 % pour la GT
+entière (z = 2,6) — l'effet de coupure existe. Mais l'excès en longueur = ~1,0 km sur 8,0 km de trous :
+<b>+0,88 point de complétude au mieux</b>.</div>
+<p>L'enrichissement est significatif (aucun sur talus_fosse), donc le mécanisme est confirmé — et
+correctement borné : une fusion des probabilités inter-fenêtres, qui exigerait une refonte du
+décodage, plafonnerait à +0,3-0,5 point réaliste. Rapport gain/effort défavorable ; à réévaluer
+seulement si le décodeur est réécrit pour une autre raison.
+Dossier : <span class="k">postpro\03_trous_grille_sahi\</span> (chaque trou en géométrie + la grille,
+pour QGIS).</p></div>
+
+<div class="piste mesurer"><h3><span class="chip mesurer">À étudier</span> Filtre « linéaires modernes » (contexte spatial)</h3>
+<div class="ancre">77 % de la longueur des FP parcellaire n'appartient à aucune couche GT. Littérature (WODAN, prospection NL) : le filtrage par contexte améliore de 17–35 %.</div>
+<p>Croiser les détections avec les routes/chemins actuels (BD TOPO) et le cadastre pour router les
+linéaires modernes vers une couche « à vérifier » plutôt que de les présenter comme archéologie.
+Demande des données externes et une règle de distance — et une partie de ces FP est peut-être de
+l'archéologie réelle non digitalisée : router, ne jamais supprimer.</p></div>
+
+<div class="piste mesurer"><h3><span class="chip mesurer">Gain borné</span> Recalage post-hoc des détections</h3>
+<div class="ancre">Complétude parcellaire à τ=10 m : +4,1 points vs τ=5 m ; 11,8 km de FP sont des décalages de 5–10 m de leur propre GT.</div>
+<p>Ramener chaque polygone sur la crête/le talweg du LD (le pipeline de recalage existe) convertirait
+une partie de ces 4 points. Gain réel mais plafonné ; à considérer après les pistes ci-dessus.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Réfutée par l'oracle</span> Pontage de trous (gap bridging)</h3>
+<div class="ancre">Combler TOUS les trous ≤20 m : <b>+0,4 point</b> de complétude parcellaire. ≤50 m : +1,5 point. Médiane des trous : 30 m.</div>
+<p>La piste vedette des pipelines d'extraction de routes (DeepRoadMapper, plus court chemin sur la
+carte de coût) ne s'applique pas à nos données : nos trous ne sont pas des coupures fines mais des
+tronçons entiers manquants. La littérature la classait 3ᵉ — l'oracle local la déclasse. C'est
+exactement le rôle de l'anatomie : dépenser les mesures avant les semaines de code.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Réfutée</span> Filtres de forme (compacité, élongation, aire)</h3>
+<div class="ancre">Compacité : déjà mesurée −0,075 à −0,196 de F1. Élongation médiane des FP : 6,7 — aussi allongés que les vrais positifs.</div>
+<p>Les FP <em>ressemblent</em> à des structures linéaires. Aucun filtre géométrique simple ne les
+sépare des TP sans saigner la complétude.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Écartée</span> TTA (flips/rotations à l'inférence)</h3>
+<div class="ancre">Gains publiés : +0,01 à +0,02 de mAP typique, pour ×4 à ×8 de temps d'inférence.</div>
+<p>Le pire rapport gain/coût de la liste pour un plugin CPU où l'inférence est déjà le poste dominant.</p></div>
+
+<div class="piste non"><h3><span class="chip non">Neutre pour la métrique</span> Squelette → graphe → lignes lissées → re-buffer</h3>
+<p style="margin-top:.2rem">La métrique (et l'archéologue) regarde la ligne de centre : régulariser
+les polygones ne gagne rien en F1. À garder comme <em>rendu</em> (polygones propres, largeur constante)
+en sous-produit gratuit si une piste future exige le graphe des squelettes — jamais comme chantier autonome.</p></div>
+
+<h2>4 · Ce qui n'est PAS du post-processing</h2>
+<p>Deux déficits identifiés ne se corrigent pas en aval du modèle, et il faut le dire pour ne pas
+dépenser là où ça ne rend pas :</p>
+<ul>
+<li><b>Les tronçons entiers manquants du parcellaire</b> (complétude 0,62, trous de 30–111 m) :
+c'est le rappel du modèle. Leviers : corpus (E0 du banc : 25 % de la longueur n'est jamais proposée,
+même à seuil nul), entrée multi-visualisations, hard negatives — le plan P0-P2 de la rétrospective.</li>
+<li><b>Les FP « inexpliqués »</b> (54 km parcellaire, 28 km talus_fosse) : sans vérité terrain
+exhaustive, impossible de distinguer hallucination et archéologie non digitalisée. Levier : une passe
+de revue humaine ciblée (l'app de revue existe) qui produirait à la fois des corrections de GT et des
+hard negatives pour le prochain entraînement.</li>
+</ul>
+
+<div class="note"><b>Méthode.</b> Anatomie : échantillonnage à 1 m le long des lignes GT (EPSG:2154),
+distances par index spatial, squelette des prédictions approché par érosion (longueurs ±1 m) ; validée
+contre le CCQ raster du banc (écart &lt; 0,3 point). Oracle = borne supérieure : ce qu'une technique
+parfaite gagnerait au mieux. Mesures de seuils : niveau B (mosaïques géoréférencées, post-traitement
+géo de production inclus), bootstrap apparié par tuile. Fichiers :
+<span class="k">D:\pipeline_results\bench\niveau_b_e9_*.json / e10_*.json</span>,
+<span class="k">D:\bench\analyse_postpro\anatomie.json</span>,
+<span class="k">comparatif_seuils_par_classe.json</span>.</div>
+
+<h2>5 · Sources</h2>
+<ul class="src">
+<li>Wiedemann et al. 1998 — évaluation complétude/correction des réseaux (la métrique du banc)</li>
+<li>Máttyus et al., <em>DeepRoadMapper</em>, ICCV 2017 — complétion par plus court chemin (réfutée ici par l'oracle)</li>
+<li>Batra et al., CVPR 2019 — raffinement appris de connectivité (piste v3, hors post-processing)</li>
+<li>arXiv:2303.05113 &amp; SPOCKMIP — hystérésis à deux seuils pour la continuité des vaisseaux</li>
+<li>Oksuz et al., <em>LRP</em> — plaidoyer mesuré pour les seuils par classe</li>
+<li>Pan et al., <em>NorCal</em>, NeurIPS 2021 — repondération post-hoc des scores long-tail</li>
+<li>O1O (arXiv:2410.07514) &amp; VL4AD — superclasses puis réattribution</li>
+<li>Verschoof-van der Vaart et al., <em>WODAN</em> — filtrage par contexte spatial en prospection LiDAR (+17–35 %)</li>
+<li>Kokalj et al., <em>ADAF</em> — l'état de l'art archéo assume un post-processing simple</li>
+<li>Waldner &amp; Diakogiannis 2020 — extent/boundary/distance + watershed (réentraînement, hors périmètre)</li>
+<li>Albumentations / Ultralytics — gains TTA publiés (+0,01–0,02 mAP, ×4–8 de coût)</li>
+<li>SAHI (obss) — fusion des fenêtres à recouvrement</li>
+</ul>
+</main>

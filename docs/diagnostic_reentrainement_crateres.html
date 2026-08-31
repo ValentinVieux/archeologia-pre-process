@@ -1,0 +1,307 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnostic cratere_circulaire_2</title>
+<style>
+  :root {
+    --papier: #F1EFEA; --panneau: #FAF9F5; --panneau2: #E9E6DF;
+    --encre: #232019; --sourdine: #6F6A5D; --ligne: #DBD7CC;
+    --accent: #7A5A1E; --accent-vif: #8F6A24;
+    --crit: #A2372A; --crit-fond: #F3E3DF;
+    --ok: #3E6E4A; --ok-fond: #E3ECE3;
+    --note-fond: #EFE8D6; --note-encre: #7A5F1D;
+    --raster: #A8A49A; --cuvette: #3A372F;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --papier: #1C1B16; --panneau: #24221C; --panneau2: #2C2A23;
+      --encre: #E7E4DA; --sourdine: #A29D8E; --ligne: #3B382F;
+      --accent: #C9A24B; --accent-vif: #D8B45F;
+      --crit: #E09284; --crit-fond: #3C2622;
+      --ok: #8FBF9A; --ok-fond: #243626;
+      --note-fond: #35301F; --note-encre: #D8BC6A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --papier: #1C1B16; --panneau: #24221C; --panneau2: #2C2A23;
+    --encre: #E7E4DA; --sourdine: #A29D8E; --ligne: #3B382F;
+    --accent: #C9A24B; --accent-vif: #D8B45F;
+    --crit: #E09284; --crit-fond: #3C2622;
+    --ok: #8FBF9A; --ok-fond: #243626;
+    --note-fond: #35301F; --note-encre: #D8BC6A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--papier); color: var(--encre);
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6; margin: 0; padding: 2.5rem 1.25rem 4rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; text-wrap: balance; line-height: 1.25; }
+  h1 { font-size: 1.9rem; margin: 0 0 .3rem; }
+  h2 { font-size: 1.3rem; margin: 2.6rem 0 .8rem; color: var(--accent); }
+  h2 .num { color: var(--sourdine); font-size: 1rem; margin-right: .5rem; }
+  h3 { font-size: 1.05rem; margin: 1.6rem 0 .5rem; }
+  p { margin: .7rem 0; }
+  .chapeau { color: var(--sourdine); font-size: .95rem; margin: 0 0 1.8rem; }
+  .chapeau strong { color: var(--encre); }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: .88em;
+    background: var(--panneau2); padding: .08em .35em; border-radius: 3px; }
+  strong { font-weight: 600; }
+
+  .verdict {
+    background: var(--panneau); border: 1px solid var(--ligne);
+    border-left: 4px solid var(--accent); padding: 1.1rem 1.3rem; margin: 1.5rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .verdict p:first-child { margin-top: 0; }
+  .verdict p:last-child { margin-bottom: 0; }
+
+  .chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: .7rem; margin: 1.4rem 0; }
+  .chiffre { background: var(--panneau); border: 1px solid var(--ligne); border-radius: 6px;
+    padding: .75rem .9rem; }
+  .chiffre .val { font-size: 1.45rem; font-weight: 650; font-variant-numeric: tabular-nums;
+    font-family: Georgia, serif; }
+  .chiffre .val.mauvais { color: var(--crit); }
+  .chiffre .lab { font-size: .78rem; color: var(--sourdine); text-transform: uppercase;
+    letter-spacing: .04em; margin-top: .15rem; }
+
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; margin: 1rem 0;
+    font-variant-numeric: tabular-nums; }
+  .defiler { overflow-x: auto; }
+  th { text-align: left; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--sourdine); font-weight: 600; padding: .45rem .7rem; border-bottom: 2px solid var(--ligne); }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--ligne); vertical-align: top; }
+  td.num { text-align: right; }
+
+  .figure { background: var(--panneau); border: 1px solid var(--ligne); border-radius: 6px;
+    padding: 1.1rem 1.2rem; margin: 1.3rem 0; }
+  .figure .panneaux { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .figure figcaption { font-size: .85rem; color: var(--sourdine); margin-top: .8rem; text-align: center; }
+  .panneau-canvas { text-align: center; }
+  .panneau-canvas canvas { border: 1px solid var(--ligne); border-radius: 3px; display: block; margin: 0 auto .4rem; }
+  .panneau-canvas .titre-p { font-size: .85rem; font-weight: 600; }
+  .panneau-canvas .sous-p { font-size: .8rem; color: var(--sourdine); }
+
+  .encart { border-radius: 6px; padding: .8rem 1.1rem; margin: 1rem 0; font-size: .93rem; }
+  .encart.attention { background: var(--note-fond); color: var(--note-encre); }
+  .encart.probleme { background: var(--crit-fond); color: var(--crit); }
+  .encart.valide { background: var(--ok-fond); color: var(--ok); }
+
+  ol.plan { padding-left: 1.3rem; }
+  ol.plan > li { margin: .9rem 0; }
+  ol.plan > li::marker { font-weight: 650; color: var(--accent); }
+  ul { padding-left: 1.3rem; }
+  li { margin: .3rem 0; }
+
+  .sources { font-size: .82rem; color: var(--sourdine); border-top: 1px solid var(--ligne);
+    margin-top: 3rem; padding-top: 1rem; }
+  .sources code { font-size: .95em; }
+  a { color: var(--accent-vif); }
+</style>
+
+<main>
+<h1>Diagnostic cratere_circulaire_2</h1>
+<p class="chapeau">Pourquoi le modèle de cratères n'est bon qu'avec SAHI 140, et comment le réentraîner
+pour sa vraie mission : détecter des cratères similaires ailleurs (mines anciennes, carrières…).
+Mesures du 17 août 2026 sur <strong>D:\data_regions\Verdun</strong>, le Drive 55_verdun, le run de test
+<strong>detection_carrieres</strong> et le modèle installé dans le plugin.</p>
+
+<div class="verdict">
+<p><strong>Le MNT commandé n'est pas en cause.</strong> Le MNT 2013 (0,5 m, EPSG:2154) et son Local
+Dominance sont sains — la preuve : il suffit de <em>zoomer dedans</em> (ce que fait SAHI 140) pour que le
+modèle détecte très bien. L'hypothèse « résolution » est juste, mais le coupable n'est pas la provenance
+du raster : c'est <strong>l'échelle d'échantillonnage des tuiles d'entraînement</strong>.</p>
+<p>Les tuiles de 504 px couvraient 252 m de terrain. À cette échelle, le cratère médian fait
+<strong>4,6 px</strong> (2,3 m au sol) et chaque tuile contient <strong>367 cratères en médiane</strong> —
+alors que RF-DETR-Seg-Large ne peut émettre que <strong>200 détections par image</strong> (plafond
+architectural de requêtes). Le modèle était donc doublement condamné : objets quasi invisibles pour le
+backbone, et interdiction structurelle d'en trouver plus de 200. SAHI 140 corrige les deux à la volée…
+mais hors de la distribution d'entraînement. Le réentraînement consiste simplement à entraîner
+<em>à l'échelle qui marche</em>.</p>
+</div>
+
+<div class="chiffres">
+  <div class="chiffre"><div class="val mauvais">4,6 px</div><div class="lab">cratère médian à l'entraînement</div></div>
+  <div class="chiffre"><div class="val mauvais">367</div><div class="lab">objets / tuile (médiane)</div></div>
+  <div class="chiffre"><div class="val">200</div><div class="lab">requêtes max (Seg-Large)</div></div>
+  <div class="chiffre"><div class="val mauvais">0,36</div><div class="lab">rappel mesuré à l'éval</div></div>
+</div>
+
+<h2><span class="num">1</span>Ce qui a réellement été entraîné</h2>
+<p>La chaîne reconstituée à partir des fichiers : MNT 2013 commandé (0,5 m) → LD RVT
+<code>Rmin10/Rmax20</code> (anneau 5–10 m, conforme à la convention projet) 8 bits → découpe en tuiles
+<strong>504 px sans marge</strong> (<code>config.json</code> du slicer, sortie <code>output_450_LD</code>)
+→ dataset Roboflow <code>verdun_ld_cratere_circulaire</code>, 4 110 images (2 874 / 824 / 412) → run
+<code>verdun_ld_cratere_circulaire_20260423_130530</code>, RF-DETR-Seg-Large, résolution 504.</p>
+<div class="defiler"><table>
+<tr><th>Mesure (labels du train, 1 870 tuiles)</th><th>Valeur</th></tr>
+<tr><td>Taille bbox des cratères (p10 / médiane / p90)</td><td class="num">2,8 / 4,6 / 9,5 px</td></tr>
+<tr><td>Cratères ≤ 16 px</td><td class="num">98,6 %</td></tr>
+<tr><td>Objets par tuile (p25 / médiane / p90 / max)</td><td class="num">214 / 367 / 600 / 932</td></tr>
+<tr><td>Tuiles dépassant les 200 requêtes du modèle</td><td class="num"><strong>76,9 %</strong></td></tr>
+<tr><td>Éval valid (conf 0,3) : précision / rappel / F1</td><td class="num">0,82 / 0,36 / 0,50</td></tr>
+<tr><td>Prédictions émises par image à l'éval (vs 375 GT)</td><td class="num">166</td></tr>
+</table></div>
+
+<h2><span class="num">2</span>Cause nº 1 — des cratères sub-résolus</h2>
+<p>À 0,5 m de GSD dans une tuile de 252 m, le cratère médian occupe 4,6 px de large. Le backbone du
+RF-DETR (DINOv2, patchs d'environ 14 px) voit donc l'objet typique tenir dans <em>un tiers de patch</em> :
+il n'y a pratiquement pas de signal à apprendre. Ce n'est pas un défaut du LD — le signal existe dans le
+raster, il est juste servi trop petit au modèle.</p>
+
+<figure class="figure">
+  <div class="panneaux">
+    <div class="panneau-canvas">
+      <canvas id="cv-train" width="220" height="220"></canvas>
+      <div class="titre-p">Entraînement : tuile 252 m</div>
+      <div class="sous-p">367 cratères de ~4,6 px</div>
+    </div>
+    <div class="panneau-canvas">
+      <canvas id="cv-sahi" width="220" height="220"></canvas>
+      <div class="titre-p">Inférence SAHI 140 : fenêtre 70 m</div>
+      <div class="sous-p">~29 cratères de ~17 px</div>
+    </div>
+  </div>
+  <figcaption>Ce que reçoit réellement le modèle (entrée 504×504, ici à l'échelle, densités médianes).
+  À gauche la configuration d'entraînement, à droite celle que l'opérateur a dû imposer pour que ça détecte.</figcaption>
+</figure>
+
+<h2><span class="num">3</span>Cause nº 2 — le plafond des 200 requêtes</h2>
+<p>Un DETR émet un nombre fixe de détections par image : <code>num_queries = 200</code> pour la variante
+Seg-Large (vérifié dans le paquet <code>rfdetr</code> installé). Or 76,9 % des tuiles d'entraînement
+contiennent plus de 200 cratères (jusqu'à 932). Sur la tuile médiane, le rappel maximal <em>théorique</em>
+est donc 200/367 ≈ 0,54 — avant même de parler de qualité de détection. L'éval le confirme : le modèle
+émet 166 prédictions par image en moyenne, collé sous son plafond, face à 375 vérités terrain. Le
+<code>cardinality_error</code> d'environ 2 300 dans <code>metrics.csv</code> raconte la même histoire :
+pendant tout l'entraînement, on a demandé au modèle une chose architecturalement impossible.</p>
+
+<h2><span class="num">4</span>Pourquoi SAHI 140 répare tout ça</h2>
+<p>Le plugin redimensionne chaque fenêtre SAHI vers l'entrée du modèle
+(<code>cv2.resize</code> INTER_LINEAR, <code>computer_vision_onnx.py</code>). Une fenêtre de 140 px
+étirée vers 504 px, c'est un zoom ×3,6 : GSD effectif 0,14 m, cratère médian ~17 px, et ~29 objets par
+fenêtre — très loin sous le plafond de 200. Les deux pathologies disparaissent simultanément. C'est un
+excellent correctif d'exploitation, mais le modèle travaille alors à une échelle qu'il n'a jamais vue à
+l'entraînement : on paie cette dissonance en précision, et la carte du modèle continue de recommander
+SAHI 350 pendant que l'<code>args.yaml</code> déployé dit 140.</p>
+
+<h2><span class="num">5</span>Facteurs aggravants relevés</h2>
+<ul>
+<li><strong>Fuite spatiale du split.</strong> Le split 70/20/10 est le split aléatoire de Roboflow : les
+voisines immédiates des tuiles de validation sont dans le train (vérifié : <code>tile_0000_0018</code> en
+train, <code>tile_0000_0019</code> en valid ; idem autour de <code>tile_0001_0013</code>). Les métriques
+d'origine sont donc <em>optimistes</em> — le vrai rappel terrain est encore sous 0,36. C'est exactement le
+piège documenté dans <code>docs/fuite_spatiale_train_test.html</code>, antérieur à la règle projet du
+split spatial par blocs.</li>
+<li><strong>Carte du modèle incohérente.</strong> <code>model_card.yaml</code> recommande
+<code>sahi.slice 350</code> « validé empiriquement » ; la config réellement déployée est à 140. À corriger
+lors de l'installation du prochain modèle.</li>
+<li><strong>Hors de cause :</strong> le MNT 2013 commandé, l'anneau LD 5–10 m, la GT
+(<code>couche_regroupee.gpkg</code>, d1–d6 fusionnées). Rien à régénérer côté rasters ni vecteurs.</li>
+</ul>
+
+<h2><span class="num">6</span>La cible réelle : des cratères de mines de la même gamme</h2>
+<p>L'objectif n'est pas Verdun pour Verdun : le modèle doit détecter des cuvettes visuellement similaires
+dans d'autres contextes — l'exemple mesuré est le run de test du 17/08 sur une zone de carrières
+(<code>D:\pipeline_results\detection_carrieres</code>) : 2 dalles IGN LiDAR HD, chaîne plugin standard
+(MNT 0,5 m, LD identique à Verdun), <code>cratere_circulaire_2</code> en SAHI 140, seuil 0,2.</p>
+<div class="defiler"><table>
+<tr><th>Run carrières — 919 détections</th><th>Valeur</th></tr>
+<tr><td>Diamètre équivalent (p25 / médiane / p90 / max)</td><td class="num">2,1 / 2,5 / 4,4 / 8,6 m</td></tr>
+<tr><td>Rappel : cratères d'obus Verdun (médiane)</td><td class="num">2,3 m</td></tr>
+<tr><td>Confiance des détections (moyenne ; part sous 0,4)</td><td class="num">0,40 ; 60 %</td></tr>
+<tr><td>Tri humain (colonne <code>validation</code>)</td><td class="num">pas encore fait</td></tr>
+</table></div>
+<p>Deux conclusions. D'abord, <strong>la cible est dimensionnellement identique à Verdun</strong>
+(médiane 2,5 m contre 2,3 m) : le corpus Verdun est la bonne base d'entraînement, et le point de
+fonctionnement ×3,6 la couvre confortablement — à 0,14 m/px effectif, la plage détectable va d'environ
+2 m (14 px) à ~25 m (l'objet remplit un tiers de la fenêtre de 90 m), ce qui absorbe largement le
+« delta supplémentaire » demandé ; les augmentations d'échelle du pipeline d'entraînement élargissent
+encore cette tolérance. Ensuite, <strong>les confiances écrasées du run (60 % entre 0,2 et 0,4) sont la
+signature du hors-distribution</strong> : le modèle opère à une échelle jamais vue à l'entraînement.
+C'est précisément ce que le réentraînement doit faire remonter.</p>
+<div class="encart valide"><strong>À faire avant le réentraînement :</strong> trier les 919 détections
+dans QGIS (la colonne <code>validation</code> est prête dans le projet
+<code>detections_validation.qgs</code>). Ce tri devient le jeu de contrôle <em>externe</em> : le même
+run rejoué avec le nouveau modèle donnera un avant/après mesurable sur la cible réelle — c'est la règle
+projet de calibration par corrections humaines.</div>
+
+<h2><span class="num">7</span>Plan de réentraînement</h2>
+<p>Principe : <strong>entraîner exactement au point de fonctionnement que SAHI 140 a validé</strong>
+(zoom ×3,6), avec l'outillage standard du repo. Fenêtres de 180 px à 0,5 m (90 m au sol) entraînées à la
+résolution 648 : 648/180 = ×3,6, le même GSD effectif de 0,14 m — et 648 est le standard projet
+(divisible par 24, résolution d'export ONNX). Densité vérifiée sur fenêtres de 84 m : médiane 43 objets,
+maximum 128 — <strong>aucune fenêtre ne sature les 200 requêtes</strong>.</p>
+<ol class="plan">
+<li><strong>Dataset</strong> — nouvelle config <code>configs/crateres_verdun_ld180_v1.yaml</code> (schéma
+<code>slice_zone</code>, comme les configs enclos) : raster = LD 8 bits existant, GPKG =
+<code>couche_regroupee.gpkg</code>, <code>tuile_px: 180</code>, <code>bloc_m: 2000</code>, split spatial
+70/20/10 à seed fixe (gelé, jamais re-tiré), 10 % de négatifs. Puis
+<code>slice_zone</code> → <code>verif_dataset</code> (boucle de vérification) → carte de contrôle validée →
+dépôt Drive en COCO (comme le chantier enclos ; Roboflow non requis).</li>
+<li><strong>Volume à arbitrer.</strong> À 90 m/tuile sur 124 km² densément cratérisés, on attend
+~25 000–30 000 tuiles. Recommandation : sous-échantillonner le <em>train</em> par blocs (~8–10 k tuiles)
+et garder valid/test complets — l'éval reste exhaustive, le run Colab reste raisonnable.</li>
+<li><strong>Entraînement</strong> — via <code>/entrainement-modele</code> : RF-DETR-Seg-Large,
+résolution 648, transfert possible depuis <code>cratere_circulaire_2</code>. Les tuiles de 180 px sont
+étirées vers 648 par le pipeline d'entraînement lui-même (A.Resize), reproduisant à l'identique le
+comportement d'inférence. <code>num_queries</code> 200 par défaut suffit (max mesuré 128/fenêtre).</li>
+<li><strong>Évaluation honnête</strong> — courbes standard <code>tools/courbes_eval.py</code> (balayage de
+seuil, F1-max → <code>confidence_default</code>), avec pour baseline
+<strong><code>cratere_circulaire_2</code> réévalué sur le même test spatial gelé</strong>. Les métriques
+d'origine (P 0,82 / R 0,36) ne sont pas comparables : autre échelle, split fuité.</li>
+<li><strong>Contrôle de généralisation</strong> — rejouer le run <code>detection_carrieres</code> avec le
+nouveau modèle (SAHI 180) et confronter au tri humain des 919 détections : c'est l'avant/après sur la
+cible réelle. Si les cratères de mines restent sous-détectés malgré la bonne échelle, l'option est un
+affinage avec quelques zones carrières annotées (même logique que les affinages français du chantier
+enclos) — à ne décider qu'au vu de ce contrôle.</li>
+<li><strong>Installation</strong> — <code>/installer-modele-plugin</code> : ONNX 648, parité binarisée,
+model_card avec <code>sahi.slice 180</code> et la <em>raison documentée</em> (cohérence
+entraînement/inférence). Coût d'inférence inchangé par rapport au mode actuel : fenêtres de 90 m à 648²
+= même débit au km² que 70 m à 504².</li>
+</ol>
+<div class="encart attention"><strong>Option en réserve (ne pas faire d'emblée) :</strong> un A/B avec un
+LD à anneau 2–5 m, mieux accordé à des cuvettes de 2 m que l'anneau 5–10 m actuel. La preuve empirique
+montre que le zoom suffit ; ne tester que si le run à 648 déçoit.</div>
+
+<h2><span class="num">8</span>Ce qu'on ne touche pas</h2>
+<ul>
+<li>Le raster LD et le MNT 2013 (aucune régénération nécessaire).</li>
+<li>La GT <code>couche_regroupee.gpkg</code> et la décision <code>verdun_3_classes</code> (autre dataset).</li>
+<li>Le modèle actuel reste installé et en production jusqu'à la comparaison des courbes.</li>
+</ul>
+
+<p class="sources">Sources examinées : modèle installé
+<code>…\archeologia-pipeline\data\models\cratere_circulaire_2</code> (model_card, args, training_params,
+evaluation_results, metrics.csv) · <code>D:\data_regions\Verdun</code> (config.json du slicer, log RVT,
+rasters mesurés par rasterio, 1 870 tuiles + labels YOLO de <code>output_450_LD\train</code>) ·
+<code>G:\…\data_regions_v2\grand_est\55_verdun</code> (manifest, dataset Roboflow 4 110 images) ·
+<code>rfdetr</code> installé (num_queries par variante) · code du plugin
+(<code>sahi_lite.py</code>, <code>computer_vision_onnx.py</code>) ·
+<code>D:\pipeline_results\detection_carrieres</code> (metadata.json, log pipeline du 17/08,
+crateres.gpkg — 919 détections mesurées).</p>
+</main>
+
+<script>
+(function () {
+  // LCG déterministe : mêmes semis à chaque rendu
+  function lcg(seed) { let s = seed; return function () { s = (s * 48271) % 2147483647; return s / 2147483647; }; }
+  function dessine(id, n, rayonPx, seed) {
+    const cv = document.getElementById(id); if (!cv) return;
+    const ctx = cv.getContext('2d'); const T = cv.width;
+    ctx.fillStyle = '#A8A49A'; ctx.fillRect(0, 0, T, T);   // gris LD, volontairement fixe
+    const rnd = lcg(seed);
+    ctx.fillStyle = '#3A372F';                              // cuvettes sombres
+    for (let i = 0; i < n; i++) {
+      const x = rnd() * T, y = rnd() * T;
+      ctx.beginPath(); ctx.arc(x, y, rayonPx, 0, 6.2832); ctx.fill();
+    }
+  }
+  // entrée modèle 504 px rendue en 220 px -> échelle 220/504
+  const k = 220 / 504;
+  dessine('cv-train', 367, Math.max(0.9, 4.6 / 2 * k), 7);  // 4,6 px de diamètre
+  dessine('cv-sahi', 29, 16.6 / 2 * k, 13);                  // ~16,6 px de diamètre
+})();
+</script>

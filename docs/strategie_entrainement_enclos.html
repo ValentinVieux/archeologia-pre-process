@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Stratégie d'entraînement — enclos français × corpus irlandais</title>
+<style>
+  :root { --encre:#1a1d21; --papier:#fbfaf7; --accent:#7c4a1e; --ok:#2c6e49; --alerte:#a4243b; --doux:#efe9df; }
+  body { font-family: Georgia, 'Times New Roman', serif; background:var(--papier); color:var(--encre);
+         max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.55; }
+  h1 { font-size: 1.7rem; border-bottom: 3px solid var(--accent); padding-bottom:.4rem; }
+  h2 { font-size: 1.25rem; color: var(--accent); margin-top: 2.2rem; }
+  h3 { font-size: 1.05rem; margin-top: 1.6rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .92rem;
+          font-family: system-ui, sans-serif; }
+  th, td { border: 1px solid #c9bfae; padding: .45rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--doux); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .verdict { background: #eaf3ec; border-left: 5px solid var(--ok); padding: .8rem 1rem; margin: 1.2rem 0; }
+  .attention { background: #f9ecee; border-left: 5px solid var(--alerte); padding: .8rem 1rem; margin: 1.2rem 0; }
+  .note { background: var(--doux); border-left: 5px solid var(--accent); padding: .8rem 1rem; margin: 1.2rem 0; }
+  code { font-family: Consolas, monospace; font-size: .88em; background: #f0ece3; padding: .05rem .3rem; border-radius: 3px; }
+  a { color: #205072; }
+  .src { font-size: .85rem; color: #555; }
+  ol li, ul li { margin-bottom: .35rem; }
+  .etape { font-weight: bold; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>Entraînement du modèle « enclos » : transfert irlandais → français</h1>
+<p class="src">2026-08-07 — analyse sourcée (recherche internet + mesures sur nos propres données).
+Question posée : faut-il pré-entraîner sur le corpus irlandais puis faire du transfert vers la France,
+ou tout entraîner ensemble ? Faut-il adapter le dataset à la résolution 1 m ? Que faire des écarts
+de taille et de morphologie ?</p>
+
+<h2>1. D'abord, quantifier l'écart — nos mesures</h2>
+<p>Mesures faites aujourd'hui sur les GPKG livrés (Drive <code>data_regions_v2</code> et corpus D:) :</p>
+<table>
+<tr><th>Population</th><th class="num">n</th><th class="num">Aire médiane</th><th class="num">Diam. équiv. médian</th><th>Résolution MNT</th><th class="num">Taille en pixels (natif)</th><th>Forme dominante</th></tr>
+<tr><td>Irlande — ringfort (sligo+kerry+galway)</td><td class="num">494</td><td class="num">~900 m²</td><td class="num">~34 m</td><td>1 m</td><td class="num">~34 px</td><td>circulaire quasi systématique (circ. 0,94-0,96), talus simple</td></tr>
+<tr><td>Irlande — enclosure</td><td class="num">156</td><td class="num">~715 m²</td><td class="num">~30 m</td><td>1 m</td><td class="num">~30 px</td><td>sub-circulaire, plus irrégulière</td></tr>
+<tr><td>Bretagne — enclos (lignes fermées)</td><td class="num">211</td><td class="num">1 375 m²</td><td class="num">42 m</td><td>0,5 m</td><td class="num">~84 px</td><td>curvilinéaire/quadrangulaire, fossés, souvent partiels</td></tr>
+<tr><td>Bretagne — enceinte</td><td class="num">31</td><td class="num">1 678 m²</td><td class="num">46 m</td><td>0,5 m</td><td class="num">~92 px</td><td>idem, plus grandes (p90 : 11 384 m²)</td></tr>
+<tr><td>IdF — enclos (Fontainebleau/Rambouillet/St-Germain)</td><td class="num">50</td><td class="num">4 300-6 800 m²</td><td class="num">~92 m</td><td>0,5 m</td><td class="num">~184 px (max ~580 px)</td><td>grands quadrangulaires ou courbes, talus arasés, souvent incomplets</td></tr>
+</table>
+<p>Trois écarts distincts se superposent, et il faut les traiter séparément :</p>
+<ol>
+<li><b>Écart de résolution</b> : 1 m/px (GSI) contre 0,5 m/px (LiDAR HD IGN).</li>
+<li><b>Écart de taille objet</b> : en pixels natifs, un ringfort fait ~34 px là où un enclos IdF fait ~184 px — un facteur 5, c'est l'écart le plus violent.</li>
+<li><b>Écart de morphologie</b> : circulaire à talus net (Irlande) contre formes ouvertes, quadrangulaires, arasées (France).</li>
+</ol>
+
+<div class="note"><b>Un atout déjà en place :</b> les LD irlandais et français sont produits avec le
+<b>même anneau métrique 5-10 m et le même étirement 8 bits fixe 0,5-1,8</b> (médiane mesurée 98 des
+deux côtés). La littérature sur la standardisation des visualisations
+(<a href="https://www.mdpi.com/2072-4292/11/24/2946">Kokalj &amp; Somrak, VAT</a> ;
+<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/arp.70002">Standardizing Visualization in Maya Lidar Research, 2025</a>)
+insiste précisément là-dessus : des visualisations reproductibles et normalisées sont la condition
+des comparaisons inter-régionales et du transfert de modèles. Ce point-là est déjà réglé chez nous.</div>
+
+<h2>2. Ce que dit la littérature sur le transfert inter-régional en archéologie</h2>
+
+<h3>2.1 Le transfert archéo → archéo marche dans un sens, pas dans l'autre</h3>
+<p>L'étude la plus directement comparable
+(<a href="https://arxiv.org/html/2307.03512">Transfer Learning of Semantic Segmentation Methods
+for Identifying Buried Archaeological Structures on LiDAR Data, 2023</a>) a testé le transfert croisé
+entre deux jeux LiDAR archéologiques (Chactún, Mexique — grand jeu hétérogène ; Veluwe, Pays-Bas — plus
+petit) : <b>pré-entraîner sur le grand jeu puis affiner sur le petit apporte jusqu'à +5 %</b> ;
+le sens inverse (petit → grand) est <b>néfaste</b>. Le pré-entraînement ImageNet seul apporte +11 %
+contre une initialisation aléatoire. Conclusion des auteurs : le transfert archéo↔archéo n'apporte
+pas d'amélioration systématique, il faut un jeu source <i>grand et varié</i>, et le sens
+grand→petit est le bon.</p>
+<p><b>Traduction pour nous :</b> Irlande (~650 annotations aujourd'hui, ~1 200-1 500 en fin de
+campagne) → France (~295 objets) est exactement le sens favorable.</p>
+
+<h3>2.2 Le précédent irlandais à grande échelle : ADAF</h3>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2352409X26001689">ADAF
+(Čož, Corns, Curran, Kocev, Kokalj, 2026)</a> a entraîné HRNet et Faster R-CNN sur
+<b>10 718 monuments irlandais digitalisés</b> (barrows, enclosures, ringforts) sur plus de 200 jeux
+ALS homogénéisés — la preuve que nos classes irlandaises sont apprenables à l'échelle, avec
+<a href="https://zenodo.org/records/15848663">poids publiés sur Zenodo</a>. C'est aussi un rappel
+utile : notre corpus vise la <i>qualité segmentation</i> (emprises polygonales propres, revues
+humainement), ce qu'ADAF n'offre pas directement pour RF-DETR seg.</p>
+
+<h3>2.3 Entraînement conjoint vs affinage séquentiel (littérature CV générale)</h3>
+<ul>
+<li>L'<a href="https://arxiv.org/html/2509.04711v1">étude domain adaptation capteurs 3D (2025)</a> :
+l'<b>entraînement conjoint améliore la robustesse hors-domaine (+2,5 à +3,4 %)</b> ; l'affinage seul
+rattrape le conjoint quand les données cibles sont abondantes — ce qui n'est <i>pas</i> notre cas
+(295 objets français).</li>
+<li>La pratique standard pour le conjoint déséquilibré : <b>sur-échantillonner le domaine cible</b>
+(répéter les tuiles françaises) plutôt que sous-échantillonner la source.</li>
+<li><a href="https://arxiv.org/pdf/2103.02205">Gradual fine-tuning (2021)</a> : passer graduellement
+d'un mélange source+cible vers la cible seule surpasse l'affinage brutal — un « curriculum » à deux
+temps est peu coûteux et cumule les avantages.</li>
+<li><a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Yu_A_Closer_Look_at_Cross-Domain_Few-Shot_Object_Detection_Fine-Tuning_Matters_CVPR_2026_paper.pdf">Cross-domain few-shot detection (CVPR 2026)</a> :
+en régime « peu d'exemples cibles », la façon d'affiner (quelles couches, quel LR) pèse plus que
+l'architecture — cohérent avec notre propre ablation SAM (le LR officiel 2e-5 sous-entraînait, 5e-5 gagnait).</li>
+</ul>
+
+<h3>2.4 Résolution : ce qui se dégrade et quand</h3>
+<p>La littérature mesure une dégradation nette au-delà de <b>3× la résolution d'origine</b>
+(perte max ~20 % ; voir la <a href="https://doi.org/10.3390/rs17152733">revue CNN/LiDAR archéo 2025</a>
+et <a href="https://www.mdpi.com/2072-4292/14/7/1694">Deep Learning for Archaeological Object Detection
+on LiDAR, 2022</a>). Un passage 0,5 m → 1 m (2×) est en deçà de ce seuil critique, <i>à condition que
+les objets restent grands en pixels</i> — nos enclos français à 1 m font encore 42-92 px de diamètre,
+très au-dessus de la taille des ringforts que le pipeline irlandais détecte très bien (30-34 px).</p>
+
+<h2>3. Réponse aux trois questions</h2>
+
+<h3>3.1 Transfert séquentiel ou entraînement conjoint ? → Les deux, dans cet ordre : conjoint puis affinage France</h3>
+<div class="verdict">
+<b>Recommandation : entraînement conjoint AVEC classes séparées, suivi d'un court affinage
+France-seule. Et l'on tranche par la mesure, pas par principe.</b>
+<ol>
+<li><b>Classes séparées à l'entraînement</b> : <code>enclos_irlande</code> (ringfort+enclosure
+fusionnés, décision du 2026-08-07) et <code>enclos_enceinte</code> (France). L'Irlande sert de
+<i>classe auxiliaire</i> : le backbone apprend « talus circulaire fermé sur LD » sur un gros volume,
+sans imposer son prior circulaire à la classe française (le risque principal d'une classe unique
+bimodale). Le plugin n'exploitera que <code>enclos_enceinte</code>.</li>
+<li><b>Sur-échantillonnage France ×3-5</b> dans le conjoint (répétition des tuiles françaises),
+pratique standard des mélanges déséquilibrés.</li>
+<li><b>Affinage final court sur la France seule</b> (gradual fine-tuning), LR réduit, avec
+<code>skip_best_epochs</code> pour éviter le piège du checkpoint « meilleur » à l'époque 0
+(<a href="https://rfdetr.roboflow.com/latest/learn/train/advanced/">doc RF-DETR Advanced Training</a>).</li>
+<li><b>Ablation à budget fixe</b> (doctrine maison : mesurer sur éval gelée) — 3 bras :
+(A) France seule (baseline), (B) conjoint+affinage (recommandé), (C) séquentiel pur
+(Irlande puis France). Éval française gelée, jamais re-tirée, comme <code>split_irlande.yaml</code>.</li>
+</ol>
+</div>
+<p>Deux points de départ possibles pour les poids — à ablater aussi, c'est bon marché :
+le COCO pré-entraîné standard de RF-DETR, et <b>notre propre checkpoint parcellaires
+<code>lineaires_seg_v2_1</code></b> : même domaine visuel (LD français, mêmes conventions
+de rendu), features déjà accordées aux textures LD — potentiellement meilleur qu'ImageNet/COCO,
+et <code>from_checkpoint()</code> adapte désormais la tête de classes
+(<a href="https://github.com/roboflow/rf-detr/releases">releases RF-DETR</a>).</p>
+
+<h3>3.2 Adapter le dataset au 1 m ? → Oui : le modèle enclos s'entraîne à 1 m, France comprise</h3>
+<div class="verdict">
+<b>Recommandation : GSD unique 1 m pour le modèle enclos.</b> Ré-échantillonner les MNT français
+0,5 m → 1 m, régénérer les LD 1 m (rayons AUTO de <code>generer_ld</code> : Rmin5/Rmax10, anneau
+5-10 m constant), et découper les tuiles 648 px sur ces LD 1 m.
+</div>
+<p>Pourquoi ce sens (France → 1 m) et pas l'inverse (Irlande → 0,5 m) :</p>
+<ul>
+<li><b>On ne peut pas inventer du 0,5 m irlandais</b> : sur-échantillonner du 1 m ne crée aucune
+information, le domaine irlandais resterait « flou » par rapport au vrai 0,5 m français — un écart de
+domaine artificiel de plus.</li>
+<li><b>Le ré-échantillonnage 0,5→1 m rapproche aussi les tailles en pixels</b> : IdF passe de
+~184 px à ~92 px, la Bretagne de ~84 à ~42 px, contre ~34 px pour les ringforts — l'écart de
+taille passe d'un facteur 5 à un facteur 1-3, dans la plage qu'une augmentation d'échelle standard
+absorbe. Notre propre expérience SAM l'a montré de manière décisive : le prior de taille était LE
+problème (ft1 rejeté pour débordement), corrigé par l'alignement des distributions de taille.</li>
+<li><b>Le contexte tuile s'améliore</b> : une tuile 648 px à 1 m couvre 648 m — un enclos IdF de
+290 m y tient avec son contexte ; à 0,5 m (324 m), les plus grands débordent de la tuile.</li>
+<li><b>La perte 2× est bénigne</b> pour des objets de cette taille (seuil critique ~3×, § 2.4), et les
+talus arasés français sont des structures de 5-20 m de large — encore 5-20 px à 1 m, dans la gamme
+de ce que le LD 5-10 m révèle.</li>
+<li><b>Cohérence contrat plugin</b> : résolution d'entraînement = résolution d'export ONNX = résolution
+d'inférence. Le modèle enclos sera déclaré « 1 m » dans le contrat, indépendamment du modèle
+parcellaires qui reste à 0,5 m. Le pipeline QGIS sait déjà ré-échantillonner un MNT IGN vers la
+résolution du modèle.</li>
+</ul>
+<p class="src">Si le test 2 m (en attente de votre verdict visuel) débloque un jour des enclosures
+supplémentaires, elles seront sur-échantillonnées 2→1 m : un facteur 2 « vers le haut », marginalement
+acceptable pour une classe auxiliaire, à mesurer.</p>
+
+<h3>3.3 Différences de taille et de forme ? → Les traiter par le design du dataset, pas par l'architecture</h3>
+<ul>
+<li><b>Classes séparées</b> (cf. 3.1) : c'est LA parade principale contre le prior circulaire irlandais.</li>
+<li><b>Harmoniser la géométrie des annotations</b> — point critique découvert en préparant cette
+analyse : les annotations irlandaises sont des <b>emprises pleines</b> (polygones SAM remplis),
+les enclos bretons sont des <b>lignes</b> (décision d'harmonisation 2026-08) et les enclos IdF des
+polygones. Pour un même concept « enclos » le masque d'entraînement doit être le même partout.
+Deux options : (a) tout en emprise pleine — fermer les lignes bretonnes fermables (211 enclos :
+la polygonisation fonctionne, testée aujourd'hui pour les mesures) et garder les emprises IdF/Irlande
+telles quelles ; les enclos <i>ouverts/partiels</i> bretons restent alors à arbitrer (buffer-ligne en
+classe « segment d'enclos » ou exclusion) ; (b) tout en anneau (buffer 7 m des lignes) — mais il
+faudrait alors ÉVIDER les emprises irlandaises et IdF, destructif et regrettable. <b>Recommandation :
+(a) emprise pleine partout</b>, avec décision humaine sur les ~10-20 % d'enclos bretons non fermables.</li>
+<li><b>Augmentation d'échelle</b> ±50 % à l'entraînement (RF-DETR le supporte via ses augmentations) :
+couvre le continuum résiduel 30-290 px après passage à 1 m.</li>
+<li><b>Ne PAS chercher à « déformer » l'Irlande vers la morphologie française</b> (nous avions exploré
+la quadrangularisation d'annotations : abandonnée). La littérature (<a href="https://arxiv.org/html/2307.03512">2307.03512</a>)
+attribue l'échec des transferts justement aux dissimilarités de forme : on ne les gomme pas par
+transformation cosmétique, on laisse la classe auxiliaire apporter ce qu'elle sait (features bas
+niveau « levée de terre sur LD ») et la classe cible apprendre sa propre forme.</li>
+</ul>
+
+<h2>4. Plan d'exécution proposé</h2>
+<ol>
+<li><span class="etape">Corpus irlandais</span> — finir les secteurs de l'ouest (roscommon en cours,
+cork, galway restants) → viser ≥ 1 200 annotations fusionnées <code>enclos_irlande</code>.</li>
+<li><span class="etape">Corpus français 1 m</span> — ré-échantillonner MNT → 1 m (une passe
+<code>gdalwarp -r bilinear</code>, jamais dalle par dalle), LD auto (<code>generer_ld</code>),
+fermer les lignes bretonnes en emprises (nouvel outil + boucle de vérification, décisions humaines
+sur les non-fermables), re-slicer 648 px avec split spatial 2 km (<code>slice_zone</code>,
+jamais de split aléatoire — cf. <code>docs/fuite_spatiale_train_test.html</code>).</li>
+<li><span class="etape">Éval française gelée</span> — tirer UNE fois un jeu d'éval France
+(stratifié Bretagne/IdF), le documenter comme <code>split_irlande.yaml</code>, ne plus jamais le
+re-tirer. Toute décision (GSD, stratégie, poids de départ) se mesure dessus.</li>
+<li><span class="etape">Ablation à 3 bras</span> (A) France seule, (B) conjoint classes séparées +
+affinage France, (C) séquentiel Irlande→France ; chaque bras testé depuis COCO et depuis
+<code>lineaires_seg_v2_1</code> si le budget GPU le permet (sinon : B-COCO, B-parcellaires, A-COCO).</li>
+<li><span class="etape">Verdict par la mesure</span> — métriques par classe sur l'éval gelée,
+IC95 bootstrap par tuile (outillage <code>tools/bench</code> réutilisable), et inspection visuelle
+des masques sur le lot de test Roboflow avant tout upload complet.</li>
+</ol>
+
+<div class="attention"><b>Deux risques à garder en tête :</b>
+(1) le corpus irlandais est majoritairement <code>source: pipeline_*</code> (revu humainement mais
+généré par cercle+SAM) — ses biais de contour (lissage, rondeur) sont connus ; l'éval française,
+elle, doit rester 100 % humaine ;
+(2) 295 objets français, même sur-échantillonnés, restent peu — si le bras (B) ne bat pas (A)
+nettement, c'est le signal qu'il faut plus de données françaises (relances archéologues, conversion
+IdF, prospection assistée par le modèle v1 sur les zones françaises déjà couvertes) plutôt que plus
+d'ingénierie d'entraînement.</div>
+
+<h2>Sources</h2>
+<ul class="src">
+<li><a href="https://arxiv.org/html/2307.03512">Transfer Learning of Semantic Segmentation Methods for Identifying Buried Archaeological Structures on LiDAR Data (2023)</a></li>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S2352409X26001689">ADAF — Automatic detection of archaeological features from ALS data using deep learning (JAS Reports, 2026)</a> ; <a href="https://github.com/EarthObservation/adaf">code</a> ; <a href="https://zenodo.org/records/15848663">poids Zenodo</a> ; <a href="https://discoveryprogramme.ie/projects/past-projects/tii-adaf-mlm-project/">The Discovery Programme</a></li>
+<li><a href="https://journal.caa-international.org/articles/10.5334/jcaa.32">WODAN — R-CNN sur LiDAR néerlandais (JCAA)</a> et <a href="https://journal.caa-international.org/articles/10.5334/jcaa.78">Cross-Domain Collaboration (JCAA)</a></li>
+<li><a href="https://www.mdpi.com/2072-4292/14/7/1694">Deep Learning for Archaeological Object Detection on LiDAR: New Evaluation Measures and Insights (Remote Sensing, 2022)</a></li>
+<li><a href="https://doi.org/10.3390/rs17152733">Technical Note on AI-Driven Archaeological Object Detection in Airborne LiDAR Derivative Data (Remote Sensing, 2025)</a></li>
+<li><a href="https://www.mdpi.com/2072-4292/11/24/2946">VAT Method (Kokalj &amp; Somrak, Remote Sensing 2019)</a> ; <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/arp.70002">Standardizing Visualization in Ancient Maya Lidar Research (2025)</a></li>
+<li><a href="https://arxiv.org/html/2509.04711v1">Domain Adaptation for Different Sensor Configurations in 3D Object Detection (2025)</a></li>
+<li><a href="https://arxiv.org/pdf/2103.02205">Gradual Fine-Tuning for Low-Resource Domain Adaptation (2021)</a></li>
+<li><a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Yu_A_Closer_Look_at_Cross-Domain_Few-Shot_Object_Detection_Fine-Tuning_Matters_CVPR_2026_paper.pdf">A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters (CVPR 2026)</a></li>
+<li><a href="https://rfdetr.roboflow.com/latest/learn/train/advanced/">RF-DETR — Advanced Training</a> ; <a href="https://github.com/roboflow/rf-detr/releases">releases (adaptation de tête de classes)</a></li>
+</ul>
+
+</body>
+</html>
