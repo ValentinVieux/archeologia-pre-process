@@ -1,0 +1,165 @@
+corpus: lineaires_648_v3
+genere_le: '2026-08-31'
+outil: tools/build_corpus.py
+outil_commit: d4108fc
+config_sha1: 96caafe5826bb59ef84f5e106968e2e5ca67e0f9
+classes:
+- parcellaire
+- talus_fosse
+- chemin_creux
+fusions:
+  voie: parcellaire
+  talus: talus_fosse
+  fosse: talus_fosse
+datasets:
+  lineaires_haye_ld_648_v2:
+    zone: grand_est/54_foret_de_haye
+    splits:
+      train:
+        images: 803
+        annotations:
+          parcellaire: 6087
+          talus_fosse: 106
+      valid:
+        images: 231
+        annotations:
+          parcellaire: 1622
+          talus_fosse: 25
+      test:
+        images: 134
+        annotations:
+          parcellaire: 1025
+          talus_fosse: 22
+    split_manifest_sha1: 327d4c137564bad7ca252f56285c0987c966c671
+    raster: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\haye_ld\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+    gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_haye_v4\54_foret_de_haye_entites_l93_final.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-07-28'
+  lineaires_fontainebleau_ld_648_v2:
+    zone: ile_de_france/77_fontainebleau
+    splits:
+      train:
+        images: 1752
+        annotations:
+          parcellaire: 17932
+          talus_fosse: 3703
+          chemin_creux: 1082
+      valid:
+        images: 530
+        annotations:
+          parcellaire: 4469
+          talus_fosse: 1157
+          chemin_creux: 308
+      test:
+        images: 243
+        annotations:
+          parcellaire: 3074
+          talus_fosse: 691
+          chemin_creux: 143
+    split_manifest_sha1: cd159720f5b46446326449d91da284e883a95331
+    raster: D:\pipeline_results\output_77_Foret_domaniale_Fontainebleau_IGN\indices\LD_A15_Rmin10_Rmax20_H1p7_V1\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+    gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_fontainebleau_v2\77_foret_de_fontainebleau_entites_l93_final.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-07-28'
+  lineaires_rambouillet_ld_648_v2:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 1170
+        annotations:
+          talus_fosse: 1523
+          parcellaire: 3607
+          chemin_creux: 811
+      valid:
+        images: 331
+        annotations:
+          talus_fosse: 435
+          chemin_creux: 205
+          parcellaire: 1085
+      test:
+        images: 211
+        annotations:
+          talus_fosse: 222
+          parcellaire: 573
+          chemin_creux: 124
+    split_manifest_sha1: 8bdf7e50040a6bdf33de2433c9319bdfe1c4eaf6
+    raster: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\rambouillet_ld\tif\index.vrt
+    gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_rambouillet_v2\78_rambouillet_entites_l93_final.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-07-28'
+  lineaires_saint_germain_ld_648_v2:
+    zone: ile_de_france/78_saint_germain_marly
+    splits:
+      train:
+        images: 409
+        annotations:
+          parcellaire: 1519
+          talus_fosse: 124
+      valid:
+        images: 129
+        annotations:
+          parcellaire: 433
+          talus_fosse: 33
+      test:
+        images: 53
+        annotations:
+          parcellaire: 245
+          talus_fosse: 23
+    split_manifest_sha1: 0ce2289341256ef96494829077fadd4e5ec4dc51
+    raster: D:\pipeline_results\output_78_Foret_domaniale_Saint-Germain_lidar_HD\indices\LD_A15_Rmin10_Rmax20_H1p7_V1\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+    gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_saint_germain\78_saint_germain_marly_entites_l93_final.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-07-28'
+  lineaires_blois_ld_648_v2:
+    zone: centre_val_de_loire/41_blois
+    splits:
+      train:
+        images: 1256
+        annotations:
+          parcellaire: 4099
+          talus_fosse: 1806
+          chemin_creux: 224
+      valid:
+        images: 337
+        annotations:
+          parcellaire: 1044
+          talus_fosse: 538
+          chemin_creux: 65
+      test:
+        images: 189
+        annotations:
+          parcellaire: 641
+          talus_fosse: 244
+          chemin_creux: 33
+    split_manifest_sha1: a01ab8c44f2a2445d3f012223a80826cee9e4cdc
+    raster: D:\pipeline_results\output_pipeline_plugin_blois\indices\RVT\tif\index.vrt
+    gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_blois\41_blois_entites_l93_final.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-07-28'
+splits:
+  train:
+    images: 5390
+    coco_sha1: 736c57a383b0d8011d7e1d0ec1e093f38fbffeb6
+    annotations:
+      parcellaire: 33244
+      talus_fosse: 7262
+      chemin_creux: 2117
+  valid:
+    images: 1558
+    coco_sha1: c4ed41c545526049d6511cc839ba1c08a45910b6
+    annotations:
+      parcellaire: 8653
+      talus_fosse: 2188
+      chemin_creux: 578
+  test:
+    images: 830
+    coco_sha1: f44da491c9964abe0191e2ebf9bef2ec94beb86f
+    annotations:
+      parcellaire: 5558
+      talus_fosse: 1202
+      chemin_creux: 300
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'Mêmes tuiles/splits que lineaires_648_v2 ; seule la taxonomie change : talus +
+  fosse fusionnés dans talus_fosse (5 -> 3 classes).'

@@ -1,0 +1,236 @@
+corpus: enclos_frie_graduel_648_v1
+genere_le: '2026-08-31'
+outil: tools/build_corpus.py
+outil_commit: 9563ebe
+config_sha1: 429ded63a3298d1e00c99994b73a314c9c56e8eb
+classes:
+- enclos_circulaire
+fusions:
+  enclos: enclos_circulaire
+datasets:
+  enclos_fr_bretagne_ld648_v1:
+    zone: bretagne/35_anomalie_lidar_bretagne
+    splits:
+      train:
+        images: 119
+        annotations:
+          enclos_circulaire: 253
+      valid:
+        images: 35
+        annotations:
+          enclos_circulaire: 73
+      test:
+        images: 22
+        annotations:
+          enclos_circulaire: 35
+    split_manifest_sha1: f242e1267dcae3c2612907c02e2f26feb5890f2b
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/bretagne_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/bretagne_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_rambouillet_ld648_v1:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 29
+        annotations:
+          enclos_circulaire: 28
+      valid:
+        images: 9
+        annotations:
+          enclos_circulaire: 9
+      test:
+        images: 6
+        annotations:
+          enclos_circulaire: 5
+    split_manifest_sha1: 8a02cd4c2dd3be118100713b54067037b9cf5fbb
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/rambouillet_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/rambouillet_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_fontainebleau_ld648_v1:
+    zone: ile_de_france/77_fontainebleau
+    splits:
+      train:
+        images: 12
+        annotations:
+          enclos_circulaire: 10
+      valid:
+        images: 5
+        annotations:
+          enclos_circulaire: 5
+      test:
+        images: 2
+        annotations:
+          enclos_circulaire: 2
+    split_manifest_sha1: 540fa428f13fa1444e459e488d926cfc7e9051ff
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/fontainebleau_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/fontainebleau_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_saint_germain_ld648_v1:
+    zone: ile_de_france/78_saint_germain_marly
+    splits:
+      train:
+        images: 4
+        annotations:
+          enclos_circulaire: 6
+      valid:
+        images: 3
+        annotations:
+          enclos_circulaire: 4
+      test:
+        images: 2
+        annotations:
+          enclos_circulaire: 2
+    split_manifest_sha1: e407850e7458adc5c536bfb3d684638f1a9826fc
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/saint_germain_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/saint_germain_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_ie_boyne_valley_ld648_v1:
+    zone: irlande/ie_boyne_valley
+    splits:
+      train:
+        images: 1
+        annotations:
+          enclos_circulaire: 3
+    split_manifest_sha1: 1595972c586ce2b4b8e380132b6c090c2e2a8d75
+    raster: D:/veille_irlande/indices/ld/ld_boyne_valley.tif
+    gpkg: D:/veille_irlande/annotations/boyne_valley_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 1
+  enclos_ie_galway_01_ld648_v1:
+    zone: irlande/ie_galway_01
+    splits:
+      train:
+        images: 14
+        annotations:
+          enclos_circulaire: 23
+    split_manifest_sha1: 0443ed62c64447bfac8b1d9a1f15192ccc0c3b6f
+    raster: D:/veille_irlande/indices/ld/ld_galway_01.tif
+    gpkg: D:/veille_irlande/annotations/galway_01_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 14
+  enclos_ie_galway_02_ld648_v1:
+    zone: irlande/ie_galway_02
+    splits:
+      train:
+        images: 9
+        annotations:
+          enclos_circulaire: 14
+    split_manifest_sha1: 1209ec8858bee2f07a45c148aa9e6563ac3d9a62
+    raster: D:/veille_irlande/indices/ld/ld_galway_02.tif
+    gpkg: D:/veille_irlande/annotations/galway_02_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 9
+  enclos_ie_galway_b_01_ld648_v1:
+    zone: irlande/ie_galway_b_01
+    splits:
+      train:
+        images: 2
+        annotations:
+          enclos_circulaire: 3
+    split_manifest_sha1: 87b7ca6703502cc7cdbde96206a4cff70f0c2f12
+    raster: D:/veille_irlande/indices/ld/ld_galway_b_01.tif
+    gpkg: D:/veille_irlande/annotations/galway_b_01_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 2
+  enclos_ie_galway_b_02_ld648_v1:
+    zone: irlande/ie_galway_b_02
+    splits:
+      train:
+        images: 2
+        annotations:
+          enclos_circulaire: 2
+    split_manifest_sha1: 66347fb848ca4279cd7033fdb575aa50c79193f0
+    raster: D:/veille_irlande/indices/ld/ld_galway_b_02.tif
+    gpkg: D:/veille_irlande/annotations/galway_b_02_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 2
+  enclos_ie_kerry_ld648_v1:
+    zone: irlande/ie_kerry
+    splits:
+      train:
+        images: 2
+        annotations:
+          enclos_circulaire: 3
+    split_manifest_sha1: c07ef565d38a7c62e0ad108466761b4e87a1deba
+    raster: D:/veille_irlande/indices/ld/ld_kerry.tif
+    gpkg: D:/veille_irlande/annotations/kerry_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 2
+  enclos_ie_roscommon_ld648_v1:
+    zone: irlande/ie_roscommon
+    splits:
+      train:
+        images: 4
+        annotations:
+          enclos_circulaire: 5
+    split_manifest_sha1: 179eddcc0455456b30edd16f93b7a985abf2db88
+    raster: D:/veille_irlande/indices/ld/ld_roscommon.tif
+    gpkg: D:/veille_irlande/annotations/roscommon_annotations_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 4
+  enclos_ie_sligo_ld648_v1:
+    zone: irlande/ie_sligo
+    splits:
+      train:
+        images: 21
+        annotations:
+          enclos_circulaire: 37
+    split_manifest_sha1: df9c002c261dea27d8168b9aa72c966f1b2f39b9
+    raster: D:/veille_irlande/indices/ld/ld_sligo.tif
+    gpkg: D:/veille_irlande/annotations/sligo_annotations_v2.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-13'
+    restriction:
+      splits:
+      - train
+      tuiles: 21
+splits:
+  train:
+    images: 219
+    coco_sha1: 30aa59f7d8c676f9577b5365c3a069d47fec5bb4
+    annotations:
+      enclos_circulaire: 387
+  valid:
+    images: 52
+    coco_sha1: 8d0e7207444869b3b5017c0e7d746a6f68a6cf00
+    annotations:
+      enclos_circulaire: 91
+  test:
+    images: 32
+    coco_sha1: 9523f1841abb1d3c0539a5af7aeb0450d71ba41e
+    annotations:
+      enclos_circulaire: 44
+gsd_m: 1.0
+rvt: LD

@@ -1,0 +1,187 @@
+corpus: fours_charbonnieres_648_v1
+classes:
+- charbonniere
+- four
+- circular_depression
+fusions: {}
+datasets:
+  fours_charb_57_fenetrange_ld648_v1:
+    zone: grand_est/57_fenetrange
+    splits:
+      train:
+        images: 726
+        annotations:
+          circular_depression: 2346
+          charbonniere: 214
+      valid:
+        images: 220
+        annotations:
+          circular_depression: 721
+          charbonniere: 61
+      test:
+        images: 117
+        annotations:
+          circular_depression: 447
+          charbonniere: 29
+    split_manifest_sha1: 021a452dfe6fbb3136967de6d722280ea68a036a
+  fours_charb_70_vosges_saonoises_ld648_v1:
+    zone: bourgogne_franche_comte/70_vosges_saonoises
+    splits:
+      train:
+        images: 223
+        annotations:
+          charbonniere: 1744
+          circular_depression: 578
+          four: 10
+      valid:
+        images: 70
+        annotations:
+          four: 3
+          charbonniere: 665
+          circular_depression: 155
+      test:
+        images: 38
+        annotations:
+          charbonniere: 295
+          circular_depression: 82
+          four: 1
+    split_manifest_sha1: 3abaf6da3f18700ff7a8c2c249e386a81e2362d7
+  fours_charb_25_haut_doubs_ld648_v1:
+    zone: bourgogne_franche_comte/25_haut_doubs
+    splits:
+      train:
+        images: 644
+        annotations:
+          four: 922
+          circular_depression: 80
+          charbonniere: 5
+      valid:
+        images: 179
+        annotations:
+          four: 241
+          circular_depression: 24
+          charbonniere: 2
+      test:
+        images: 101
+        annotations:
+          four: 155
+          circular_depression: 19
+          charbonniere: 1
+    split_manifest_sha1: 9b51314bb9e86585d6cf7dea20eeee0c00dd8e1d
+  fours_charb_30_ales_garrigues_ne_ld648_v1:
+    zone: occitanie/30_ales_garrigues_ne
+    splits:
+      train:
+        images: 1748
+        annotations:
+          charbonniere: 2111
+          circular_depression: 731
+          four: 782
+      valid:
+        images: 486
+        annotations:
+          four: 222
+          circular_depression: 214
+          charbonniere: 603
+      test:
+        images: 262
+        annotations:
+          charbonniere: 300
+          circular_depression: 102
+          four: 111
+    split_manifest_sha1: efc638d9995d4d351b14f8b51bd9ef735bffaf37
+  fours_charb_30_la_capelle_ld648_v1:
+    zone: occitanie/30_la_capelle_et_masmolene
+    splits:
+      train:
+        images: 165
+        annotations:
+          four: 155
+          charbonniere: 38
+          circular_depression: 61
+      valid:
+        images: 54
+        annotations:
+          four: 44
+          circular_depression: 17
+          charbonniere: 10
+      test:
+        images: 24
+        annotations:
+          charbonniere: 7
+          four: 22
+          circular_depression: 8
+    split_manifest_sha1: c5414fe9de7b66bcddee1c815125e2f448de9f44
+  fours_charb_78_rambouillet_ld648_v1:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 988
+        annotations:
+          charbonniere: 3812
+          circular_depression: 481
+      valid:
+        images: 330
+        annotations:
+          charbonniere: 1125
+          circular_depression: 131
+      test:
+        images: 136
+        annotations:
+          charbonniere: 576
+          circular_depression: 76
+    split_manifest_sha1: 89d00ce1a8f28643f334b4e3731e870916b04e84
+  fours_charb_25_chailluz_ld648_v1:
+    zone: bourgogne_franche_comte/25_besancon_chailluz
+    splits:
+      train:
+        images: 251
+        annotations:
+          charbonniere: 1295
+          circular_depression: 74
+      valid:
+        images: 83
+        annotations:
+          charbonniere: 336
+          circular_depression: 19
+      test:
+        images: 48
+        annotations:
+          circular_depression: 11
+          charbonniere: 175
+    split_manifest_sha1: 638ff445786e8eaf63f9f2ae48037a50aec926c5
+  fours_charb_41_blois_ld648_v1:
+    zone: centre_val_de_loire/41_blois
+    splits:
+      train:
+        images: 211
+        annotations:
+          charbonniere: 457
+      valid:
+        images: 62
+        annotations:
+          charbonniere: 140
+      test:
+        images: 33
+        annotations:
+          charbonniere: 84
+    split_manifest_sha1: ca6f030da10a7fafdfe45266704bfeb7af5c6b47
+splits:
+  train:
+    images: 4956
+    annotations:
+      circular_depression: 4351
+      charbonniere: 9676
+      four: 1869
+  valid:
+    images: 1484
+    annotations:
+      circular_depression: 1281
+      charbonniere: 2942
+      four: 510
+  test:
+    images: 759
+    annotations:
+      circular_depression: 745
+      charbonniere: 1467
+      four: 289

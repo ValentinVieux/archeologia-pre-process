@@ -1,0 +1,24 @@
+# Corpus d'entraînement multi-zones v3 — segmentation RF-DETR structures linéaires,
+# 3 CLASSES. Mêmes 5 datasets v2, mêmes tuiles et mêmes splits spatiaux que
+# lineaires_648_v2 (split_manifest hérités, jamais re-tirés) ; seule différence :
+# fusion des annotations talus + fosse -> talus_fosse (décision utilisateur
+# 2026-08-31 — la confusion structurelle talus/fossé du run v2_1 motive le
+# réentraînement, cf. rétrospective 2026-07-30). voie -> parcellaire reconduit
+# (décision 2026-07-28). Éval externe : bretagne (35_anomalie_lidar_bretagne),
+# hors corpus par construction.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v3.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: lineaires_648_v3
+classes: [parcellaire, talus_fosse, chemin_creux]
+fusions: {voie: parcellaire, talus: talus_fosse, fosse: talus_fosse}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml
+  - "Mêmes tuiles/splits que lineaires_648_v2 ; seule la taxonomie change :
+    talus + fosse fusionnés dans talus_fosse (5 -> 3 classes)."
+datasets:
+  - lineaires_haye_ld_648_v2
+  - lineaires_fontainebleau_ld_648_v2
+  - lineaires_rambouillet_ld_648_v2
+  - lineaires_saint_germain_ld_648_v2
+  - lineaires_blois_ld_648_v2

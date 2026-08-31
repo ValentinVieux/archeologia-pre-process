@@ -1,0 +1,107 @@
+corpus: enclos_fr_648_csl_v1
+genere_le: '2026-08-31'
+outil: tools/build_corpus.py
+outil_commit: 9563ebe
+config_sha1: 129eaae1560b861d58abcec12b67ea3ab7aaf337
+classes:
+- enclos_circulaire
+fusions: {}
+datasets:
+  enclos_fr_bretagne_csl648_v1:
+    zone: bretagne/35_anomalie_lidar_bretagne
+    splits:
+      train:
+        images: 119
+        annotations:
+          enclos_circulaire: 253
+      valid:
+        images: 35
+        annotations:
+          enclos_circulaire: 73
+      test:
+        images: 22
+        annotations:
+          enclos_circulaire: 35
+    split_manifest_sha1: 164d0ef4184db0a7f28f73eda48c7d1abc289774
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/bretagne_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/bretagne_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_rambouillet_csl648_v1:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 29
+        annotations:
+          enclos_circulaire: 28
+      valid:
+        images: 9
+        annotations:
+          enclos_circulaire: 9
+      test:
+        images: 6
+        annotations:
+          enclos_circulaire: 5
+    split_manifest_sha1: 386cd71267573ac025a394fca5d188dbccdcd9c6
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/rambouillet_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/rambouillet_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_fontainebleau_csl648_v1:
+    zone: ile_de_france/77_fontainebleau
+    splits:
+      train:
+        images: 12
+        annotations:
+          enclos_circulaire: 10
+      valid:
+        images: 5
+        annotations:
+          enclos_circulaire: 5
+      test:
+        images: 2
+        annotations:
+          enclos_circulaire: 2
+    split_manifest_sha1: 72f9d581628abb7939b0b213dc629a6b3caef727
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/fontainebleau_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/fontainebleau_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+  enclos_fr_saint_germain_csl648_v1:
+    zone: ile_de_france/78_saint_germain_marly
+    splits:
+      train:
+        images: 4
+        annotations:
+          enclos_circulaire: 6
+      valid:
+        images: 3
+        annotations:
+          enclos_circulaire: 4
+      test:
+        images: 2
+        annotations:
+          enclos_circulaire: 2
+    split_manifest_sha1: 24e57f326005c352e7f3b051aeaf6dcd5e1ec2be
+    raster: D:/veille_irlande/corpus_enclos_fr/ld/saint_germain_ld_1m.vrt
+    gpkg: D:/veille_irlande/corpus_enclos_fr/vecteurs/saint_germain_emprises.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-16'
+splits:
+  train:
+    images: 164
+    coco_sha1: e846d4f750fd4f1bd4c120a4c9a4f3224b68d25b
+    annotations:
+      enclos_circulaire: 297
+  valid:
+    images: 52
+    coco_sha1: 63beb3107c400377dc25541ebcc1b4de4e4ee7e4
+    annotations:
+      enclos_circulaire: 91
+  test:
+    images: 32
+    coco_sha1: bfc527a41c4d39acd65c272e2487a21c0e94765f
+    annotations:
+      enclos_circulaire: 44
+gsd_m: 1.0
+rvt: LD

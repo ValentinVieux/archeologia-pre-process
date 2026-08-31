@@ -1,0 +1,162 @@
+corpus: enclos_ie_648_crim_v1
+classes:
+- enclos
+fusions: {}
+datasets:
+  enclos_ie_sligo_crim648_v1:
+    zone: irlande/ie_sligo
+    splits:
+      train:
+        images: 163
+        annotations:
+          enclos: 274
+      valid:
+        images: 45
+        annotations:
+          enclos: 84
+      test:
+        images: 22
+        annotations:
+          enclos: 43
+    split_manifest_sha1: 8ffb00a36b0a160ecb563bec7334265739306d00
+  enclos_ie_kerry_crim648_v1:
+    zone: irlande/ie_kerry
+    splits:
+      train:
+        images: 32
+        annotations:
+          enclos: 39
+      valid:
+        images: 11
+        annotations:
+          enclos: 14
+      test:
+        images: 5
+        annotations:
+          enclos: 6
+    split_manifest_sha1: 0759913f5fe518405761665ae4abcb71b9722965
+  enclos_ie_boyne_valley_crim648_v1:
+    zone: irlande/ie_boyne_valley
+    splits:
+      train:
+        images: 7
+        annotations:
+          enclos: 8
+      valid:
+        images: 3
+        annotations:
+          enclos: 5
+      test:
+        images: 1
+        annotations:
+          enclos: 1
+    split_manifest_sha1: 62c181a966c58af43c9eb40b347635639e2c5031
+  enclos_ie_galway_01_crim648_v1:
+    zone: irlande/ie_galway_01
+    splits:
+      train:
+        images: 98
+        annotations:
+          enclos: 129
+      valid:
+        images: 23
+        annotations:
+          enclos: 37
+      test:
+        images: 14
+        annotations:
+          enclos: 22
+    split_manifest_sha1: cb332e29efe3b8f1d5be3752d1e55aa0f15221d7
+  enclos_ie_galway_02_crim648_v1:
+    zone: irlande/ie_galway_02
+    splits:
+      train:
+        images: 84
+        annotations:
+          enclos: 115
+      valid:
+        images: 24
+        annotations:
+          enclos: 33
+      test:
+        images: 10
+        annotations:
+          enclos: 16
+    split_manifest_sha1: b92b24d648f3f96dc2683fc0744033915c70f083
+  enclos_ie_galway_b_01_crim648_v1:
+    zone: irlande/ie_galway_b_01
+    splits:
+      train:
+        images: 23
+        annotations:
+          enclos: 26
+      valid:
+        images: 7
+        annotations:
+          enclos: 7
+      test:
+        images: 3
+        annotations:
+          enclos: 5
+    split_manifest_sha1: 45f54e98d31f7e085c9271320d34217227656012
+  enclos_ie_galway_b_02_crim648_v1:
+    zone: irlande/ie_galway_b_02
+    splits:
+      train:
+        images: 26
+        annotations:
+          enclos: 35
+      valid:
+        images: 8
+        annotations:
+          enclos: 11
+      test:
+        images: 6
+        annotations:
+          enclos: 5
+    split_manifest_sha1: f5d4f848b62402cd500f443e1c9d562af98712a4
+  enclos_ie_roscommon_crim648_v1:
+    zone: irlande/ie_roscommon
+    splits:
+      train:
+        images: 94
+        annotations:
+          enclos: 128
+      valid:
+        images: 25
+        annotations:
+          enclos: 37
+      test:
+        images: 11
+        annotations:
+          enclos: 19
+    split_manifest_sha1: 046de5d0ecd5764cbe4fc954fc40a40b56861322
+  enclos_ie_cork_03_crim648_v1:
+    zone: irlande/ie_cork_03
+    splits:
+      train:
+        images: 22
+        annotations:
+          enclos: 24
+      valid:
+        images: 6
+        annotations:
+          enclos: 8
+      test:
+        images: 4
+        annotations:
+          enclos: 5
+    split_manifest_sha1: 848ed3832895045cfb8ccab758772c0db27727ba
+splits:
+  train:
+    images: 549
+    annotations:
+      enclos: 778
+  valid:
+    images: 152
+    annotations:
+      enclos: 236
+  test:
+    images: 76
+    annotations:
+      enclos: 122

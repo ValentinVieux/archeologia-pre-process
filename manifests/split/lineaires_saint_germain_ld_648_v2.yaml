@@ -1,0 +1,8970 @@
+dataset: lineaires_saint_germain_ld_648_v2
+zone: ile_de_france/78_saint_germain_marly
+seed: 42
+genere_le: '2026-07-28'
+config:
+  assign_crs: null
+  bloc_m: 1000
+  couches:
+    parcellaire:
+      classe: parcellaire
+      buffer_m: 7.0
+      ignorer: false
+    voie:
+      classe: voie
+      buffer_m: 7.0
+      ignorer: false
+    talus:
+      classe: talus
+      buffer_m: 7.0
+      ignorer: false
+    fosse:
+      classe: fosse
+      buffer_m: 7.0
+      ignorer: false
+    amenagement_militaire:
+      ignorer: true
+      buffer_m: null
+  dataset: lineaires_saint_germain_ld_648_v2
+  gpkg: C:\Users\valen\AppData\Local\Temp\claude\c--projets-Archeologia-pre-process-data\8c25b448-1b2c-46a3-8e1c-ff43d46af186\scratchpad\recalage_saint_germain\78_saint_germain_marly_entites_l93_final.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: 0
+  raster: D:\pipeline_results\output_78_Foret_domaniale_Saint-Germain_lidar_HD\indices\LD_A15_Rmin10_Rmax20_H1p7_V1\tif\index_LD_A15_Rmin10_Rmax20_H1p7_V1.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: ile_de_france/78_saint_germain_marly
+grille:
+  origine:
+  - 625000.0
+  - 6878000.0
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    fosse: 27
+    parcellaire: 1143
+    talus: 97
+    voie: 376
+  valid:
+    fosse: 4
+    parcellaire: 338
+    talus: 29
+    voie: 95
+  test:
+    fosse: 9
+    parcellaire: 166
+    talus: 14
+    voie: 79
+hashes_sha1:
+  train: 2a02a9f775af2cc6d3c02dba2d9a732dda4d6641
+  valid: b98bffcafdf275b6af126e96ebdc8df4da090314
+  test: a56d2aaf00616b6782f87751f155a1ebd61a74d5
+tuiles:
+- nom: 78_saint_germain_marly_r0006_c0028.png
+  row: 6
+  col: 28
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634072.0
+  - 6875732.0
+  - 634396.0
+  - 6876056.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0006_c0032.png
+  row: 6
+  col: 32
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635368.0
+  - 6875732.0
+  - 635692.0
+  - 6876056.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0006_c0033.png
+  row: 6
+  col: 33
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635692.0
+  - 6875732.0
+  - 636016.0
+  - 6876056.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0006_c0034.png
+  row: 6
+  col: 34
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636016.0
+  - 6875732.0
+  - 636340.0
+  - 6876056.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0006_c0035.png
+  row: 6
+  col: 35
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636340.0
+  - 6875732.0
+  - 636664.0
+  - 6876056.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0006_c0036.png
+  row: 6
+  col: 36
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636664.0
+  - 6875732.0
+  - 636988.0
+  - 6876056.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0006_c0037.png
+  row: 6
+  col: 37
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 636988.0
+  - 6875732.0
+  - 637312.0
+  - 6876056.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0025.png
+  row: 7
+  col: 25
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633100.0
+  - 6875408.0
+  - 633424.0
+  - 6875732.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0007_c0026.png
+  row: 7
+  col: 26
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633424.0
+  - 6875408.0
+  - 633748.0
+  - 6875732.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0007_c0027.png
+  row: 7
+  col: 27
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633748.0
+  - 6875408.0
+  - 634072.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0028.png
+  row: 7
+  col: 28
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634072.0
+  - 6875408.0
+  - 634396.0
+  - 6875732.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0029.png
+  row: 7
+  col: 29
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634396.0
+  - 6875408.0
+  - 634720.0
+  - 6875732.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0030.png
+  row: 7
+  col: 30
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634720.0
+  - 6875408.0
+  - 635044.0
+  - 6875732.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0031.png
+  row: 7
+  col: 31
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635044.0
+  - 6875408.0
+  - 635368.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0032.png
+  row: 7
+  col: 32
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635368.0
+  - 6875408.0
+  - 635692.0
+  - 6875732.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0033.png
+  row: 7
+  col: 33
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635692.0
+  - 6875408.0
+  - 636016.0
+  - 6875732.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0034.png
+  row: 7
+  col: 34
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636016.0
+  - 6875408.0
+  - 636340.0
+  - 6875732.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0035.png
+  row: 7
+  col: 35
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636340.0
+  - 6875408.0
+  - 636664.0
+  - 6875732.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0036.png
+  row: 7
+  col: 36
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636664.0
+  - 6875408.0
+  - 636988.0
+  - 6875732.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0037.png
+  row: 7
+  col: 37
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 636988.0
+  - 6875408.0
+  - 637312.0
+  - 6875732.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0038.png
+  row: 7
+  col: 38
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 637312.0
+  - 6875408.0
+  - 637636.0
+  - 6875732.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0039.png
+  row: 7
+  col: 39
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 637636.0
+  - 6875408.0
+  - 637960.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0007_c0041.png
+  row: 7
+  col: 41
+  bloc:
+  - 638
+  - 6875
+  split: train
+  bounds:
+  - 638284.0
+  - 6875408.0
+  - 638608.0
+  - 6875732.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0007_c0042.png
+  row: 7
+  col: 42
+  bloc:
+  - 638
+  - 6875
+  split: train
+  bounds:
+  - 638608.0
+  - 6875408.0
+  - 638932.0
+  - 6875732.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0008_c0025.png
+  row: 8
+  col: 25
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633100.0
+  - 6875084.0
+  - 633424.0
+  - 6875408.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0026.png
+  row: 8
+  col: 26
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633424.0
+  - 6875084.0
+  - 633748.0
+  - 6875408.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0027.png
+  row: 8
+  col: 27
+  bloc:
+  - 633
+  - 6875
+  split: train
+  bounds:
+  - 633748.0
+  - 6875084.0
+  - 634072.0
+  - 6875408.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0028.png
+  row: 8
+  col: 28
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634072.0
+  - 6875084.0
+  - 634396.0
+  - 6875408.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0029.png
+  row: 8
+  col: 29
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634396.0
+  - 6875084.0
+  - 634720.0
+  - 6875408.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0030.png
+  row: 8
+  col: 30
+  bloc:
+  - 634
+  - 6875
+  split: train
+  bounds:
+  - 634720.0
+  - 6875084.0
+  - 635044.0
+  - 6875408.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0031.png
+  row: 8
+  col: 31
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635044.0
+  - 6875084.0
+  - 635368.0
+  - 6875408.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0032.png
+  row: 8
+  col: 32
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635368.0
+  - 6875084.0
+  - 635692.0
+  - 6875408.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0033.png
+  row: 8
+  col: 33
+  bloc:
+  - 635
+  - 6875
+  split: train
+  bounds:
+  - 635692.0
+  - 6875084.0
+  - 636016.0
+  - 6875408.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0034.png
+  row: 8
+  col: 34
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636016.0
+  - 6875084.0
+  - 636340.0
+  - 6875408.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0035.png
+  row: 8
+  col: 35
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636340.0
+  - 6875084.0
+  - 636664.0
+  - 6875408.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0036.png
+  row: 8
+  col: 36
+  bloc:
+  - 636
+  - 6875
+  split: train
+  bounds:
+  - 636664.0
+  - 6875084.0
+  - 636988.0
+  - 6875408.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0037.png
+  row: 8
+  col: 37
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 636988.0
+  - 6875084.0
+  - 637312.0
+  - 6875408.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0038.png
+  row: 8
+  col: 38
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 637312.0
+  - 6875084.0
+  - 637636.0
+  - 6875408.0
+  n_annotations: 7
+  classes:
+  - fosse
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0039.png
+  row: 8
+  col: 39
+  bloc:
+  - 637
+  - 6875
+  split: train
+  bounds:
+  - 637636.0
+  - 6875084.0
+  - 637960.0
+  - 6875408.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0008_c0040.png
+  row: 8
+  col: 40
+  bloc:
+  - 638
+  - 6875
+  split: train
+  bounds:
+  - 637960.0
+  - 6875084.0
+  - 638284.0
+  - 6875408.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0024.png
+  row: 9
+  col: 24
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632776.0
+  - 6874760.0
+  - 633100.0
+  - 6875084.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0025.png
+  row: 9
+  col: 25
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633100.0
+  - 6874760.0
+  - 633424.0
+  - 6875084.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0026.png
+  row: 9
+  col: 26
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633424.0
+  - 6874760.0
+  - 633748.0
+  - 6875084.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0027.png
+  row: 9
+  col: 27
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633748.0
+  - 6874760.0
+  - 634072.0
+  - 6875084.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0028.png
+  row: 9
+  col: 28
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634072.0
+  - 6874760.0
+  - 634396.0
+  - 6875084.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0029.png
+  row: 9
+  col: 29
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634396.0
+  - 6874760.0
+  - 634720.0
+  - 6875084.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0030.png
+  row: 9
+  col: 30
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634720.0
+  - 6874760.0
+  - 635044.0
+  - 6875084.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0031.png
+  row: 9
+  col: 31
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635044.0
+  - 6874760.0
+  - 635368.0
+  - 6875084.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0032.png
+  row: 9
+  col: 32
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635368.0
+  - 6874760.0
+  - 635692.0
+  - 6875084.0
+  n_annotations: 18
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0033.png
+  row: 9
+  col: 33
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635692.0
+  - 6874760.0
+  - 636016.0
+  - 6875084.0
+  n_annotations: 16
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0034.png
+  row: 9
+  col: 34
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636016.0
+  - 6874760.0
+  - 636340.0
+  - 6875084.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0035.png
+  row: 9
+  col: 35
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636340.0
+  - 6874760.0
+  - 636664.0
+  - 6875084.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0036.png
+  row: 9
+  col: 36
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636664.0
+  - 6874760.0
+  - 636988.0
+  - 6875084.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0038.png
+  row: 9
+  col: 38
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637312.0
+  - 6874760.0
+  - 637636.0
+  - 6875084.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0039.png
+  row: 9
+  col: 39
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637636.0
+  - 6874760.0
+  - 637960.0
+  - 6875084.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0009_c0040.png
+  row: 9
+  col: 40
+  bloc:
+  - 638
+  - 6874
+  split: valid
+  bounds:
+  - 637960.0
+  - 6874760.0
+  - 638284.0
+  - 6875084.0
+  n_annotations: 1
+  classes:
+  - fosse
+- nom: 78_saint_germain_marly_r0009_c0041.png
+  row: 9
+  col: 41
+  bloc:
+  - 638
+  - 6874
+  split: valid
+  bounds:
+  - 638284.0
+  - 6874760.0
+  - 638608.0
+  - 6875084.0
+  n_annotations: 1
+  classes:
+  - fosse
+- nom: 78_saint_germain_marly_r0009_c0042.png
+  row: 9
+  col: 42
+  bloc:
+  - 638
+  - 6874
+  split: valid
+  bounds:
+  - 638608.0
+  - 6874760.0
+  - 638932.0
+  - 6875084.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0010_c0023.png
+  row: 10
+  col: 23
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632452.0
+  - 6874436.0
+  - 632776.0
+  - 6874760.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0024.png
+  row: 10
+  col: 24
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632776.0
+  - 6874436.0
+  - 633100.0
+  - 6874760.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0025.png
+  row: 10
+  col: 25
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633100.0
+  - 6874436.0
+  - 633424.0
+  - 6874760.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0026.png
+  row: 10
+  col: 26
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633424.0
+  - 6874436.0
+  - 633748.0
+  - 6874760.0
+  n_annotations: 13
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0027.png
+  row: 10
+  col: 27
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633748.0
+  - 6874436.0
+  - 634072.0
+  - 6874760.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0028.png
+  row: 10
+  col: 28
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634072.0
+  - 6874436.0
+  - 634396.0
+  - 6874760.0
+  n_annotations: 12
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0029.png
+  row: 10
+  col: 29
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634396.0
+  - 6874436.0
+  - 634720.0
+  - 6874760.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0030.png
+  row: 10
+  col: 30
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634720.0
+  - 6874436.0
+  - 635044.0
+  - 6874760.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0031.png
+  row: 10
+  col: 31
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635044.0
+  - 6874436.0
+  - 635368.0
+  - 6874760.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0032.png
+  row: 10
+  col: 32
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635368.0
+  - 6874436.0
+  - 635692.0
+  - 6874760.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0033.png
+  row: 10
+  col: 33
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635692.0
+  - 6874436.0
+  - 636016.0
+  - 6874760.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0034.png
+  row: 10
+  col: 34
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636016.0
+  - 6874436.0
+  - 636340.0
+  - 6874760.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0035.png
+  row: 10
+  col: 35
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636340.0
+  - 6874436.0
+  - 636664.0
+  - 6874760.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0036.png
+  row: 10
+  col: 36
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636664.0
+  - 6874436.0
+  - 636988.0
+  - 6874760.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0037.png
+  row: 10
+  col: 37
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 636988.0
+  - 6874436.0
+  - 637312.0
+  - 6874760.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0038.png
+  row: 10
+  col: 38
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637312.0
+  - 6874436.0
+  - 637636.0
+  - 6874760.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0039.png
+  row: 10
+  col: 39
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637636.0
+  - 6874436.0
+  - 637960.0
+  - 6874760.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0010_c0040.png
+  row: 10
+  col: 40
+  bloc:
+  - 638
+  - 6874
+  split: valid
+  bounds:
+  - 637960.0
+  - 6874436.0
+  - 638284.0
+  - 6874760.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0022.png
+  row: 11
+  col: 22
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632128.0
+  - 6874112.0
+  - 632452.0
+  - 6874436.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0023.png
+  row: 11
+  col: 23
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632452.0
+  - 6874112.0
+  - 632776.0
+  - 6874436.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0024.png
+  row: 11
+  col: 24
+  bloc:
+  - 632
+  - 6874
+  split: train
+  bounds:
+  - 632776.0
+  - 6874112.0
+  - 633100.0
+  - 6874436.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0025.png
+  row: 11
+  col: 25
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633100.0
+  - 6874112.0
+  - 633424.0
+  - 6874436.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0026.png
+  row: 11
+  col: 26
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633424.0
+  - 6874112.0
+  - 633748.0
+  - 6874436.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0027.png
+  row: 11
+  col: 27
+  bloc:
+  - 633
+  - 6874
+  split: valid
+  bounds:
+  - 633748.0
+  - 6874112.0
+  - 634072.0
+  - 6874436.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0028.png
+  row: 11
+  col: 28
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634072.0
+  - 6874112.0
+  - 634396.0
+  - 6874436.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0029.png
+  row: 11
+  col: 29
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634396.0
+  - 6874112.0
+  - 634720.0
+  - 6874436.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0030.png
+  row: 11
+  col: 30
+  bloc:
+  - 634
+  - 6874
+  split: train
+  bounds:
+  - 634720.0
+  - 6874112.0
+  - 635044.0
+  - 6874436.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0031.png
+  row: 11
+  col: 31
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635044.0
+  - 6874112.0
+  - 635368.0
+  - 6874436.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0033.png
+  row: 11
+  col: 33
+  bloc:
+  - 635
+  - 6874
+  split: test
+  bounds:
+  - 635692.0
+  - 6874112.0
+  - 636016.0
+  - 6874436.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0034.png
+  row: 11
+  col: 34
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636016.0
+  - 6874112.0
+  - 636340.0
+  - 6874436.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0035.png
+  row: 11
+  col: 35
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636340.0
+  - 6874112.0
+  - 636664.0
+  - 6874436.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0036.png
+  row: 11
+  col: 36
+  bloc:
+  - 636
+  - 6874
+  split: train
+  bounds:
+  - 636664.0
+  - 6874112.0
+  - 636988.0
+  - 6874436.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0037.png
+  row: 11
+  col: 37
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 636988.0
+  - 6874112.0
+  - 637312.0
+  - 6874436.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0038.png
+  row: 11
+  col: 38
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637312.0
+  - 6874112.0
+  - 637636.0
+  - 6874436.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0039.png
+  row: 11
+  col: 39
+  bloc:
+  - 637
+  - 6874
+  split: train
+  bounds:
+  - 637636.0
+  - 6874112.0
+  - 637960.0
+  - 6874436.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0011_c0040.png
+  row: 11
+  col: 40
+  bloc:
+  - 638
+  - 6874
+  split: valid
+  bounds:
+  - 637960.0
+  - 6874112.0
+  - 638284.0
+  - 6874436.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0022.png
+  row: 12
+  col: 22
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632128.0
+  - 6873788.0
+  - 632452.0
+  - 6874112.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0023.png
+  row: 12
+  col: 23
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632452.0
+  - 6873788.0
+  - 632776.0
+  - 6874112.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0024.png
+  row: 12
+  col: 24
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632776.0
+  - 6873788.0
+  - 633100.0
+  - 6874112.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0025.png
+  row: 12
+  col: 25
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633100.0
+  - 6873788.0
+  - 633424.0
+  - 6874112.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0026.png
+  row: 12
+  col: 26
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633424.0
+  - 6873788.0
+  - 633748.0
+  - 6874112.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0027.png
+  row: 12
+  col: 27
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633748.0
+  - 6873788.0
+  - 634072.0
+  - 6874112.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0028.png
+  row: 12
+  col: 28
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634072.0
+  - 6873788.0
+  - 634396.0
+  - 6874112.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0029.png
+  row: 12
+  col: 29
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634396.0
+  - 6873788.0
+  - 634720.0
+  - 6874112.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0030.png
+  row: 12
+  col: 30
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634720.0
+  - 6873788.0
+  - 635044.0
+  - 6874112.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0033.png
+  row: 12
+  col: 33
+  bloc:
+  - 635
+  - 6873
+  split: train
+  bounds:
+  - 635692.0
+  - 6873788.0
+  - 636016.0
+  - 6874112.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0012_c0034.png
+  row: 12
+  col: 34
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636016.0
+  - 6873788.0
+  - 636340.0
+  - 6874112.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0012_c0035.png
+  row: 12
+  col: 35
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636340.0
+  - 6873788.0
+  - 636664.0
+  - 6874112.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0022.png
+  row: 13
+  col: 22
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632128.0
+  - 6873464.0
+  - 632452.0
+  - 6873788.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0023.png
+  row: 13
+  col: 23
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632452.0
+  - 6873464.0
+  - 632776.0
+  - 6873788.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0024.png
+  row: 13
+  col: 24
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632776.0
+  - 6873464.0
+  - 633100.0
+  - 6873788.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0025.png
+  row: 13
+  col: 25
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633100.0
+  - 6873464.0
+  - 633424.0
+  - 6873788.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0026.png
+  row: 13
+  col: 26
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633424.0
+  - 6873464.0
+  - 633748.0
+  - 6873788.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0027.png
+  row: 13
+  col: 27
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633748.0
+  - 6873464.0
+  - 634072.0
+  - 6873788.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0034.png
+  row: 13
+  col: 34
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636016.0
+  - 6873464.0
+  - 636340.0
+  - 6873788.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0013_c0035.png
+  row: 13
+  col: 35
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636340.0
+  - 6873464.0
+  - 636664.0
+  - 6873788.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0022.png
+  row: 14
+  col: 22
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632128.0
+  - 6873140.0
+  - 632452.0
+  - 6873464.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0023.png
+  row: 14
+  col: 23
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632452.0
+  - 6873140.0
+  - 632776.0
+  - 6873464.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0024.png
+  row: 14
+  col: 24
+  bloc:
+  - 632
+  - 6873
+  split: valid
+  bounds:
+  - 632776.0
+  - 6873140.0
+  - 633100.0
+  - 6873464.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0025.png
+  row: 14
+  col: 25
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633100.0
+  - 6873140.0
+  - 633424.0
+  - 6873464.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0026.png
+  row: 14
+  col: 26
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633424.0
+  - 6873140.0
+  - 633748.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0027.png
+  row: 14
+  col: 27
+  bloc:
+  - 633
+  - 6873
+  split: train
+  bounds:
+  - 633748.0
+  - 6873140.0
+  - 634072.0
+  - 6873464.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0028.png
+  row: 14
+  col: 28
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634072.0
+  - 6873140.0
+  - 634396.0
+  - 6873464.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0029.png
+  row: 14
+  col: 29
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634396.0
+  - 6873140.0
+  - 634720.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0030.png
+  row: 14
+  col: 30
+  bloc:
+  - 634
+  - 6873
+  split: train
+  bounds:
+  - 634720.0
+  - 6873140.0
+  - 635044.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0031.png
+  row: 14
+  col: 31
+  bloc:
+  - 635
+  - 6873
+  split: train
+  bounds:
+  - 635044.0
+  - 6873140.0
+  - 635368.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0032.png
+  row: 14
+  col: 32
+  bloc:
+  - 635
+  - 6873
+  split: train
+  bounds:
+  - 635368.0
+  - 6873140.0
+  - 635692.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0034.png
+  row: 14
+  col: 34
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636016.0
+  - 6873140.0
+  - 636340.0
+  - 6873464.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0035.png
+  row: 14
+  col: 35
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636340.0
+  - 6873140.0
+  - 636664.0
+  - 6873464.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0014_c0036.png
+  row: 14
+  col: 36
+  bloc:
+  - 636
+  - 6873
+  split: train
+  bounds:
+  - 636664.0
+  - 6873140.0
+  - 636988.0
+  - 6873464.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0015_c0022.png
+  row: 15
+  col: 22
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632128.0
+  - 6872816.0
+  - 632452.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0023.png
+  row: 15
+  col: 23
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632452.0
+  - 6872816.0
+  - 632776.0
+  - 6873140.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0024.png
+  row: 15
+  col: 24
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632776.0
+  - 6872816.0
+  - 633100.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0025.png
+  row: 15
+  col: 25
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633100.0
+  - 6872816.0
+  - 633424.0
+  - 6873140.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0026.png
+  row: 15
+  col: 26
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633424.0
+  - 6872816.0
+  - 633748.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0027.png
+  row: 15
+  col: 27
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633748.0
+  - 6872816.0
+  - 634072.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0028.png
+  row: 15
+  col: 28
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634072.0
+  - 6872816.0
+  - 634396.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0029.png
+  row: 15
+  col: 29
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634396.0
+  - 6872816.0
+  - 634720.0
+  - 6873140.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0015_c0030.png
+  row: 15
+  col: 30
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634720.0
+  - 6872816.0
+  - 635044.0
+  - 6873140.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0031.png
+  row: 15
+  col: 31
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635044.0
+  - 6872816.0
+  - 635368.0
+  - 6873140.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0032.png
+  row: 15
+  col: 32
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635368.0
+  - 6872816.0
+  - 635692.0
+  - 6873140.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0033.png
+  row: 15
+  col: 33
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635692.0
+  - 6872816.0
+  - 636016.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0015_c0036.png
+  row: 15
+  col: 36
+  bloc:
+  - 636
+  - 6872
+  split: test
+  bounds:
+  - 636664.0
+  - 6872816.0
+  - 636988.0
+  - 6873140.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0016_c0020.png
+  row: 16
+  col: 20
+  bloc:
+  - 631
+  - 6872
+  split: train
+  bounds:
+  - 631480.0
+  - 6872492.0
+  - 631804.0
+  - 6872816.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0016_c0022.png
+  row: 16
+  col: 22
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632128.0
+  - 6872492.0
+  - 632452.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0023.png
+  row: 16
+  col: 23
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632452.0
+  - 6872492.0
+  - 632776.0
+  - 6872816.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0024.png
+  row: 16
+  col: 24
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632776.0
+  - 6872492.0
+  - 633100.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0025.png
+  row: 16
+  col: 25
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633100.0
+  - 6872492.0
+  - 633424.0
+  - 6872816.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0026.png
+  row: 16
+  col: 26
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633424.0
+  - 6872492.0
+  - 633748.0
+  - 6872816.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0027.png
+  row: 16
+  col: 27
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633748.0
+  - 6872492.0
+  - 634072.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0028.png
+  row: 16
+  col: 28
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634072.0
+  - 6872492.0
+  - 634396.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0029.png
+  row: 16
+  col: 29
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634396.0
+  - 6872492.0
+  - 634720.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0030.png
+  row: 16
+  col: 30
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634720.0
+  - 6872492.0
+  - 635044.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0032.png
+  row: 16
+  col: 32
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635368.0
+  - 6872492.0
+  - 635692.0
+  - 6872816.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0033.png
+  row: 16
+  col: 33
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635692.0
+  - 6872492.0
+  - 636016.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0016_c0034.png
+  row: 16
+  col: 34
+  bloc:
+  - 636
+  - 6872
+  split: test
+  bounds:
+  - 636016.0
+  - 6872492.0
+  - 636340.0
+  - 6872816.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0017_c0021.png
+  row: 17
+  col: 21
+  bloc:
+  - 631
+  - 6872
+  split: train
+  bounds:
+  - 631804.0
+  - 6872168.0
+  - 632128.0
+  - 6872492.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0022.png
+  row: 17
+  col: 22
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632128.0
+  - 6872168.0
+  - 632452.0
+  - 6872492.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0023.png
+  row: 17
+  col: 23
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632452.0
+  - 6872168.0
+  - 632776.0
+  - 6872492.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0024.png
+  row: 17
+  col: 24
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632776.0
+  - 6872168.0
+  - 633100.0
+  - 6872492.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0025.png
+  row: 17
+  col: 25
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633100.0
+  - 6872168.0
+  - 633424.0
+  - 6872492.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0026.png
+  row: 17
+  col: 26
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633424.0
+  - 6872168.0
+  - 633748.0
+  - 6872492.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0027.png
+  row: 17
+  col: 27
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633748.0
+  - 6872168.0
+  - 634072.0
+  - 6872492.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0028.png
+  row: 17
+  col: 28
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634072.0
+  - 6872168.0
+  - 634396.0
+  - 6872492.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0029.png
+  row: 17
+  col: 29
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634396.0
+  - 6872168.0
+  - 634720.0
+  - 6872492.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0017_c0031.png
+  row: 17
+  col: 31
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635044.0
+  - 6872168.0
+  - 635368.0
+  - 6872492.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0017_c0032.png
+  row: 17
+  col: 32
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635368.0
+  - 6872168.0
+  - 635692.0
+  - 6872492.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0019.png
+  row: 18
+  col: 19
+  bloc:
+  - 631
+  - 6872
+  split: train
+  bounds:
+  - 631156.0
+  - 6871844.0
+  - 631480.0
+  - 6872168.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0018_c0021.png
+  row: 18
+  col: 21
+  bloc:
+  - 631
+  - 6872
+  split: train
+  bounds:
+  - 631804.0
+  - 6871844.0
+  - 632128.0
+  - 6872168.0
+  n_annotations: 5
+  classes:
+  - fosse
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0018_c0022.png
+  row: 18
+  col: 22
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632128.0
+  - 6871844.0
+  - 632452.0
+  - 6872168.0
+  n_annotations: 13
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0023.png
+  row: 18
+  col: 23
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632452.0
+  - 6871844.0
+  - 632776.0
+  - 6872168.0
+  n_annotations: 13
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0024.png
+  row: 18
+  col: 24
+  bloc:
+  - 632
+  - 6872
+  split: train
+  bounds:
+  - 632776.0
+  - 6871844.0
+  - 633100.0
+  - 6872168.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0025.png
+  row: 18
+  col: 25
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633100.0
+  - 6871844.0
+  - 633424.0
+  - 6872168.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0026.png
+  row: 18
+  col: 26
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633424.0
+  - 6871844.0
+  - 633748.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0027.png
+  row: 18
+  col: 27
+  bloc:
+  - 633
+  - 6872
+  split: train
+  bounds:
+  - 633748.0
+  - 6871844.0
+  - 634072.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0028.png
+  row: 18
+  col: 28
+  bloc:
+  - 634
+  - 6872
+  split: valid
+  bounds:
+  - 634072.0
+  - 6871844.0
+  - 634396.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0031.png
+  row: 18
+  col: 31
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635044.0
+  - 6871844.0
+  - 635368.0
+  - 6872168.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0032.png
+  row: 18
+  col: 32
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635368.0
+  - 6871844.0
+  - 635692.0
+  - 6872168.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0033.png
+  row: 18
+  col: 33
+  bloc:
+  - 635
+  - 6872
+  split: train
+  bounds:
+  - 635692.0
+  - 6871844.0
+  - 636016.0
+  - 6872168.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0018_c0034.png
+  row: 18
+  col: 34
+  bloc:
+  - 636
+  - 6872
+  split: test
+  bounds:
+  - 636016.0
+  - 6871844.0
+  - 636340.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0019.png
+  row: 19
+  col: 19
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631156.0
+  - 6871520.0
+  - 631480.0
+  - 6871844.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0020.png
+  row: 19
+  col: 20
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631480.0
+  - 6871520.0
+  - 631804.0
+  - 6871844.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0021.png
+  row: 19
+  col: 21
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631804.0
+  - 6871520.0
+  - 632128.0
+  - 6871844.0
+  n_annotations: 18
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0019_c0022.png
+  row: 19
+  col: 22
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632128.0
+  - 6871520.0
+  - 632452.0
+  - 6871844.0
+  n_annotations: 16
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0019_c0023.png
+  row: 19
+  col: 23
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632452.0
+  - 6871520.0
+  - 632776.0
+  - 6871844.0
+  n_annotations: 12
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0024.png
+  row: 19
+  col: 24
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632776.0
+  - 6871520.0
+  - 633100.0
+  - 6871844.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0025.png
+  row: 19
+  col: 25
+  bloc:
+  - 633
+  - 6871
+  split: train
+  bounds:
+  - 633100.0
+  - 6871520.0
+  - 633424.0
+  - 6871844.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0031.png
+  row: 19
+  col: 31
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635044.0
+  - 6871520.0
+  - 635368.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0032.png
+  row: 19
+  col: 32
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635368.0
+  - 6871520.0
+  - 635692.0
+  - 6871844.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0019_c0033.png
+  row: 19
+  col: 33
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635692.0
+  - 6871520.0
+  - 636016.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0019.png
+  row: 20
+  col: 19
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631156.0
+  - 6871196.0
+  - 631480.0
+  - 6871520.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0020.png
+  row: 20
+  col: 20
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631480.0
+  - 6871196.0
+  - 631804.0
+  - 6871520.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0021.png
+  row: 20
+  col: 21
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631804.0
+  - 6871196.0
+  - 632128.0
+  - 6871520.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0022.png
+  row: 20
+  col: 22
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632128.0
+  - 6871196.0
+  - 632452.0
+  - 6871520.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0020_c0023.png
+  row: 20
+  col: 23
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632452.0
+  - 6871196.0
+  - 632776.0
+  - 6871520.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0024.png
+  row: 20
+  col: 24
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632776.0
+  - 6871196.0
+  - 633100.0
+  - 6871520.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0025.png
+  row: 20
+  col: 25
+  bloc:
+  - 633
+  - 6871
+  split: train
+  bounds:
+  - 633100.0
+  - 6871196.0
+  - 633424.0
+  - 6871520.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0026.png
+  row: 20
+  col: 26
+  bloc:
+  - 633
+  - 6871
+  split: train
+  bounds:
+  - 633424.0
+  - 6871196.0
+  - 633748.0
+  - 6871520.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0020_c0031.png
+  row: 20
+  col: 31
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635044.0
+  - 6871196.0
+  - 635368.0
+  - 6871520.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0020_c0032.png
+  row: 20
+  col: 32
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635368.0
+  - 6871196.0
+  - 635692.0
+  - 6871520.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0019.png
+  row: 21
+  col: 19
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631156.0
+  - 6870872.0
+  - 631480.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0020.png
+  row: 21
+  col: 20
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631480.0
+  - 6870872.0
+  - 631804.0
+  - 6871196.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0021.png
+  row: 21
+  col: 21
+  bloc:
+  - 631
+  - 6871
+  split: valid
+  bounds:
+  - 631804.0
+  - 6870872.0
+  - 632128.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0022.png
+  row: 21
+  col: 22
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632128.0
+  - 6870872.0
+  - 632452.0
+  - 6871196.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0023.png
+  row: 21
+  col: 23
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632452.0
+  - 6870872.0
+  - 632776.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0024.png
+  row: 21
+  col: 24
+  bloc:
+  - 632
+  - 6871
+  split: train
+  bounds:
+  - 632776.0
+  - 6870872.0
+  - 633100.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0025.png
+  row: 21
+  col: 25
+  bloc:
+  - 633
+  - 6871
+  split: train
+  bounds:
+  - 633100.0
+  - 6870872.0
+  - 633424.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0021_c0026.png
+  row: 21
+  col: 26
+  bloc:
+  - 633
+  - 6871
+  split: train
+  bounds:
+  - 633424.0
+  - 6870872.0
+  - 633748.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0021_c0031.png
+  row: 21
+  col: 31
+  bloc:
+  - 635
+  - 6871
+  split: train
+  bounds:
+  - 635044.0
+  - 6870872.0
+  - 635368.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0022_c0017.png
+  row: 22
+  col: 17
+  bloc:
+  - 630
+  - 6870
+  split: test
+  bounds:
+  - 630508.0
+  - 6870548.0
+  - 630832.0
+  - 6870872.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0022_c0019.png
+  row: 22
+  col: 19
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631156.0
+  - 6870548.0
+  - 631480.0
+  - 6870872.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0022_c0021.png
+  row: 22
+  col: 21
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631804.0
+  - 6870548.0
+  - 632128.0
+  - 6870872.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0022_c0022.png
+  row: 22
+  col: 22
+  bloc:
+  - 632
+  - 6870
+  split: valid
+  bounds:
+  - 632128.0
+  - 6870548.0
+  - 632452.0
+  - 6870872.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0022_c0023.png
+  row: 22
+  col: 23
+  bloc:
+  - 632
+  - 6870
+  split: valid
+  bounds:
+  - 632452.0
+  - 6870548.0
+  - 632776.0
+  - 6870872.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0022_c0026.png
+  row: 22
+  col: 26
+  bloc:
+  - 633
+  - 6870
+  split: train
+  bounds:
+  - 633424.0
+  - 6870548.0
+  - 633748.0
+  - 6870872.0
+  n_annotations: 3
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0022_c0032.png
+  row: 22
+  col: 32
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635368.0
+  - 6870548.0
+  - 635692.0
+  - 6870872.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0022_c0033.png
+  row: 22
+  col: 33
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635692.0
+  - 6870548.0
+  - 636016.0
+  - 6870872.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0020.png
+  row: 23
+  col: 20
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631480.0
+  - 6870224.0
+  - 631804.0
+  - 6870548.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0021.png
+  row: 23
+  col: 21
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631804.0
+  - 6870224.0
+  - 632128.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0022.png
+  row: 23
+  col: 22
+  bloc:
+  - 632
+  - 6870
+  split: valid
+  bounds:
+  - 632128.0
+  - 6870224.0
+  - 632452.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0023.png
+  row: 23
+  col: 23
+  bloc:
+  - 632
+  - 6870
+  split: valid
+  bounds:
+  - 632452.0
+  - 6870224.0
+  - 632776.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0025.png
+  row: 23
+  col: 25
+  bloc:
+  - 633
+  - 6870
+  split: train
+  bounds:
+  - 633100.0
+  - 6870224.0
+  - 633424.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0026.png
+  row: 23
+  col: 26
+  bloc:
+  - 633
+  - 6870
+  split: train
+  bounds:
+  - 633424.0
+  - 6870224.0
+  - 633748.0
+  - 6870548.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0023_c0031.png
+  row: 23
+  col: 31
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635044.0
+  - 6870224.0
+  - 635368.0
+  - 6870548.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0032.png
+  row: 23
+  col: 32
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635368.0
+  - 6870224.0
+  - 635692.0
+  - 6870548.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0023_c0033.png
+  row: 23
+  col: 33
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635692.0
+  - 6870224.0
+  - 636016.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0016.png
+  row: 24
+  col: 16
+  bloc:
+  - 630
+  - 6870
+  split: test
+  bounds:
+  - 630184.0
+  - 6869900.0
+  - 630508.0
+  - 6870224.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0024_c0017.png
+  row: 24
+  col: 17
+  bloc:
+  - 630
+  - 6870
+  split: test
+  bounds:
+  - 630508.0
+  - 6869900.0
+  - 630832.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0018.png
+  row: 24
+  col: 18
+  bloc:
+  - 630
+  - 6870
+  split: test
+  bounds:
+  - 630832.0
+  - 6869900.0
+  - 631156.0
+  - 6870224.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0019.png
+  row: 24
+  col: 19
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631156.0
+  - 6869900.0
+  - 631480.0
+  - 6870224.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0020.png
+  row: 24
+  col: 20
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631480.0
+  - 6869900.0
+  - 631804.0
+  - 6870224.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0021.png
+  row: 24
+  col: 21
+  bloc:
+  - 631
+  - 6870
+  split: train
+  bounds:
+  - 631804.0
+  - 6869900.0
+  - 632128.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0024.png
+  row: 24
+  col: 24
+  bloc:
+  - 632
+  - 6870
+  split: valid
+  bounds:
+  - 632776.0
+  - 6869900.0
+  - 633100.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0025.png
+  row: 24
+  col: 25
+  bloc:
+  - 633
+  - 6870
+  split: train
+  bounds:
+  - 633100.0
+  - 6869900.0
+  - 633424.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0028.png
+  row: 24
+  col: 28
+  bloc:
+  - 634
+  - 6870
+  split: valid
+  bounds:
+  - 634072.0
+  - 6869900.0
+  - 634396.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0029.png
+  row: 24
+  col: 29
+  bloc:
+  - 634
+  - 6870
+  split: valid
+  bounds:
+  - 634396.0
+  - 6869900.0
+  - 634720.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0031.png
+  row: 24
+  col: 31
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635044.0
+  - 6869900.0
+  - 635368.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0024_c0032.png
+  row: 24
+  col: 32
+  bloc:
+  - 635
+  - 6870
+  split: train
+  bounds:
+  - 635368.0
+  - 6869900.0
+  - 635692.0
+  - 6870224.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0025_c0014.png
+  row: 25
+  col: 14
+  bloc:
+  - 629
+  - 6869
+  split: train
+  bounds:
+  - 629536.0
+  - 6869576.0
+  - 629860.0
+  - 6869900.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0025_c0015.png
+  row: 25
+  col: 15
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 629860.0
+  - 6869576.0
+  - 630184.0
+  - 6869900.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0025_c0016.png
+  row: 25
+  col: 16
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630184.0
+  - 6869576.0
+  - 630508.0
+  - 6869900.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0025_c0017.png
+  row: 25
+  col: 17
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630508.0
+  - 6869576.0
+  - 630832.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0025_c0018.png
+  row: 25
+  col: 18
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630832.0
+  - 6869576.0
+  - 631156.0
+  - 6869900.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0025_c0019.png
+  row: 25
+  col: 19
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631156.0
+  - 6869576.0
+  - 631480.0
+  - 6869900.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0025_c0020.png
+  row: 25
+  col: 20
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631480.0
+  - 6869576.0
+  - 631804.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0025_c0021.png
+  row: 25
+  col: 21
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631804.0
+  - 6869576.0
+  - 632128.0
+  - 6869900.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0025_c0022.png
+  row: 25
+  col: 22
+  bloc:
+  - 632
+  - 6869
+  split: train
+  bounds:
+  - 632128.0
+  - 6869576.0
+  - 632452.0
+  - 6869900.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0025_c0024.png
+  row: 25
+  col: 24
+  bloc:
+  - 632
+  - 6869
+  split: train
+  bounds:
+  - 632776.0
+  - 6869576.0
+  - 633100.0
+  - 6869900.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0025_c0026.png
+  row: 25
+  col: 26
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633424.0
+  - 6869576.0
+  - 633748.0
+  - 6869900.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0025_c0027.png
+  row: 25
+  col: 27
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633748.0
+  - 6869576.0
+  - 634072.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0025_c0028.png
+  row: 25
+  col: 28
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634072.0
+  - 6869576.0
+  - 634396.0
+  - 6869900.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0025_c0029.png
+  row: 25
+  col: 29
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634396.0
+  - 6869576.0
+  - 634720.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0025_c0030.png
+  row: 25
+  col: 30
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634720.0
+  - 6869576.0
+  - 635044.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0014.png
+  row: 26
+  col: 14
+  bloc:
+  - 629
+  - 6869
+  split: train
+  bounds:
+  - 629536.0
+  - 6869252.0
+  - 629860.0
+  - 6869576.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0015.png
+  row: 26
+  col: 15
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 629860.0
+  - 6869252.0
+  - 630184.0
+  - 6869576.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0016.png
+  row: 26
+  col: 16
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630184.0
+  - 6869252.0
+  - 630508.0
+  - 6869576.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0017.png
+  row: 26
+  col: 17
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630508.0
+  - 6869252.0
+  - 630832.0
+  - 6869576.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0018.png
+  row: 26
+  col: 18
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630832.0
+  - 6869252.0
+  - 631156.0
+  - 6869576.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0026_c0019.png
+  row: 26
+  col: 19
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631156.0
+  - 6869252.0
+  - 631480.0
+  - 6869576.0
+  n_annotations: 7
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0026_c0020.png
+  row: 26
+  col: 20
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631480.0
+  - 6869252.0
+  - 631804.0
+  - 6869576.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0026_c0022.png
+  row: 26
+  col: 22
+  bloc:
+  - 632
+  - 6869
+  split: train
+  bounds:
+  - 632128.0
+  - 6869252.0
+  - 632452.0
+  - 6869576.0
+  n_annotations: 2
+  classes:
+  - fosse
+  - talus
+- nom: 78_saint_germain_marly_r0026_c0023.png
+  row: 26
+  col: 23
+  bloc:
+  - 632
+  - 6869
+  split: train
+  bounds:
+  - 632452.0
+  - 6869252.0
+  - 632776.0
+  - 6869576.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0026_c0026.png
+  row: 26
+  col: 26
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633424.0
+  - 6869252.0
+  - 633748.0
+  - 6869576.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0026_c0027.png
+  row: 26
+  col: 27
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633748.0
+  - 6869252.0
+  - 634072.0
+  - 6869576.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0028.png
+  row: 26
+  col: 28
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634072.0
+  - 6869252.0
+  - 634396.0
+  - 6869576.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0026_c0029.png
+  row: 26
+  col: 29
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634396.0
+  - 6869252.0
+  - 634720.0
+  - 6869576.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0014.png
+  row: 27
+  col: 14
+  bloc:
+  - 629
+  - 6869
+  split: train
+  bounds:
+  - 629536.0
+  - 6868928.0
+  - 629860.0
+  - 6869252.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0015.png
+  row: 27
+  col: 15
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 629860.0
+  - 6868928.0
+  - 630184.0
+  - 6869252.0
+  n_annotations: 10
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0016.png
+  row: 27
+  col: 16
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630184.0
+  - 6868928.0
+  - 630508.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0017.png
+  row: 27
+  col: 17
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630508.0
+  - 6868928.0
+  - 630832.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0018.png
+  row: 27
+  col: 18
+  bloc:
+  - 630
+  - 6869
+  split: train
+  bounds:
+  - 630832.0
+  - 6868928.0
+  - 631156.0
+  - 6869252.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0027_c0019.png
+  row: 27
+  col: 19
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631156.0
+  - 6868928.0
+  - 631480.0
+  - 6869252.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0027_c0020.png
+  row: 27
+  col: 20
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631480.0
+  - 6868928.0
+  - 631804.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0021.png
+  row: 27
+  col: 21
+  bloc:
+  - 631
+  - 6869
+  split: valid
+  bounds:
+  - 631804.0
+  - 6868928.0
+  - 632128.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0025.png
+  row: 27
+  col: 25
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633100.0
+  - 6868928.0
+  - 633424.0
+  - 6869252.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0027_c0026.png
+  row: 27
+  col: 26
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633424.0
+  - 6868928.0
+  - 633748.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0027_c0027.png
+  row: 27
+  col: 27
+  bloc:
+  - 633
+  - 6869
+  split: train
+  bounds:
+  - 633748.0
+  - 6868928.0
+  - 634072.0
+  - 6869252.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0028.png
+  row: 27
+  col: 28
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634072.0
+  - 6868928.0
+  - 634396.0
+  - 6869252.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0027_c0029.png
+  row: 27
+  col: 29
+  bloc:
+  - 634
+  - 6869
+  split: train
+  bounds:
+  - 634396.0
+  - 6868928.0
+  - 634720.0
+  - 6869252.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0014.png
+  row: 28
+  col: 14
+  bloc:
+  - 629
+  - 6868
+  split: train
+  bounds:
+  - 629536.0
+  - 6868604.0
+  - 629860.0
+  - 6868928.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0015.png
+  row: 28
+  col: 15
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 629860.0
+  - 6868604.0
+  - 630184.0
+  - 6868928.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0028_c0016.png
+  row: 28
+  col: 16
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630184.0
+  - 6868604.0
+  - 630508.0
+  - 6868928.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0017.png
+  row: 28
+  col: 17
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630508.0
+  - 6868604.0
+  - 630832.0
+  - 6868928.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0018.png
+  row: 28
+  col: 18
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630832.0
+  - 6868604.0
+  - 631156.0
+  - 6868928.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0019.png
+  row: 28
+  col: 19
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631156.0
+  - 6868604.0
+  - 631480.0
+  - 6868928.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0020.png
+  row: 28
+  col: 20
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631480.0
+  - 6868604.0
+  - 631804.0
+  - 6868928.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0021.png
+  row: 28
+  col: 21
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631804.0
+  - 6868604.0
+  - 632128.0
+  - 6868928.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0025.png
+  row: 28
+  col: 25
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633100.0
+  - 6868604.0
+  - 633424.0
+  - 6868928.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0028_c0026.png
+  row: 28
+  col: 26
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633424.0
+  - 6868604.0
+  - 633748.0
+  - 6868928.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0028_c0027.png
+  row: 28
+  col: 27
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633748.0
+  - 6868604.0
+  - 634072.0
+  - 6868928.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0028.png
+  row: 28
+  col: 28
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634072.0
+  - 6868604.0
+  - 634396.0
+  - 6868928.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0029.png
+  row: 28
+  col: 29
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634396.0
+  - 6868604.0
+  - 634720.0
+  - 6868928.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0028_c0030.png
+  row: 28
+  col: 30
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634720.0
+  - 6868604.0
+  - 635044.0
+  - 6868928.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0029_c0013.png
+  row: 29
+  col: 13
+  bloc:
+  - 629
+  - 6868
+  split: train
+  bounds:
+  - 629212.0
+  - 6868280.0
+  - 629536.0
+  - 6868604.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0029_c0015.png
+  row: 29
+  col: 15
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 629860.0
+  - 6868280.0
+  - 630184.0
+  - 6868604.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0016.png
+  row: 29
+  col: 16
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630184.0
+  - 6868280.0
+  - 630508.0
+  - 6868604.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0017.png
+  row: 29
+  col: 17
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630508.0
+  - 6868280.0
+  - 630832.0
+  - 6868604.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0018.png
+  row: 29
+  col: 18
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630832.0
+  - 6868280.0
+  - 631156.0
+  - 6868604.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0019.png
+  row: 29
+  col: 19
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631156.0
+  - 6868280.0
+  - 631480.0
+  - 6868604.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0029_c0020.png
+  row: 29
+  col: 20
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631480.0
+  - 6868280.0
+  - 631804.0
+  - 6868604.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0021.png
+  row: 29
+  col: 21
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631804.0
+  - 6868280.0
+  - 632128.0
+  - 6868604.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0025.png
+  row: 29
+  col: 25
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633100.0
+  - 6868280.0
+  - 633424.0
+  - 6868604.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0029_c0026.png
+  row: 29
+  col: 26
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633424.0
+  - 6868280.0
+  - 633748.0
+  - 6868604.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0029_c0027.png
+  row: 29
+  col: 27
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633748.0
+  - 6868280.0
+  - 634072.0
+  - 6868604.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0028.png
+  row: 29
+  col: 28
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634072.0
+  - 6868280.0
+  - 634396.0
+  - 6868604.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0029_c0029.png
+  row: 29
+  col: 29
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634396.0
+  - 6868280.0
+  - 634720.0
+  - 6868604.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0029_c0030.png
+  row: 29
+  col: 30
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634720.0
+  - 6868280.0
+  - 635044.0
+  - 6868604.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0030_c0008.png
+  row: 30
+  col: 8
+  bloc:
+  - 627
+  - 6868
+  split: train
+  bounds:
+  - 627592.0
+  - 6867956.0
+  - 627916.0
+  - 6868280.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0030_c0016.png
+  row: 30
+  col: 16
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630184.0
+  - 6867956.0
+  - 630508.0
+  - 6868280.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0030_c0017.png
+  row: 30
+  col: 17
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630508.0
+  - 6867956.0
+  - 630832.0
+  - 6868280.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0030_c0018.png
+  row: 30
+  col: 18
+  bloc:
+  - 630
+  - 6868
+  split: train
+  bounds:
+  - 630832.0
+  - 6867956.0
+  - 631156.0
+  - 6868280.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0030_c0019.png
+  row: 30
+  col: 19
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631156.0
+  - 6867956.0
+  - 631480.0
+  - 6868280.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0030_c0020.png
+  row: 30
+  col: 20
+  bloc:
+  - 631
+  - 6868
+  split: train
+  bounds:
+  - 631480.0
+  - 6867956.0
+  - 631804.0
+  - 6868280.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0030_c0025.png
+  row: 30
+  col: 25
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633100.0
+  - 6867956.0
+  - 633424.0
+  - 6868280.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0030_c0026.png
+  row: 30
+  col: 26
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633424.0
+  - 6867956.0
+  - 633748.0
+  - 6868280.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0030_c0027.png
+  row: 30
+  col: 27
+  bloc:
+  - 633
+  - 6868
+  split: train
+  bounds:
+  - 633748.0
+  - 6867956.0
+  - 634072.0
+  - 6868280.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0030_c0028.png
+  row: 30
+  col: 28
+  bloc:
+  - 634
+  - 6868
+  split: train
+  bounds:
+  - 634072.0
+  - 6867956.0
+  - 634396.0
+  - 6868280.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0031_c0006.png
+  row: 31
+  col: 6
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 626944.0
+  - 6867632.0
+  - 627268.0
+  - 6867956.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0007.png
+  row: 31
+  col: 7
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 627268.0
+  - 6867632.0
+  - 627592.0
+  - 6867956.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0008.png
+  row: 31
+  col: 8
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 627592.0
+  - 6867632.0
+  - 627916.0
+  - 6867956.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0009.png
+  row: 31
+  col: 9
+  bloc:
+  - 628
+  - 6867
+  split: train
+  bounds:
+  - 627916.0
+  - 6867632.0
+  - 628240.0
+  - 6867956.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0017.png
+  row: 31
+  col: 17
+  bloc:
+  - 630
+  - 6867
+  split: train
+  bounds:
+  - 630508.0
+  - 6867632.0
+  - 630832.0
+  - 6867956.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0018.png
+  row: 31
+  col: 18
+  bloc:
+  - 630
+  - 6867
+  split: train
+  bounds:
+  - 630832.0
+  - 6867632.0
+  - 631156.0
+  - 6867956.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0031_c0019.png
+  row: 31
+  col: 19
+  bloc:
+  - 631
+  - 6867
+  split: valid
+  bounds:
+  - 631156.0
+  - 6867632.0
+  - 631480.0
+  - 6867956.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0020.png
+  row: 31
+  col: 20
+  bloc:
+  - 631
+  - 6867
+  split: valid
+  bounds:
+  - 631480.0
+  - 6867632.0
+  - 631804.0
+  - 6867956.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0031_c0025.png
+  row: 31
+  col: 25
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633100.0
+  - 6867632.0
+  - 633424.0
+  - 6867956.0
+  n_annotations: 2
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0031_c0026.png
+  row: 31
+  col: 26
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633424.0
+  - 6867632.0
+  - 633748.0
+  - 6867956.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0031_c0028.png
+  row: 31
+  col: 28
+  bloc:
+  - 634
+  - 6867
+  split: valid
+  bounds:
+  - 634072.0
+  - 6867632.0
+  - 634396.0
+  - 6867956.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0032_c0006.png
+  row: 32
+  col: 6
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 626944.0
+  - 6867308.0
+  - 627268.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0007.png
+  row: 32
+  col: 7
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 627268.0
+  - 6867308.0
+  - 627592.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0008.png
+  row: 32
+  col: 8
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 627592.0
+  - 6867308.0
+  - 627916.0
+  - 6867632.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0017.png
+  row: 32
+  col: 17
+  bloc:
+  - 630
+  - 6867
+  split: train
+  bounds:
+  - 630508.0
+  - 6867308.0
+  - 630832.0
+  - 6867632.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0032_c0019.png
+  row: 32
+  col: 19
+  bloc:
+  - 631
+  - 6867
+  split: valid
+  bounds:
+  - 631156.0
+  - 6867308.0
+  - 631480.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0020.png
+  row: 32
+  col: 20
+  bloc:
+  - 631
+  - 6867
+  split: valid
+  bounds:
+  - 631480.0
+  - 6867308.0
+  - 631804.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0021.png
+  row: 32
+  col: 21
+  bloc:
+  - 631
+  - 6867
+  split: valid
+  bounds:
+  - 631804.0
+  - 6867308.0
+  - 632128.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0032_c0025.png
+  row: 32
+  col: 25
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633100.0
+  - 6867308.0
+  - 633424.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0032_c0026.png
+  row: 32
+  col: 26
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633424.0
+  - 6867308.0
+  - 633748.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0032_c0027.png
+  row: 32
+  col: 27
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633748.0
+  - 6867308.0
+  - 634072.0
+  - 6867632.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0032_c0029.png
+  row: 32
+  col: 29
+  bloc:
+  - 634
+  - 6867
+  split: valid
+  bounds:
+  - 634396.0
+  - 6867308.0
+  - 634720.0
+  - 6867632.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0033_c0005.png
+  row: 33
+  col: 5
+  bloc:
+  - 626
+  - 6867
+  split: train
+  bounds:
+  - 626620.0
+  - 6866984.0
+  - 626944.0
+  - 6867308.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0033_c0006.png
+  row: 33
+  col: 6
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 626944.0
+  - 6866984.0
+  - 627268.0
+  - 6867308.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0033_c0007.png
+  row: 33
+  col: 7
+  bloc:
+  - 627
+  - 6867
+  split: valid
+  bounds:
+  - 627268.0
+  - 6866984.0
+  - 627592.0
+  - 6867308.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0033_c0011.png
+  row: 33
+  col: 11
+  bloc:
+  - 628
+  - 6867
+  split: train
+  bounds:
+  - 628564.0
+  - 6866984.0
+  - 628888.0
+  - 6867308.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0033_c0027.png
+  row: 33
+  col: 27
+  bloc:
+  - 633
+  - 6867
+  split: train
+  bounds:
+  - 633748.0
+  - 6866984.0
+  - 634072.0
+  - 6867308.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0033_c0028.png
+  row: 33
+  col: 28
+  bloc:
+  - 634
+  - 6867
+  split: valid
+  bounds:
+  - 634072.0
+  - 6866984.0
+  - 634396.0
+  - 6867308.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0034_c0004.png
+  row: 34
+  col: 4
+  bloc:
+  - 626
+  - 6866
+  split: train
+  bounds:
+  - 626296.0
+  - 6866660.0
+  - 626620.0
+  - 6866984.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0034_c0005.png
+  row: 34
+  col: 5
+  bloc:
+  - 626
+  - 6866
+  split: train
+  bounds:
+  - 626620.0
+  - 6866660.0
+  - 626944.0
+  - 6866984.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0034_c0006.png
+  row: 34
+  col: 6
+  bloc:
+  - 627
+  - 6866
+  split: test
+  bounds:
+  - 626944.0
+  - 6866660.0
+  - 627268.0
+  - 6866984.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0034_c0007.png
+  row: 34
+  col: 7
+  bloc:
+  - 627
+  - 6866
+  split: test
+  bounds:
+  - 627268.0
+  - 6866660.0
+  - 627592.0
+  - 6866984.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0034_c0017.png
+  row: 34
+  col: 17
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 630508.0
+  - 6866660.0
+  - 630832.0
+  - 6866984.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0035_c0009.png
+  row: 35
+  col: 9
+  bloc:
+  - 628
+  - 6866
+  split: train
+  bounds:
+  - 627916.0
+  - 6866336.0
+  - 628240.0
+  - 6866660.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0035_c0011.png
+  row: 35
+  col: 11
+  bloc:
+  - 628
+  - 6866
+  split: train
+  bounds:
+  - 628564.0
+  - 6866336.0
+  - 628888.0
+  - 6866660.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0035_c0014.png
+  row: 35
+  col: 14
+  bloc:
+  - 629
+  - 6866
+  split: test
+  bounds:
+  - 629536.0
+  - 6866336.0
+  - 629860.0
+  - 6866660.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0035_c0016.png
+  row: 35
+  col: 16
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 630184.0
+  - 6866336.0
+  - 630508.0
+  - 6866660.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0035_c0017.png
+  row: 35
+  col: 17
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 630508.0
+  - 6866336.0
+  - 630832.0
+  - 6866660.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0036_c0004.png
+  row: 36
+  col: 4
+  bloc:
+  - 626
+  - 6866
+  split: train
+  bounds:
+  - 626296.0
+  - 6866012.0
+  - 626620.0
+  - 6866336.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0005.png
+  row: 36
+  col: 5
+  bloc:
+  - 626
+  - 6866
+  split: train
+  bounds:
+  - 626620.0
+  - 6866012.0
+  - 626944.0
+  - 6866336.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0006.png
+  row: 36
+  col: 6
+  bloc:
+  - 627
+  - 6866
+  split: test
+  bounds:
+  - 626944.0
+  - 6866012.0
+  - 627268.0
+  - 6866336.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0007.png
+  row: 36
+  col: 7
+  bloc:
+  - 627
+  - 6866
+  split: test
+  bounds:
+  - 627268.0
+  - 6866012.0
+  - 627592.0
+  - 6866336.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0008.png
+  row: 36
+  col: 8
+  bloc:
+  - 627
+  - 6866
+  split: test
+  bounds:
+  - 627592.0
+  - 6866012.0
+  - 627916.0
+  - 6866336.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0009.png
+  row: 36
+  col: 9
+  bloc:
+  - 628
+  - 6866
+  split: train
+  bounds:
+  - 627916.0
+  - 6866012.0
+  - 628240.0
+  - 6866336.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0036_c0013.png
+  row: 36
+  col: 13
+  bloc:
+  - 629
+  - 6866
+  split: test
+  bounds:
+  - 629212.0
+  - 6866012.0
+  - 629536.0
+  - 6866336.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0036_c0014.png
+  row: 36
+  col: 14
+  bloc:
+  - 629
+  - 6866
+  split: test
+  bounds:
+  - 629536.0
+  - 6866012.0
+  - 629860.0
+  - 6866336.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0036_c0015.png
+  row: 36
+  col: 15
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 629860.0
+  - 6866012.0
+  - 630184.0
+  - 6866336.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0036_c0016.png
+  row: 36
+  col: 16
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 630184.0
+  - 6866012.0
+  - 630508.0
+  - 6866336.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0036_c0017.png
+  row: 36
+  col: 17
+  bloc:
+  - 630
+  - 6866
+  split: valid
+  bounds:
+  - 630508.0
+  - 6866012.0
+  - 630832.0
+  - 6866336.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0037_c0003.png
+  row: 37
+  col: 3
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 625972.0
+  - 6865688.0
+  - 626296.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0004.png
+  row: 37
+  col: 4
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626296.0
+  - 6865688.0
+  - 626620.0
+  - 6866012.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0005.png
+  row: 37
+  col: 5
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626620.0
+  - 6865688.0
+  - 626944.0
+  - 6866012.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0006.png
+  row: 37
+  col: 6
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 626944.0
+  - 6865688.0
+  - 627268.0
+  - 6866012.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0007.png
+  row: 37
+  col: 7
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627268.0
+  - 6865688.0
+  - 627592.0
+  - 6866012.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0008.png
+  row: 37
+  col: 8
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627592.0
+  - 6865688.0
+  - 627916.0
+  - 6866012.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0009.png
+  row: 37
+  col: 9
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 627916.0
+  - 6865688.0
+  - 628240.0
+  - 6866012.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0010.png
+  row: 37
+  col: 10
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 628240.0
+  - 6865688.0
+  - 628564.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0013.png
+  row: 37
+  col: 13
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629212.0
+  - 6865688.0
+  - 629536.0
+  - 6866012.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0014.png
+  row: 37
+  col: 14
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629536.0
+  - 6865688.0
+  - 629860.0
+  - 6866012.0
+  n_annotations: 8
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0015.png
+  row: 37
+  col: 15
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 629860.0
+  - 6865688.0
+  - 630184.0
+  - 6866012.0
+  n_annotations: 17
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0016.png
+  row: 37
+  col: 16
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 630184.0
+  - 6865688.0
+  - 630508.0
+  - 6866012.0
+  n_annotations: 12
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0037_c0017.png
+  row: 37
+  col: 17
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 630508.0
+  - 6865688.0
+  - 630832.0
+  - 6866012.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0038_c0002.png
+  row: 38
+  col: 2
+  bloc:
+  - 625
+  - 6865
+  split: train
+  bounds:
+  - 625648.0
+  - 6865364.0
+  - 625972.0
+  - 6865688.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0003.png
+  row: 38
+  col: 3
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 625972.0
+  - 6865364.0
+  - 626296.0
+  - 6865688.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0004.png
+  row: 38
+  col: 4
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626296.0
+  - 6865364.0
+  - 626620.0
+  - 6865688.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0005.png
+  row: 38
+  col: 5
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626620.0
+  - 6865364.0
+  - 626944.0
+  - 6865688.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0006.png
+  row: 38
+  col: 6
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 626944.0
+  - 6865364.0
+  - 627268.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0007.png
+  row: 38
+  col: 7
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627268.0
+  - 6865364.0
+  - 627592.0
+  - 6865688.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0038_c0008.png
+  row: 38
+  col: 8
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627592.0
+  - 6865364.0
+  - 627916.0
+  - 6865688.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0038_c0009.png
+  row: 38
+  col: 9
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 627916.0
+  - 6865364.0
+  - 628240.0
+  - 6865688.0
+  n_annotations: 12
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0010.png
+  row: 38
+  col: 10
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 628240.0
+  - 6865364.0
+  - 628564.0
+  - 6865688.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0011.png
+  row: 38
+  col: 11
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 628564.0
+  - 6865364.0
+  - 628888.0
+  - 6865688.0
+  n_annotations: 14
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0038_c0012.png
+  row: 38
+  col: 12
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 628888.0
+  - 6865364.0
+  - 629212.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0013.png
+  row: 38
+  col: 13
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629212.0
+  - 6865364.0
+  - 629536.0
+  - 6865688.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0038_c0014.png
+  row: 38
+  col: 14
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629536.0
+  - 6865364.0
+  - 629860.0
+  - 6865688.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0038_c0015.png
+  row: 38
+  col: 15
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 629860.0
+  - 6865364.0
+  - 630184.0
+  - 6865688.0
+  n_annotations: 19
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0038_c0016.png
+  row: 38
+  col: 16
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 630184.0
+  - 6865364.0
+  - 630508.0
+  - 6865688.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0002.png
+  row: 39
+  col: 2
+  bloc:
+  - 625
+  - 6865
+  split: train
+  bounds:
+  - 625648.0
+  - 6865040.0
+  - 625972.0
+  - 6865364.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0003.png
+  row: 39
+  col: 3
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 625972.0
+  - 6865040.0
+  - 626296.0
+  - 6865364.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0004.png
+  row: 39
+  col: 4
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626296.0
+  - 6865040.0
+  - 626620.0
+  - 6865364.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0005.png
+  row: 39
+  col: 5
+  bloc:
+  - 626
+  - 6865
+  split: valid
+  bounds:
+  - 626620.0
+  - 6865040.0
+  - 626944.0
+  - 6865364.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0006.png
+  row: 39
+  col: 6
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 626944.0
+  - 6865040.0
+  - 627268.0
+  - 6865364.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0039_c0007.png
+  row: 39
+  col: 7
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627268.0
+  - 6865040.0
+  - 627592.0
+  - 6865364.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0039_c0008.png
+  row: 39
+  col: 8
+  bloc:
+  - 627
+  - 6865
+  split: test
+  bounds:
+  - 627592.0
+  - 6865040.0
+  - 627916.0
+  - 6865364.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0009.png
+  row: 39
+  col: 9
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 627916.0
+  - 6865040.0
+  - 628240.0
+  - 6865364.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0010.png
+  row: 39
+  col: 10
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 628240.0
+  - 6865040.0
+  - 628564.0
+  - 6865364.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0011.png
+  row: 39
+  col: 11
+  bloc:
+  - 628
+  - 6865
+  split: train
+  bounds:
+  - 628564.0
+  - 6865040.0
+  - 628888.0
+  - 6865364.0
+  n_annotations: 11
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0039_c0013.png
+  row: 39
+  col: 13
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629212.0
+  - 6865040.0
+  - 629536.0
+  - 6865364.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0039_c0014.png
+  row: 39
+  col: 14
+  bloc:
+  - 629
+  - 6865
+  split: train
+  bounds:
+  - 629536.0
+  - 6865040.0
+  - 629860.0
+  - 6865364.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0015.png
+  row: 39
+  col: 15
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 629860.0
+  - 6865040.0
+  - 630184.0
+  - 6865364.0
+  n_annotations: 12
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0016.png
+  row: 39
+  col: 16
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 630184.0
+  - 6865040.0
+  - 630508.0
+  - 6865364.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0039_c0017.png
+  row: 39
+  col: 17
+  bloc:
+  - 630
+  - 6865
+  split: train
+  bounds:
+  - 630508.0
+  - 6865040.0
+  - 630832.0
+  - 6865364.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0003.png
+  row: 40
+  col: 3
+  bloc:
+  - 626
+  - 6864
+  split: train
+  bounds:
+  - 625972.0
+  - 6864716.0
+  - 626296.0
+  - 6865040.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0004.png
+  row: 40
+  col: 4
+  bloc:
+  - 626
+  - 6864
+  split: train
+  bounds:
+  - 626296.0
+  - 6864716.0
+  - 626620.0
+  - 6865040.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0005.png
+  row: 40
+  col: 5
+  bloc:
+  - 626
+  - 6864
+  split: train
+  bounds:
+  - 626620.0
+  - 6864716.0
+  - 626944.0
+  - 6865040.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0006.png
+  row: 40
+  col: 6
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 626944.0
+  - 6864716.0
+  - 627268.0
+  - 6865040.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0007.png
+  row: 40
+  col: 7
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 627268.0
+  - 6864716.0
+  - 627592.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0008.png
+  row: 40
+  col: 8
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 627592.0
+  - 6864716.0
+  - 627916.0
+  - 6865040.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0009.png
+  row: 40
+  col: 9
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 627916.0
+  - 6864716.0
+  - 628240.0
+  - 6865040.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0010.png
+  row: 40
+  col: 10
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628240.0
+  - 6864716.0
+  - 628564.0
+  - 6865040.0
+  n_annotations: 9
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0011.png
+  row: 40
+  col: 11
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628564.0
+  - 6864716.0
+  - 628888.0
+  - 6865040.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0012.png
+  row: 40
+  col: 12
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 628888.0
+  - 6864716.0
+  - 629212.0
+  - 6865040.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0013.png
+  row: 40
+  col: 13
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629212.0
+  - 6864716.0
+  - 629536.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0014.png
+  row: 40
+  col: 14
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629536.0
+  - 6864716.0
+  - 629860.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0015.png
+  row: 40
+  col: 15
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 629860.0
+  - 6864716.0
+  - 630184.0
+  - 6865040.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0016.png
+  row: 40
+  col: 16
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630184.0
+  - 6864716.0
+  - 630508.0
+  - 6865040.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0017.png
+  row: 40
+  col: 17
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630508.0
+  - 6864716.0
+  - 630832.0
+  - 6865040.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0040_c0020.png
+  row: 40
+  col: 20
+  bloc:
+  - 631
+  - 6864
+  split: train
+  bounds:
+  - 631480.0
+  - 6864716.0
+  - 631804.0
+  - 6865040.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0041_c0004.png
+  row: 41
+  col: 4
+  bloc:
+  - 626
+  - 6864
+  split: train
+  bounds:
+  - 626296.0
+  - 6864392.0
+  - 626620.0
+  - 6864716.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0005.png
+  row: 41
+  col: 5
+  bloc:
+  - 626
+  - 6864
+  split: train
+  bounds:
+  - 626620.0
+  - 6864392.0
+  - 626944.0
+  - 6864716.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0006.png
+  row: 41
+  col: 6
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 626944.0
+  - 6864392.0
+  - 627268.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0007.png
+  row: 41
+  col: 7
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 627268.0
+  - 6864392.0
+  - 627592.0
+  - 6864716.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0008.png
+  row: 41
+  col: 8
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 627592.0
+  - 6864392.0
+  - 627916.0
+  - 6864716.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0009.png
+  row: 41
+  col: 9
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 627916.0
+  - 6864392.0
+  - 628240.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0010.png
+  row: 41
+  col: 10
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628240.0
+  - 6864392.0
+  - 628564.0
+  - 6864716.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0011.png
+  row: 41
+  col: 11
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628564.0
+  - 6864392.0
+  - 628888.0
+  - 6864716.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0012.png
+  row: 41
+  col: 12
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 628888.0
+  - 6864392.0
+  - 629212.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0013.png
+  row: 41
+  col: 13
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629212.0
+  - 6864392.0
+  - 629536.0
+  - 6864716.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0014.png
+  row: 41
+  col: 14
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629536.0
+  - 6864392.0
+  - 629860.0
+  - 6864716.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0015.png
+  row: 41
+  col: 15
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 629860.0
+  - 6864392.0
+  - 630184.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0016.png
+  row: 41
+  col: 16
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630184.0
+  - 6864392.0
+  - 630508.0
+  - 6864716.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0017.png
+  row: 41
+  col: 17
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630508.0
+  - 6864392.0
+  - 630832.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0041_c0019.png
+  row: 41
+  col: 19
+  bloc:
+  - 631
+  - 6864
+  split: train
+  bounds:
+  - 631156.0
+  - 6864392.0
+  - 631480.0
+  - 6864716.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0041_c0020.png
+  row: 41
+  col: 20
+  bloc:
+  - 631
+  - 6864
+  split: train
+  bounds:
+  - 631480.0
+  - 6864392.0
+  - 631804.0
+  - 6864716.0
+  n_annotations: 7
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0042_c0008.png
+  row: 42
+  col: 8
+  bloc:
+  - 627
+  - 6864
+  split: valid
+  bounds:
+  - 627592.0
+  - 6864068.0
+  - 627916.0
+  - 6864392.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0009.png
+  row: 42
+  col: 9
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 627916.0
+  - 6864068.0
+  - 628240.0
+  - 6864392.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0010.png
+  row: 42
+  col: 10
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628240.0
+  - 6864068.0
+  - 628564.0
+  - 6864392.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0042_c0011.png
+  row: 42
+  col: 11
+  bloc:
+  - 628
+  - 6864
+  split: test
+  bounds:
+  - 628564.0
+  - 6864068.0
+  - 628888.0
+  - 6864392.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0042_c0012.png
+  row: 42
+  col: 12
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 628888.0
+  - 6864068.0
+  - 629212.0
+  - 6864392.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0042_c0013.png
+  row: 42
+  col: 13
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629212.0
+  - 6864068.0
+  - 629536.0
+  - 6864392.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0014.png
+  row: 42
+  col: 14
+  bloc:
+  - 629
+  - 6864
+  split: valid
+  bounds:
+  - 629536.0
+  - 6864068.0
+  - 629860.0
+  - 6864392.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0015.png
+  row: 42
+  col: 15
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 629860.0
+  - 6864068.0
+  - 630184.0
+  - 6864392.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0016.png
+  row: 42
+  col: 16
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630184.0
+  - 6864068.0
+  - 630508.0
+  - 6864392.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0017.png
+  row: 42
+  col: 17
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630508.0
+  - 6864068.0
+  - 630832.0
+  - 6864392.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0042_c0018.png
+  row: 42
+  col: 18
+  bloc:
+  - 630
+  - 6864
+  split: train
+  bounds:
+  - 630832.0
+  - 6864068.0
+  - 631156.0
+  - 6864392.0
+  n_annotations: 9
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0042_c0019.png
+  row: 42
+  col: 19
+  bloc:
+  - 631
+  - 6864
+  split: train
+  bounds:
+  - 631156.0
+  - 6864068.0
+  - 631480.0
+  - 6864392.0
+  n_annotations: 1
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0043_c0010.png
+  row: 43
+  col: 10
+  bloc:
+  - 628
+  - 6863
+  split: train
+  bounds:
+  - 628240.0
+  - 6863744.0
+  - 628564.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0043_c0011.png
+  row: 43
+  col: 11
+  bloc:
+  - 628
+  - 6863
+  split: train
+  bounds:
+  - 628564.0
+  - 6863744.0
+  - 628888.0
+  - 6864068.0
+  n_annotations: 3
+  classes:
+  - fosse
+  - parcellaire
+- nom: 78_saint_germain_marly_r0043_c0012.png
+  row: 43
+  col: 12
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 628888.0
+  - 6863744.0
+  - 629212.0
+  - 6864068.0
+  n_annotations: 7
+  classes:
+  - fosse
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0043_c0013.png
+  row: 43
+  col: 13
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 629212.0
+  - 6863744.0
+  - 629536.0
+  - 6864068.0
+  n_annotations: 4
+  classes:
+  - fosse
+  - talus
+- nom: 78_saint_germain_marly_r0043_c0014.png
+  row: 43
+  col: 14
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 629536.0
+  - 6863744.0
+  - 629860.0
+  - 6864068.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0043_c0015.png
+  row: 43
+  col: 15
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 629860.0
+  - 6863744.0
+  - 630184.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0043_c0016.png
+  row: 43
+  col: 16
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630184.0
+  - 6863744.0
+  - 630508.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0043_c0017.png
+  row: 43
+  col: 17
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630508.0
+  - 6863744.0
+  - 630832.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0043_c0027.png
+  row: 43
+  col: 27
+  bloc:
+  - 633
+  - 6863
+  split: train
+  bounds:
+  - 633748.0
+  - 6863744.0
+  - 634072.0
+  - 6864068.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0044_c0012.png
+  row: 44
+  col: 12
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 628888.0
+  - 6863420.0
+  - 629212.0
+  - 6863744.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0044_c0013.png
+  row: 44
+  col: 13
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 629212.0
+  - 6863420.0
+  - 629536.0
+  - 6863744.0
+  n_annotations: 4
+  classes:
+  - fosse
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0044_c0014.png
+  row: 44
+  col: 14
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 629536.0
+  - 6863420.0
+  - 629860.0
+  - 6863744.0
+  n_annotations: 3
+  classes:
+  - fosse
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0044_c0015.png
+  row: 44
+  col: 15
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 629860.0
+  - 6863420.0
+  - 630184.0
+  - 6863744.0
+  n_annotations: 6
+  classes:
+  - fosse
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0044_c0016.png
+  row: 44
+  col: 16
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630184.0
+  - 6863420.0
+  - 630508.0
+  - 6863744.0
+  n_annotations: 3
+  classes:
+  - fosse
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0044_c0024.png
+  row: 44
+  col: 24
+  bloc:
+  - 632
+  - 6863
+  split: train
+  bounds:
+  - 632776.0
+  - 6863420.0
+  - 633100.0
+  - 6863744.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0045_c0012.png
+  row: 45
+  col: 12
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 628888.0
+  - 6863096.0
+  - 629212.0
+  - 6863420.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0045_c0013.png
+  row: 45
+  col: 13
+  bloc:
+  - 629
+  - 6863
+  split: train
+  bounds:
+  - 629212.0
+  - 6863096.0
+  - 629536.0
+  - 6863420.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0045_c0015.png
+  row: 45
+  col: 15
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 629860.0
+  - 6863096.0
+  - 630184.0
+  - 6863420.0
+  n_annotations: 9
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0045_c0016.png
+  row: 45
+  col: 16
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630184.0
+  - 6863096.0
+  - 630508.0
+  - 6863420.0
+  n_annotations: 7
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0045_c0017.png
+  row: 45
+  col: 17
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630508.0
+  - 6863096.0
+  - 630832.0
+  - 6863420.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0045_c0018.png
+  row: 45
+  col: 18
+  bloc:
+  - 630
+  - 6863
+  split: valid
+  bounds:
+  - 630832.0
+  - 6863096.0
+  - 631156.0
+  - 6863420.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0045_c0023.png
+  row: 45
+  col: 23
+  bloc:
+  - 632
+  - 6863
+  split: train
+  bounds:
+  - 632452.0
+  - 6863096.0
+  - 632776.0
+  - 6863420.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0045_c0024.png
+  row: 45
+  col: 24
+  bloc:
+  - 632
+  - 6863
+  split: train
+  bounds:
+  - 632776.0
+  - 6863096.0
+  - 633100.0
+  - 6863420.0
+  n_annotations: 5
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0045_c0025.png
+  row: 45
+  col: 25
+  bloc:
+  - 633
+  - 6863
+  split: train
+  bounds:
+  - 633100.0
+  - 6863096.0
+  - 633424.0
+  - 6863420.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0045_c0026.png
+  row: 45
+  col: 26
+  bloc:
+  - 633
+  - 6863
+  split: train
+  bounds:
+  - 633424.0
+  - 6863096.0
+  - 633748.0
+  - 6863420.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0012.png
+  row: 46
+  col: 12
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 628888.0
+  - 6862772.0
+  - 629212.0
+  - 6863096.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0046_c0013.png
+  row: 46
+  col: 13
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629212.0
+  - 6862772.0
+  - 629536.0
+  - 6863096.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0046_c0014.png
+  row: 46
+  col: 14
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629536.0
+  - 6862772.0
+  - 629860.0
+  - 6863096.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0046_c0015.png
+  row: 46
+  col: 15
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 629860.0
+  - 6862772.0
+  - 630184.0
+  - 6863096.0
+  n_annotations: 8
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0016.png
+  row: 46
+  col: 16
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630184.0
+  - 6862772.0
+  - 630508.0
+  - 6863096.0
+  n_annotations: 4
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0017.png
+  row: 46
+  col: 17
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630508.0
+  - 6862772.0
+  - 630832.0
+  - 6863096.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0046_c0018.png
+  row: 46
+  col: 18
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630832.0
+  - 6862772.0
+  - 631156.0
+  - 6863096.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0046_c0019.png
+  row: 46
+  col: 19
+  bloc:
+  - 631
+  - 6862
+  split: train
+  bounds:
+  - 631156.0
+  - 6862772.0
+  - 631480.0
+  - 6863096.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0046_c0022.png
+  row: 46
+  col: 22
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632128.0
+  - 6862772.0
+  - 632452.0
+  - 6863096.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0046_c0023.png
+  row: 46
+  col: 23
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632452.0
+  - 6862772.0
+  - 632776.0
+  - 6863096.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0046_c0024.png
+  row: 46
+  col: 24
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632776.0
+  - 6862772.0
+  - 633100.0
+  - 6863096.0
+  n_annotations: 17
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0025.png
+  row: 46
+  col: 25
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633100.0
+  - 6862772.0
+  - 633424.0
+  - 6863096.0
+  n_annotations: 18
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0026.png
+  row: 46
+  col: 26
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633424.0
+  - 6862772.0
+  - 633748.0
+  - 6863096.0
+  n_annotations: 6
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0046_c0027.png
+  row: 46
+  col: 27
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633748.0
+  - 6862772.0
+  - 634072.0
+  - 6863096.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0046_c0032.png
+  row: 46
+  col: 32
+  bloc:
+  - 635
+  - 6862
+  split: train
+  bounds:
+  - 635368.0
+  - 6862772.0
+  - 635692.0
+  - 6863096.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0047_c0012.png
+  row: 47
+  col: 12
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 628888.0
+  - 6862448.0
+  - 629212.0
+  - 6862772.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0047_c0013.png
+  row: 47
+  col: 13
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629212.0
+  - 6862448.0
+  - 629536.0
+  - 6862772.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0047_c0014.png
+  row: 47
+  col: 14
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629536.0
+  - 6862448.0
+  - 629860.0
+  - 6862772.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0047_c0016.png
+  row: 47
+  col: 16
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630184.0
+  - 6862448.0
+  - 630508.0
+  - 6862772.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0047_c0018.png
+  row: 47
+  col: 18
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630832.0
+  - 6862448.0
+  - 631156.0
+  - 6862772.0
+  n_annotations: 2
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0047_c0019.png
+  row: 47
+  col: 19
+  bloc:
+  - 631
+  - 6862
+  split: train
+  bounds:
+  - 631156.0
+  - 6862448.0
+  - 631480.0
+  - 6862772.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0047_c0020.png
+  row: 47
+  col: 20
+  bloc:
+  - 631
+  - 6862
+  split: train
+  bounds:
+  - 631480.0
+  - 6862448.0
+  - 631804.0
+  - 6862772.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0047_c0022.png
+  row: 47
+  col: 22
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632128.0
+  - 6862448.0
+  - 632452.0
+  - 6862772.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0047_c0023.png
+  row: 47
+  col: 23
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632452.0
+  - 6862448.0
+  - 632776.0
+  - 6862772.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0047_c0024.png
+  row: 47
+  col: 24
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632776.0
+  - 6862448.0
+  - 633100.0
+  - 6862772.0
+  n_annotations: 10
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0047_c0025.png
+  row: 47
+  col: 25
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633100.0
+  - 6862448.0
+  - 633424.0
+  - 6862772.0
+  n_annotations: 20
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0047_c0026.png
+  row: 47
+  col: 26
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633424.0
+  - 6862448.0
+  - 633748.0
+  - 6862772.0
+  n_annotations: 7
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0047_c0027.png
+  row: 47
+  col: 27
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633748.0
+  - 6862448.0
+  - 634072.0
+  - 6862772.0
+  n_annotations: 11
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0047_c0028.png
+  row: 47
+  col: 28
+  bloc:
+  - 634
+  - 6862
+  split: train
+  bounds:
+  - 634072.0
+  - 6862448.0
+  - 634396.0
+  - 6862772.0
+  n_annotations: 8
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0010.png
+  row: 48
+  col: 10
+  bloc:
+  - 628
+  - 6862
+  split: train
+  bounds:
+  - 628240.0
+  - 6862124.0
+  - 628564.0
+  - 6862448.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0048_c0011.png
+  row: 48
+  col: 11
+  bloc:
+  - 628
+  - 6862
+  split: train
+  bounds:
+  - 628564.0
+  - 6862124.0
+  - 628888.0
+  - 6862448.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0048_c0012.png
+  row: 48
+  col: 12
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 628888.0
+  - 6862124.0
+  - 629212.0
+  - 6862448.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0048_c0013.png
+  row: 48
+  col: 13
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629212.0
+  - 6862124.0
+  - 629536.0
+  - 6862448.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0048_c0014.png
+  row: 48
+  col: 14
+  bloc:
+  - 629
+  - 6862
+  split: train
+  bounds:
+  - 629536.0
+  - 6862124.0
+  - 629860.0
+  - 6862448.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0048_c0015.png
+  row: 48
+  col: 15
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 629860.0
+  - 6862124.0
+  - 630184.0
+  - 6862448.0
+  n_annotations: 3
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0048_c0017.png
+  row: 48
+  col: 17
+  bloc:
+  - 630
+  - 6862
+  split: train
+  bounds:
+  - 630508.0
+  - 6862124.0
+  - 630832.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - fosse
+- nom: 78_saint_germain_marly_r0048_c0020.png
+  row: 48
+  col: 20
+  bloc:
+  - 631
+  - 6862
+  split: train
+  bounds:
+  - 631480.0
+  - 6862124.0
+  - 631804.0
+  - 6862448.0
+  n_annotations: 4
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0021.png
+  row: 48
+  col: 21
+  bloc:
+  - 631
+  - 6862
+  split: train
+  bounds:
+  - 631804.0
+  - 6862124.0
+  - 632128.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0048_c0022.png
+  row: 48
+  col: 22
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632128.0
+  - 6862124.0
+  - 632452.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0048_c0023.png
+  row: 48
+  col: 23
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632452.0
+  - 6862124.0
+  - 632776.0
+  - 6862448.0
+  n_annotations: 4
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0024.png
+  row: 48
+  col: 24
+  bloc:
+  - 632
+  - 6862
+  split: valid
+  bounds:
+  - 632776.0
+  - 6862124.0
+  - 633100.0
+  - 6862448.0
+  n_annotations: 9
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0025.png
+  row: 48
+  col: 25
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633100.0
+  - 6862124.0
+  - 633424.0
+  - 6862448.0
+  n_annotations: 9
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0026.png
+  row: 48
+  col: 26
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633424.0
+  - 6862124.0
+  - 633748.0
+  - 6862448.0
+  n_annotations: 18
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0027.png
+  row: 48
+  col: 27
+  bloc:
+  - 633
+  - 6862
+  split: train
+  bounds:
+  - 633748.0
+  - 6862124.0
+  - 634072.0
+  - 6862448.0
+  n_annotations: 19
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0028.png
+  row: 48
+  col: 28
+  bloc:
+  - 634
+  - 6862
+  split: train
+  bounds:
+  - 634072.0
+  - 6862124.0
+  - 634396.0
+  - 6862448.0
+  n_annotations: 6
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0048_c0030.png
+  row: 48
+  col: 30
+  bloc:
+  - 634
+  - 6862
+  split: train
+  bounds:
+  - 634720.0
+  - 6862124.0
+  - 635044.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0048_c0031.png
+  row: 48
+  col: 31
+  bloc:
+  - 635
+  - 6862
+  split: train
+  bounds:
+  - 635044.0
+  - 6862124.0
+  - 635368.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0048_c0033.png
+  row: 48
+  col: 33
+  bloc:
+  - 635
+  - 6862
+  split: train
+  bounds:
+  - 635692.0
+  - 6862124.0
+  - 636016.0
+  - 6862448.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0049_c0009.png
+  row: 49
+  col: 9
+  bloc:
+  - 628
+  - 6861
+  split: test
+  bounds:
+  - 627916.0
+  - 6861800.0
+  - 628240.0
+  - 6862124.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0049_c0011.png
+  row: 49
+  col: 11
+  bloc:
+  - 628
+  - 6861
+  split: test
+  bounds:
+  - 628564.0
+  - 6861800.0
+  - 628888.0
+  - 6862124.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0012.png
+  row: 49
+  col: 12
+  bloc:
+  - 629
+  - 6861
+  split: train
+  bounds:
+  - 628888.0
+  - 6861800.0
+  - 629212.0
+  - 6862124.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0014.png
+  row: 49
+  col: 14
+  bloc:
+  - 629
+  - 6861
+  split: train
+  bounds:
+  - 629536.0
+  - 6861800.0
+  - 629860.0
+  - 6862124.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0017.png
+  row: 49
+  col: 17
+  bloc:
+  - 630
+  - 6861
+  split: train
+  bounds:
+  - 630508.0
+  - 6861800.0
+  - 630832.0
+  - 6862124.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0018.png
+  row: 49
+  col: 18
+  bloc:
+  - 630
+  - 6861
+  split: train
+  bounds:
+  - 630832.0
+  - 6861800.0
+  - 631156.0
+  - 6862124.0
+  n_annotations: 4
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0019.png
+  row: 49
+  col: 19
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631156.0
+  - 6861800.0
+  - 631480.0
+  - 6862124.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0020.png
+  row: 49
+  col: 20
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631480.0
+  - 6861800.0
+  - 631804.0
+  - 6862124.0
+  n_annotations: 48
+  classes:
+  - fosse
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0021.png
+  row: 49
+  col: 21
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631804.0
+  - 6861800.0
+  - 632128.0
+  - 6862124.0
+  n_annotations: 12
+  classes:
+  - fosse
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0022.png
+  row: 49
+  col: 22
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632128.0
+  - 6861800.0
+  - 632452.0
+  - 6862124.0
+  n_annotations: 21
+  classes:
+  - fosse
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0023.png
+  row: 49
+  col: 23
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632452.0
+  - 6861800.0
+  - 632776.0
+  - 6862124.0
+  n_annotations: 15
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0024.png
+  row: 49
+  col: 24
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632776.0
+  - 6861800.0
+  - 633100.0
+  - 6862124.0
+  n_annotations: 4
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0025.png
+  row: 49
+  col: 25
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633100.0
+  - 6861800.0
+  - 633424.0
+  - 6862124.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0026.png
+  row: 49
+  col: 26
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633424.0
+  - 6861800.0
+  - 633748.0
+  - 6862124.0
+  n_annotations: 12
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0027.png
+  row: 49
+  col: 27
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633748.0
+  - 6861800.0
+  - 634072.0
+  - 6862124.0
+  n_annotations: 19
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0028.png
+  row: 49
+  col: 28
+  bloc:
+  - 634
+  - 6861
+  split: valid
+  bounds:
+  - 634072.0
+  - 6861800.0
+  - 634396.0
+  - 6862124.0
+  n_annotations: 5
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0029.png
+  row: 49
+  col: 29
+  bloc:
+  - 634
+  - 6861
+  split: valid
+  bounds:
+  - 634396.0
+  - 6861800.0
+  - 634720.0
+  - 6862124.0
+  n_annotations: 1
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0049_c0030.png
+  row: 49
+  col: 30
+  bloc:
+  - 634
+  - 6861
+  split: valid
+  bounds:
+  - 634720.0
+  - 6861800.0
+  - 635044.0
+  - 6862124.0
+  n_annotations: 2
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0049_c0031.png
+  row: 49
+  col: 31
+  bloc:
+  - 635
+  - 6861
+  split: train
+  bounds:
+  - 635044.0
+  - 6861800.0
+  - 635368.0
+  - 6862124.0
+  n_annotations: 1
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0049_c0032.png
+  row: 49
+  col: 32
+  bloc:
+  - 635
+  - 6861
+  split: train
+  bounds:
+  - 635368.0
+  - 6861800.0
+  - 635692.0
+  - 6862124.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0049_c0033.png
+  row: 49
+  col: 33
+  bloc:
+  - 635
+  - 6861
+  split: train
+  bounds:
+  - 635692.0
+  - 6861800.0
+  - 636016.0
+  - 6862124.0
+  n_annotations: 2
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0050_c0011.png
+  row: 50
+  col: 11
+  bloc:
+  - 628
+  - 6861
+  split: test
+  bounds:
+  - 628564.0
+  - 6861476.0
+  - 628888.0
+  - 6861800.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0050_c0016.png
+  row: 50
+  col: 16
+  bloc:
+  - 630
+  - 6861
+  split: train
+  bounds:
+  - 630184.0
+  - 6861476.0
+  - 630508.0
+  - 6861800.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0050_c0018.png
+  row: 50
+  col: 18
+  bloc:
+  - 630
+  - 6861
+  split: train
+  bounds:
+  - 630832.0
+  - 6861476.0
+  - 631156.0
+  - 6861800.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0050_c0019.png
+  row: 50
+  col: 19
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631156.0
+  - 6861476.0
+  - 631480.0
+  - 6861800.0
+  n_annotations: 6
+  classes:
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0020.png
+  row: 50
+  col: 20
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631480.0
+  - 6861476.0
+  - 631804.0
+  - 6861800.0
+  n_annotations: 19
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0021.png
+  row: 50
+  col: 21
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631804.0
+  - 6861476.0
+  - 632128.0
+  - 6861800.0
+  n_annotations: 11
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0022.png
+  row: 50
+  col: 22
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632128.0
+  - 6861476.0
+  - 632452.0
+  - 6861800.0
+  n_annotations: 22
+  classes:
+  - fosse
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0023.png
+  row: 50
+  col: 23
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632452.0
+  - 6861476.0
+  - 632776.0
+  - 6861800.0
+  n_annotations: 4
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0026.png
+  row: 50
+  col: 26
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633424.0
+  - 6861476.0
+  - 633748.0
+  - 6861800.0
+  n_annotations: 4
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0050_c0027.png
+  row: 50
+  col: 27
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633748.0
+  - 6861476.0
+  - 634072.0
+  - 6861800.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0050_c0028.png
+  row: 50
+  col: 28
+  bloc:
+  - 634
+  - 6861
+  split: valid
+  bounds:
+  - 634072.0
+  - 6861476.0
+  - 634396.0
+  - 6861800.0
+  n_annotations: 2
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0050_c0032.png
+  row: 50
+  col: 32
+  bloc:
+  - 635
+  - 6861
+  split: train
+  bounds:
+  - 635368.0
+  - 6861476.0
+  - 635692.0
+  - 6861800.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0050_c0033.png
+  row: 50
+  col: 33
+  bloc:
+  - 635
+  - 6861
+  split: train
+  bounds:
+  - 635692.0
+  - 6861476.0
+  - 636016.0
+  - 6861800.0
+  n_annotations: 5
+  classes:
+  - parcellaire
+  - talus
+- nom: 78_saint_germain_marly_r0051_c0010.png
+  row: 51
+  col: 10
+  bloc:
+  - 628
+  - 6861
+  split: test
+  bounds:
+  - 628240.0
+  - 6861152.0
+  - 628564.0
+  - 6861476.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0051_c0015.png
+  row: 51
+  col: 15
+  bloc:
+  - 630
+  - 6861
+  split: train
+  bounds:
+  - 629860.0
+  - 6861152.0
+  - 630184.0
+  - 6861476.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0051_c0019.png
+  row: 51
+  col: 19
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631156.0
+  - 6861152.0
+  - 631480.0
+  - 6861476.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0020.png
+  row: 51
+  col: 20
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631480.0
+  - 6861152.0
+  - 631804.0
+  - 6861476.0
+  n_annotations: 10
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0021.png
+  row: 51
+  col: 21
+  bloc:
+  - 631
+  - 6861
+  split: train
+  bounds:
+  - 631804.0
+  - 6861152.0
+  - 632128.0
+  - 6861476.0
+  n_annotations: 16
+  classes:
+  - fosse
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0022.png
+  row: 51
+  col: 22
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632128.0
+  - 6861152.0
+  - 632452.0
+  - 6861476.0
+  n_annotations: 16
+  classes:
+  - fosse
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0023.png
+  row: 51
+  col: 23
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632452.0
+  - 6861152.0
+  - 632776.0
+  - 6861476.0
+  n_annotations: 5
+  classes:
+  - fosse
+  - parcellaire
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0024.png
+  row: 51
+  col: 24
+  bloc:
+  - 632
+  - 6861
+  split: test
+  bounds:
+  - 632776.0
+  - 6861152.0
+  - 633100.0
+  - 6861476.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0025.png
+  row: 51
+  col: 25
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633100.0
+  - 6861152.0
+  - 633424.0
+  - 6861476.0
+  n_annotations: 1
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0051_c0026.png
+  row: 51
+  col: 26
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633424.0
+  - 6861152.0
+  - 633748.0
+  - 6861476.0
+  n_annotations: 2
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0051_c0027.png
+  row: 51
+  col: 27
+  bloc:
+  - 633
+  - 6861
+  split: train
+  bounds:
+  - 633748.0
+  - 6861152.0
+  - 634072.0
+  - 6861476.0
+  n_annotations: 3
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0051_c0028.png
+  row: 51
+  col: 28
+  bloc:
+  - 634
+  - 6861
+  split: valid
+  bounds:
+  - 634072.0
+  - 6861152.0
+  - 634396.0
+  - 6861476.0
+  n_annotations: 4
+  classes:
+  - talus
+- nom: 78_saint_germain_marly_r0052_c0020.png
+  row: 52
+  col: 20
+  bloc:
+  - 631
+  - 6860
+  split: valid
+  bounds:
+  - 631480.0
+  - 6860828.0
+  - 631804.0
+  - 6861152.0
+  n_annotations: 4
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0021.png
+  row: 52
+  col: 21
+  bloc:
+  - 631
+  - 6860
+  split: valid
+  bounds:
+  - 631804.0
+  - 6860828.0
+  - 632128.0
+  - 6861152.0
+  n_annotations: 9
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0022.png
+  row: 52
+  col: 22
+  bloc:
+  - 632
+  - 6860
+  split: train
+  bounds:
+  - 632128.0
+  - 6860828.0
+  - 632452.0
+  - 6861152.0
+  n_annotations: 8
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0023.png
+  row: 52
+  col: 23
+  bloc:
+  - 632
+  - 6860
+  split: train
+  bounds:
+  - 632452.0
+  - 6860828.0
+  - 632776.0
+  - 6861152.0
+  n_annotations: 6
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0024.png
+  row: 52
+  col: 24
+  bloc:
+  - 632
+  - 6860
+  split: train
+  bounds:
+  - 632776.0
+  - 6860828.0
+  - 633100.0
+  - 6861152.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0025.png
+  row: 52
+  col: 25
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633100.0
+  - 6860828.0
+  - 633424.0
+  - 6861152.0
+  n_annotations: 4
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0026.png
+  row: 52
+  col: 26
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633424.0
+  - 6860828.0
+  - 633748.0
+  - 6861152.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0052_c0027.png
+  row: 52
+  col: 27
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633748.0
+  - 6860828.0
+  - 634072.0
+  - 6861152.0
+  n_annotations: 2
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0053_c0020.png
+  row: 53
+  col: 20
+  bloc:
+  - 631
+  - 6860
+  split: valid
+  bounds:
+  - 631480.0
+  - 6860504.0
+  - 631804.0
+  - 6860828.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0053_c0024.png
+  row: 53
+  col: 24
+  bloc:
+  - 632
+  - 6860
+  split: train
+  bounds:
+  - 632776.0
+  - 6860504.0
+  - 633100.0
+  - 6860828.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0053_c0025.png
+  row: 53
+  col: 25
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633100.0
+  - 6860504.0
+  - 633424.0
+  - 6860828.0
+  n_annotations: 3
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0053_c0026.png
+  row: 53
+  col: 26
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633424.0
+  - 6860504.0
+  - 633748.0
+  - 6860828.0
+  n_annotations: 1
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0053_c0027.png
+  row: 53
+  col: 27
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633748.0
+  - 6860504.0
+  - 634072.0
+  - 6860828.0
+  n_annotations: 2
+  classes:
+  - talus
+  - voie
+- nom: 78_saint_germain_marly_r0053_c0028.png
+  row: 53
+  col: 28
+  bloc:
+  - 634
+  - 6860
+  split: train
+  bounds:
+  - 634072.0
+  - 6860504.0
+  - 634396.0
+  - 6860828.0
+  n_annotations: 1
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0054_c0024.png
+  row: 54
+  col: 24
+  bloc:
+  - 632
+  - 6860
+  split: train
+  bounds:
+  - 632776.0
+  - 6860180.0
+  - 633100.0
+  - 6860504.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0054_c0025.png
+  row: 54
+  col: 25
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633100.0
+  - 6860180.0
+  - 633424.0
+  - 6860504.0
+  n_annotations: 2
+  classes:
+  - voie
+- nom: 78_saint_germain_marly_r0054_c0026.png
+  row: 54
+  col: 26
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633424.0
+  - 6860180.0
+  - 633748.0
+  - 6860504.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0054_c0027.png
+  row: 54
+  col: 27
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633748.0
+  - 6860180.0
+  - 634072.0
+  - 6860504.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0054_c0028.png
+  row: 54
+  col: 28
+  bloc:
+  - 634
+  - 6860
+  split: train
+  bounds:
+  - 634072.0
+  - 6860180.0
+  - 634396.0
+  - 6860504.0
+  n_annotations: 1
+  classes:
+  - parcellaire
+- nom: 78_saint_germain_marly_r0054_c0030.png
+  row: 54
+  col: 30
+  bloc:
+  - 634
+  - 6860
+  split: train
+  bounds:
+  - 634720.0
+  - 6860180.0
+  - 635044.0
+  - 6860504.0
+  n_annotations: 0
+  classes: []
+- nom: 78_saint_germain_marly_r0055_c0025.png
+  row: 55
+  col: 25
+  bloc:
+  - 633
+  - 6860
+  split: train
+  bounds:
+  - 633100.0
+  - 6859856.0
+  - 633424.0
+  - 6860180.0
+  n_annotations: 0
+  classes: []
