@@ -1,8 +1,9 @@
-# pre-process-data
+# training-models
 
-Audit et uniformisation des livraisons de données vecteur archéologiques (amont de
-l'entraînement des modèles RF-DETR sur Roboflow, consommés par le plugin QGIS
-`archeologia-pipeline`).
+Audit et uniformisation des livraisons de données vecteur archéologiques, construction
+des corpus d'entraînement multi-zones et entraînement des modèles RF-DETR (notebook
+Colab canonique `docs/google_collab/`), consommés par le plugin QGIS
+`archeologia-pipeline`.
 
 ## Setup
 

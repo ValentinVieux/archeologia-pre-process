@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 datasets/
+corpus/
 audits/
 tests/fixture_dataset/
 .claude/settings.local.json
