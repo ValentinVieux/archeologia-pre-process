@@ -116,6 +116,18 @@ def main() -> None:
                 "schema": "metriques_eval/1", "genere_le": date, "tache": "segmentation",
                 "modeles": {nom: {"global": bloc, "par_classe": {"a": bloc, "b": bloc}}},
             }), encoding="utf-8")
+        # modèle PROVISOIRE : dans le tableau (étiqueté) mais HORS évolution
+        prov = tmp / "fours" / "runs" / "training" / "fours_prov" / "evaluation"
+        prov.mkdir(parents=True)
+        bloc_p = dict(ce.bloc_metriques(ENREGS, 0.05), F1=0.5)
+        prov.joinpath("metriques_eval.json").write_text(json.dumps({
+            "schema": "metriques_eval/1", "genere_le": "2026-08-30T10:00:00",
+            "tache": "segmentation",
+            "modeles": {"fours_prov_x": {"global": bloc_p, "par_classe": {"a": bloc_p}}},
+        }), encoding="utf-8")
+        prov.joinpath("PROVISOIRE.txt").write_text("data retravaillées demain",
+                                                   encoding="utf-8")
+
         vide = tmp / "verdun" / "runs" / "training" / "verdun_v1"
         vide.mkdir(parents=True)
         vide.joinpath("metrics.csv").write_text("epoch\n", encoding="utf-8")
@@ -130,6 +142,9 @@ def main() -> None:
         assert "enclos_seg_v1 → enclos_seg_v2" in page  # ordre des versions par date
         assert "<polyline" in page  # sparklines
         assert "verdun_v1" in page and "sans mesure" in page.lower()  # reste-à-faire
+        assert "fours_prov_x" in page and "[provisoire]" in page  # étiqueté au tableau
+        assert "fours_prov_x → " not in page and "→ fours_prov_x" not in page, \
+            "un modèle provisoire ne doit pas entrer dans l'évolution"
         assert "corrompu" in page and "⚠" in page  # fichier cassé = warning, pas crash
 
     print("OK — courbes_eval (prf/ap50/resumer/empreinte) + tableau_modeles")

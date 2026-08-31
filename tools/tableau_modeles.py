@@ -11,6 +11,8 @@ checkpoints/…, GoogleDriveFS oblige) — et génère UN index.html statique
     ordonnées par date de génération ;
   - les runs `runs/training/<run>` SANS metriques_eval.json sont listés « sans
     mesure » (trace le reste-à-faire) ;
+  - un fichier `PROVISOIRE.txt` à côté du metriques_eval.json = modèle voué au
+    remplacement : étiqueté dans le tableau, EXCLU de l'évolution par classe ;
   - fichiers illisibles = avertissements dans la page, jamais un crash
     (GoogleDriveFS fragile).
 
@@ -102,11 +104,16 @@ def construire(racine):
     familles = {}
     for p, data in evals:
         fam = famille_de(p, racine)
+        # PROVISOIRE.txt à côté de metriques_eval.json = modèle voué au remplacement
+        # (data retravaillées, réentraînement prévu) : gardé dans le tableau avec
+        # son étiquette, EXCLU de l'évolution par classe. Le marqueur meurt avec
+        # le run quand il est supprimé.
+        provisoire = (p.parent / "PROVISOIRE.txt").exists()
         for nom, m in data.get("modeles", {}).items():
             familles.setdefault(fam, []).append({
                 "nom": nom, "date": data.get("genere_le", ""), "tache": data.get("tache", "?"),
                 "global": m.get("global", {}), "par_classe": m.get("par_classe", {}),
-                "dossier": p.parent,
+                "dossier": p.parent, "provisoire": provisoire,
             })
     for lignes in familles.values():
         lignes.sort(key=lambda l: (l["date"], l["nom"]))
@@ -146,8 +153,9 @@ def construire(racine):
             def cell(v):
                 return "—" if v is None else (f"{v:.3f}" if isinstance(v, float) else str(v))
 
+            etiquette = " <span class='warn'>[provisoire]</span>" if l["provisoire"] else ""
             parties.append(
-                f"<tr><td>{e(l['nom'])}</td><td>{e(l['date'][:10])}</td>"
+                f"<tr><td>{e(l['nom'])}{etiquette}</td><td>{e(l['date'][:10])}</td>"
                 f"<td>{e(l['tache'])}</td><td>{cell(g.get('seuil_f1max'))}</td>"
                 f"<td>{cell(g.get('F1'))}</td><td>{cell(g.get('P'))}</td>"
                 f"<td>{cell(g.get('R'))}</td><td>{cell(g.get('AP50'))}</td>"
@@ -155,9 +163,12 @@ def construire(racine):
                 f"<td><a href='{e(lien)}/courbes_seuils_pr.png'>courbes</a></td></tr>")
         parties.append("</table>")
 
-        # évolution par classe : dernière valeur par nom de modèle, ordre par date
+        # évolution par classe : dernière valeur par nom de modèle, ordre par date ;
+        # les modèles PROVISOIRES (marqueur dans evaluation/) n'entrent pas dans la série
         derniers = {}
         for l in lignes:  # déjà triées par date — la plus récente écrase
+            if l["provisoire"]:
+                continue
             derniers[l["nom"]] = l
         serie = sorted(derniers.values(), key=lambda l: (l["date"], l["nom"]))
         classes = sorted({c for l in serie for c in l["par_classe"]})
