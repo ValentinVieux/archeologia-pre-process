@@ -6,11 +6,13 @@ tools/courbes_eval.py), marche élaguée des dossiers lourds (dataset/corpus/
 checkpoints/…, GoogleDriveFS oblige) — et génère UN index.html statique
 (zéro JS, CSS inline) :
   - par famille de modèles (1er segment du chemin relatif) : tableau des évaluations
-    (tâche, seuil F1-max, F1, P, R, AP50, n_gt, IoU médian, lien vers les planches) ;
+    (tâche, seuil F1-max, F1, P, R, AP50, n_gt, IoU médian, lien vers les planches)
+    + les planches de courbes INTÉGRÉES en blocs repliables (un par dossier
+    d'évaluation, images en chargement paresseux) ;
   - par classe : sparklines SVG de l'évolution (F1, AP50, seuil) entre versions,
     ordonnées par date de génération ;
-  - les runs `runs/training/<run>` SANS metriques_eval.json sont listés « sans
-    mesure » (trace le reste-à-faire) ;
+  - les runs `runs/training/<run>` SANS metriques_eval.json sont seulement COMPTÉS
+    dans l'en-tête (liste supprimée le 2026-09-02 à la demande de l'utilisateur) ;
   - un fichier `PROVISOIRE.txt` à côté du metriques_eval.json = modèle voué au
     remplacement : étiqueté dans le tableau, EXCLU de l'évolution par classe ;
   - fichiers illisibles = avertissements dans la page, jamais un crash
@@ -128,6 +130,9 @@ def construire(racine):
         "th{background:#eee}details{margin-bottom:1.2em}summary{font-size:17px;",
         "font-weight:600;cursor:pointer}.val{font-size:11px;color:#555}",
         ".note{color:#777;font-size:12px}.warn{color:#a33;font-size:12px}",
+        "details details{margin:.2em 0}details details summary{font-size:13px;",
+        "font-weight:500;color:#1f4e79}details details img{max-width:100%;",
+        "display:block;margin:.3em 0;border:1px solid #ddd;background:#fff}",
         "h3{margin:.6em 0 .2em;font-size:14px}</style></head><body>",
         "<h1>Modèles — métriques d'évaluation</h1>",
         f"<p class='note'>Généré le {datetime.now().isoformat(timespec='seconds')} par "
@@ -143,7 +148,7 @@ def construire(racine):
     for fam in sorted(familles):
         lignes = familles[fam]
         parties.append(f"<details open><summary>{e(fam)}</summary>")
-        parties.append("<table><tr><th>modèle</th><th>date</th><th>tâche</th>"
+        parties.append("<table><tr><th>modèle</th><th>date éval</th><th>tâche</th>"
                        "<th>seuil F1-max</th><th>F1</th><th>P</th><th>R</th><th>AP50</th>"
                        "<th>n_gt</th><th>IoU méd.</th><th>planches</th></tr>")
         for l in lignes:
@@ -186,14 +191,25 @@ def construire(racine):
                                f"<td>{sparkline(col('seuil_f1max'))}</td>"
                                f"<td>{'—' if ngt is None else ngt}</td></tr>")
             parties.append("</table>")
+
+        # planches intégrées : un bloc repliable par dossier d'évaluation de la
+        # famille (plusieurs modèles d'une même éval superposée partagent le bloc)
+        vus = {}
+        for l in lignes:
+            vus.setdefault(l["dossier"], l["date"])
+        for dossier, date in vus.items():
+            imgs = [n for n in ("courbes_seuils_pr.png", "f1_par_classe.png",
+                                "zones_et_masques.png") if (dossier / n).exists()]
+            if not imgs:
+                continue
+            rel = os.path.relpath(dossier, racine).replace("\\", "/")
+            parties.append(f"<details><summary>courbes — {e(dossier.parent.name)} "
+                           f"({e(date[:10])})</summary>")
+            for n in imgs:
+                parties.append(f"<img src='{e(rel)}/{n}' alt='{e(n)}' loading='lazy'>")
+            parties.append("</details>")
         parties.append("</details>")
 
-    if sans_mesure:
-        parties.append("<details open><summary>Runs sans mesure "
-                       f"({len(sans_mesure)})</summary><ul>")
-        for run in sans_mesure:
-            parties.append(f"<li class='note'>{e(str(run.relative_to(racine)))}</li>")
-        parties.append("</ul></details>")
     parties.append("</body></html>")
     return "\n".join(parties)
 

@@ -179,6 +179,9 @@ def main() -> None:
                 "schema": "metriques_eval/1", "genere_le": date, "tache": "segmentation",
                 "modeles": {nom: {"global": bloc, "par_classe": {"a": bloc, "b": bloc}}},
             }), encoding="utf-8")
+        # planches présentes pour enclos_v2 seulement -> bloc de courbes intégré
+        (tmp / "enclos" / "runs" / "training" / "enclos_v2" / "evaluation"
+         / "courbes_seuils_pr.png").write_bytes(b"png factice")
         # modèle PROVISOIRE : dans le tableau (étiqueté) mais HORS évolution
         prov = tmp / "fours" / "runs" / "training" / "fours_prov" / "evaluation"
         prov.mkdir(parents=True)
@@ -204,7 +207,12 @@ def main() -> None:
         assert "0.710" in page and "0.620" in page
         assert "enclos_seg_v1 → enclos_seg_v2" in page  # ordre des versions par date
         assert "<polyline" in page  # sparklines
-        assert "verdun_v1" in page and "sans mesure" in page.lower()  # reste-à-faire
+        assert "verdun_v1" not in page, "liste des runs sans mesure supprimée (2026-09-02)"
+        assert "sans mesure" in page.lower()  # le COMPTEUR reste dans l'en-tête
+        # courbes intégrées : bloc repliable là où la planche existe, pas ailleurs
+        assert "courbes — enclos_v2" in page and "loading='lazy'" in page
+        assert "enclos_v2/evaluation/courbes_seuils_pr.png'" in page
+        assert "courbes — enclos_v1" not in page  # pas de planche -> pas de bloc
         assert "fours_prov_x" in page and "[provisoire]" in page  # étiqueté au tableau
         assert "fours_prov_x → " not in page and "→ fours_prov_x" not in page, \
             "un modèle provisoire ne doit pas entrer dans l'évolution"
