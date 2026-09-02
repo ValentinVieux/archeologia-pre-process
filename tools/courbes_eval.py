@@ -14,7 +14,11 @@ Pour 1 à N modèles évalués sur le MÊME jeu COCO, produit :
   - appariements.json : appariements bruts en CACHE, avec empreinte de
     provenance `_meta` — relance à empreinte identique = re-rendu sans
     inférence ; empreinte différente = erreur ; cache legacy sans empreinte
-    accepté seulement avec --adopter-cache.
+    accepté seulement avec --adopter-cache. Cache par MODÈLE (2026-09-02) :
+    `--reprendre-de <dossier_eval>` (répétable) adopte les appariements des
+    modèles déjà évalués ailleurs à provenance identique (run + par-modèle) ;
+    seuls les modèles encore manquants passent à l'inférence — ajouter un
+    concurrent à une comparaison ne réinfère plus les anciens.
 
 Protocole (doctrine maison, cf. docs/rapport_test_adaf.html) : inférence au
 plancher 0,05, appariement glouton par confiance décroissante, class-aware,
@@ -376,26 +380,79 @@ def construire_meta(plancher, coco, fusion, modeles, tache=None):
     return meta
 
 
-def meta_divergence(attendu, cache):
-    """Première divergence entre l'empreinte attendue (CLI) et celle du cache, ou None."""
+def divergence_run(attendu, cache):
+    """Divergence des paramètres de RUN (plancher/coco/fusion) entre empreintes, ou None."""
     if cache.get("plancher") != attendu["plancher"]:
         return f"plancher {cache.get('plancher')} != {attendu['plancher']}"
     if cache.get("coco", "").casefold() != attendu["coco"].casefold():
         return f"coco {cache.get('coco')} != {attendu['coco']}"
     if cache.get("fusion") != attendu["fusion"]:
         return f"fusion {cache.get('fusion')} != {attendu['fusion']}"
+    return None
+
+
+def divergence_modele(nom, att, cac):
+    """Divergence de l'empreinte PAR MODÈLE (poids/résolution/taille), ou None."""
+    if cac.get("poids", "").casefold() != att["poids"].casefold():
+        return f"{nom} : poids {cac.get('poids')} != {att['poids']}"
+    if cac.get("resolution") != att["resolution"]:
+        return f"{nom} : résolution {cac.get('resolution')} != {att['resolution']}"
+    if (att["taille_octets"] is not None and cac.get("taille_octets") is not None
+            and cac["taille_octets"] != att["taille_octets"]):
+        return f"{nom} : taille des poids {cac['taille_octets']} != {att['taille_octets']}"
+    return None
+
+
+def meta_divergence(attendu, cache):
+    """Première divergence entre l'empreinte attendue (CLI) et celle du cache, ou None."""
+    div = divergence_run(attendu, cache)
+    if div:
+        return div
     if sorted(cache.get("modeles", {})) != sorted(attendu["modeles"]):
         return f"modèles {sorted(cache.get('modeles', {}))} != {sorted(attendu['modeles'])}"
     for nom, att in attendu["modeles"].items():
-        cac = cache["modeles"][nom]
-        if cac.get("poids", "").casefold() != att["poids"].casefold():
-            return f"{nom} : poids {cac.get('poids')} != {att['poids']}"
-        if cac.get("resolution") != att["resolution"]:
-            return f"{nom} : résolution {cac.get('resolution')} != {att['resolution']}"
-        if (att["taille_octets"] is not None and cac.get("taille_octets") is not None
-                and cac["taille_octets"] != att["taille_octets"]):
-            return f"{nom} : taille des poids {cac['taille_octets']} != {att['taille_octets']}"
+        div = divergence_modele(nom, att, cache["modeles"][nom])
+        if div:
+            return div
     return None
+
+
+def reprendre_modeles(sources, meta_attendu, modeles, donnees, tache):
+    """Cache par MODÈLE : adopte depuis d'autres sorties d'éval les appariements
+    des modèles du CLI encore manquants. Exigences : empreinte de RUN identique
+    (plancher/coco/fusion), tâche compatible, empreinte PAR MODÈLE identique
+    (même nom, mêmes poids, même résolution). Un modèle présent dans la source
+    sous le bon nom mais à empreinte divergente = ERREUR (jamais de réinférence
+    silencieuse de ce que l'appelant croyait repris) ; une source qui n'apporte
+    rien est tolérée (modèles déjà couverts ou absents). Retourne la tâche."""
+    for dossier in sources:
+        chemin = os.path.join(dossier, "appariements.json")
+        if not os.path.exists(chemin):
+            sys.exit(f"ERREUR : --reprendre-de {dossier} : appariements.json absent.")
+        brut = json.load(open(chemin, encoding="utf-8"))
+        meta_src = brut.pop("_meta", None)
+        if meta_src is None:
+            sys.exit(f"ERREUR : --reprendre-de {dossier} : cache sans empreinte "
+                     "(legacy) — inutilisable pour la reprise par modèle.")
+        div = divergence_run(meta_attendu, meta_src)
+        if div:
+            sys.exit(f"ERREUR : --reprendre-de {dossier} : autre provenance ({div}).")
+        if tache is not None and meta_src.get("tache") not in (None, tache):
+            sys.exit(f"ERREUR : --reprendre-de {dossier} : tâche "
+                     f"{meta_src.get('tache')} != {tache}.")
+        tache = tache or meta_src.get("tache")
+        pris = []
+        for nom in modeles:
+            if nom in donnees or nom not in brut:
+                continue
+            div = divergence_modele(nom, meta_attendu["modeles"][nom],
+                                    meta_src.get("modeles", {}).get(nom, {}))
+            if div:
+                sys.exit(f"ERREUR : --reprendre-de {dossier} : {div}.")
+            donnees[nom] = brut[nom]
+            pris.append(nom)
+        print(f"repris de {dossier} : {', '.join(pris) if pris else 'rien'}")
+    return tache
 
 
 def main():
@@ -416,6 +473,11 @@ def main():
     ap.add_argument("--sans-autocontrole", action="store_true")
     ap.add_argument("--adopter-cache", action="store_true",
                     help="accepter un appariements.json legacy sans empreinte _meta")
+    ap.add_argument("--reprendre-de", action="append", default=[], metavar="DOSSIER",
+                    help="sortie d'une éval précédente dont appariements.json fournit "
+                         "les appariements des modèles du CLI encore manquants (cache "
+                         "par modèle : empreintes de run et par-modèle vérifiées, seuls "
+                         "les modèles restants sont inférés) — répétable")
     a = ap.parse_args()
 
     modeles = {}
@@ -444,10 +506,11 @@ def main():
     cache = os.path.join(a.out, "appariements.json")
     meta_attendu = construire_meta(a.plancher, a.coco, fusion, modeles)
     provenance_cache = "calculee"
+    donnees, tache, modifie = {}, a.tache, False
 
     if os.path.exists(cache):
-        donnees = json.load(open(cache, encoding="utf-8"))
-        meta_cache = donnees.pop("_meta", None)
+        brut = json.load(open(cache, encoding="utf-8"))
+        meta_cache = brut.pop("_meta", None)
         if meta_cache is None:
             if not a.adopter_cache:
                 sys.exit(f"ERREUR : cache sans empreinte de provenance : {cache}\n"
@@ -457,35 +520,63 @@ def main():
             tache = a.tache or "segmentation"  # les caches legacy viennent du chemin seg
             print(f"AVERTISSEMENT : cache adopté sans empreinte ({cache}), "
                   f"tâche supposée {tache}")
-            if sorted(donnees) != sorted(modeles):
-                sys.exit(f"ERREUR : modèles du cache {sorted(donnees)} != CLI "
+            if sorted(brut) != sorted(modeles):
+                sys.exit(f"ERREUR : modèles du cache {sorted(brut)} != CLI "
                          f"{sorted(modeles)} — nommer les --modele comme dans le cache.")
+            donnees = brut
         else:
-            div = meta_divergence(meta_attendu, meta_cache)
+            div = divergence_run(meta_attendu, meta_cache)
             if div:
                 sys.exit(f"ERREUR : le cache {cache} vient d'une autre provenance ({div}).\n"
                          "Supprimer le cache ou changer --out.")
+            # cache par MODÈLE : le cache de --out peut couvrir un sous-ensemble
+            # du CLI (les manquants seront repris ailleurs ou inférés) ; un modèle
+            # du cache absent du CLI reste une erreur (la sortie l'écraserait).
+            for nom in brut:
+                if nom not in modeles:
+                    sys.exit(f"ERREUR : le cache {cache} contient '{nom}' absent du CLI — "
+                             "reprendre ce modèle au CLI ou changer --out.")
+                div = divergence_modele(nom, meta_attendu["modeles"][nom],
+                                        meta_cache.get("modeles", {}).get(nom, {}))
+                if div:
+                    sys.exit(f"ERREUR : le cache {cache} vient d'une autre provenance "
+                             f"({div}).\nSupprimer le cache ou changer --out.")
+            donnees = brut
             tache = meta_cache["tache"]
             if a.tache and a.tache != tache:
                 sys.exit(f"ERREUR : cache en tâche {tache}, --tache {a.tache} demandé.")
-        print("cache reutilise :", cache)
-    else:
+        print(f"cache reutilise : {cache} ({len(donnees)} modèle(s))")
+
+    if a.reprendre_de:
+        if provenance_cache == "adoptee_sans_empreinte":
+            sys.exit("ERREUR : --reprendre-de est incompatible avec un cache legacy adopté.")
+        n_avant = len(donnees)
+        tache = reprendre_modeles(a.reprendre_de, meta_attendu, modeles, donnees, tache)
+        modifie = modifie or len(donnees) > n_avant
+
+    manquants = {nom: cfg for nom, cfg in modeles.items() if nom not in donnees}
+    if manquants:
         # classes par défaut = catégories du premier split
         coco0 = json.load(open(os.path.join(splits[0][1], "_annotations.coco.json"),
                                encoding="utf-8"))
         cats_coco = [c["name"] for c in coco0["categories"]]
-        for cfg in modeles.values():
+        for cfg in manquants.values():
             if cfg["noms"] is None:
                 cfg["noms"] = cats_coco
-        donnees, tache = inferer(modeles, splits, fusion, a.plancher, a.tache)
+        infere, tache = inferer(manquants, splits, fusion, a.plancher, tache)
         if not a.sans_autocontrole:
-            for nom, dd in donnees.items():
+            for nom, dd in infere.items():
                 _, r, _ = prf(dd["enregs"], a.plancher, a.classe_controle)
                 if r < RAPPEL_MIN:
                     cible = a.classe_controle or "global"
                     sys.exit(f"ERREUR autocontrôle : rappel plancher de {nom} ({cible}) = "
                              f"{r:.3f} < {RAPPEL_MIN} — chargement/offset suspect. Cache NON "
                              "écrit. (--sans-autocontrole pour un modèle légitimement faible)")
+        donnees.update(infere)
+        modifie = True
+
+    donnees = {nom: donnees[nom] for nom in modeles}  # ordre du CLI (légendes des planches)
+    if modifie and provenance_cache == "calculee":
         meta_attendu["tache"] = tache
         json.dump({"_meta": meta_attendu, **donnees}, open(cache, "w", encoding="utf-8"))
 

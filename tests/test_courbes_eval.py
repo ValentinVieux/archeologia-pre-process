@@ -102,6 +102,69 @@ def main() -> None:
     autre3["plancher"] = 0.1
     assert "plancher" in ce.meta_divergence(meta, autre3)
 
+    # --- reprise par modèle (--reprendre-de) ------------------------------
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        modeles2 = {"mA": {"poids": "D:/pA/best.pth", "resolution": 648, "noms": None},
+                    "mB": {"poids": "D:/pB/best.pth", "resolution": 1032, "noms": None}}
+        attendu = ce.construire_meta(0.05, "D:/corpus", {}, modeles2)
+        src_a = tmp / "evalA"
+        src_a.mkdir()
+        meta_a = ce.construire_meta(0.05, "D:/corpus", {}, {"mA": modeles2["mA"]},
+                                    tache="segmentation")
+        src_a.joinpath("appariements.json").write_text(
+            json.dumps({"_meta": meta_a, "mA": {"decal": 0, "enregs": ENREGS}}),
+            encoding="utf-8")
+        donnees2 = {}
+        tache2 = ce.reprendre_modeles([str(src_a)], attendu, modeles2, donnees2, None)
+        assert tache2 == "segmentation" and list(donnees2) == ["mA"], donnees2
+        assert donnees2["mA"]["enregs"] == ENREGS  # appariements repris tels quels
+        # source redondante (mA déjà couvert, mB absent) : tolérée, n'apporte rien
+        tache2 = ce.reprendre_modeles([str(src_a)], attendu, modeles2, donnees2, tache2)
+        assert list(donnees2) == ["mA"]
+        # empreinte par-modèle divergente (résolution) sous le bon nom = refus
+        meta_div = json.loads(json.dumps(meta_a))
+        meta_div["modeles"]["mA"]["resolution"] = 504
+        src_b = tmp / "evalB"
+        src_b.mkdir()
+        src_b.joinpath("appariements.json").write_text(
+            json.dumps({"_meta": meta_div, "mA": {"decal": 0, "enregs": ENREGS}}),
+            encoding="utf-8")
+        try:
+            ce.reprendre_modeles([str(src_b)], attendu, modeles2, {}, "segmentation")
+            raise AssertionError("divergence par modèle non détectée")
+        except SystemExit:
+            pass
+        # provenance de RUN différente (fusion) = refus
+        meta_run = ce.construire_meta(0.05, "D:/corpus", {"x": "y"},
+                                      {"mA": modeles2["mA"]}, tache="segmentation")
+        src_c = tmp / "evalC"
+        src_c.mkdir()
+        src_c.joinpath("appariements.json").write_text(
+            json.dumps({"_meta": meta_run, "mA": {"decal": 0, "enregs": ENREGS}}),
+            encoding="utf-8")
+        try:
+            ce.reprendre_modeles([str(src_c)], attendu, modeles2, {}, None)
+            raise AssertionError("divergence de run non détectée")
+        except SystemExit:
+            pass
+        # cache legacy sans empreinte = refus explicite
+        src_d = tmp / "evalD"
+        src_d.mkdir()
+        src_d.joinpath("appariements.json").write_text(
+            json.dumps({"mA": {"decal": 0, "enregs": ENREGS}}), encoding="utf-8")
+        try:
+            ce.reprendre_modeles([str(src_d)], attendu, modeles2, {}, None)
+            raise AssertionError("cache legacy accepté à tort")
+        except SystemExit:
+            pass
+        # tâche incompatible = refus
+        try:
+            ce.reprendre_modeles([str(src_a)], attendu, modeles2, {}, "detection")
+            raise AssertionError("tâche incompatible acceptée à tort")
+        except SystemExit:
+            pass
+
     # --- dashboard tableau_modeles ----------------------------------------
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
@@ -147,7 +210,7 @@ def main() -> None:
             "un modèle provisoire ne doit pas entrer dans l'évolution"
         assert "corrompu" in page and "⚠" in page  # fichier cassé = warning, pas crash
 
-    print("OK — courbes_eval (prf/ap50/resumer/empreinte) + tableau_modeles")
+    print("OK — courbes_eval (prf/ap50/resumer/empreinte/reprendre-de) + tableau_modeles")
 
 
 if __name__ == "__main__":
