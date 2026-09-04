@@ -3,8 +3,8 @@
 # n'est PAS utilisé : le COCO dispatché fait foi). LD 0,5 m (VRT des jpg).
 dataset: fours_charb_25_haut_doubs_ld648_v1
 zone: bourgogne_franche_comte/25_haut_doubs
-raster: D:/entrainement_fours_charbonnieres/zones/25_haut_doubs/ld.vrt
-gpkg: D:/entrainement_fours_charbonnieres/zones/25_haut_doubs/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/zones/25_haut_doubs/ld.vrt
+gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg
 couches:
   charbonniere:
     classe: charbonniere

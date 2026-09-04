@@ -4,8 +4,8 @@
 # LD 0,5 m généré (generer_ld, chaîne française) depuis 208 dalles MNT IGN.
 dataset: fours_charb_25_chailluz_ld648_v1
 zone: bourgogne_franche_comte/25_besancon_chailluz
-raster: D:/entrainement_fours_charbonnieres/chailluz/chailluz_ld.tif
-gpkg: D:/entrainement_fours_charbonnieres/zones/25_besancon_chailluz/chailluz_entites.gpkg
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/25_besancon_chailluz/chailluz_entites.gpkg
 couches:
   charbonniere:
     classe: charbonniere

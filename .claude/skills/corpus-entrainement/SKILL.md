@@ -6,7 +6,7 @@ description: >
   boucle de vérification, manifeste enrichi, dépôt model-training. Utiliser quand
   l'utilisateur dit « assemble le corpus X », « construis le corpus », « ajoute la
   zone Y au corpus », « dépose le corpus sur le Drive », « corpus v2 ».
-argument-hint: <nom du corpus, ex. fours_charbonnieres_648_v2>
+argument-hint: <nom du corpus, ex. ponctuelles_648_v2>
 entrees:
   - "configs/corpus_<nom>.yaml (existante ou à écrire sur gabarit)"
   - "datasets/<dataset>/ locaux CONFORMES (verif_dataset), split_manifest.yaml présents"

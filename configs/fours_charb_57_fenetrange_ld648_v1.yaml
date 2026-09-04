@@ -2,8 +2,8 @@
 # classe charbonnière UNIQUE actée 2026-08-21). LD 0,5 m (VRT des jpg d'origine).
 dataset: fours_charb_57_fenetrange_ld648_v1
 zone: grand_est/57_fenetrange
-raster: D:/entrainement_fours_charbonnieres/zones/57_fenetrange/ld.vrt
-gpkg: D:/entrainement_fours_charbonnieres/zones/57_fenetrange/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+gpkg: D:/entrainement_ponctuelles/zones/57_fenetrange/annotations_coco.gpkg
 couches:
   charbonniere:
     classe: charbonniere

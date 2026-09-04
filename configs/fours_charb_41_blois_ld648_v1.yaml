@@ -4,8 +4,8 @@
 # LD 0,5 m généré (generer_ld) depuis les mosaïques MNT e-k du raw.
 dataset: fours_charb_41_blois_ld648_v1
 zone: centre_val_de_loire/41_blois
-raster: D:/entrainement_fours_charbonnieres/blois/blois_ld.tif
-gpkg: D:/entrainement_fours_charbonnieres/zones/41_blois/blois_entites.gpkg
+raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/41_blois/blois_entites.gpkg
 couches:
   charbonniere:
     classe: charbonniere

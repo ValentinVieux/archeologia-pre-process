@@ -3,9 +3,17 @@
 Pour 1 à N modèles évalués sur le MÊME jeu COCO, produit :
   - metriques_eval.json : sortie CANONIQUE machine-readable (schéma metriques_eval/1)
     — seuils F1-max global + par classe, P/R/F1, AP@50 toutes-points, par zone,
-    provenance (poids, résolution, dataset). C'est LA source des seuils du
-    model_card (confidence_default + confidence_per_class) et du dashboard
-    (tools/tableau_modeles.py) ;
+    par zone × classe, provenance (poids, résolution, dataset). C'est LA source
+    des seuils du model_card (confidence_default + confidence_per_class) et du
+    dashboard (tools/tableau_modeles.py). Par modèle : `global` et
+    `par_classe[c]` (seuil_f1max, F1, P, R, AP50, n_gt, iou_median) ;
+    `par_zone[z]` (P, R, n_gt au seuil F1-max global) ; `par_zone_classe[z][c]`
+    (2026-09-03, additif : n_gt, tp, fp, R, P au seuil F1-max GLOBAL,
+    R_seuil_classe + fp_seuil_classe au seuil F1-max de LA classe, R_max =
+    rappel avec TOUS les matches du cache ; R/P null quand n_gt / tp+fp = 0 —
+    toutes les classes de par_classe figurent dans chaque zone). Une éval
+    antérieure au 2026-09-03 se complète sans GPU par
+    tools/completer_metriques_eval.py ;
   - courbes_seuils_pr.png : P/confiance, R/confiance, F1/confiance, courbe P-R
     (AP@0,5 toutes-points), courbes SUPERPOSÉES et point F1-max annoté ;
   - f1_par_classe.png (si >1 classe après fusion) ;
@@ -221,6 +229,41 @@ def classes_presentes(donnees):
                   | {c for dd in donnees.values() for e in dd["enregs"] for c in e["gt_classes"]})
 
 
+def par_zone_classe(enregs, seuil_global, seuils_classe, classes):
+    """Détail ZONE × CLASSE d'un modèle (fonction pure, sans GPU) — 2026-09-03.
+
+    Par zone puis par classe (toutes les `classes`, n_gt 0 possible) :
+    n_gt ; tp/fp/R/P au `seuil_global` (F1-max global, comme par_zone) ;
+    R_seuil_classe/fp_seuil_classe au seuil de LA classe (`seuils_classe[c]`) ;
+    R_max = rappel avec TOUS les matches du cache (inférence au plancher) —
+    ce que le modèle retrouve au mieux. R null si n_gt == 0, P null si
+    tp + fp == 0 (PAS la convention P = 1,0 de par_zone : ici l'absence de
+    prédiction n'est pas un mérite). Arrondi 4 décimales.
+    """
+    def ratio(num, den):
+        return round(num / den, 4) if den else None
+
+    out = {}
+    for z in sorted({e.get("zone", "") for e in enregs if e.get("zone")}):
+        sous = [e for e in enregs if e.get("zone") == z]
+        out[z] = {}
+        for c in classes:
+            sc = seuils_classe[c]
+            ngt = sum(1 for e in sous for g in e["gt_classes"] if g == c)
+            confs_tp = [m[0] for e in sous for m in e["matches"] if m[2] == c]
+            confs_fp = [f[0] for e in sous for f in e["fps"] if f[1] == c]
+            tp = sum(1 for v in confs_tp if v >= seuil_global)
+            fp = sum(1 for v in confs_fp if v >= seuil_global)
+            out[z][c] = {
+                "n_gt": ngt, "tp": tp, "fp": fp,
+                "R": ratio(tp, ngt), "P": ratio(tp, tp + fp),
+                "R_seuil_classe": ratio(sum(1 for v in confs_tp if v >= sc), ngt),
+                "fp_seuil_classe": sum(1 for v in confs_fp if v >= sc),
+                "R_max": ratio(len(confs_tp), ngt),
+            }
+    return out
+
+
 def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_cache):
     """Construit le dict metriques_eval/1 — LA sortie canonique de l'outil."""
     classes = classes_presentes(donnees)
@@ -253,15 +296,18 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
             par_zone[z] = {"P": round(tp / (tp + fp), 4) if tp + fp else 1.0,
                            "R": round(tp / ngt, 4) if ngt else 0.0, "n_gt": int(ngt)}
         info = meta_modeles.get(nom, {})
+        par_classe = {cl: bloc_metriques(enregs, plancher, cl) for cl in classes}
         resume["modeles"][nom] = {
             "poids": info.get("poids"),
             "resolution": info.get("resolution"),
             "class_offset": dd.get("decal"),
             "global": bloc_global,
-            "par_classe": {cl: bloc_metriques(enregs, plancher, cl) for cl in classes},
+            "par_classe": par_classe,
         }
         if par_zone:
             resume["modeles"][nom]["par_zone"] = par_zone
+            resume["modeles"][nom]["par_zone_classe"] = par_zone_classe(
+                enregs, s0, {cl: b["seuil_f1max"] for cl, b in par_classe.items()}, classes)
     return resume
 
 

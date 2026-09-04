@@ -7,9 +7,12 @@ tools/courbes_eval.py)
 Recalcule depuis appariements.json, par une implémentation VOLONTAIREMENT
 différente (python pur, recomptage brut par seuil, enveloppe de précision par
 boucle arrière — zéro code partagé avec courbes_eval), les métriques publiées
-dans metriques_eval.json : global, par_classe, par_zone. Égalité exacte exigée
-après arrondi à 4 décimales. Contrôles de cohérence : schémas, empreinte _meta
-vs champs publiés, seuil_f1max ∈ grille, IoU des matches ≥ 0,5, sommes n_gt.
+dans metriques_eval.json : global, par_classe, par_zone, par_zone_classe (bloc
+additif du 2026-09-03 : absent = AVERTISSEMENT, pas de non-conformité — le
+compléter par tools/completer_metriques_eval.py). Égalité exacte exigée après
+arrondi à 4 décimales. Contrôles de cohérence : schémas, empreinte _meta vs
+champs publiés, seuil_f1max ∈ grille, IoU des matches ≥ 0,5, sommes n_gt (par
+classe = global ; par zone × classe = par zone).
 
 L'inférence elle-même est couverte par l'autocontrôle de chargement de
 courbes_eval (rappel plancher >= 0,30) ; CE contrôleur garantit que les CHIFFRES
@@ -23,10 +26,24 @@ from pathlib import Path
 from statistics import median
 
 RAPPORT: list[str] = []
+AVERTISSEMENTS: list[str] = []
 
 
 def probleme(msg: str) -> None:
     RAPPORT.append(msg)
+
+
+def zone_classe_local(sous, classe, s0, s_classe):
+    """Bloc zone × classe attendu (recomptage brut ; R/P None quand dénominateur nul)."""
+    tp, fp, ngt = compte(sous, s0, classe)
+    tp_cl, fp_cl, _ = compte(sous, s_classe, classe)
+    tp_max = sum(1 for e in sous for m in e["matches"] if m[2] == classe)  # TOUS les matches
+    return {"n_gt": ngt, "tp": tp, "fp": fp,
+            "R": round(tp / ngt, 4) if ngt else None,
+            "P": round(tp / (tp + fp), 4) if tp + fp else None,
+            "R_seuil_classe": round(tp_cl / ngt, 4) if ngt else None,
+            "fp_seuil_classe": fp_cl,
+            "R_max": round(tp_max / ngt, 4) if ngt else None}
 
 
 def grille_locale(plancher: float) -> list[float]:
@@ -151,6 +168,7 @@ def main() -> None:
     if sorted(cache) != sorted(metriques.get("modeles", {})):
         probleme(f"modèles du cache {sorted(cache)} != publiés {sorted(metriques.get('modeles', {}))}")
 
+    n_zone_classe = 0
     for nom, dd in cache.items():
         enregs = dd["enregs"]
         publie = metriques["modeles"].get(nom)
@@ -193,6 +211,34 @@ def main() -> None:
                        "R": round(tp / ngt, 4) if ngt else 0.0, "n_gt": ngt}
             comparer(f"{nom}.par_zone.{z}", bloc_pub, attendu)
 
+        # par_zone_classe (2026-09-03) : même seuil s0, seuil de classe publié, R_max
+        zc_pub = publie.get("par_zone_classe")
+        if zones_pub and zc_pub is None:
+            AVERTISSEMENTS.append(f"{nom} : par_zone_classe absent (éval antérieure au "
+                                  "2026-09-03 : lancer completer_metriques_eval.py)")
+        elif zc_pub is not None:
+            n_zone_classe += 1
+            classes_pub = sorted(publie.get("par_classe") or {})
+            if sorted(zc_pub) != sorted(zones_pub):
+                probleme(f"{nom} : zones de par_zone_classe {sorted(zc_pub)} != par_zone")
+            for z, par_cl in zc_pub.items():
+                sous = [e for e in enregs if e.get("zone") == z]
+                if sorted(par_cl) != classes_pub:
+                    probleme(f"{nom}.par_zone_classe.{z} : classes {sorted(par_cl)} "
+                             f"!= par_classe {classes_pub}")
+                for cl, bloc_pub in par_cl.items():
+                    s_cl = (publie.get("par_classe") or {}).get(cl, {}).get("seuil_f1max")
+                    if s_cl is None:
+                        continue  # déjà signalé (classe hors par_classe)
+                    comparer(f"{nom}.par_zone_classe.{z}.{cl}", bloc_pub,
+                             zone_classe_local(sous, cl, s0, s_cl))
+                somme = sum(b.get("n_gt", 0) for b in par_cl.values())
+                if somme != (zones_pub.get(z) or {}).get("n_gt"):
+                    probleme(f"{nom}.par_zone_classe.{z} : somme n_gt {somme} "
+                             f"!= par_zone {(zones_pub.get(z) or {}).get('n_gt')}")
+
+    for av in AVERTISSEMENTS:
+        print("AVERTISSEMENT —", av)
     if RAPPORT:
         print(f"NON CONFORME — {len(RAPPORT)} divergence(s) :")
         for r in RAPPORT:
@@ -200,7 +246,8 @@ def main() -> None:
         sys.exit(1)
     n_modeles = len(cache)
     print(f"CONFORME — {n_modeles} modèle(s), grille {len(grille)} seuils, "
-          "global + par_classe + par_zone recalculés à l'identique")
+          "global + par_classe + par_zone recalculés à l'identique"
+          + (f" + par_zone_classe ({n_zone_classe} modèle(s))" if n_zone_classe else ""))
 
 
 if __name__ == "__main__":

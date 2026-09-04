@@ -68,7 +68,7 @@ entities:
     plugin_entity_id: charbonniere
     roboflow_classes: ["charbonnières"]
   - id: four
-    label_fr: Fours
+    label_fr: Fours à chaux
     morphology: circulaire
     status: canonical
     plugin_entity_id: four
