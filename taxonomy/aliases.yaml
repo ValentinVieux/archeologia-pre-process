@@ -75,6 +75,8 @@ aliases:
   - { raw: "indice archeo", entity_id: indice_archeo, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
   - { raw: "forage", entity_id: forage, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
   - { raw: "parquet", entity_id: parquet, source_dataset: 77_fontainebleau, context: "Digit_Polygone.shp, champ 'Type'", decided: "2026-07-27" }
+  # Vimy (62, Hauts-de-France) — audit 2026-09-04, lignes_vimy champ interp (rapport ONF : « axes de communication »)
+  - { raw: "Axe de circulation", entity_id: voie, source_dataset: 62_vimy, context: "lignes_vimy.shp, champ 'interp'", decided: "2026-09-04" }
 ignored:
   # champ 'type' — fourre-tout et objets sans signature LiDAR
   - { raw: "dépôt", source_dataset: data_bretagne_1, decided: "2026-07-16" }
@@ -211,3 +213,129 @@ ignored:
   - { raw: "1", source_dataset: 41_blois, decided: "2026-07-28" }
   - { raw: "2", source_dataset: 41_blois, decided: "2026-07-28" }
   - { raw: "Charbonnieres_dia_total", source_dataset: 41_blois, decided: "2026-07-28" }
+  # Vimy — audit 2026-09-04 : noms de couches
+  - { raw: "lignes_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "photos_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "points_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "polygones_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "preconisations_tranchees_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "preconisations_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "vimy_emprise", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "zonages_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "zones_prospectees_vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  # Vimy — audit 2026-09-04 : identifiants de sites VIM_* (num_site/id_site)
+  - { raw: "VIM_0001-1", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0001-2", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0002", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0003", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0006", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0008", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0010", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0013", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0014", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0016", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0016-1", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0016-2", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIM_0017", source_dataset: 62_vimy, decided: "2026-09-04" }
+  # Vimy — audit 2026-09-04 : directions des photos (photos_vimy.Direction)
+  - { raw: "E", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "NE", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "NO", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "SE", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "SO", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "V", source_dataset: 62_vimy, decided: "2026-09-04" }
+  # Vimy — audit 2026-09-04 : codes du parcellaire forestier ONF (vimy_emprise.*)
+  - { raw: "000001", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000002", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000003", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000004", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000005", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000006", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000007", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000008", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000009", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000010", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000011", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000012", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000013", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000014", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000015", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000016", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000017", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000018", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000019", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000020", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000021", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "000022", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "10", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "11", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "12", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "13", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "14", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "15", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "16", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "17", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "18", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "19", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "20", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "21", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "22", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "4", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "5", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "6", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "7", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "8", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "8505", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "850511", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "85051113", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "9", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "A", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "DO", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "F10087Y", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189128D", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189129E", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189130F", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189131G", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189132H", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189133I", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189134J", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189135K", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189136L", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189137M", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189138N", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189139O", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189140P", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189141Q", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189142R", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189143S", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189144T", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189145U", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189146V", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P00189147W", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P04910201W", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "P04910202X", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00001", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00002", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00003", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00004", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00005", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00006", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00007", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00008", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00009", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00010", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00011", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00012", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00013", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00014", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00015", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00016", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00017", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00018", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00019", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00020", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00021", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "VIMY_00022", source_dataset: 62_vimy, decided: "2026-09-04" }
+  - { raw: "vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
+  # Vimy — audit 2026-09-04 : autres attributs
