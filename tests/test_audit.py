@@ -42,7 +42,10 @@ def main() -> None:
     assert cand["fossé"]["match"]["entity_id"] == "fosse", cand["fossé"]
     # « indéterminé » a été ignoré lors de l'audit data_bretagne_1 (aliases.yaml ignored:)
     assert cand["indéterminé"]["match"]["status"] == "ignored", cand["indéterminé"]
-    assert cand["Fours à chaux"]["match"] is None
+    # 2026-09-03 : label_fr de `four` précisé en « Fours à chaux » (décision utilisateur) ->
+    # le nom brut « Fours à chaux » est désormais reconnu par le label (avant : inconnu)
+    assert cand["Fours à chaux"]["match"]["entity_id"] == "four", cand["Fours à chaux"]
+    assert cand["Fours à chaux"]["match"]["matched_on"] == "label_fr", cand["Fours à chaux"]
 
     # DBF utf-8 sans .cpg : accents intacts (pas de mojibake cp1252) et matchés
     assert cand["mégalithe"]["match"]["entity_id"] == "megalithe", cand.keys()

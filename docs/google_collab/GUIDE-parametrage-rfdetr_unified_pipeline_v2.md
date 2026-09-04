@@ -90,7 +90,11 @@ Sources : config.py @ 1.8.3, CHANGELOG 1.7.0,
 | PRECISION | bf16-mixed | amp auto | bf16 = plage dynamique de fp32, zéro loss scaling, zéro retuning ([Kalamkar 2019](https://arxiv.org/abs/1905.12322)) ; T4/V100 : repasser à 16-mixed |
 | SEED | 42 | None | Comparabilité des bras — ne jamais changer entre bras d'une même expérience |
 | AUG_CONFIG_NAME | AUG_AERIAL | HFlip seul | Flips H/V p=0.5 + Rotate 90° p=0.5 + brightness/contrast p=0.4. En vue nadir il n'y a pas de « haut » : le groupe D4 est gratuit et c'est l'augmentation au meilleur rendement mesuré en archéo-DL — **+0,11 mAP@50** chez [Guyot 2021](https://journal.caa-international.org/articles/10.5334/jcaa.64) (150 img, Bretagne, avec MOINS que ça). ⚠️ Nuance multicanal : LD/SLRM/SVF/O± sont isotropes, mais le **CVAT embarque un ombrage 315°** — une rotation crée des vues « éclairées du sud ». Assumé (l'augmentation s'applique à l'identique dans tous les bras, la comparaison reste équitable) ; à réexaminer si le bras CSL sous-performe étrangement |
-| CONFIDENCE_THRESHOLD | 0.3 | — | Provisoire : le seuil définitif = F1-max mesuré par courbes_eval (règle projet) |
+| CONFIDENCE_THRESHOLD | 0.3 | — | Provisoire : écrasé en section 11 par le seuil F1-max mesuré par courbes_eval (règle projet) |
+| EVAL_TOOLS_REPO / EVAL_TOOLS_REF | dépôt training-models / dev | — | Section 11 : dépôt d'outils cloné dans Colab. ÉPINGLER un commit POUSSÉ pour un run à reproduire (Colab ne voit pas le dépôt local) |
+| EVAL_CHECKPOINT | checkpoint_best_ema.pth | — | Le checkpoint LIVRÉ (= package/weights/best.pth) — l'éval mesure ce qui part, rien d'autre |
+| EVAL_BASELINES / EVAL_FUSIONS | [] / [] | — | Modèles à superposer sur la même éval (`nom=poids@res`) ; fusions de classes à l'éval. Jamais mélanger un cache Colab et un cache local |
+| EVAL_PLANCHER | 0.05 | — | Plancher du balayage de seuil (standard des évals déposées) |
 
 ### Blocs contractuels (INFERENCE / MNT / RVT / UI / MODEL_CARD_META)
 Pilotent le packaging (cellule 43) → model_card.yaml/args.yaml du plugin :
@@ -180,9 +184,16 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
   le fichier le plus RÉCENT gagne (racine vs output/ vs checkpoints/) — la copie
   de `checkpoints/` faite par le finally d'entraînement est PÉRIMÉE après une
   reprise (piège mesuré sur fours : ép. 22 vs 41), le helper l'écarte en le disant.
-- Cellules 32-34 : métriques valid+test → `evaluation_results.json` (consommé par le
-  packaging — ne JAMAIS écraser celui d'un modèle installé). Validation humaine des
-  sorties de cellules = le protocole `/entrainement-modele`.
+- Cellules 31-32 (depuis le 2026-09-03) : **éval outillée** — clone du dépôt d'outils
+  (`EVAL_TOOLS_REPO` @ `EVAL_TOOLS_REF`), `tools/courbes_eval.py` sur valid + test avec
+  le checkpoint livré, baselines superposées, puis `tools/verif_courbes_eval.py`
+  (CONFORME exigé, sinon arrêt). Sorties dans `evaluation/` du run (metriques_eval.json
+  canonique, planches, appariements.json, provenance_outils.txt). Les seuils F1-max
+  écrasent `CONFIDENCE_THRESHOLD` et remplissent `UI` (confidence_per_class,
+  seuils_provenance) pour le packaging. `evaluation_results.json` n'est plus produit
+  (l'ancienne éval mesurait à seuil fixe 0,3 et tronquait les mAP). Cellule 34 :
+  visualisation des logs d'entraînement seulement. Validation humaine des sorties de
+  cellules = le protocole `/entrainement-modele`.
 - Cellules 36-40 : visualisations des prédictions (test) — l'inspection humaine des
   masques fait partie de la boucle.
 
@@ -201,9 +212,10 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
   Opset 17. Puis checklist `/installer-modele-plugin` (porte de parité binarisée,
   sidecar class_offset, entité catalogue) — et pour les modèles multicanaux : **ne pas
   installer avant le chantier de composition des canaux à l'inférence**.
-- Après tout run : éval outillée `tools/courbes_eval.py` (venv_adaf), seuil F1-max
-  (metriques_eval.json) → confidence_default du model_card ; traçabilité dans
-  `entrainement/`.
+- Après tout run : l'éval outillée a tourné en section 11 (garde-fou : la cellule 43
+  refuse de packager sans `UI["seuils_provenance"]`) ; sur le poste, re-verdict
+  `tools/verif_courbes_eval.py` (sans GPU), dashboard `tools/tableau_modeles.py`,
+  traçabilité dans `entrainement/`.
 
 ## 10. Reproductibilité (retouches 2026-08-31)
 

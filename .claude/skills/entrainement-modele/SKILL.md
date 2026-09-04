@@ -50,18 +50,35 @@ colle les sorties de cellules : les valider une à une.
 ## Après le run
 - Best = post-hoc sur `ema_segm_mAP_50` depuis metrics.csv (PAS le best
   automatique) ; loss_ce qui monte sous IA-BCE = normal.
-- **Éval outillée OBLIGATOIRE** : `tools/courbes_eval.py` (venv_adaf — détection
-  bbox ET segmentation, tâche auto-détectée), le nouveau modèle SUPERPOSÉ au
-  précédent/à la baseline sur la MÊME éval gelée. Sorties déposées dans
-  `runs/training/<run>/evaluation/` du Drive (staging + robocopy) :
+- **Éval outillée OBLIGATOIRE** : `tools/courbes_eval.py` — depuis le 2026-09-03
+  elle tourne DANS COLAB, section 11 du notebook canonique (clone du dépôt
+  d'outils `EVAL_TOOLS_REPO` @ `EVAL_TOOLS_REF` : ÉPINGLER un commit poussé —
+  un outil modifié localement mais non poussé n'est pas vu par Colab), sur le
+  checkpoint LIVRÉ `EVAL_CHECKPOINT`, valid + test du corpus, baselines à
+  superposer dans `EVAL_BASELINES` (mêmes tuiles, même machine : jamais mélanger
+  un cache Colab et un cache local), fusions dans `EVAL_FUSIONS` ; puis
+  `verif_courbes_eval.py` dans la même cellule, verdict CONFORME exigé, et les
+  seuils F1-max deviennent `CONFIDENCE_THRESHOLD` / `UI` pour le packaging.
+  Sur le poste (venv_adaf) seulement pour une éval a posteriori ou une
+  superposition hors Colab. Sorties dans
+  `runs/training/<run>/evaluation/` du Drive :
   `metriques_eval.json` (CANONIQUE — seuils F1-max global + par classe, AP@50,
   par zone, provenance) + planches + `appariements.json` (cache à empreinte).
   Les seuils du model_card (`confidence_default` + `confidence_per_class`)
   proviennent UNIQUEMENT de metriques_eval.json — plus jamais lus sur les PNG.
-  Puis **`tools/verif_courbes_eval.py <dossier_eval>`** (.venv, sans GPU) :
-  verdict CONFORME AVANT toute lecture de seuils ou dépôt.
+  Puis, sur le poste, **`tools/verif_courbes_eval.py <dossier_eval>`** (.venv,
+  sans GPU) : re-verdict CONFORME AVANT toute lecture de seuils ou dépôt (le
+  cache n'a pas à être recalculé). Depuis le 2026-09-03
+  courbes_eval publie aussi `par_zone_classe` (zone × classe : n_gt, R/P au seuil
+  global, R au seuil de classe, R_max au plancher) ; une éval antérieure se complète
+  SANS GPU par `tools/completer_metriques_eval.py <dossier_eval>` puis re-verif.
 - **Dashboard** : régénérer `tools/tableau_modeles.py` → `index.html` racine
-  model-training après le dépôt.
+  model-training après le dépôt, avec `--plugin <data/models ou zip publié>` pour
+  la colonne « installé » ; les fiches par modèle (données par classe, zones,
+  zone × classe, run, apprentissage) lisent `manifests/corpus/<corpus>.yaml` du
+  dépôt (jointure par CORPUS_DRIVE_DIR de params_run.yaml) : un run sans
+  params_run.yaml ni manifeste de corpus affiche « non tracé » — le notebook
+  doit donc écrire params_run.yaml et le corpus avoir son manifeste versionné.
 - Consigner (tracker de campagne + mémoire) : chiffres, époque best, artefacts.
 - Installation plugin : skill `/installer-modele-plugin`.
 

@@ -73,8 +73,11 @@ compléments 2026-08).
 8. Recharger le plugin dans QGIS (plugin reloader) ; rappeler le commit du
    catalogue à l'utilisateur.
 9. **Régénérer le dashboard** : `tools/tableau_modeles.py` sur la racine
-   model-training `--registre <data_regions_v2>\modeles.yaml` (règle CLAUDE.md
-   « après tout dépôt d'évaluation ») + resynchroniser le `package/` du run
+   model-training `--registre <data_regions_v2>\modeles.yaml` et
+   `--plugin <data/models du plugin de référence, ou zip publié>` (règle CLAUDE.md
+   « après tout dépôt d'évaluation » ; la fiche du modèle compare le seuil déployé
+   du model_card au F1-max mesuré : un écart doit être justifié dans
+   `seuils_provenance`, sinon il est signalé « non justifié ») + resynchroniser le `package/` du run
    Drive avec le model_card final (la seule copie correcte ne doit pas être
    uniquement le data/models gitignoré du laptop).
 

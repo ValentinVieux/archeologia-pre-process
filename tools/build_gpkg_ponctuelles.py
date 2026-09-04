@@ -15,7 +15,7 @@ Les auto-labels (auto_label_depressions.py, bboxes) sont convertis en ellipses
 inscrites. S'ils manquent : avertissement, couche omise (re-lancer après).
 
 Usage :
-  .venv\\Scripts\\python.exe tools\\build_gpkg_fours_charbonnieres.py <zone> <sortie.gpkg>
+  .venv\\Scripts\\python.exe tools\\build_gpkg_ponctuelles.py <zone> <sortie.gpkg>
       [--auto-labels <gpkg>] [--payload <dossier COCO>] [--source <gpkg source>]
 zone ∈ {chailluz, blois, rambouillet}
 """
