@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Revue détections</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css?v=bbox1">
+</head>
+<body>
+<aside id="sidebar">
+  <h1>Revue détections <span id="titre-modele"></span></h1>
+  <div id="filtres">
+    <select id="f-split"><option value="">tous splits</option></select>
+    <select id="f-zone"><option value="">toutes zones</option></select>
+    <select id="f-classe"><option value="">toutes classes</option></select>
+    <select id="f-etat">
+      <option value="a_traiter">à traiter</option>
+      <option value="finies">finies</option>
+      <option value="toutes">toutes</option>
+    </select>
+    <select id="f-tri">
+      <option value="ordre">dans l'ordre</option>
+      <option value="score">score max décroissant</option>
+      <option value="non_gt">hors GT d'abord</option>
+    </select>
+  </div>
+  <div id="progression"></div>
+  <ul id="liste"></ul>
+</aside>
+
+<main id="centre">
+  <canvas id="canvas"></canvas>
+  <div id="hud"></div>
+</main>
+
+<aside id="panneau">
+  <h2 id="p-tuile"></h2>
+  <table id="p-mesures"></table>
+  <div id="p-selection"></div>
+  <div id="p-decision"></div>
+  <div id="p-classe-active"></div>
+  <div id="lg-classes"></div>
+  <div id="legende">
+    <span class="lg gt">GT du dataset (blanc, tirets + étiquette)</span>
+    <span class="lg inval">invalidée</span>
+    <span class="lg edit">éditée</span>
+  </div>
+  <div id="aide">
+    Tout est en <b>bounding boxes</b> (revue pour l'entraînement détection).<br>
+    <b>clic</b> sélectionner une boîte · <b>Tab</b> suivante à traiter ·
+    <b>Entrée</b> valider la sélection (éditée si modifiée) puis suivante ·
+    <b>Shift+Entrée</b> valider tout le restant de la tuile + tuile suivante ·
+    <b>X</b> ou <b>Suppr</b> invalider (sur un ajout : le supprimer) ·
+    <b>1/2/3</b> changer la classe de la sélection, ou choisir la classe active d'ajout ·
+    <b>A</b> ajouter une boîte (glisser coin→coin, classe active) ·
+    <b>←/→ j/k</b> tuile préc./suiv. · <b>Échap</b> annuler / désélectionner ·
+    <b>molette</b> zoom · <b>drag milieu</b> pan<br>
+    <b>D</b> masquer/afficher les détections · <b>G</b> GT on/off ·
+    <b>S</b> détections sous le seuil on/off · <b>V</b> voisines on/off ·
+    <b>C</b> contexte 3×3 on/off · <b>Espace</b> (maintenu) / <b>T</b> = LD à nu<br>
+    <b>Édition :</b> drag poignée (coins/bords) = redimensionner ·
+    drag intérieur = déplacer · <b>Alt+flèches</b> nudge (×10 Shift) ·
+    <b>Ctrl+Z</b> annuler · <b>R</b> revenir à la boîte prédite
+  </div>
+</aside>
+<script src="app.js?v=bbox1"></script>
+</body>
+</html>

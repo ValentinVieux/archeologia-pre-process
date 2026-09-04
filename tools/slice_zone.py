@@ -143,6 +143,37 @@ def affecter_splits(annos_par_bloc, cibles, seed):
     return affectation
 
 
+def imposer_split(affectation, chemin_manifest):
+    """Reprend l'affectation bloc->split d'un split_manifest.yaml antérieur.
+
+    Les blocs (2 km, grille alignée sur 0) sont géographiques : ils survivent à un
+    changement de raster/gsd de la zone (règle manifests 2026-08-31 : ne jamais
+    re-tirer un split sans décision humaine). Les blocs absents du manifest gardent
+    leur affectation gloutonne (nouveaux blocs seulement).
+    """
+    import re
+    man = yaml.safe_load(Path(chemin_manifest).read_text(encoding="utf-8"))
+    g = man["grille"]
+    bloc_m = man["config"]["bloc_m"]
+    anciens = {}
+    for t in man["tuiles"]:
+        m = re.search(r"_r(\d+)_c(\d+)\.png$", t["nom"])
+        row, col = int(m.group(1)), int(m.group(2))
+        cx = g["origine"][0] + (col + 0.5) * g["tuile_px"] * g["gsd_m_px"][0]
+        cy = g["origine"][1] - (row + 0.5) * g["tuile_px"] * g["gsd_m_px"][1]
+        b = (math.floor(cx / bloc_m), math.floor(cy / bloc_m))
+        if anciens.setdefault(b, t["split"]) != t["split"]:
+            raise SystemExit(f"--split-depuis : bloc {b} incohérent dans {chemin_manifest}")
+    repris = sum(1 for b in affectation if b in anciens)
+    for b in affectation:
+        if b in anciens:
+            affectation[b] = anciens[b]
+    print(f"split imposé depuis {chemin_manifest} : {repris}/{len(affectation)} blocs "
+          f"repris, {len(affectation) - repris} nouveaux (glouton), "
+          f"{len(anciens) - repris} blocs du manifest sans tuile ici")
+    return affectation
+
+
 # ---------------------------------------------------------------------------
 # Entités -> polygones COCO
 # ---------------------------------------------------------------------------
@@ -337,7 +368,7 @@ def _visibilite_bbox(bbox_px, masque, tuile_px):
     return float(masque[y0:y1, x0:x1].mean())
 
 
-def run_slicing(cfg, out_dir, seed=42):
+def run_slicing(cfg, out_dir, seed=42, split_depuis=None):
     """Orchestration complète : grille -> validité -> annotations -> split -> sorties."""
     out_dir = Path(out_dir)
     _refuser_drive(out_dir, "--out")
@@ -435,6 +466,8 @@ def run_slicing(cfg, out_dir, seed=42):
             if cpt:  # bloc annoté : équilibrer aussi le volume de tuiles, pas
                 cpt["__tuiles__"] = tuiles_par_bloc[b]  # seulement les annotations
         affectation = affecter_splits(annos_par_bloc, cfg["split"], seed)
+        if split_depuis:
+            affectation = imposer_split(affectation, split_depuis)
 
         annotees = [t for t in gardees if t["annos"] and t["bloc"] in affectation]
         # négatifs PURS uniquement : une tuile dont les annotations ont été écartées
@@ -516,6 +549,7 @@ def run_slicing(cfg, out_dir, seed=42):
         hashes[s] = hashlib.sha1("\n".join(noms).encode("utf-8")).hexdigest()
     manifeste = {
         "dataset": cfg["dataset"], "zone": cfg["zone"], "seed": seed,
+        "split_depuis": str(split_depuis) if split_depuis else None,
         "genere_le": datetime.date.today().isoformat(),
         "config": {k: cfg[k] for k in sorted(cfg)},
         "grille": grille_info,
@@ -616,12 +650,16 @@ def main():
     parseur.add_argument("--out", default=None,
                          help="dossier de sortie (défaut : datasets\\<dataset>)")
     parseur.add_argument("--seed", type=int, default=42)
+    parseur.add_argument("--split-depuis", default=None,
+                         help="split_manifest.yaml antérieur : reprend son affectation "
+                              "bloc->split (blocs 2 km géographiques, survit à un "
+                              "changement de raster/gsd)")
     args = parseur.parse_args()
 
     cfg = charger_config(args.config)
     out_dir = Path(args.out) if args.out else (
         Path(__file__).resolve().parents[1] / "datasets" / cfg["dataset"])
-    stats = run_slicing(cfg, out_dir, seed=args.seed)
+    stats = run_slicing(cfg, out_dir, seed=args.seed, split_depuis=args.split_depuis)
 
     print(f"\n{cfg['dataset']} — {stats['tuiles']} tuiles "
           f"({stats['annotees']} annotées + {stats['negatives']} négatives), "

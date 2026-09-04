@@ -1,0 +1,50 @@
+* { box-sizing: border-box; margin: 0; }
+body {
+  display: grid; grid-template-columns: 290px 1fr 260px; height: 100vh;
+  font: 13px/1.45 system-ui, sans-serif; background: #16181d; color: #d6d9de;
+}
+#sidebar, #centre, #panneau, #liste { min-height: 0; }
+h1 { font-size: 15px; padding: 10px 12px 6px; }
+#titre-modele { color: #7fb0e8; font-weight: 600; display: block; font-size: 12px; }
+h2 { font-size: 13px; word-break: break-all; }
+#sidebar { display: flex; flex-direction: column; border-right: 1px solid #2a2e36; }
+#filtres { padding: 0 12px 8px; display: flex; flex-direction: column; gap: 5px; }
+#filtres select { background: #22252c; color: inherit; border: 1px solid #2a2e36; padding: 3px; }
+#progression { padding: 4px 12px; color: #8b93a0; font-variant-numeric: tabular-nums; }
+#liste { list-style: none; overflow-y: auto; flex: 1; }
+#liste li {
+  padding: 4px 12px; cursor: pointer; display: flex; gap: 6px;
+  justify-content: space-between; white-space: nowrap;
+}
+#liste li:hover { background: #22252c; }
+#liste li.actif { background: #2c3a55; }
+#liste li .compte { color: #8b93a0; }
+#liste li.finie { opacity: .6; }
+#liste li .badge { font-size: 11px; padding: 0 5px; border-radius: 3px; }
+.b-nongt { background: #4c3b23; color: #e0b06a; }
+#centre { position: relative; overflow: hidden; }
+#canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+#hud {
+  position: absolute; left: 10px; bottom: 8px; color: #8b93a0;
+  background: #16181dcc; padding: 2px 8px; border-radius: 4px;
+}
+#panneau { border-left: 1px solid #2a2e36; padding: 12px; display: flex;
+  flex-direction: column; gap: 12px; overflow-y: auto; }
+#p-mesures { width: 100%; border-collapse: collapse; }
+#p-mesures td { padding: 2px 0; }
+#p-mesures td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+#p-selection { min-height: 40px; }
+#p-decision { min-height: 20px; font-weight: 600; }
+#p-classe-active { color: #8b93a0; }
+#p-classe-active b { color: #d6d9de; }
+#legende, #lg-classes { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-block; width: 14px; height: 4px; margin-right: 4px;
+  vertical-align: middle; }
+.lg { padding-left: 18px; position: relative; }
+#lg-classes .lg { padding-left: 0; }
+.lg::before { content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 4px; }
+.lg.gt::before { background: #ffffff88; }
+.lg.inval::before { background: #e0555566; }
+.lg.edit::before { background: #e8c93e; }
+#aide { color: #8b93a0; font-size: 12px; }
+#aide b { color: #d6d9de; }

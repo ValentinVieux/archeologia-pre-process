@@ -19,7 +19,7 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\build_v2_index.py "<racine data_regions_v2>"       # régénère index.html
 .venv\Scripts\python.exe tools\build_haye_gpkg.py [--out <dossier>]  # reconstruit le GPKG de 54_foret_de_haye
 .venv\Scripts\python.exe tools\build_fontainebleau_gpkg.py <source> [--out <dossier>]  # reconstruit le GPKG de 77_fontainebleau (Digit_*.shp)
-.venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N]  # tuiles 648px + split spatial (cf. configs\)
+.venv\Scripts\python.exe tools\slice_zone.py <config.yaml> [--out <dossier>] [--seed N] [--split-depuis <split_manifest.yaml>]  # tuiles 648px + split spatial (cf. configs\) ; --split-depuis = reprendre l'affectation blocs->split d'un manifest antérieur (jamais re-tirer un split)
 .venv\Scripts\python.exe tools\build_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> [--out <dossier>]  # GPKG entités depuis livraison auditée
 .venv\Scripts\python.exe tools\verif_zone_gpkg.py configs\vecteurs_<zone>.yaml <source> <gpkg>  # boucle de vérification du GPKG
 .venv\Scripts\python.exe tools\verif_dataset.py <dataset> [--gpkg <chemin>]  # boucle de vérification d'un dataset découpé
@@ -35,19 +35,22 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\verif_coco_a_gpkg.py <payload> <sortie> [--fusion SRC=DST ...]  # boucle de vérification (recompte + regéoréf indépendants) — RÉPÉTER les --fusion du producteur, sinon verdict faux
 .venv\Scripts\python.exe tools\telecharger_dalles_ign.py <entites.gpkg> <sortie> [--anneau 1] [--mt 4]  # dalles MNT LiDAR HD IGN (GeoTIFF 1 km 0,5 m) via la grille WFS : cellules occupées + anneau, reprise idempotente, CRS estampillé
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\auto_label_depressions.py <ld.tif> <selection.gpkg> <sortie.gpkg> --poids <ckpt>  # auto-labels circular_depression par run_rf_detr_1 @0,395 (tuiles 1 km alignées grille, parité d'inférence) ; 0 détection = garde-fou, diagnostiquer au plancher avant d'accepter
-.venv\Scripts\python.exe tools\build_gpkg_fours_charbonnieres.py <zone> <sortie.gpkg> [--source|--payload|--auto-labels]  # GPKG des zones spéciales du corpus fours/charbonnières (chailluz r=5 m, blois rayons réels, rambouillet COCO+GPKG+ignorer)
+.venv\Scripts\python.exe tools\build_gpkg_ponctuelles.py <zone> <sortie.gpkg> [--source|--payload|--auto-labels]  # GPKG des zones spéciales du corpus fours/charbonnières (chailluz r=5 m, blois rayons réels, rambouillet COCO+GPKG+ignorer)
 .venv\Scripts\python.exe tools\mosaique_mnt.py <dossier_dalles> <sortie.tif> [--tr 1.0]  # MNT téléchargés (étrangers ou IGN) -> UNE mosaïque EPSG:2154 en une passe ; JAMAIS de reprojection dalle par dalle (canevas union + joints RVT)
 .venv\Scripts\python.exe tools\telecharger_dalles_gsi.py --noms <DATA_NAME...> [--couche <couche>] [--epsg2154]  # dalles LiDAR ouvertes irlandaises (DTM GeoTIFF) depuis l'index D:\veille_irlande ; --liste pour l'inventaire ; cf. suivi_corpus.yaml (corpus Irlande)
-.venv\Scripts\python.exe tools\generer_ld.py <mnt.tif> <sortie_ld.tif>  # LD 8 bits, rayons AUTO selon résolution (anneau 5-10 m constant), étirement fixe, auto-vérifié CONFORME
+.venv\Scripts\python.exe tools\generer_ld.py <mnt.tif> <sortie_ld.tif> [--procs N]  # LD 8 bits, rayons AUTO selon résolution (anneau 5-10 m constant), étirement fixe, auto-vérifié CONFORME ; --procs = tuiles en parallèle (sortie byte-identique vérifiée, ~1,5 Go RAM/process — pour les canevas géants)
 .venv\Scripts\python.exe tools\planche_indices.py <mnt> <sortie> --emprise xmin ymin xmax ymax [--nom d] [--gpkg gt.gpkg]  # planche de TOUS les indices RVT + variantes (choix des canaux multicanaux) — MNT 1 m exigé, recettes VAT/CVAT/e3MSTP vérifiées sur l'install rvt-qgis
 D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.py <points.gpkg> <ld.tif> <sortie.gpkg>  # propositions hybrides cercle+SAM (corpus Irlande, cf. /corpus-irlande) — venv_sam OBLIGATOIRE (torch)
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques) — ATTENTION : --out est le dossier DU corpus (rmtree !), défaut corpus\<nom> ; ne JAMAIS passer --out corpus
 .venv\Scripts\python.exe tools\repeindre_dataset.py <dataset_ld_v1> datasets --mnt <tif|glob> [--ld <raster>]  # datasets multicanaux (csl+crim) aux pixels recalculés, splits/COCO INTACTS — jamais re-slicer pour changer de canaux
 .venv\Scripts\python.exe tools\generer_slrm_cvat.py <mnt.tif> <sortie_dir> [--prefixe p]  # SLRM r10 ADAF + « cvat » (VAT general mal nommé, cf. § multicanal) 8 bits auto-vérifiés
-D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_corpus.py <corpus> <poids.pth> <out> --metriques <metriques_eval.json>  # détections d'un modèle sur les tuiles d'un corpus (detections.json px + GPKG EPSG:2154 ; retenu = seuil F1-max par classe du metriques_eval canonique, plancher 0,15 pour les scores écrasés type Chailluz) — venv_adaf GPU ; reste : --help
+.venv\Scripts\python.exe -m tools.review_detections <corpus> <detections.json> [--decisions <yaml>] [--port 5176]  # app locale de revue des détections par tuile, tout en BOUNDING BOXES (valider/invalider/redimensionner/reclasser/ajouter une boîte, GT du dataset marquée, masquage touche D ; décisions YAML immédiates, jamais le corpus — même contrat que review_recalage)
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--reprendre-de <eval_precedente> ...] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
 .venv\Scripts\python.exe tools\verif_courbes_eval.py <dossier_eval>  # contrôleur indépendant SANS GPU : recalcule P/R/F1/AP depuis appariements.json — CONFORME requis avant dépôt/seuils/dashboard
-.venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, runs sans mesure listés) ; régénérer après tout dépôt d'évaluation
+.venv\Scripts\python.exe tools\completer_metriques_eval.py <dossier_eval> [--out <dossier>] [--forcer]  # ajoute le bloc par_zone_classe (zone × classe : n_gt/tp/fp/R/P au seuil global, R au seuil de classe, R_max) à un metriques_eval.json antérieur au 2026-09-03, depuis appariements.json SANS GPU ni réinférence ; reste byte-identique + champ complete_le ; refuse si déjà présent ; copie locale puis re-dépôt, re-vérifier par verif_courbes_eval
+.venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>] [--depot <repo>] [--plugin <data/models|plugin.zip>] [--seuil-fragile 30] [--min-train 100]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, lien vers les planches, runs sans mesure comptés + signalés s'ils ont un checkpoint) + FICHE repliée par modèle (données par classe/zone depuis manifests/corpus du --depot, run, époques FUSIONNÉES metrics.csv + historiques de reprise, badge et seuils déployés vs F1-max depuis les model_card du --plugin) ; régénérer après tout dépôt d'évaluation
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
 .venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
@@ -134,20 +137,31 @@ git log ; pas de fichier de log séparé.
   `entrainement/comparaison_<vs>/` (superpositions). `evaluation_results.json` racine
   = legacy notebook (appariement incompatible, seuil fixe 0,3) : documentaire, JAMAIS
   réécrit ni source de seuils. Après tout dépôt d'évaluation : régénérer le dashboard
-  (`tools/tableau_modeles.py` → index.html racine model-training). **La traçabilité
+  (`tools/tableau_modeles.py` → index.html racine model-training ; depuis le
+  2026-09-03 : fiche repliée par modèle — données par classe depuis
+  `manifests/corpus/<corpus>.yaml`, zones et zone × classe depuis
+  `par_zone_classe` (évals antérieures complétées par
+  `completer_metriques_eval.py`), run depuis params_run.yaml/config.json +
+  metrics.csv fusionnés, badge plugin avec `--plugin` ; comptes en ANNOTATIONS,
+  seuils d'affichage fragile < 30 objets mesurés, rare < 100 annotations train).
+  **La traçabilité
   du run vit dans `entrainement/`** : `metrics.csv` (+ historiques si reprises +
   NOTE-metriques.md), `hparams.yaml`, tfevents, `visualizations/` — le contrat reste
   à la racine. Cf. skill `/installer-modele-plugin` pour la checklist complète
   (ONNX, parité binarisée, sidecar class_offset, entité catalogue).
 - **Nommage des configs de découpe** (2026-08-31) : toute NOUVELLE config suit
   `<famille>_<zone_id>_ld648_v<N>.yaml` (zone_id = id data_regions_v2, ex.
-  `fours_charb_41_blois_ld648_v1`) ; l'existant n'est PAS renommé (référencé par les
+  `ponctuelles_41_blois_ld648_v2`) ; l'existant n'est PAS renommé (référencé par les
   manifestes). Le champ `zone:` porte l'id CANONIQUE `<region>/<dept>_<site>`
   (jointure zone↔modèle — les ids inventés d'enclos_fr ont été patchés le 2026-08-31).
 - **Rangement model-training** (décision 2026-08-31) : UNE famille par thème à la
   racine du Drive `model-training/` (nom snake_case ASCII sans accents ni tirets —
   vérifier l'existant AVANT de créer une famille ou un run ; c'est ainsi que
-  `fours_charbonnieres` et `fours-à-chaux_charbonnieres` ont coexisté) ; les
+  `fours_charbonnieres` et `fours-à-chaux_charbonnieres` ont coexisté ; la famille
+  `fours_charbonnieres` est RENOMMÉE `ponctuelles` le 2026-09-03 — 3 classes ponctuelles
+  four (fours à chaux) / charbonniere / circular_depression, dossier Drive
+  `ponctuelles/ponctuelles_3_classes/`, dossier local `D:/entrainement_ponctuelles/` ; les
+  noms de corpus/run/modèle antérieurs restent) ; les
   générations obsolètes descendent dans `legacy_<annee>/` (les 3 familles détection
   2025 sont dans `legacy_2025/`, cf. son LISEZ-MOI — le run_rf_detr_1 du plugin en
   vient). Un lancement raté (dossier de run horodaté sans poids ni metrics, + son
@@ -175,8 +189,12 @@ git log ; pas de fichier de log séparé.
 - **Notebook d'entraînement canonique** (règle 2026-08-20) :
   `G:\Mon Drive\Colab Notebooks\rfdetr_unified_pipeline_v2.ipynb` — c'est LUI qu'on
   paramètre à chaque entraînement (copie locale docs/google_collab/ → édition cellule 2
-  → redépôt G:). Guide complet section par section (défauts rfdetr 1.8.3, checkpoints,
-  pièges de reprise, sources) : `docs/google_collab/GUIDE-parametrage-rfdetr_unified_pipeline_v2.md`.
+  → redépôt G:). Depuis le 2026-09-03 sa section 11 EST l'éval outillée (clone du
+  dépôt d'outils épinglé `EVAL_TOOLS_REF` — un commit POUSSÉ, sinon Colab voit les anciens
+  outils —, courbes_eval + verif dans Colab, seuils F1-max → packaging) ;
+  `evaluation_results.json` n'est plus produit. Guide complet section par section
+  (défauts rfdetr 1.8.3, checkpoints, pièges de reprise, sources) :
+  `docs/google_collab/GUIDE-parametrage-rfdetr_unified_pipeline_v2.md`.
 - **Un script scratchpad réutilisé deux sessions de suite doit être promu dans
   `tools/`** (leçon : points_a_recaler perdu dans une purge de scratchpad et réécrit
   deux fois avant promotion).

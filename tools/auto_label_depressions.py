@@ -15,7 +15,7 @@ Usage (venv_adaf OBLIGATOIRE — GPU) :
   D:\\veille_irlande\\venv_adaf\\Scripts\\python.exe tools\\auto_label_depressions.py
       <ld.tif> <selection.gpkg> <sortie.gpkg> --poids <ckpt.pth>
       [--couche <nom>] [--seuil 0.395] [--resolution 704] [--anneau 1]
-      [--classe-id 4] [--nom-classe circular_depression]
+      [--classe-id 4] [--nom-classe circular_depression] [--recouvrement]
 """
 from __future__ import annotations
 
@@ -54,6 +54,10 @@ def main():
     ap.add_argument("--anneau", type=int, default=1)
     ap.add_argument("--classe-id", type=int, default=4, help="id COCO de circular_depression dans le modèle")
     ap.add_argument("--nom-classe", default="circular_depression")
+    ap.add_argument("--recouvrement", action="store_true",
+                    help="correctif marges (audit 2026-09-01) : 3 passes décalées de "
+                         "500 m + dédup IoU 0,5 privilégiant les boîtes loin des bords "
+                         "de fenêtre — répare les détections tronquées aux joints km")
     a = ap.parse_args()
 
     import geopandas as gpd
@@ -67,6 +71,9 @@ def main():
     modele.optimize_for_inference()
 
     cibles = cellules(a.selection, a.couche, a.anneau)
+    decalages = [(0.0, 0.0)]
+    if a.recouvrement:  # les fenêtres décalées voient ENTIERS les objets des joints km
+        decalages += [(500.0, 0.0), (0.0, 500.0), (500.0, 500.0)]
     lignes, sautees = [], 0
     with rasterio.open(a.ld) as src:
         nodata = src.nodata if src.nodata is not None else 255
@@ -74,32 +81,84 @@ def main():
         if abs(px - 0.5) > 0.01:
             sys.exit(f"LD à {px} m/px : la parité d'inférence exige 0,5 m")
         traitees = 0
-        for x, y in sorted(cibles):
-            x0, y1 = x * 1000.0, (y + 1) * 1000.0  # coin NW de la cellule
-            fen = rasterio.windows.from_bounds(x0, y1 - 1000, x0 + 1000, y1, src.transform)
-            fen = fen.round_offsets().round_lengths()
-            if fen.col_off < 0 or fen.row_off < 0 or \
-               fen.col_off + fen.width > src.width or fen.row_off + fen.height > src.height:
-                sautees += 1
-                continue
-            bande = src.read(1, window=fen)
-            if bande.shape != (2000, 2000) or (bande == nodata).mean() > 0.5:
-                sautees += 1
-                continue
-            im = Image.fromarray(np.stack([bande] * 3, axis=-1))
-            d = modele.predict(im, threshold=a.seuil)
-            for j in range(len(d)):
-                if int(d.class_id[j]) != a.classe_id:
+        for dx, dy in decalages:
+            for x, y in sorted(cibles):
+                x0, y1 = x * 1000.0 + dx, (y + 1) * 1000.0 + dy  # coin NW de la fenêtre
+                fen = rasterio.windows.from_bounds(x0, y1 - 1000, x0 + 1000, y1, src.transform)
+                fen = fen.round_offsets().round_lengths()
+                if fen.col_off < 0 or fen.row_off < 0 or \
+                   fen.col_off + fen.width > src.width or fen.row_off + fen.height > src.height:
+                    sautees += 1
                     continue
-                bx0, by0, bx1, by1 = (float(v) for v in d.xyxy[j])
-                lignes.append({
-                    "tuile": f"{x:04d}_{y + 1:04d}",
-                    "score": round(float(d.confidence[j]), 4),
-                    "geometry": box(x0 + bx0 * px, y1 - by1 * px, x0 + bx1 * px, y1 - by0 * px),
-                })
-            traitees += 1
-            if traitees % 25 == 0:
-                print(f"  {traitees} tuiles traitées, {len(lignes)} détections", flush=True)
+                bande = src.read(1, window=fen)
+                if bande.shape != (2000, 2000) or (bande == nodata).mean() > 0.5:
+                    sautees += 1
+                    continue
+                im = Image.fromarray(np.stack([bande] * 3, axis=-1))
+                d = modele.predict(im, threshold=a.seuil)
+                for j in range(len(d)):
+                    if int(d.class_id[j]) != a.classe_id:
+                        continue
+                    bx0, by0, bx1, by1 = (float(v) for v in d.xyxy[j])
+                    geom = box(x0 + bx0 * px, y1 - by1 * px, x0 + bx1 * px, y1 - by0 * px)
+                    cx, cy = geom.centroid.x, geom.centroid.y
+                    lignes.append({
+                        "tuile": f"{int(cx // 1000):04d}_{int(cy // 1000) + 1:04d}",
+                        "score": round(float(d.confidence[j]), 4),
+                        "passe": f"{int(dx)}_{int(dy)}",
+                        # distance de la bbox au bord de SA fenêtre (m) : ~0 = tronquée
+                        "bord_m": round(min(bx0, by0, 2000 - bx1, 2000 - by1) * px, 1),
+                        "geometry": geom,
+                    })
+                traitees += 1
+                if traitees % 25 == 0:
+                    print(f"  {traitees} fenêtres traitées, {len(lignes)} détections", flush=True)
+
+    if a.recouvrement and lignes:
+        # Politique CONSERVATRICE : la passe de base fait foi (parité avec la v1).
+        # L'union brute des 4 passes SUR-DÉTECTE (mesuré 2026-09-03 : 361 candidats
+        # -> 232 « uniques », les mêmes objets ressortant à IoU < 0,5 entre passes).
+        # Les passes décalées ne servent donc qu'à : (1) RÉPARER la géométrie des
+        # détections de base tronquées au bord de leur fenêtre ; (2) AJOUTER les
+        # objets à cheval sur une ligne km manqués des deux côtés par la passe de
+        # base (détections décalées propres, à cheval km, sans recouvrement).
+        def meme_objet(g1, g2):
+            if not g1.intersects(g2):
+                return False
+            return (g1.intersection(g2).area / g1.union(g2).area > 0.2
+                    or g1.contains(g2.centroid) or g2.contains(g1.centroid))
+
+        def chevauche_km(geom):
+            x0, y0, x1, y1 = geom.bounds
+            return int(x0 // 1000) != int(x1 // 1000) or int(y0 // 1000) != int(y1 // 1000)
+
+        base = [l for l in lignes if l["passe"] == "0_0"]
+        dec = [l for l in lignes if l["passe"] != "0_0"]
+        reparees = 0
+        for l in base:
+            if l["bord_m"] < 1.0:
+                cands = [o for o in dec if o["bord_m"] >= 1.0
+                         and meme_objet(l["geometry"], o["geometry"])]
+                if cands:
+                    meilleur = max(cands, key=lambda o:
+                                   l["geometry"].intersection(o["geometry"]).area)
+                    l["geometry"] = meilleur["geometry"]
+                    l["score"] = max(l["score"], meilleur["score"])
+                    l["bord_m"] = meilleur["bord_m"]
+                    reparees += 1
+        gardees = list(base)
+        ajoutees = 0
+        for o in sorted(dec, key=lambda l: -l["score"]):
+            if o["bord_m"] < 1.0 or not chevauche_km(o["geometry"]):
+                continue
+            if any(meme_objet(o["geometry"], k["geometry"]) for k in gardees):
+                continue
+            gardees.append(o)
+            ajoutees += 1
+        print(f"recouvrement : {len(base)} détections de base, {reparees} géométries "
+              f"réparées au joint, +{ajoutees} objets de joint récupérés, "
+              f"{len(dec) - ajoutees} candidats décalés écartés")
+        lignes = gardees
 
     if not lignes:
         sys.exit("0 détection — vérifier LD/seuil/classe-id avant d'accepter ce résultat")

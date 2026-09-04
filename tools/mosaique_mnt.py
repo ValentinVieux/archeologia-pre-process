@@ -29,6 +29,10 @@ def main() -> None:
     p.add_argument("dossier", type=Path, help="dossier des dalles téléchargées (.tif/.asc)")
     p.add_argument("sortie", type=Path, help="GeoTIFF mosaïque à produire")
     p.add_argument("--tr", type=float, default=1.0, help="résolution cible en m (défaut 1)")
+    p.add_argument("--mono", action="store_true",
+                   help="warp mono-thread : gdalwarp -multi corrompt son tas (0xC0000374) "
+                        "sur les gros lots (mesuré 3x sur 411 dalles, 2026-09-03) — plus "
+                        "lent mais stable ; à utiliser au-delà de ~300 dalles")
     a = p.parse_args()
 
     dalles = sorted(a.dossier.glob("*.tif")) + sorted(a.dossier.glob("*.asc"))
@@ -48,14 +52,19 @@ def main() -> None:
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
 
     print(f"{len(dalles)} dalles -> {a.sortie}")
+    # sources via --optfile : >300 chemins en argv dépassent la limite de ligne de
+    # commande Windows (WinError 206, mesuré sur 411 dalles Haut-Doubs 2026-09-03)
+    optfile = a.sortie.with_suffix(".sources.txt")
+    optfile.write_text("\n".join(f'"{d}"' for d in dalles), encoding="utf-8")
     subprocess.run(
         [gdal_exe("gdalwarp"), "-overwrite", "-t_srs", "EPSG:2154",
          "-tr", str(a.tr), str(a.tr), "-tap", "-r", "bilinear",
-         "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
+         *([] if a.mono else ["-multi", "-wo", "NUM_THREADS=ALL_CPUS"]),
          "-co", "COMPRESS=DEFLATE", "-co", "TILED=YES", "-co", "BIGTIFF=IF_SAFER",
-         *map(str, dalles), str(a.sortie)],
+         "--optfile", str(optfile), str(a.sortie)],
         check=True,
     )
+    optfile.unlink()
 
     # auto-vérification : grille propre, CRS cible, NoData propagé
     info = json.loads(subprocess.run(

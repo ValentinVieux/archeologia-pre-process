@@ -39,10 +39,42 @@ ETIREMENT = (0.5, 1.8)          # bornes FIXES du 8 bits (jamais par scène)
 NODATA_OUT = 255
 
 
+def _tuile_ld(spec):
+    """Calcule UNE tuile (identique au chemin séquentiel — parité exigée).
+
+    spec = (chemin, cl, rl, ch, rh, r0, c0, h, w, rmin, rmax, nodata_src).
+    Ouvre le raster dans le worker (un handle par process, spawn Windows).
+    """
+    chemin, cl, rl, ch, rh, r0, c0, h, w, rmin, rmax, nodata_src = spec
+    with rasterio.open(chemin) as src:
+        bloc = src.read(1, window=rasterio.windows.Window(cl, rl, ch - cl, rh - rl)).astype("float32")
+    # NoData float64-max : inf apres cast float32, echappe au == (bug vu
+    # sur les SLRM galway_b_*) — neutraliser tout non-fini d'abord
+    bloc[~np.isfinite(bloc)] = np.nan
+    if nodata_src is not None:
+        bloc[bloc == np.float32(nodata_src)] = np.nan
+    if not np.isfinite(bloc).any():
+        sortie = np.full((h, w), NODATA_OUT, dtype="uint8")
+    else:
+        ld = rvt.vis.local_dominance(dem=bloc, min_rad=rmin, max_rad=rmax, rad_inc=1,
+                                     angular_res=15, observer_height=1.7, ve_factor=1)
+        ld = np.clip(ld, *ETIREMENT)
+        b = ((ld - ETIREMENT[0]) / (ETIREMENT[1] - ETIREMENT[0]) * 255).round()
+        b = np.where(np.isfinite(b), b, NODATA_OUT)
+        b = np.clip(b, 0, 254)  # 255 réservé NoData (collision connue du pipeline, évitée ici)
+        b[~np.isfinite(bloc)] = NODATA_OUT
+        sortie = b[r0 - rl:r0 - rl + h, c0 - cl:c0 - cl + w].astype("uint8")
+    return c0, r0, w, h, sortie
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("mnt", type=Path)
     ap.add_argument("sortie", type=Path)
+    ap.add_argument("--procs", type=int, default=1,
+                    help="processus parallèles (tuiles indépendantes, sortie identique "
+                         "au séquentiel ; ~1,5 Go RAM par process — les canevas géants "
+                         "type Alès 11,6 Gpx passent de ~24 h à ~5 h avec 4)")
     a = ap.parse_args()
 
     src = rasterio.open(a.mnt)
@@ -58,33 +90,30 @@ def main() -> None:
                             "compress": "deflate", "tiled": True, "BIGTIFF": "IF_SAFER"}
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
     marge = rmax + 1
+    specs = []
+    for r0 in range(0, src.height, TUILE):
+        for c0 in range(0, src.width, TUILE):
+            h = min(TUILE, src.height - r0)
+            w = min(TUILE, src.width - c0)
+            rl, cl = max(0, r0 - marge), max(0, c0 - marge)
+            rh = min(src.height, r0 + h + marge)
+            ch = min(src.width, c0 + w + marge)
+            specs.append((str(a.mnt), cl, rl, ch, rh, r0, c0, h, w, rmin, rmax, src.nodata))
     with rasterio.open(a.sortie, "w", **profil) as dst:
-        for r0 in range(0, src.height, TUILE):
-            for c0 in range(0, src.width, TUILE):
-                h = min(TUILE, src.height - r0)
-                w = min(TUILE, src.width - c0)
-                rl, cl = max(0, r0 - marge), max(0, c0 - marge)
-                rh = min(src.height, r0 + h + marge)
-                ch = min(src.width, c0 + w + marge)
-                bloc = src.read(1, window=rasterio.windows.Window(cl, rl, ch - cl, rh - rl)).astype("float32")
-                # NoData float64-max : inf apres cast float32, echappe au == (bug vu
-                # sur les SLRM galway_b_*) — neutraliser tout non-fini d'abord
-                bloc[~np.isfinite(bloc)] = np.nan
-                if src.nodata is not None:
-                    bloc[bloc == np.float32(src.nodata)] = np.nan
-                if not np.isfinite(bloc).any():
-                    sortie = np.full((h, w), NODATA_OUT, dtype="uint8")
-                else:
-                    ld = rvt.vis.local_dominance(dem=bloc, min_rad=rmin, max_rad=rmax, rad_inc=1,
-                                                 angular_res=15, observer_height=1.7, ve_factor=1)
-                    ld = np.clip(ld, *ETIREMENT)
-                    b = ((ld - ETIREMENT[0]) / (ETIREMENT[1] - ETIREMENT[0]) * 255).round()
-                    b = np.where(np.isfinite(b), b, NODATA_OUT)
-                    b = np.clip(b, 0, 254)  # 255 réservé NoData (collision connue du pipeline, évitée ici)
-                    b[~np.isfinite(bloc)] = NODATA_OUT
-                    sortie = b[r0 - rl:r0 - rl + h, c0 - cl:c0 - cl + w].astype("uint8")
+        if a.procs <= 1:
+            for i, spec in enumerate(specs):
+                c0, r0, w, h, sortie = _tuile_ld(spec)
                 dst.write(sortie, 1, window=rasterio.windows.Window(c0, r0, w, h))
-            print(f"  lignes {min(r0 + TUILE, src.height)}/{src.height}")
+                if (i + 1) % 16 == 0 or i + 1 == len(specs):
+                    print(f"  tuiles {i + 1}/{len(specs)}", flush=True)
+        else:
+            import concurrent.futures
+            with concurrent.futures.ProcessPoolExecutor(max_workers=a.procs) as pool:
+                for i, (c0, r0, w, h, sortie) in enumerate(pool.map(_tuile_ld, specs,
+                                                                    chunksize=1)):
+                    dst.write(sortie, 1, window=rasterio.windows.Window(c0, r0, w, h))
+                    if (i + 1) % 16 == 0 or i + 1 == len(specs):
+                        print(f"  tuiles {i + 1}/{len(specs)}", flush=True)
 
     # auto-vérification
     with rasterio.open(a.sortie) as v:
