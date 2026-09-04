@@ -1,0 +1,29 @@
+# Corpus fours/charbonnières v2 — Haut-Doubs. Différence v1 -> v2 : le LD livré
+# était calculé DALLE PAR DALLE SANS MARGE (audit 2026-09-01 : 39/39 joints fautifs,
+# discontinuité 10,7x la baseline) et au gsd atypique 0,4543 m/px -> LD RÉGÉNÉRÉ
+# depuis le MNT LiDAR HD IGN (telecharger_dalles_ign + mosaique_mnt --tr 0.5 +
+# generer_ld), continu à 0,5 m. GPKG inchangé (0 paire coupée). Split repris du
+# manifest v1 (--split-depuis : blocs 2 km géographiques, survivent au changement
+# de grille).
+dataset: ponctuelles_25_haut_doubs_ld648_v2
+zone: bourgogne_franche_comte/25_haut_doubs
+raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  four:
+    classe: four
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

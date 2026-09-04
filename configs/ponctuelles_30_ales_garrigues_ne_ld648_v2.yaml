@@ -1,0 +1,27 @@
+# Corpus fours/charbonnières v2 — Alès garrigues NE. Différence v1 -> v2 : le LD
+# livré était calculé DALLE PAR DALLE SANS MARGE (audit 2026-09-01 : 36/37 joints
+# fautifs, discontinuité 10,6x la baseline) et au gsd atypique 0,4543 m/px -> LD
+# RÉGÉNÉRÉ depuis le MNT LiDAR HD IGN, continu à 0,5 m. GPKG inchangé (0 paire
+# coupée). Split repris du manifest v1 (blocs 2 km géographiques).
+dataset: ponctuelles_30_ales_garrigues_ne_ld648_v2
+zone: occitanie/30_ales_garrigues_ne
+raster: D:/entrainement_ponctuelles/ales/ales_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/30_ales_garrigues_ne/annotations_coco.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  four:
+    classe: four
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

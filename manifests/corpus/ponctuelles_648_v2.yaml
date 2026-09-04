@@ -1,0 +1,213 @@
+corpus: ponctuelles_648_v2
+genere_le: '2026-09-04'
+outil: tools/build_corpus.py
+outil_commit: 7cc4c20
+config_sha1: c735fa8909d4801c6ecff39199fbf803cf904ac1
+classes:
+- charbonniere
+- four
+- circular_depression
+fusions: {}
+datasets:
+  ponctuelles_57_fenetrange_ld648_v2:
+    zone: grand_est/57_fenetrange
+    splits:
+      train:
+        images: 726
+        annotations:
+          circular_depression: 2325
+          charbonniere: 214
+      valid:
+        images: 220
+        annotations:
+          circular_depression: 717
+          charbonniere: 61
+      test:
+        images: 117
+        annotations:
+          circular_depression: 444
+          charbonniere: 29
+    split_manifest_sha1: be0509ed3d8cd18dcb353ff4f6e2c12800a69438
+    raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/zones/57_fenetrange/annotations_coco_v2.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-03'
+  ponctuelles_70_vosges_saonoises_ld648_v2:
+    zone: bourgogne_franche_comte/70_vosges_saonoises
+    splits:
+      train:
+        images: 223
+        annotations:
+          charbonniere: 1740
+          circular_depression: 578
+          four: 10
+      valid:
+        images: 70
+        annotations:
+          four: 3
+          charbonniere: 664
+          circular_depression: 155
+      test:
+        images: 38
+        annotations:
+          charbonniere: 295
+          circular_depression: 82
+          four: 1
+    split_manifest_sha1: fc9c94a8dcd74bcd33c803aa2fc669824722fd95
+    raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_coco_v2.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-03'
+  ponctuelles_25_haut_doubs_ld648_v2:
+    zone: bourgogne_franche_comte/25_haut_doubs
+    splits:
+      train:
+        images: 575
+        annotations:
+          four: 912
+          circular_depression: 78
+          charbonniere: 4
+      valid:
+        images: 161
+        annotations:
+          four: 234
+          circular_depression: 26
+          charbonniere: 4
+      test:
+        images: 100
+        annotations:
+          four: 141
+          circular_depression: 13
+          charbonniere: 2
+    split_manifest_sha1: da04b9bee6712c6334ed843f588606518a9d536c
+    raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-04'
+  ponctuelles_30_ales_garrigues_ne_ld648_v2:
+    zone: occitanie/30_ales_garrigues_ne
+    splits:
+      train:
+        images: 1620
+        annotations:
+          charbonniere: 2093
+          four: 781
+          circular_depression: 736
+      valid:
+        images: 446
+        annotations:
+          four: 240
+          circular_depression: 210
+          charbonniere: 595
+      test:
+        images: 247
+        annotations:
+          circular_depression: 112
+          charbonniere: 306
+          four: 122
+    split_manifest_sha1: 2351db15e99ef0a541b12ca63d6625f64899f567
+    raster: D:/entrainement_ponctuelles/ales/ales_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/30_ales_garrigues_ne/annotations_coco.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-04'
+  ponctuelles_30_la_capelle_ld648_v2:
+    zone: occitanie/30_la_capelle_et_masmolene
+    splits:
+      train:
+        images: 167
+        annotations:
+          four: 156
+          charbonniere: 40
+          circular_depression: 60
+      valid:
+        images: 46
+        annotations:
+          four: 43
+          circular_depression: 12
+          charbonniere: 10
+      test:
+        images: 22
+        annotations:
+          circular_depression: 8
+          charbonniere: 6
+          four: 20
+    split_manifest_sha1: f1824131e1efce4acbed22d6e76b7666aea780c8
+    raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-03'
+  ponctuelles_78_rambouillet_ld648_v2:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 988
+        annotations:
+          charbonniere: 3812
+          circular_depression: 481
+      valid:
+        images: 330
+        annotations:
+          charbonniere: 1125
+          circular_depression: 131
+      test:
+        images: 136
+        annotations:
+          charbonniere: 575
+          circular_depression: 76
+    split_manifest_sha1: 3714e5009122c2c25a001421515817e8cc1eab78
+    raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
+    gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites_v2.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-03'
+  fours_charb_41_blois_ld648_v1:
+    zone: centre_val_de_loire/41_blois
+    splits:
+      train:
+        images: 211
+        annotations:
+          charbonniere: 457
+      valid:
+        images: 62
+        annotations:
+          charbonniere: 140
+      test:
+        images: 33
+        annotations:
+          charbonniere: 84
+    split_manifest_sha1: ca6f030da10a7fafdfe45266704bfeb7af5c6b47
+    raster: D:/entrainement_fours_charbonnieres/blois/blois_ld.tif
+    gpkg: D:/entrainement_fours_charbonnieres/zones/41_blois/blois_entites.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-08-21'
+splits:
+  train:
+    images: 4510
+    coco_sha1: f13c8fd1a2d3554eceb509ab651e150aa2d15a56
+    annotations:
+      circular_depression: 4258
+      charbonniere: 8360
+      four: 1859
+  valid:
+    images: 1335
+    coco_sha1: 1f0461b4253617d3491a0b39ce5cc5cfe7d9e7c7
+    annotations:
+      circular_depression: 1251
+      charbonniere: 2599
+      four: 520
+  test:
+    images: 693
+    coco_sha1: e80ce4193b77ebcf298c1833a687e70b4075992f
+    annotations:
+      circular_depression: 735
+      charbonniere: 1297
+      four: 284
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'DÉCISION 2026-09-03: Chailluz EXCLU (cercles synthétiques r=5 m — défaut de données
+  n°1 du run fours_charb_seg_ld_v1_ep41)'
+- 'ATTENTION: ~606 troncatures sèches aux lignes km subsistent (moitié d''objet jamais
+  annotée par la source, incorrigible sans revue humaine — audit_final_2026-09-04)
+  ; 7 paires résiduelles non arbitrées (gt_paires_residuelles.gpkg, 14 annotations)'
+- Corpus destiné à l'entraînement DÉTECTION bbox (résolution 672) ; les masques ellipses
+  des sources bbox restent dans les COCO mais ne servent pas en détection

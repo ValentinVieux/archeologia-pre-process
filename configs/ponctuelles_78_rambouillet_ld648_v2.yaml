@@ -1,0 +1,26 @@
+# Corpus fours/charbonnières v2 — Rambouillet. Différence v1 -> v2 : GPKG _v2 aux
+# 3 paires de charbonnières coupées aux joints km FUSIONNÉES (audit marges
+# 2026-09-01). LD inchangé (VRT continu hormis 2 raccords isolés, audité).
+# Split repris du manifest v1.
+dataset: ponctuelles_78_rambouillet_ld648_v2
+zone: ile_de_france/78_rambouillet
+raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
+gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites_v2.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  circular_depression:
+    classe: circular_depression
+  depression_pts_ignorer:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null

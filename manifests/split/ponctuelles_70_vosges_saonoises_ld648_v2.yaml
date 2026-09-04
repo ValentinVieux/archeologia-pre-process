@@ -1,0 +1,5173 @@
+dataset: ponctuelles_70_vosges_saonoises_ld648_v2
+zone: bourgogne_franche_comte/70_vosges_saonoises
+seed: 42
+split_depuis: manifests\split\fours_charb_70_vosges_saonoises_ld648_v1.yaml
+genere_le: '2026-09-03'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+    four:
+      classe: four
+      buffer_m: null
+      ignorer: false
+    circular_depression:
+      classe: circular_depression
+      buffer_m: null
+      ignorer: false
+  dataset: ponctuelles_70_vosges_saonoises_ld648_v2
+  gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_coco_v2.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: 0
+  raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: bourgogne_franche_comte/70_vosges_saonoises
+grille:
+  origine:
+  - 943000.0
+  - 6767000.0
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 1740
+    circular_depression: 578
+    four: 10
+  valid:
+    charbonniere: 664
+    circular_depression: 155
+    four: 3
+  test:
+    charbonniere: 295
+    circular_depression: 82
+    four: 1
+hashes_sha1:
+  train: bf61021f2689e02e3f1f8b62c8fb94dd29703225
+  valid: 216b94d6a0995573d7a6a857beb0db7b0257efc9
+  test: fee44439d46928db731d1b0f91fceafb9bcddcd9
+tuiles:
+- nom: 70_vosges_saonoises_r0000_c0016.png
+  row: 0
+  col: 16
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948184.0
+  - 6766676.0
+  - 948508.0
+  - 6767000.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0000_c0017.png
+  row: 0
+  col: 17
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948508.0
+  - 6766676.0
+  - 948832.0
+  - 6767000.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0000_c0018.png
+  row: 0
+  col: 18
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948832.0
+  - 6766676.0
+  - 949156.0
+  - 6767000.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0001_c0016.png
+  row: 1
+  col: 16
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948184.0
+  - 6766352.0
+  - 948508.0
+  - 6766676.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0001_c0017.png
+  row: 1
+  col: 17
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948508.0
+  - 6766352.0
+  - 948832.0
+  - 6766676.0
+  n_annotations: 38
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0001_c0018.png
+  row: 1
+  col: 18
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948832.0
+  - 6766352.0
+  - 949156.0
+  - 6766676.0
+  n_annotations: 13
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0002_c0016.png
+  row: 2
+  col: 16
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948184.0
+  - 6766028.0
+  - 948508.0
+  - 6766352.0
+  n_annotations: 34
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0002_c0017.png
+  row: 2
+  col: 17
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948508.0
+  - 6766028.0
+  - 948832.0
+  - 6766352.0
+  n_annotations: 23
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0002_c0018.png
+  row: 2
+  col: 18
+  bloc:
+  - 474
+  - 3383
+  split: train
+  bounds:
+  - 948832.0
+  - 6766028.0
+  - 949156.0
+  - 6766352.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0003_c0000.png
+  row: 3
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6765704.0
+  - 943324.0
+  - 6766028.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0003_c0001.png
+  row: 3
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6765704.0
+  - 943648.0
+  - 6766028.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0003_c0002.png
+  row: 3
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6765704.0
+  - 943972.0
+  - 6766028.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0003_c0003.png
+  row: 3
+  col: 3
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 943972.0
+  - 6765704.0
+  - 944296.0
+  - 6766028.0
+  n_annotations: 27
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0003_c0004.png
+  row: 3
+  col: 4
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944296.0
+  - 6765704.0
+  - 944620.0
+  - 6766028.0
+  n_annotations: 48
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0003_c0005.png
+  row: 3
+  col: 5
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944620.0
+  - 6765704.0
+  - 944944.0
+  - 6766028.0
+  n_annotations: 36
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0004_c0000.png
+  row: 4
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6765380.0
+  - 943324.0
+  - 6765704.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0004_c0001.png
+  row: 4
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6765380.0
+  - 943648.0
+  - 6765704.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0004_c0002.png
+  row: 4
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6765380.0
+  - 943972.0
+  - 6765704.0
+  n_annotations: 32
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0004_c0003.png
+  row: 4
+  col: 3
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 943972.0
+  - 6765380.0
+  - 944296.0
+  - 6765704.0
+  n_annotations: 42
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0004_c0004.png
+  row: 4
+  col: 4
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944296.0
+  - 6765380.0
+  - 944620.0
+  - 6765704.0
+  n_annotations: 42
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0004_c0005.png
+  row: 4
+  col: 5
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944620.0
+  - 6765380.0
+  - 944944.0
+  - 6765704.0
+  n_annotations: 52
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0000.png
+  row: 5
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6765056.0
+  - 943324.0
+  - 6765380.0
+  n_annotations: 26
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0001.png
+  row: 5
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6765056.0
+  - 943648.0
+  - 6765380.0
+  n_annotations: 38
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0002.png
+  row: 5
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6765056.0
+  - 943972.0
+  - 6765380.0
+  n_annotations: 29
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0003.png
+  row: 5
+  col: 3
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 943972.0
+  - 6765056.0
+  - 944296.0
+  - 6765380.0
+  n_annotations: 37
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0004.png
+  row: 5
+  col: 4
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944296.0
+  - 6765056.0
+  - 944620.0
+  - 6765380.0
+  n_annotations: 49
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0005_c0005.png
+  row: 5
+  col: 5
+  bloc:
+  - 472
+  - 3382
+  split: train
+  bounds:
+  - 944620.0
+  - 6765056.0
+  - 944944.0
+  - 6765380.0
+  n_annotations: 33
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0006_c0000.png
+  row: 6
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6764732.0
+  - 943324.0
+  - 6765056.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0006_c0001.png
+  row: 6
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6764732.0
+  - 943648.0
+  - 6765056.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0006_c0002.png
+  row: 6
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6764732.0
+  - 943972.0
+  - 6765056.0
+  n_annotations: 35
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0007_c0000.png
+  row: 7
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6764408.0
+  - 943324.0
+  - 6764732.0
+  n_annotations: 25
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0007_c0001.png
+  row: 7
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6764408.0
+  - 943648.0
+  - 6764732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0007_c0002.png
+  row: 7
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6764408.0
+  - 943972.0
+  - 6764732.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0008_c0000.png
+  row: 8
+  col: 0
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943000.0
+  - 6764084.0
+  - 943324.0
+  - 6764408.0
+  n_annotations: 39
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0008_c0001.png
+  row: 8
+  col: 1
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943324.0
+  - 6764084.0
+  - 943648.0
+  - 6764408.0
+  n_annotations: 31
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0008_c0002.png
+  row: 8
+  col: 2
+  bloc:
+  - 471
+  - 3382
+  split: train
+  bounds:
+  - 943648.0
+  - 6764084.0
+  - 943972.0
+  - 6764408.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0009_c0000.png
+  row: 9
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6763760.0
+  - 943324.0
+  - 6764084.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0009_c0001.png
+  row: 9
+  col: 1
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943324.0
+  - 6763760.0
+  - 943648.0
+  - 6764084.0
+  n_annotations: 21
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0009_c0002.png
+  row: 9
+  col: 2
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943648.0
+  - 6763760.0
+  - 943972.0
+  - 6764084.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0010_c0000.png
+  row: 10
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6763436.0
+  - 943324.0
+  - 6763760.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0010_c0001.png
+  row: 10
+  col: 1
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943324.0
+  - 6763436.0
+  - 943648.0
+  - 6763760.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0010_c0002.png
+  row: 10
+  col: 2
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943648.0
+  - 6763436.0
+  - 943972.0
+  - 6763760.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0010_c0074.png
+  row: 10
+  col: 74
+  bloc:
+  - 483
+  - 3381
+  split: valid
+  bounds:
+  - 966976.0
+  - 6763436.0
+  - 967300.0
+  - 6763760.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0011_c0000.png
+  row: 11
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6763112.0
+  - 943324.0
+  - 6763436.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0011_c0075.png
+  row: 11
+  col: 75
+  bloc:
+  - 483
+  - 3381
+  split: valid
+  bounds:
+  - 967300.0
+  - 6763112.0
+  - 967624.0
+  - 6763436.0
+  n_annotations: 1
+  classes:
+  - four
+- nom: 70_vosges_saonoises_r0012_c0000.png
+  row: 12
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6762788.0
+  - 943324.0
+  - 6763112.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0012_c0001.png
+  row: 12
+  col: 1
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943324.0
+  - 6762788.0
+  - 943648.0
+  - 6763112.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0013_c0000.png
+  row: 13
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6762464.0
+  - 943324.0
+  - 6762788.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0013_c0003.png
+  row: 13
+  col: 3
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 943972.0
+  - 6762464.0
+  - 944296.0
+  - 6762788.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0013_c0004.png
+  row: 13
+  col: 4
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 944296.0
+  - 6762464.0
+  - 944620.0
+  - 6762788.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0013_c0005.png
+  row: 13
+  col: 5
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 944620.0
+  - 6762464.0
+  - 944944.0
+  - 6762788.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0014_c0000.png
+  row: 14
+  col: 0
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943000.0
+  - 6762140.0
+  - 943324.0
+  - 6762464.0
+  n_annotations: 23
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0014_c0001.png
+  row: 14
+  col: 1
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943324.0
+  - 6762140.0
+  - 943648.0
+  - 6762464.0
+  n_annotations: 23
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0014_c0002.png
+  row: 14
+  col: 2
+  bloc:
+  - 471
+  - 3381
+  split: train
+  bounds:
+  - 943648.0
+  - 6762140.0
+  - 943972.0
+  - 6762464.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0014_c0003.png
+  row: 14
+  col: 3
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 943972.0
+  - 6762140.0
+  - 944296.0
+  - 6762464.0
+  n_annotations: 1
+  classes:
+  - four
+- nom: 70_vosges_saonoises_r0014_c0004.png
+  row: 14
+  col: 4
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 944296.0
+  - 6762140.0
+  - 944620.0
+  - 6762464.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0014_c0005.png
+  row: 14
+  col: 5
+  bloc:
+  - 472
+  - 3381
+  split: valid
+  bounds:
+  - 944620.0
+  - 6762140.0
+  - 944944.0
+  - 6762464.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0015_c0000.png
+  row: 15
+  col: 0
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943000.0
+  - 6761816.0
+  - 943324.0
+  - 6762140.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0015_c0001.png
+  row: 15
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6761816.0
+  - 943648.0
+  - 6762140.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0015_c0003.png
+  row: 15
+  col: 3
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 943972.0
+  - 6761816.0
+  - 944296.0
+  - 6762140.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0015_c0004.png
+  row: 15
+  col: 4
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944296.0
+  - 6761816.0
+  - 944620.0
+  - 6762140.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0015_c0005.png
+  row: 15
+  col: 5
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944620.0
+  - 6761816.0
+  - 944944.0
+  - 6762140.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0015_c0059.png
+  row: 15
+  col: 59
+  bloc:
+  - 481
+  - 3380
+  split: valid
+  bounds:
+  - 962116.0
+  - 6761816.0
+  - 962440.0
+  - 6762140.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0015_c0060.png
+  row: 15
+  col: 60
+  bloc:
+  - 481
+  - 3380
+  split: valid
+  bounds:
+  - 962440.0
+  - 6761816.0
+  - 962764.0
+  - 6762140.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0016_c0000.png
+  row: 16
+  col: 0
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943000.0
+  - 6761492.0
+  - 943324.0
+  - 6761816.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0016_c0001.png
+  row: 16
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6761492.0
+  - 943648.0
+  - 6761816.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0016_c0002.png
+  row: 16
+  col: 2
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943648.0
+  - 6761492.0
+  - 943972.0
+  - 6761816.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0016_c0003.png
+  row: 16
+  col: 3
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 943972.0
+  - 6761492.0
+  - 944296.0
+  - 6761816.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0016_c0004.png
+  row: 16
+  col: 4
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944296.0
+  - 6761492.0
+  - 944620.0
+  - 6761816.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0016_c0005.png
+  row: 16
+  col: 5
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944620.0
+  - 6761492.0
+  - 944944.0
+  - 6761816.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0016_c0061.png
+  row: 16
+  col: 61
+  bloc:
+  - 481
+  - 3380
+  split: valid
+  bounds:
+  - 962764.0
+  - 6761492.0
+  - 963088.0
+  - 6761816.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0017_c0000.png
+  row: 17
+  col: 0
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943000.0
+  - 6761168.0
+  - 943324.0
+  - 6761492.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0017_c0001.png
+  row: 17
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6761168.0
+  - 943648.0
+  - 6761492.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0017_c0002.png
+  row: 17
+  col: 2
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943648.0
+  - 6761168.0
+  - 943972.0
+  - 6761492.0
+  n_annotations: 26
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0017_c0003.png
+  row: 17
+  col: 3
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 943972.0
+  - 6761168.0
+  - 944296.0
+  - 6761492.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0017_c0004.png
+  row: 17
+  col: 4
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944296.0
+  - 6761168.0
+  - 944620.0
+  - 6761492.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0017_c0005.png
+  row: 17
+  col: 5
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944620.0
+  - 6761168.0
+  - 944944.0
+  - 6761492.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0017_c0060.png
+  row: 17
+  col: 60
+  bloc:
+  - 481
+  - 3380
+  split: valid
+  bounds:
+  - 962440.0
+  - 6761168.0
+  - 962764.0
+  - 6761492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0017_c0061.png
+  row: 17
+  col: 61
+  bloc:
+  - 481
+  - 3380
+  split: valid
+  bounds:
+  - 962764.0
+  - 6761168.0
+  - 963088.0
+  - 6761492.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0018_c0000.png
+  row: 18
+  col: 0
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943000.0
+  - 6760844.0
+  - 943324.0
+  - 6761168.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0018_c0001.png
+  row: 18
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6760844.0
+  - 943648.0
+  - 6761168.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0018_c0002.png
+  row: 18
+  col: 2
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943648.0
+  - 6760844.0
+  - 943972.0
+  - 6761168.0
+  n_annotations: 40
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0018_c0003.png
+  row: 18
+  col: 3
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 943972.0
+  - 6760844.0
+  - 944296.0
+  - 6761168.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0018_c0004.png
+  row: 18
+  col: 4
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 944296.0
+  - 6760844.0
+  - 944620.0
+  - 6761168.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0019_c0001.png
+  row: 19
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6760520.0
+  - 943648.0
+  - 6760844.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0019_c0002.png
+  row: 19
+  col: 2
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943648.0
+  - 6760520.0
+  - 943972.0
+  - 6760844.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0019_c0003.png
+  row: 19
+  col: 3
+  bloc:
+  - 472
+  - 3380
+  split: valid
+  bounds:
+  - 943972.0
+  - 6760520.0
+  - 944296.0
+  - 6760844.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0020_c0000.png
+  row: 20
+  col: 0
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943000.0
+  - 6760196.0
+  - 943324.0
+  - 6760520.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0020_c0001.png
+  row: 20
+  col: 1
+  bloc:
+  - 471
+  - 3380
+  split: train
+  bounds:
+  - 943324.0
+  - 6760196.0
+  - 943648.0
+  - 6760520.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0023_c0000.png
+  row: 23
+  col: 0
+  bloc:
+  - 471
+  - 3379
+  split: train
+  bounds:
+  - 943000.0
+  - 6759224.0
+  - 943324.0
+  - 6759548.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0023_c0002.png
+  row: 23
+  col: 2
+  bloc:
+  - 471
+  - 3379
+  split: train
+  bounds:
+  - 943648.0
+  - 6759224.0
+  - 943972.0
+  - 6759548.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0024_c0000.png
+  row: 24
+  col: 0
+  bloc:
+  - 471
+  - 3379
+  split: train
+  bounds:
+  - 943000.0
+  - 6758900.0
+  - 943324.0
+  - 6759224.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0031_c0000.png
+  row: 31
+  col: 0
+  bloc:
+  - 471
+  - 3378
+  split: train
+  bounds:
+  - 943000.0
+  - 6756632.0
+  - 943324.0
+  - 6756956.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0031_c0002.png
+  row: 31
+  col: 2
+  bloc:
+  - 471
+  - 3378
+  split: train
+  bounds:
+  - 943648.0
+  - 6756632.0
+  - 943972.0
+  - 6756956.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0031_c0004.png
+  row: 31
+  col: 4
+  bloc:
+  - 472
+  - 3378
+  split: train
+  bounds:
+  - 944296.0
+  - 6756632.0
+  - 944620.0
+  - 6756956.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0031_c0005.png
+  row: 31
+  col: 5
+  bloc:
+  - 472
+  - 3378
+  split: train
+  bounds:
+  - 944620.0
+  - 6756632.0
+  - 944944.0
+  - 6756956.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0032_c0001.png
+  row: 32
+  col: 1
+  bloc:
+  - 471
+  - 3378
+  split: train
+  bounds:
+  - 943324.0
+  - 6756308.0
+  - 943648.0
+  - 6756632.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0032_c0003.png
+  row: 32
+  col: 3
+  bloc:
+  - 472
+  - 3378
+  split: train
+  bounds:
+  - 943972.0
+  - 6756308.0
+  - 944296.0
+  - 6756632.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0032_c0005.png
+  row: 32
+  col: 5
+  bloc:
+  - 472
+  - 3378
+  split: train
+  bounds:
+  - 944620.0
+  - 6756308.0
+  - 944944.0
+  - 6756632.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0033_c0001.png
+  row: 33
+  col: 1
+  bloc:
+  - 471
+  - 3378
+  split: train
+  bounds:
+  - 943324.0
+  - 6755984.0
+  - 943648.0
+  - 6756308.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0033_c0005.png
+  row: 33
+  col: 5
+  bloc:
+  - 472
+  - 3378
+  split: train
+  bounds:
+  - 944620.0
+  - 6755984.0
+  - 944944.0
+  - 6756308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0034_c0001.png
+  row: 34
+  col: 1
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943324.0
+  - 6755660.0
+  - 943648.0
+  - 6755984.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0034_c0002.png
+  row: 34
+  col: 2
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943648.0
+  - 6755660.0
+  - 943972.0
+  - 6755984.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0034_c0004.png
+  row: 34
+  col: 4
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944296.0
+  - 6755660.0
+  - 944620.0
+  - 6755984.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0034_c0005.png
+  row: 34
+  col: 5
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944620.0
+  - 6755660.0
+  - 944944.0
+  - 6755984.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0035_c0000.png
+  row: 35
+  col: 0
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943000.0
+  - 6755336.0
+  - 943324.0
+  - 6755660.0
+  n_annotations: 9
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0035_c0002.png
+  row: 35
+  col: 2
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943648.0
+  - 6755336.0
+  - 943972.0
+  - 6755660.0
+  n_annotations: 21
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0035_c0003.png
+  row: 35
+  col: 3
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 943972.0
+  - 6755336.0
+  - 944296.0
+  - 6755660.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0035_c0004.png
+  row: 35
+  col: 4
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944296.0
+  - 6755336.0
+  - 944620.0
+  - 6755660.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0035_c0005.png
+  row: 35
+  col: 5
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944620.0
+  - 6755336.0
+  - 944944.0
+  - 6755660.0
+  n_annotations: 26
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0036_c0001.png
+  row: 36
+  col: 1
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943324.0
+  - 6755012.0
+  - 943648.0
+  - 6755336.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0036_c0002.png
+  row: 36
+  col: 2
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943648.0
+  - 6755012.0
+  - 943972.0
+  - 6755336.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0036_c0003.png
+  row: 36
+  col: 3
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 943972.0
+  - 6755012.0
+  - 944296.0
+  - 6755336.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0036_c0004.png
+  row: 36
+  col: 4
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944296.0
+  - 6755012.0
+  - 944620.0
+  - 6755336.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0036_c0005.png
+  row: 36
+  col: 5
+  bloc:
+  - 472
+  - 3377
+  split: train
+  bounds:
+  - 944620.0
+  - 6755012.0
+  - 944944.0
+  - 6755336.0
+  n_annotations: 18
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0037_c0000.png
+  row: 37
+  col: 0
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943000.0
+  - 6754688.0
+  - 943324.0
+  - 6755012.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0037_c0001.png
+  row: 37
+  col: 1
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943324.0
+  - 6754688.0
+  - 943648.0
+  - 6755012.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0037_c0002.png
+  row: 37
+  col: 2
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943648.0
+  - 6754688.0
+  - 943972.0
+  - 6755012.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0038_c0001.png
+  row: 38
+  col: 1
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943324.0
+  - 6754364.0
+  - 943648.0
+  - 6754688.0
+  n_annotations: 5
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0038_c0002.png
+  row: 38
+  col: 2
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943648.0
+  - 6754364.0
+  - 943972.0
+  - 6754688.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0039_c0000.png
+  row: 39
+  col: 0
+  bloc:
+  - 471
+  - 3377
+  split: train
+  bounds:
+  - 943000.0
+  - 6754040.0
+  - 943324.0
+  - 6754364.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0040_c0000.png
+  row: 40
+  col: 0
+  bloc:
+  - 471
+  - 3376
+  split: train
+  bounds:
+  - 943000.0
+  - 6753716.0
+  - 943324.0
+  - 6754040.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0040_c0004.png
+  row: 40
+  col: 4
+  bloc:
+  - 472
+  - 3376
+  split: train
+  bounds:
+  - 944296.0
+  - 6753716.0
+  - 944620.0
+  - 6754040.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0041_c0134.png
+  row: 41
+  col: 134
+  bloc:
+  - 493
+  - 3376
+  split: train
+  bounds:
+  - 986416.0
+  - 6753392.0
+  - 986740.0
+  - 6753716.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0042_c0000.png
+  row: 42
+  col: 0
+  bloc:
+  - 471
+  - 3376
+  split: train
+  bounds:
+  - 943000.0
+  - 6753068.0
+  - 943324.0
+  - 6753392.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0042_c0004.png
+  row: 42
+  col: 4
+  bloc:
+  - 472
+  - 3376
+  split: train
+  bounds:
+  - 944296.0
+  - 6753068.0
+  - 944620.0
+  - 6753392.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0042_c0134.png
+  row: 42
+  col: 134
+  bloc:
+  - 493
+  - 3376
+  split: train
+  bounds:
+  - 986416.0
+  - 6753068.0
+  - 986740.0
+  - 6753392.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0042_c0135.png
+  row: 42
+  col: 135
+  bloc:
+  - 493
+  - 3376
+  split: train
+  bounds:
+  - 986740.0
+  - 6753068.0
+  - 987064.0
+  - 6753392.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0047_c0005.png
+  row: 47
+  col: 5
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944620.0
+  - 6751448.0
+  - 944944.0
+  - 6751772.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0048_c0003.png
+  row: 48
+  col: 3
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 943972.0
+  - 6751124.0
+  - 944296.0
+  - 6751448.0
+  n_annotations: 6
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0048_c0004.png
+  row: 48
+  col: 4
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944296.0
+  - 6751124.0
+  - 944620.0
+  - 6751448.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0048_c0005.png
+  row: 48
+  col: 5
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944620.0
+  - 6751124.0
+  - 944944.0
+  - 6751448.0
+  n_annotations: 24
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0049_c0001.png
+  row: 49
+  col: 1
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943324.0
+  - 6750800.0
+  - 943648.0
+  - 6751124.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0049_c0002.png
+  row: 49
+  col: 2
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943648.0
+  - 6750800.0
+  - 943972.0
+  - 6751124.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0049_c0003.png
+  row: 49
+  col: 3
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 943972.0
+  - 6750800.0
+  - 944296.0
+  - 6751124.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0049_c0004.png
+  row: 49
+  col: 4
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944296.0
+  - 6750800.0
+  - 944620.0
+  - 6751124.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0049_c0005.png
+  row: 49
+  col: 5
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944620.0
+  - 6750800.0
+  - 944944.0
+  - 6751124.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0050_c0000.png
+  row: 50
+  col: 0
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943000.0
+  - 6750476.0
+  - 943324.0
+  - 6750800.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0050_c0001.png
+  row: 50
+  col: 1
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943324.0
+  - 6750476.0
+  - 943648.0
+  - 6750800.0
+  n_annotations: 25
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0050_c0002.png
+  row: 50
+  col: 2
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943648.0
+  - 6750476.0
+  - 943972.0
+  - 6750800.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0050_c0003.png
+  row: 50
+  col: 3
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 943972.0
+  - 6750476.0
+  - 944296.0
+  - 6750800.0
+  n_annotations: 7
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0050_c0004.png
+  row: 50
+  col: 4
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944296.0
+  - 6750476.0
+  - 944620.0
+  - 6750800.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0050_c0005.png
+  row: 50
+  col: 5
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944620.0
+  - 6750476.0
+  - 944944.0
+  - 6750800.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0000.png
+  row: 51
+  col: 0
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943000.0
+  - 6750152.0
+  - 943324.0
+  - 6750476.0
+  n_annotations: 27
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0001.png
+  row: 51
+  col: 1
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943324.0
+  - 6750152.0
+  - 943648.0
+  - 6750476.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0002.png
+  row: 51
+  col: 2
+  bloc:
+  - 471
+  - 3375
+  split: train
+  bounds:
+  - 943648.0
+  - 6750152.0
+  - 943972.0
+  - 6750476.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0003.png
+  row: 51
+  col: 3
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 943972.0
+  - 6750152.0
+  - 944296.0
+  - 6750476.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0004.png
+  row: 51
+  col: 4
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944296.0
+  - 6750152.0
+  - 944620.0
+  - 6750476.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0051_c0005.png
+  row: 51
+  col: 5
+  bloc:
+  - 472
+  - 3375
+  split: train
+  bounds:
+  - 944620.0
+  - 6750152.0
+  - 944944.0
+  - 6750476.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0052_c0000.png
+  row: 52
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6749828.0
+  - 943324.0
+  - 6750152.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0052_c0001.png
+  row: 52
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6749828.0
+  - 943648.0
+  - 6750152.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0052_c0002.png
+  row: 52
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6749828.0
+  - 943972.0
+  - 6750152.0
+  n_annotations: 14
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0052_c0003.png
+  row: 52
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6749828.0
+  - 944296.0
+  - 6750152.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0052_c0004.png
+  row: 52
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6749828.0
+  - 944620.0
+  - 6750152.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0052_c0005.png
+  row: 52
+  col: 5
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944620.0
+  - 6749828.0
+  - 944944.0
+  - 6750152.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0000.png
+  row: 53
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6749504.0
+  - 943324.0
+  - 6749828.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0001.png
+  row: 53
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6749504.0
+  - 943648.0
+  - 6749828.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0002.png
+  row: 53
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6749504.0
+  - 943972.0
+  - 6749828.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0003.png
+  row: 53
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6749504.0
+  - 944296.0
+  - 6749828.0
+  n_annotations: 32
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0004.png
+  row: 53
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6749504.0
+  - 944620.0
+  - 6749828.0
+  n_annotations: 29
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0053_c0005.png
+  row: 53
+  col: 5
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944620.0
+  - 6749504.0
+  - 944944.0
+  - 6749828.0
+  n_annotations: 5
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0054_c0000.png
+  row: 54
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6749180.0
+  - 943324.0
+  - 6749504.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0054_c0001.png
+  row: 54
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6749180.0
+  - 943648.0
+  - 6749504.0
+  n_annotations: 14
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0054_c0002.png
+  row: 54
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6749180.0
+  - 943972.0
+  - 6749504.0
+  n_annotations: 24
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0054_c0003.png
+  row: 54
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6749180.0
+  - 944296.0
+  - 6749504.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0054_c0004.png
+  row: 54
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6749180.0
+  - 944620.0
+  - 6749504.0
+  n_annotations: 28
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0054_c0005.png
+  row: 54
+  col: 5
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944620.0
+  - 6749180.0
+  - 944944.0
+  - 6749504.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0055_c0000.png
+  row: 55
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6748856.0
+  - 943324.0
+  - 6749180.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0055_c0001.png
+  row: 55
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6748856.0
+  - 943648.0
+  - 6749180.0
+  n_annotations: 32
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0055_c0002.png
+  row: 55
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6748856.0
+  - 943972.0
+  - 6749180.0
+  n_annotations: 35
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0055_c0003.png
+  row: 55
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6748856.0
+  - 944296.0
+  - 6749180.0
+  n_annotations: 24
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0055_c0004.png
+  row: 55
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6748856.0
+  - 944620.0
+  - 6749180.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0055_c0005.png
+  row: 55
+  col: 5
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944620.0
+  - 6748856.0
+  - 944944.0
+  - 6749180.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0000.png
+  row: 56
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6748532.0
+  - 943324.0
+  - 6748856.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0001.png
+  row: 56
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6748532.0
+  - 943648.0
+  - 6748856.0
+  n_annotations: 32
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0002.png
+  row: 56
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6748532.0
+  - 943972.0
+  - 6748856.0
+  n_annotations: 47
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0003.png
+  row: 56
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6748532.0
+  - 944296.0
+  - 6748856.0
+  n_annotations: 28
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0004.png
+  row: 56
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6748532.0
+  - 944620.0
+  - 6748856.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0005.png
+  row: 56
+  col: 5
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944620.0
+  - 6748532.0
+  - 944944.0
+  - 6748856.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0056_c0121.png
+  row: 56
+  col: 121
+  bloc:
+  - 491
+  - 3374
+  split: train
+  bounds:
+  - 982204.0
+  - 6748532.0
+  - 982528.0
+  - 6748856.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0056_c0122.png
+  row: 56
+  col: 122
+  bloc:
+  - 491
+  - 3374
+  split: train
+  bounds:
+  - 982528.0
+  - 6748532.0
+  - 982852.0
+  - 6748856.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0057_c0000.png
+  row: 57
+  col: 0
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943000.0
+  - 6748208.0
+  - 943324.0
+  - 6748532.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0057_c0001.png
+  row: 57
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6748208.0
+  - 943648.0
+  - 6748532.0
+  n_annotations: 21
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0057_c0002.png
+  row: 57
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6748208.0
+  - 943972.0
+  - 6748532.0
+  n_annotations: 34
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0057_c0003.png
+  row: 57
+  col: 3
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 943972.0
+  - 6748208.0
+  - 944296.0
+  - 6748532.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0057_c0004.png
+  row: 57
+  col: 4
+  bloc:
+  - 472
+  - 3374
+  split: train
+  bounds:
+  - 944296.0
+  - 6748208.0
+  - 944620.0
+  - 6748532.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0057_c0122.png
+  row: 57
+  col: 122
+  bloc:
+  - 491
+  - 3374
+  split: train
+  bounds:
+  - 982528.0
+  - 6748208.0
+  - 982852.0
+  - 6748532.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0058_c0001.png
+  row: 58
+  col: 1
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943324.0
+  - 6747884.0
+  - 943648.0
+  - 6748208.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0058_c0002.png
+  row: 58
+  col: 2
+  bloc:
+  - 471
+  - 3374
+  split: test
+  bounds:
+  - 943648.0
+  - 6747884.0
+  - 943972.0
+  - 6748208.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0062_c0001.png
+  row: 62
+  col: 1
+  bloc:
+  - 471
+  - 3373
+  split: test
+  bounds:
+  - 943324.0
+  - 6746588.0
+  - 943648.0
+  - 6746912.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0062_c0002.png
+  row: 62
+  col: 2
+  bloc:
+  - 471
+  - 3373
+  split: test
+  bounds:
+  - 943648.0
+  - 6746588.0
+  - 943972.0
+  - 6746912.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0062_c0164.png
+  row: 62
+  col: 164
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996136.0
+  - 6746588.0
+  - 996460.0
+  - 6746912.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0062_c0165.png
+  row: 62
+  col: 165
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996460.0
+  - 6746588.0
+  - 996784.0
+  - 6746912.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0063_c0005.png
+  row: 63
+  col: 5
+  bloc:
+  - 472
+  - 3373
+  split: test
+  bounds:
+  - 944620.0
+  - 6746264.0
+  - 944944.0
+  - 6746588.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0063_c0164.png
+  row: 63
+  col: 164
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996136.0
+  - 6746264.0
+  - 996460.0
+  - 6746588.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0063_c0165.png
+  row: 63
+  col: 165
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996460.0
+  - 6746264.0
+  - 996784.0
+  - 6746588.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0064_c0002.png
+  row: 64
+  col: 2
+  bloc:
+  - 471
+  - 3373
+  split: test
+  bounds:
+  - 943648.0
+  - 6745940.0
+  - 943972.0
+  - 6746264.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0064_c0003.png
+  row: 64
+  col: 3
+  bloc:
+  - 472
+  - 3373
+  split: test
+  bounds:
+  - 943972.0
+  - 6745940.0
+  - 944296.0
+  - 6746264.0
+  n_annotations: 24
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0064_c0004.png
+  row: 64
+  col: 4
+  bloc:
+  - 472
+  - 3373
+  split: test
+  bounds:
+  - 944296.0
+  - 6745940.0
+  - 944620.0
+  - 6746264.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0064_c0005.png
+  row: 64
+  col: 5
+  bloc:
+  - 472
+  - 3373
+  split: test
+  bounds:
+  - 944620.0
+  - 6745940.0
+  - 944944.0
+  - 6746264.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0064_c0164.png
+  row: 64
+  col: 164
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996136.0
+  - 6745940.0
+  - 996460.0
+  - 6746264.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0064_c0165.png
+  row: 64
+  col: 165
+  bloc:
+  - 498
+  - 3373
+  split: train
+  bounds:
+  - 996460.0
+  - 6745940.0
+  - 996784.0
+  - 6746264.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0065_c0001.png
+  row: 65
+  col: 1
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943324.0
+  - 6745616.0
+  - 943648.0
+  - 6745940.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0065_c0002.png
+  row: 65
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6745616.0
+  - 943972.0
+  - 6745940.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0065_c0003.png
+  row: 65
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6745616.0
+  - 944296.0
+  - 6745940.0
+  n_annotations: 29
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0065_c0004.png
+  row: 65
+  col: 4
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944296.0
+  - 6745616.0
+  - 944620.0
+  - 6745940.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0065_c0005.png
+  row: 65
+  col: 5
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944620.0
+  - 6745616.0
+  - 944944.0
+  - 6745940.0
+  n_annotations: 13
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0066_c0000.png
+  row: 66
+  col: 0
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943000.0
+  - 6745292.0
+  - 943324.0
+  - 6745616.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0066_c0002.png
+  row: 66
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6745292.0
+  - 943972.0
+  - 6745616.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0066_c0003.png
+  row: 66
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6745292.0
+  - 944296.0
+  - 6745616.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0066_c0004.png
+  row: 66
+  col: 4
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944296.0
+  - 6745292.0
+  - 944620.0
+  - 6745616.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0066_c0005.png
+  row: 66
+  col: 5
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944620.0
+  - 6745292.0
+  - 944944.0
+  - 6745616.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0066_c0009.png
+  row: 66
+  col: 9
+  bloc:
+  - 473
+  - 3372
+  split: test
+  bounds:
+  - 945916.0
+  - 6745292.0
+  - 946240.0
+  - 6745616.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0066_c0010.png
+  row: 66
+  col: 10
+  bloc:
+  - 473
+  - 3372
+  split: test
+  bounds:
+  - 946240.0
+  - 6745292.0
+  - 946564.0
+  - 6745616.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0066_c0011.png
+  row: 66
+  col: 11
+  bloc:
+  - 473
+  - 3372
+  split: test
+  bounds:
+  - 946564.0
+  - 6745292.0
+  - 946888.0
+  - 6745616.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0067_c0000.png
+  row: 67
+  col: 0
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943000.0
+  - 6744968.0
+  - 943324.0
+  - 6745292.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0067_c0001.png
+  row: 67
+  col: 1
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943324.0
+  - 6744968.0
+  - 943648.0
+  - 6745292.0
+  n_annotations: 22
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0067_c0002.png
+  row: 67
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6744968.0
+  - 943972.0
+  - 6745292.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0067_c0003.png
+  row: 67
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6744968.0
+  - 944296.0
+  - 6745292.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0067_c0005.png
+  row: 67
+  col: 5
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944620.0
+  - 6744968.0
+  - 944944.0
+  - 6745292.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0067_c0010.png
+  row: 67
+  col: 10
+  bloc:
+  - 473
+  - 3372
+  split: test
+  bounds:
+  - 946240.0
+  - 6744968.0
+  - 946564.0
+  - 6745292.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0067_c0011.png
+  row: 67
+  col: 11
+  bloc:
+  - 473
+  - 3372
+  split: test
+  bounds:
+  - 946564.0
+  - 6744968.0
+  - 946888.0
+  - 6745292.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0000.png
+  row: 68
+  col: 0
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943000.0
+  - 6744644.0
+  - 943324.0
+  - 6744968.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0001.png
+  row: 68
+  col: 1
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943324.0
+  - 6744644.0
+  - 943648.0
+  - 6744968.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0002.png
+  row: 68
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6744644.0
+  - 943972.0
+  - 6744968.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0003.png
+  row: 68
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6744644.0
+  - 944296.0
+  - 6744968.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0004.png
+  row: 68
+  col: 4
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944296.0
+  - 6744644.0
+  - 944620.0
+  - 6744968.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0068_c0005.png
+  row: 68
+  col: 5
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944620.0
+  - 6744644.0
+  - 944944.0
+  - 6744968.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0069_c0001.png
+  row: 69
+  col: 1
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943324.0
+  - 6744320.0
+  - 943648.0
+  - 6744644.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - four
+- nom: 70_vosges_saonoises_r0069_c0002.png
+  row: 69
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6744320.0
+  - 943972.0
+  - 6744644.0
+  n_annotations: 21
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0069_c0003.png
+  row: 69
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6744320.0
+  - 944296.0
+  - 6744644.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0069_c0004.png
+  row: 69
+  col: 4
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944296.0
+  - 6744320.0
+  - 944620.0
+  - 6744644.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0070_c0000.png
+  row: 70
+  col: 0
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943000.0
+  - 6743996.0
+  - 943324.0
+  - 6744320.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0070_c0001.png
+  row: 70
+  col: 1
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943324.0
+  - 6743996.0
+  - 943648.0
+  - 6744320.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 70_vosges_saonoises_r0070_c0002.png
+  row: 70
+  col: 2
+  bloc:
+  - 471
+  - 3372
+  split: train
+  bounds:
+  - 943648.0
+  - 6743996.0
+  - 943972.0
+  - 6744320.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0070_c0003.png
+  row: 70
+  col: 3
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 943972.0
+  - 6743996.0
+  - 944296.0
+  - 6744320.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0070_c0004.png
+  row: 70
+  col: 4
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944296.0
+  - 6743996.0
+  - 944620.0
+  - 6744320.0
+  n_annotations: 22
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0070_c0005.png
+  row: 70
+  col: 5
+  bloc:
+  - 472
+  - 3372
+  split: train
+  bounds:
+  - 944620.0
+  - 6743996.0
+  - 944944.0
+  - 6744320.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0000.png
+  row: 71
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6743672.0
+  - 943324.0
+  - 6743996.0
+  n_annotations: 6
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0001.png
+  row: 71
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6743672.0
+  - 943648.0
+  - 6743996.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0002.png
+  row: 71
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6743672.0
+  - 943972.0
+  - 6743996.0
+  n_annotations: 24
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0003.png
+  row: 71
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6743672.0
+  - 944296.0
+  - 6743996.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0004.png
+  row: 71
+  col: 4
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944296.0
+  - 6743672.0
+  - 944620.0
+  - 6743996.0
+  n_annotations: 30
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0071_c0005.png
+  row: 71
+  col: 5
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944620.0
+  - 6743672.0
+  - 944944.0
+  - 6743996.0
+  n_annotations: 41
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0071_c0108.png
+  row: 71
+  col: 108
+  bloc:
+  - 489
+  - 3371
+  split: train
+  bounds:
+  - 977992.0
+  - 6743672.0
+  - 978316.0
+  - 6743996.0
+  n_annotations: 1
+  classes:
+  - four
+- nom: 70_vosges_saonoises_r0071_c0110.png
+  row: 71
+  col: 110
+  bloc:
+  - 489
+  - 3371
+  split: train
+  bounds:
+  - 978640.0
+  - 6743672.0
+  - 978964.0
+  - 6743996.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0072_c0000.png
+  row: 72
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6743348.0
+  - 943324.0
+  - 6743672.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0072_c0001.png
+  row: 72
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6743348.0
+  - 943648.0
+  - 6743672.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0072_c0002.png
+  row: 72
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6743348.0
+  - 943972.0
+  - 6743672.0
+  n_annotations: 21
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0072_c0003.png
+  row: 72
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6743348.0
+  - 944296.0
+  - 6743672.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0072_c0004.png
+  row: 72
+  col: 4
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944296.0
+  - 6743348.0
+  - 944620.0
+  - 6743672.0
+  n_annotations: 23
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0072_c0005.png
+  row: 72
+  col: 5
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944620.0
+  - 6743348.0
+  - 944944.0
+  - 6743672.0
+  n_annotations: 30
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0000.png
+  row: 73
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6743024.0
+  - 943324.0
+  - 6743348.0
+  n_annotations: 27
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0001.png
+  row: 73
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6743024.0
+  - 943648.0
+  - 6743348.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0002.png
+  row: 73
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6743024.0
+  - 943972.0
+  - 6743348.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0003.png
+  row: 73
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6743024.0
+  - 944296.0
+  - 6743348.0
+  n_annotations: 29
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0004.png
+  row: 73
+  col: 4
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944296.0
+  - 6743024.0
+  - 944620.0
+  - 6743348.0
+  n_annotations: 16
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0005.png
+  row: 73
+  col: 5
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944620.0
+  - 6743024.0
+  - 944944.0
+  - 6743348.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0073_c0109.png
+  row: 73
+  col: 109
+  bloc:
+  - 489
+  - 3371
+  split: train
+  bounds:
+  - 978316.0
+  - 6743024.0
+  - 978640.0
+  - 6743348.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0074_c0000.png
+  row: 74
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6742700.0
+  - 943324.0
+  - 6743024.0
+  n_annotations: 20
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0001.png
+  row: 74
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6742700.0
+  - 943648.0
+  - 6743024.0
+  n_annotations: 25
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0002.png
+  row: 74
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6742700.0
+  - 943972.0
+  - 6743024.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0003.png
+  row: 74
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6742700.0
+  - 944296.0
+  - 6743024.0
+  n_annotations: 19
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0074_c0004.png
+  row: 74
+  col: 4
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944296.0
+  - 6742700.0
+  - 944620.0
+  - 6743024.0
+  n_annotations: 13
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0005.png
+  row: 74
+  col: 5
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944620.0
+  - 6742700.0
+  - 944944.0
+  - 6743024.0
+  n_annotations: 9
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0096.png
+  row: 74
+  col: 96
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974104.0
+  - 6742700.0
+  - 974428.0
+  - 6743024.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0074_c0097.png
+  row: 74
+  col: 97
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974428.0
+  - 6742700.0
+  - 974752.0
+  - 6743024.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0074_c0098.png
+  row: 74
+  col: 98
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974752.0
+  - 6742700.0
+  - 975076.0
+  - 6743024.0
+  n_annotations: 11
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0000.png
+  row: 75
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6742376.0
+  - 943324.0
+  - 6742700.0
+  n_annotations: 28
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0075_c0001.png
+  row: 75
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6742376.0
+  - 943648.0
+  - 6742700.0
+  n_annotations: 14
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0002.png
+  row: 75
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6742376.0
+  - 943972.0
+  - 6742700.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0003.png
+  row: 75
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6742376.0
+  - 944296.0
+  - 6742700.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0075_c0004.png
+  row: 75
+  col: 4
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944296.0
+  - 6742376.0
+  - 944620.0
+  - 6742700.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0005.png
+  row: 75
+  col: 5
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 944620.0
+  - 6742376.0
+  - 944944.0
+  - 6742700.0
+  n_annotations: 15
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0096.png
+  row: 75
+  col: 96
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974104.0
+  - 6742376.0
+  - 974428.0
+  - 6742700.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0097.png
+  row: 75
+  col: 97
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974428.0
+  - 6742376.0
+  - 974752.0
+  - 6742700.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0075_c0098.png
+  row: 75
+  col: 98
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974752.0
+  - 6742376.0
+  - 975076.0
+  - 6742700.0
+  n_annotations: 21
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0076_c0000.png
+  row: 76
+  col: 0
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943000.0
+  - 6742052.0
+  - 943324.0
+  - 6742376.0
+  n_annotations: 29
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0076_c0001.png
+  row: 76
+  col: 1
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943324.0
+  - 6742052.0
+  - 943648.0
+  - 6742376.0
+  n_annotations: 18
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0076_c0002.png
+  row: 76
+  col: 2
+  bloc:
+  - 471
+  - 3371
+  split: valid
+  bounds:
+  - 943648.0
+  - 6742052.0
+  - 943972.0
+  - 6742376.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0076_c0003.png
+  row: 76
+  col: 3
+  bloc:
+  - 472
+  - 3371
+  split: valid
+  bounds:
+  - 943972.0
+  - 6742052.0
+  - 944296.0
+  - 6742376.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0076_c0096.png
+  row: 76
+  col: 96
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974104.0
+  - 6742052.0
+  - 974428.0
+  - 6742376.0
+  n_annotations: 13
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0076_c0097.png
+  row: 76
+  col: 97
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974428.0
+  - 6742052.0
+  - 974752.0
+  - 6742376.0
+  n_annotations: 12
+  classes:
+  - charbonniere
+  - circular_depression
+  - four
+- nom: 70_vosges_saonoises_r0076_c0098.png
+  row: 76
+  col: 98
+  bloc:
+  - 487
+  - 3371
+  split: valid
+  bounds:
+  - 974752.0
+  - 6742052.0
+  - 975076.0
+  - 6742376.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0077_c0001.png
+  row: 77
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6741728.0
+  - 943648.0
+  - 6742052.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0077_c0115.png
+  row: 77
+  col: 115
+  bloc:
+  - 490
+  - 3370
+  split: train
+  bounds:
+  - 980260.0
+  - 6741728.0
+  - 980584.0
+  - 6742052.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0078_c0001.png
+  row: 78
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6741404.0
+  - 943648.0
+  - 6741728.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0078_c0002.png
+  row: 78
+  col: 2
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943648.0
+  - 6741404.0
+  - 943972.0
+  - 6741728.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0078_c0116.png
+  row: 78
+  col: 116
+  bloc:
+  - 490
+  - 3370
+  split: train
+  bounds:
+  - 980584.0
+  - 6741404.0
+  - 980908.0
+  - 6741728.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0079_c0000.png
+  row: 79
+  col: 0
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943000.0
+  - 6741080.0
+  - 943324.0
+  - 6741404.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0079_c0001.png
+  row: 79
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6741080.0
+  - 943648.0
+  - 6741404.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - four
+- nom: 70_vosges_saonoises_r0080_c0000.png
+  row: 80
+  col: 0
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943000.0
+  - 6740756.0
+  - 943324.0
+  - 6741080.0
+  n_annotations: 5
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0080_c0001.png
+  row: 80
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6740756.0
+  - 943648.0
+  - 6741080.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0081_c0000.png
+  row: 81
+  col: 0
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943000.0
+  - 6740432.0
+  - 943324.0
+  - 6740756.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 70_vosges_saonoises_r0081_c0001.png
+  row: 81
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6740432.0
+  - 943648.0
+  - 6740756.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0082_c0000.png
+  row: 82
+  col: 0
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943000.0
+  - 6740108.0
+  - 943324.0
+  - 6740432.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0082_c0001.png
+  row: 82
+  col: 1
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943324.0
+  - 6740108.0
+  - 943648.0
+  - 6740432.0
+  n_annotations: 4
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0082_c0002.png
+  row: 82
+  col: 2
+  bloc:
+  - 471
+  - 3370
+  split: train
+  bounds:
+  - 943648.0
+  - 6740108.0
+  - 943972.0
+  - 6740432.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0086_c0075.png
+  row: 86
+  col: 75
+  bloc:
+  - 483
+  - 3369
+  split: train
+  bounds:
+  - 967300.0
+  - 6738812.0
+  - 967624.0
+  - 6739136.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0087_c0000.png
+  row: 87
+  col: 0
+  bloc:
+  - 471
+  - 3369
+  split: train
+  bounds:
+  - 943000.0
+  - 6738488.0
+  - 943324.0
+  - 6738812.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0087_c0002.png
+  row: 87
+  col: 2
+  bloc:
+  - 471
+  - 3369
+  split: train
+  bounds:
+  - 943648.0
+  - 6738488.0
+  - 943972.0
+  - 6738812.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0087_c0075.png
+  row: 87
+  col: 75
+  bloc:
+  - 483
+  - 3369
+  split: train
+  bounds:
+  - 967300.0
+  - 6738488.0
+  - 967624.0
+  - 6738812.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0088_c0074.png
+  row: 88
+  col: 74
+  bloc:
+  - 483
+  - 3369
+  split: train
+  bounds:
+  - 966976.0
+  - 6738164.0
+  - 967300.0
+  - 6738488.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0089_c0001.png
+  row: 89
+  col: 1
+  bloc:
+  - 471
+  - 3369
+  split: train
+  bounds:
+  - 943324.0
+  - 6737840.0
+  - 943648.0
+  - 6738164.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0090_c0004.png
+  row: 90
+  col: 4
+  bloc:
+  - 472
+  - 3368
+  split: train
+  bounds:
+  - 944296.0
+  - 6737516.0
+  - 944620.0
+  - 6737840.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0090_c0005.png
+  row: 90
+  col: 5
+  bloc:
+  - 472
+  - 3368
+  split: train
+  bounds:
+  - 944620.0
+  - 6737516.0
+  - 944944.0
+  - 6737840.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0091_c0004.png
+  row: 91
+  col: 4
+  bloc:
+  - 472
+  - 3368
+  split: train
+  bounds:
+  - 944296.0
+  - 6737192.0
+  - 944620.0
+  - 6737516.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0091_c0005.png
+  row: 91
+  col: 5
+  bloc:
+  - 472
+  - 3368
+  split: train
+  bounds:
+  - 944620.0
+  - 6737192.0
+  - 944944.0
+  - 6737516.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0093_c0000.png
+  row: 93
+  col: 0
+  bloc:
+  - 471
+  - 3368
+  split: valid
+  bounds:
+  - 943000.0
+  - 6736544.0
+  - 943324.0
+  - 6736868.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0094_c0000.png
+  row: 94
+  col: 0
+  bloc:
+  - 471
+  - 3368
+  split: valid
+  bounds:
+  - 943000.0
+  - 6736220.0
+  - 943324.0
+  - 6736544.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0097_c0004.png
+  row: 97
+  col: 4
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944296.0
+  - 6735248.0
+  - 944620.0
+  - 6735572.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0097_c0005.png
+  row: 97
+  col: 5
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944620.0
+  - 6735248.0
+  - 944944.0
+  - 6735572.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0098_c0004.png
+  row: 98
+  col: 4
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944296.0
+  - 6734924.0
+  - 944620.0
+  - 6735248.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0098_c0005.png
+  row: 98
+  col: 5
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944620.0
+  - 6734924.0
+  - 944944.0
+  - 6735248.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0099_c0000.png
+  row: 99
+  col: 0
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943000.0
+  - 6734600.0
+  - 943324.0
+  - 6734924.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0099_c0001.png
+  row: 99
+  col: 1
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943324.0
+  - 6734600.0
+  - 943648.0
+  - 6734924.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0099_c0003.png
+  row: 99
+  col: 3
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 943972.0
+  - 6734600.0
+  - 944296.0
+  - 6734924.0
+  n_annotations: 22
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0099_c0004.png
+  row: 99
+  col: 4
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944296.0
+  - 6734600.0
+  - 944620.0
+  - 6734924.0
+  n_annotations: 17
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0100_c0001.png
+  row: 100
+  col: 1
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943324.0
+  - 6734276.0
+  - 943648.0
+  - 6734600.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0100_c0002.png
+  row: 100
+  col: 2
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943648.0
+  - 6734276.0
+  - 943972.0
+  - 6734600.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0100_c0003.png
+  row: 100
+  col: 3
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 943972.0
+  - 6734276.0
+  - 944296.0
+  - 6734600.0
+  n_annotations: 51
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0100_c0004.png
+  row: 100
+  col: 4
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944296.0
+  - 6734276.0
+  - 944620.0
+  - 6734600.0
+  n_annotations: 43
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 70_vosges_saonoises_r0100_c0005.png
+  row: 100
+  col: 5
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944620.0
+  - 6734276.0
+  - 944944.0
+  - 6734600.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0101_c0000.png
+  row: 101
+  col: 0
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943000.0
+  - 6733952.0
+  - 943324.0
+  - 6734276.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0101_c0002.png
+  row: 101
+  col: 2
+  bloc:
+  - 471
+  - 3367
+  split: test
+  bounds:
+  - 943648.0
+  - 6733952.0
+  - 943972.0
+  - 6734276.0
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0101_c0003.png
+  row: 101
+  col: 3
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 943972.0
+  - 6733952.0
+  - 944296.0
+  - 6734276.0
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0101_c0004.png
+  row: 101
+  col: 4
+  bloc:
+  - 472
+  - 3367
+  split: train
+  bounds:
+  - 944296.0
+  - 6733952.0
+  - 944620.0
+  - 6734276.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0105_c0000.png
+  row: 105
+  col: 0
+  bloc:
+  - 471
+  - 3366
+  split: train
+  bounds:
+  - 943000.0
+  - 6732656.0
+  - 943324.0
+  - 6732980.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0106_c0000.png
+  row: 106
+  col: 0
+  bloc:
+  - 471
+  - 3366
+  split: train
+  bounds:
+  - 943000.0
+  - 6732332.0
+  - 943324.0
+  - 6732656.0
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 70_vosges_saonoises_r0106_c0002.png
+  row: 106
+  col: 2
+  bloc:
+  - 471
+  - 3366
+  split: train
+  bounds:
+  - 943648.0
+  - 6732332.0
+  - 943972.0
+  - 6732656.0
+  n_annotations: 0
+  classes: []
+- nom: 70_vosges_saonoises_r0107_c0000.png
+  row: 107
+  col: 0
+  bloc:
+  - 471
+  - 3366
+  split: train
+  bounds:
+  - 943000.0
+  - 6732008.0
+  - 943324.0
+  - 6732332.0
+  n_annotations: 0
+  classes: []

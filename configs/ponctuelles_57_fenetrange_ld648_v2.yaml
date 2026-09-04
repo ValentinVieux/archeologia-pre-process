@@ -1,0 +1,28 @@
+# Corpus fours/charbonnières v2 — Fenêtrange. Différence v1 -> v2 : GPKG _v2 aux
+# 27 composantes d'objets coupés aux joints km FUSIONNÉES (audit marges 2026-09-01,
+# fusionner_paires.py — 55 membres -> 27 ellipses). LD inchangé (VRT continu, audité
+# sain). Split repris du manifest v1 (--split-depuis, jamais re-tiré).
+dataset: ponctuelles_57_fenetrange_ld648_v2
+zone: grand_est/57_fenetrange
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+gpkg: D:/entrainement_ponctuelles/zones/57_fenetrange/annotations_coco_v2.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  # 2 fours seulement dans la zone : impossible à répartir sur 3 splits
+  # (DIVERGENCE verif_dataset) -> ignorer (pas de négatifs sur ces tuiles).
+  four:
+    ignorer: true
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0
+assign_crs: null

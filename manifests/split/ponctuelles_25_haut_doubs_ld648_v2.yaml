@@ -1,0 +1,12555 @@
+dataset: ponctuelles_25_haut_doubs_ld648_v2
+zone: bourgogne_franche_comte/25_haut_doubs
+seed: 42
+split_depuis: manifests\split\fours_charb_25_haut_doubs_ld648_v1.yaml
+genere_le: '2026-09-04'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+    four:
+      classe: four
+      buffer_m: null
+      ignorer: false
+    circular_depression:
+      classe: circular_depression
+      buffer_m: null
+      ignorer: false
+  dataset: ponctuelles_25_haut_doubs_ld648_v2
+  gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: bourgogne_franche_comte/25_haut_doubs
+grille:
+  origine:
+  - 926999.5
+  - 6640000.5
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 4
+    circular_depression: 78
+    four: 912
+  valid:
+    charbonniere: 4
+    circular_depression: 26
+    four: 234
+  test:
+    charbonniere: 2
+    circular_depression: 13
+    four: 141
+hashes_sha1:
+  train: 13af86101765291167649691da01f7b1e9763a25
+  valid: eef61890ca8f825ea2a3887258ea75558f86bb11
+  test: eef716edb0f11e48da1cb614ffa444dc1ccfcdf0
+tuiles:
+- nom: 25_haut_doubs_r0006_c0063.png
+  row: 6
+  col: 63
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947411.5
+  - 6637732.5
+  - 947735.5
+  - 6638056.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0006_c0064.png
+  row: 6
+  col: 64
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947735.5
+  - 6637732.5
+  - 948059.5
+  - 6638056.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0007_c0060.png
+  row: 7
+  col: 60
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946439.5
+  - 6637408.5
+  - 946763.5
+  - 6637732.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0007_c0061.png
+  row: 7
+  col: 61
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946763.5
+  - 6637408.5
+  - 947087.5
+  - 6637732.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0007_c0062.png
+  row: 7
+  col: 62
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947087.5
+  - 6637408.5
+  - 947411.5
+  - 6637732.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0007_c0065.png
+  row: 7
+  col: 65
+  bloc:
+  - 474
+  - 3318
+  split: valid
+  bounds:
+  - 948059.5
+  - 6637408.5
+  - 948383.5
+  - 6637732.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0007_c0066.png
+  row: 7
+  col: 66
+  bloc:
+  - 474
+  - 3318
+  split: valid
+  bounds:
+  - 948383.5
+  - 6637408.5
+  - 948707.5
+  - 6637732.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0008_c0060.png
+  row: 8
+  col: 60
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946439.5
+  - 6637084.5
+  - 946763.5
+  - 6637408.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0008_c0061.png
+  row: 8
+  col: 61
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946763.5
+  - 6637084.5
+  - 947087.5
+  - 6637408.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0008_c0062.png
+  row: 8
+  col: 62
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947087.5
+  - 6637084.5
+  - 947411.5
+  - 6637408.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0009_c0062.png
+  row: 9
+  col: 62
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947087.5
+  - 6636760.5
+  - 947411.5
+  - 6637084.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0009_c0063.png
+  row: 9
+  col: 63
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947411.5
+  - 6636760.5
+  - 947735.5
+  - 6637084.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0009_c0066.png
+  row: 9
+  col: 66
+  bloc:
+  - 474
+  - 3318
+  split: valid
+  bounds:
+  - 948383.5
+  - 6636760.5
+  - 948707.5
+  - 6637084.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0010_c0057.png
+  row: 10
+  col: 57
+  bloc:
+  - 472
+  - 3318
+  split: train
+  bounds:
+  - 945467.5
+  - 6636436.5
+  - 945791.5
+  - 6636760.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0010_c0060.png
+  row: 10
+  col: 60
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946439.5
+  - 6636436.5
+  - 946763.5
+  - 6636760.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0010_c0064.png
+  row: 10
+  col: 64
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947735.5
+  - 6636436.5
+  - 948059.5
+  - 6636760.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0010_c0065.png
+  row: 10
+  col: 65
+  bloc:
+  - 474
+  - 3318
+  split: valid
+  bounds:
+  - 948059.5
+  - 6636436.5
+  - 948383.5
+  - 6636760.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0011_c0059.png
+  row: 11
+  col: 59
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 946115.5
+  - 6636112.5
+  - 946439.5
+  - 6636436.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0011_c0062.png
+  row: 11
+  col: 62
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947087.5
+  - 6636112.5
+  - 947411.5
+  - 6636436.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0011_c0063.png
+  row: 11
+  col: 63
+  bloc:
+  - 473
+  - 3318
+  split: train
+  bounds:
+  - 947411.5
+  - 6636112.5
+  - 947735.5
+  - 6636436.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0011_c0065.png
+  row: 11
+  col: 65
+  bloc:
+  - 474
+  - 3318
+  split: valid
+  bounds:
+  - 948059.5
+  - 6636112.5
+  - 948383.5
+  - 6636436.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0057.png
+  row: 12
+  col: 57
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945467.5
+  - 6635788.5
+  - 945791.5
+  - 6636112.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0058.png
+  row: 12
+  col: 58
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945791.5
+  - 6635788.5
+  - 946115.5
+  - 6636112.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0059.png
+  row: 12
+  col: 59
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946115.5
+  - 6635788.5
+  - 946439.5
+  - 6636112.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0060.png
+  row: 12
+  col: 60
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946439.5
+  - 6635788.5
+  - 946763.5
+  - 6636112.5
+  n_annotations: 8
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0061.png
+  row: 12
+  col: 61
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946763.5
+  - 6635788.5
+  - 947087.5
+  - 6636112.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0064.png
+  row: 12
+  col: 64
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 947735.5
+  - 6635788.5
+  - 948059.5
+  - 6636112.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0065.png
+  row: 12
+  col: 65
+  bloc:
+  - 474
+  - 3317
+  split: train
+  bounds:
+  - 948059.5
+  - 6635788.5
+  - 948383.5
+  - 6636112.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0066.png
+  row: 12
+  col: 66
+  bloc:
+  - 474
+  - 3317
+  split: train
+  bounds:
+  - 948383.5
+  - 6635788.5
+  - 948707.5
+  - 6636112.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0012_c0069.png
+  row: 12
+  col: 69
+  bloc:
+  - 474
+  - 3317
+  split: train
+  bounds:
+  - 949355.5
+  - 6635788.5
+  - 949679.5
+  - 6636112.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0013_c0056.png
+  row: 13
+  col: 56
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945143.5
+  - 6635464.5
+  - 945467.5
+  - 6635788.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0013_c0058.png
+  row: 13
+  col: 58
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945791.5
+  - 6635464.5
+  - 946115.5
+  - 6635788.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0013_c0059.png
+  row: 13
+  col: 59
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946115.5
+  - 6635464.5
+  - 946439.5
+  - 6635788.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0013_c0061.png
+  row: 13
+  col: 61
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946763.5
+  - 6635464.5
+  - 947087.5
+  - 6635788.5
+  n_annotations: 12
+  classes:
+  - four
+- nom: 25_haut_doubs_r0013_c0062.png
+  row: 13
+  col: 62
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 947087.5
+  - 6635464.5
+  - 947411.5
+  - 6635788.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0014_c0055.png
+  row: 14
+  col: 55
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 944819.5
+  - 6635140.5
+  - 945143.5
+  - 6635464.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0014_c0058.png
+  row: 14
+  col: 58
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945791.5
+  - 6635140.5
+  - 946115.5
+  - 6635464.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0014_c0059.png
+  row: 14
+  col: 59
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946115.5
+  - 6635140.5
+  - 946439.5
+  - 6635464.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0014_c0060.png
+  row: 14
+  col: 60
+  bloc:
+  - 473
+  - 3317
+  split: train
+  bounds:
+  - 946439.5
+  - 6635140.5
+  - 946763.5
+  - 6635464.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0014_c0066.png
+  row: 14
+  col: 66
+  bloc:
+  - 474
+  - 3317
+  split: train
+  bounds:
+  - 948383.5
+  - 6635140.5
+  - 948707.5
+  - 6635464.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0017_c0056.png
+  row: 17
+  col: 56
+  bloc:
+  - 472
+  - 3317
+  split: train
+  bounds:
+  - 945143.5
+  - 6634168.5
+  - 945467.5
+  - 6634492.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0017_c0066.png
+  row: 17
+  col: 66
+  bloc:
+  - 474
+  - 3317
+  split: train
+  bounds:
+  - 948383.5
+  - 6634168.5
+  - 948707.5
+  - 6634492.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0019_c0090.png
+  row: 19
+  col: 90
+  bloc:
+  - 478
+  - 3316
+  split: valid
+  bounds:
+  - 956159.5
+  - 6633520.5
+  - 956483.5
+  - 6633844.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0019_c0091.png
+  row: 19
+  col: 91
+  bloc:
+  - 478
+  - 3316
+  split: valid
+  bounds:
+  - 956483.5
+  - 6633520.5
+  - 956807.5
+  - 6633844.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0020_c0088.png
+  row: 20
+  col: 88
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 955511.5
+  - 6633196.5
+  - 955835.5
+  - 6633520.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0021_c0081.png
+  row: 21
+  col: 81
+  bloc:
+  - 476
+  - 3316
+  split: test
+  bounds:
+  - 953243.5
+  - 6632872.5
+  - 953567.5
+  - 6633196.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0021_c0086.png
+  row: 21
+  col: 86
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 954863.5
+  - 6632872.5
+  - 955187.5
+  - 6633196.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0021_c0087.png
+  row: 21
+  col: 87
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 955187.5
+  - 6632872.5
+  - 955511.5
+  - 6633196.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0022_c0086.png
+  row: 22
+  col: 86
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 954863.5
+  - 6632548.5
+  - 955187.5
+  - 6632872.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0022_c0087.png
+  row: 22
+  col: 87
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 955187.5
+  - 6632548.5
+  - 955511.5
+  - 6632872.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0023_c0087.png
+  row: 23
+  col: 87
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 955187.5
+  - 6632224.5
+  - 955511.5
+  - 6632548.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0023_c0088.png
+  row: 23
+  col: 88
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 955511.5
+  - 6632224.5
+  - 955835.5
+  - 6632548.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0023_c0091.png
+  row: 23
+  col: 91
+  bloc:
+  - 478
+  - 3316
+  split: valid
+  bounds:
+  - 956483.5
+  - 6632224.5
+  - 956807.5
+  - 6632548.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0024_c0079.png
+  row: 24
+  col: 79
+  bloc:
+  - 476
+  - 3316
+  split: test
+  bounds:
+  - 952595.5
+  - 6631900.5
+  - 952919.5
+  - 6632224.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0024_c0080.png
+  row: 24
+  col: 80
+  bloc:
+  - 476
+  - 3316
+  split: test
+  bounds:
+  - 952919.5
+  - 6631900.5
+  - 953243.5
+  - 6632224.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0024_c0084.png
+  row: 24
+  col: 84
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 954215.5
+  - 6631900.5
+  - 954539.5
+  - 6632224.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0024_c0086.png
+  row: 24
+  col: 86
+  bloc:
+  - 477
+  - 3316
+  split: valid
+  bounds:
+  - 954863.5
+  - 6631900.5
+  - 955187.5
+  - 6632224.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0024_c0090.png
+  row: 24
+  col: 90
+  bloc:
+  - 478
+  - 3316
+  split: valid
+  bounds:
+  - 956159.5
+  - 6631900.5
+  - 956483.5
+  - 6632224.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0025_c0083.png
+  row: 25
+  col: 83
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 953891.5
+  - 6631576.5
+  - 954215.5
+  - 6631900.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0025_c0084.png
+  row: 25
+  col: 84
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954215.5
+  - 6631576.5
+  - 954539.5
+  - 6631900.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0025_c0087.png
+  row: 25
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6631576.5
+  - 955511.5
+  - 6631900.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0025_c0089.png
+  row: 25
+  col: 89
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955835.5
+  - 6631576.5
+  - 956159.5
+  - 6631900.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0025_c0091.png
+  row: 25
+  col: 91
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956483.5
+  - 6631576.5
+  - 956807.5
+  - 6631900.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0026_c0080.png
+  row: 26
+  col: 80
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 952919.5
+  - 6631252.5
+  - 953243.5
+  - 6631576.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0081.png
+  row: 26
+  col: 81
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 953243.5
+  - 6631252.5
+  - 953567.5
+  - 6631576.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0083.png
+  row: 26
+  col: 83
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 953891.5
+  - 6631252.5
+  - 954215.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0085.png
+  row: 26
+  col: 85
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954539.5
+  - 6631252.5
+  - 954863.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0087.png
+  row: 26
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6631252.5
+  - 955511.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0088.png
+  row: 26
+  col: 88
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955511.5
+  - 6631252.5
+  - 955835.5
+  - 6631576.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0026_c0089.png
+  row: 26
+  col: 89
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955835.5
+  - 6631252.5
+  - 956159.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0026_c0090.png
+  row: 26
+  col: 90
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956159.5
+  - 6631252.5
+  - 956483.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0026_c0091.png
+  row: 26
+  col: 91
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956483.5
+  - 6631252.5
+  - 956807.5
+  - 6631576.5
+  n_annotations: 5
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_haut_doubs_r0026_c0092.png
+  row: 26
+  col: 92
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956807.5
+  - 6631252.5
+  - 957131.5
+  - 6631576.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0027_c0070.png
+  row: 27
+  col: 70
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 949679.5
+  - 6630928.5
+  - 950003.5
+  - 6631252.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0027_c0080.png
+  row: 27
+  col: 80
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 952919.5
+  - 6630928.5
+  - 953243.5
+  - 6631252.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0027_c0086.png
+  row: 27
+  col: 86
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954863.5
+  - 6630928.5
+  - 955187.5
+  - 6631252.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0027_c0087.png
+  row: 27
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6630928.5
+  - 955511.5
+  - 6631252.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0027_c0090.png
+  row: 27
+  col: 90
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956159.5
+  - 6630928.5
+  - 956483.5
+  - 6631252.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0027_c0091.png
+  row: 27
+  col: 91
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956483.5
+  - 6630928.5
+  - 956807.5
+  - 6631252.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_haut_doubs_r0028_c0068.png
+  row: 28
+  col: 68
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 949031.5
+  - 6630604.5
+  - 949355.5
+  - 6630928.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0028_c0072.png
+  row: 28
+  col: 72
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 950327.5
+  - 6630604.5
+  - 950651.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0073.png
+  row: 28
+  col: 73
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 950651.5
+  - 6630604.5
+  - 950975.5
+  - 6630928.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0028_c0074.png
+  row: 28
+  col: 74
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 950975.5
+  - 6630604.5
+  - 951299.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0075.png
+  row: 28
+  col: 75
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 951299.5
+  - 6630604.5
+  - 951623.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0077.png
+  row: 28
+  col: 77
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 951947.5
+  - 6630604.5
+  - 952271.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0082.png
+  row: 28
+  col: 82
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 953567.5
+  - 6630604.5
+  - 953891.5
+  - 6630928.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0083.png
+  row: 28
+  col: 83
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 953891.5
+  - 6630604.5
+  - 954215.5
+  - 6630928.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0084.png
+  row: 28
+  col: 84
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954215.5
+  - 6630604.5
+  - 954539.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_haut_doubs_r0028_c0085.png
+  row: 28
+  col: 85
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954539.5
+  - 6630604.5
+  - 954863.5
+  - 6630928.5
+  n_annotations: 2
+  classes:
+  - charbonniere
+  - circular_depression
+- nom: 25_haut_doubs_r0028_c0086.png
+  row: 28
+  col: 86
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954863.5
+  - 6630604.5
+  - 955187.5
+  - 6630928.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0028_c0087.png
+  row: 28
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6630604.5
+  - 955511.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0088.png
+  row: 28
+  col: 88
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955511.5
+  - 6630604.5
+  - 955835.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0028_c0089.png
+  row: 28
+  col: 89
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955835.5
+  - 6630604.5
+  - 956159.5
+  - 6630928.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0029_c0067.png
+  row: 29
+  col: 67
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 948707.5
+  - 6630280.5
+  - 949031.5
+  - 6630604.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0029_c0083.png
+  row: 29
+  col: 83
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 953891.5
+  - 6630280.5
+  - 954215.5
+  - 6630604.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0029_c0085.png
+  row: 29
+  col: 85
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954539.5
+  - 6630280.5
+  - 954863.5
+  - 6630604.5
+  n_annotations: 8
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0029_c0086.png
+  row: 29
+  col: 86
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954863.5
+  - 6630280.5
+  - 955187.5
+  - 6630604.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0029_c0087.png
+  row: 29
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6630280.5
+  - 955511.5
+  - 6630604.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0029_c0088.png
+  row: 29
+  col: 88
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955511.5
+  - 6630280.5
+  - 955835.5
+  - 6630604.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0029_c0089.png
+  row: 29
+  col: 89
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955835.5
+  - 6630280.5
+  - 956159.5
+  - 6630604.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0029_c0091.png
+  row: 29
+  col: 91
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956483.5
+  - 6630280.5
+  - 956807.5
+  - 6630604.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0065.png
+  row: 30
+  col: 65
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 948059.5
+  - 6629956.5
+  - 948383.5
+  - 6630280.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0030_c0066.png
+  row: 30
+  col: 66
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 948383.5
+  - 6629956.5
+  - 948707.5
+  - 6630280.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0030_c0068.png
+  row: 30
+  col: 68
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 949031.5
+  - 6629956.5
+  - 949355.5
+  - 6630280.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0069.png
+  row: 30
+  col: 69
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 949355.5
+  - 6629956.5
+  - 949679.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0070.png
+  row: 30
+  col: 70
+  bloc:
+  - 474
+  - 3315
+  split: test
+  bounds:
+  - 949679.5
+  - 6629956.5
+  - 950003.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0071.png
+  row: 30
+  col: 71
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 950003.5
+  - 6629956.5
+  - 950327.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0073.png
+  row: 30
+  col: 73
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 950651.5
+  - 6629956.5
+  - 950975.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0076.png
+  row: 30
+  col: 76
+  bloc:
+  - 475
+  - 3315
+  split: valid
+  bounds:
+  - 951623.5
+  - 6629956.5
+  - 951947.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0030_c0079.png
+  row: 30
+  col: 79
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 952595.5
+  - 6629956.5
+  - 952919.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0080.png
+  row: 30
+  col: 80
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 952919.5
+  - 6629956.5
+  - 953243.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0081.png
+  row: 30
+  col: 81
+  bloc:
+  - 476
+  - 3315
+  split: train
+  bounds:
+  - 953243.5
+  - 6629956.5
+  - 953567.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0084.png
+  row: 30
+  col: 84
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954215.5
+  - 6629956.5
+  - 954539.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0085.png
+  row: 30
+  col: 85
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 954539.5
+  - 6629956.5
+  - 954863.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0087.png
+  row: 30
+  col: 87
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955187.5
+  - 6629956.5
+  - 955511.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0088.png
+  row: 30
+  col: 88
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955511.5
+  - 6629956.5
+  - 955835.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0089.png
+  row: 30
+  col: 89
+  bloc:
+  - 477
+  - 3315
+  split: test
+  bounds:
+  - 955835.5
+  - 6629956.5
+  - 956159.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0090.png
+  row: 30
+  col: 90
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956159.5
+  - 6629956.5
+  - 956483.5
+  - 6630280.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0030_c0092.png
+  row: 30
+  col: 92
+  bloc:
+  - 478
+  - 3315
+  split: train
+  bounds:
+  - 956807.5
+  - 6629956.5
+  - 957131.5
+  - 6630280.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0071.png
+  row: 31
+  col: 71
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950003.5
+  - 6629632.5
+  - 950327.5
+  - 6629956.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0072.png
+  row: 31
+  col: 72
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950327.5
+  - 6629632.5
+  - 950651.5
+  - 6629956.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0075.png
+  row: 31
+  col: 75
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951299.5
+  - 6629632.5
+  - 951623.5
+  - 6629956.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0079.png
+  row: 31
+  col: 79
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952595.5
+  - 6629632.5
+  - 952919.5
+  - 6629956.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0084.png
+  row: 31
+  col: 84
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954215.5
+  - 6629632.5
+  - 954539.5
+  - 6629956.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0031_c0085.png
+  row: 31
+  col: 85
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954539.5
+  - 6629632.5
+  - 954863.5
+  - 6629956.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0031_c0086.png
+  row: 31
+  col: 86
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954863.5
+  - 6629632.5
+  - 955187.5
+  - 6629956.5
+  n_annotations: 7
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0031_c0087.png
+  row: 31
+  col: 87
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955187.5
+  - 6629632.5
+  - 955511.5
+  - 6629956.5
+  n_annotations: 7
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0031_c0088.png
+  row: 31
+  col: 88
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955511.5
+  - 6629632.5
+  - 955835.5
+  - 6629956.5
+  n_annotations: 5
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0031_c0089.png
+  row: 31
+  col: 89
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955835.5
+  - 6629632.5
+  - 956159.5
+  - 6629956.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0031_c0090.png
+  row: 31
+  col: 90
+  bloc:
+  - 478
+  - 3314
+  split: valid
+  bounds:
+  - 956159.5
+  - 6629632.5
+  - 956483.5
+  - 6629956.5
+  n_annotations: 4
+  classes:
+  - charbonniere
+  - four
+- nom: 25_haut_doubs_r0031_c0091.png
+  row: 31
+  col: 91
+  bloc:
+  - 478
+  - 3314
+  split: valid
+  bounds:
+  - 956483.5
+  - 6629632.5
+  - 956807.5
+  - 6629956.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0031_c0092.png
+  row: 31
+  col: 92
+  bloc:
+  - 478
+  - 3314
+  split: valid
+  bounds:
+  - 956807.5
+  - 6629632.5
+  - 957131.5
+  - 6629956.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_haut_doubs_r0032_c0066.png
+  row: 32
+  col: 66
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948383.5
+  - 6629308.5
+  - 948707.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0070.png
+  row: 32
+  col: 70
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949679.5
+  - 6629308.5
+  - 950003.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0071.png
+  row: 32
+  col: 71
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950003.5
+  - 6629308.5
+  - 950327.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0075.png
+  row: 32
+  col: 75
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951299.5
+  - 6629308.5
+  - 951623.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0076.png
+  row: 32
+  col: 76
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951623.5
+  - 6629308.5
+  - 951947.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0079.png
+  row: 32
+  col: 79
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952595.5
+  - 6629308.5
+  - 952919.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0080.png
+  row: 32
+  col: 80
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952919.5
+  - 6629308.5
+  - 953243.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0081.png
+  row: 32
+  col: 81
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 953243.5
+  - 6629308.5
+  - 953567.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0082.png
+  row: 32
+  col: 82
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 953567.5
+  - 6629308.5
+  - 953891.5
+  - 6629632.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0032_c0084.png
+  row: 32
+  col: 84
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954215.5
+  - 6629308.5
+  - 954539.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0032_c0085.png
+  row: 32
+  col: 85
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954539.5
+  - 6629308.5
+  - 954863.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0087.png
+  row: 32
+  col: 87
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955187.5
+  - 6629308.5
+  - 955511.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0032_c0088.png
+  row: 32
+  col: 88
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955511.5
+  - 6629308.5
+  - 955835.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0089.png
+  row: 32
+  col: 89
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955835.5
+  - 6629308.5
+  - 956159.5
+  - 6629632.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0032_c0090.png
+  row: 32
+  col: 90
+  bloc:
+  - 478
+  - 3314
+  split: valid
+  bounds:
+  - 956159.5
+  - 6629308.5
+  - 956483.5
+  - 6629632.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0032_c0092.png
+  row: 32
+  col: 92
+  bloc:
+  - 478
+  - 3314
+  split: valid
+  bounds:
+  - 956807.5
+  - 6629308.5
+  - 957131.5
+  - 6629632.5
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 25_haut_doubs_r0033_c0073.png
+  row: 33
+  col: 73
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950651.5
+  - 6628984.5
+  - 950975.5
+  - 6629308.5
+  n_annotations: 6
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0033_c0074.png
+  row: 33
+  col: 74
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950975.5
+  - 6628984.5
+  - 951299.5
+  - 6629308.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0075.png
+  row: 33
+  col: 75
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951299.5
+  - 6628984.5
+  - 951623.5
+  - 6629308.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0078.png
+  row: 33
+  col: 78
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952271.5
+  - 6628984.5
+  - 952595.5
+  - 6629308.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0079.png
+  row: 33
+  col: 79
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952595.5
+  - 6628984.5
+  - 952919.5
+  - 6629308.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0083.png
+  row: 33
+  col: 83
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 953891.5
+  - 6628984.5
+  - 954215.5
+  - 6629308.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0087.png
+  row: 33
+  col: 87
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955187.5
+  - 6628984.5
+  - 955511.5
+  - 6629308.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0033_c0088.png
+  row: 33
+  col: 88
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955511.5
+  - 6628984.5
+  - 955835.5
+  - 6629308.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0067.png
+  row: 34
+  col: 67
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948707.5
+  - 6628660.5
+  - 949031.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0068.png
+  row: 34
+  col: 68
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949031.5
+  - 6628660.5
+  - 949355.5
+  - 6628984.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0072.png
+  row: 34
+  col: 72
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950327.5
+  - 6628660.5
+  - 950651.5
+  - 6628984.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0034_c0073.png
+  row: 34
+  col: 73
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950651.5
+  - 6628660.5
+  - 950975.5
+  - 6628984.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0034_c0074.png
+  row: 34
+  col: 74
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950975.5
+  - 6628660.5
+  - 951299.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0075.png
+  row: 34
+  col: 75
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951299.5
+  - 6628660.5
+  - 951623.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0076.png
+  row: 34
+  col: 76
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951623.5
+  - 6628660.5
+  - 951947.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0077.png
+  row: 34
+  col: 77
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 951947.5
+  - 6628660.5
+  - 952271.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0078.png
+  row: 34
+  col: 78
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952271.5
+  - 6628660.5
+  - 952595.5
+  - 6628984.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0079.png
+  row: 34
+  col: 79
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952595.5
+  - 6628660.5
+  - 952919.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0084.png
+  row: 34
+  col: 84
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954215.5
+  - 6628660.5
+  - 954539.5
+  - 6628984.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0034_c0088.png
+  row: 34
+  col: 88
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 955511.5
+  - 6628660.5
+  - 955835.5
+  - 6628984.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0066.png
+  row: 35
+  col: 66
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948383.5
+  - 6628336.5
+  - 948707.5
+  - 6628660.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0067.png
+  row: 35
+  col: 67
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948707.5
+  - 6628336.5
+  - 949031.5
+  - 6628660.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0069.png
+  row: 35
+  col: 69
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949355.5
+  - 6628336.5
+  - 949679.5
+  - 6628660.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0070.png
+  row: 35
+  col: 70
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949679.5
+  - 6628336.5
+  - 950003.5
+  - 6628660.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0071.png
+  row: 35
+  col: 71
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950003.5
+  - 6628336.5
+  - 950327.5
+  - 6628660.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0073.png
+  row: 35
+  col: 73
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950651.5
+  - 6628336.5
+  - 950975.5
+  - 6628660.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0076.png
+  row: 35
+  col: 76
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951623.5
+  - 6628336.5
+  - 951947.5
+  - 6628660.5
+  n_annotations: 5
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0035_c0077.png
+  row: 35
+  col: 77
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 951947.5
+  - 6628336.5
+  - 952271.5
+  - 6628660.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0078.png
+  row: 35
+  col: 78
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952271.5
+  - 6628336.5
+  - 952595.5
+  - 6628660.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0079.png
+  row: 35
+  col: 79
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952595.5
+  - 6628336.5
+  - 952919.5
+  - 6628660.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0082.png
+  row: 35
+  col: 82
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 953567.5
+  - 6628336.5
+  - 953891.5
+  - 6628660.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0035_c0083.png
+  row: 35
+  col: 83
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 953891.5
+  - 6628336.5
+  - 954215.5
+  - 6628660.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0035_c0084.png
+  row: 35
+  col: 84
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954215.5
+  - 6628336.5
+  - 954539.5
+  - 6628660.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0036_c0065.png
+  row: 36
+  col: 65
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948059.5
+  - 6628012.5
+  - 948383.5
+  - 6628336.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0066.png
+  row: 36
+  col: 66
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948383.5
+  - 6628012.5
+  - 948707.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0067.png
+  row: 36
+  col: 67
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 948707.5
+  - 6628012.5
+  - 949031.5
+  - 6628336.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0068.png
+  row: 36
+  col: 68
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949031.5
+  - 6628012.5
+  - 949355.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0069.png
+  row: 36
+  col: 69
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949355.5
+  - 6628012.5
+  - 949679.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0070.png
+  row: 36
+  col: 70
+  bloc:
+  - 474
+  - 3314
+  split: train
+  bounds:
+  - 949679.5
+  - 6628012.5
+  - 950003.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0072.png
+  row: 36
+  col: 72
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950327.5
+  - 6628012.5
+  - 950651.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0073.png
+  row: 36
+  col: 73
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950651.5
+  - 6628012.5
+  - 950975.5
+  - 6628336.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0036_c0074.png
+  row: 36
+  col: 74
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 950975.5
+  - 6628012.5
+  - 951299.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0075.png
+  row: 36
+  col: 75
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951299.5
+  - 6628012.5
+  - 951623.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0076.png
+  row: 36
+  col: 76
+  bloc:
+  - 475
+  - 3314
+  split: train
+  bounds:
+  - 951623.5
+  - 6628012.5
+  - 951947.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0077.png
+  row: 36
+  col: 77
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 951947.5
+  - 6628012.5
+  - 952271.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0078.png
+  row: 36
+  col: 78
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952271.5
+  - 6628012.5
+  - 952595.5
+  - 6628336.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0080.png
+  row: 36
+  col: 80
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 952919.5
+  - 6628012.5
+  - 953243.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0081.png
+  row: 36
+  col: 81
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 953243.5
+  - 6628012.5
+  - 953567.5
+  - 6628336.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0082.png
+  row: 36
+  col: 82
+  bloc:
+  - 476
+  - 3314
+  split: train
+  bounds:
+  - 953567.5
+  - 6628012.5
+  - 953891.5
+  - 6628336.5
+  n_annotations: 8
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0083.png
+  row: 36
+  col: 83
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 953891.5
+  - 6628012.5
+  - 954215.5
+  - 6628336.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0036_c0085.png
+  row: 36
+  col: 85
+  bloc:
+  - 477
+  - 3314
+  split: train
+  bounds:
+  - 954539.5
+  - 6628012.5
+  - 954863.5
+  - 6628336.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0053.png
+  row: 37
+  col: 53
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 944171.5
+  - 6627688.5
+  - 944495.5
+  - 6628012.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0037_c0062.png
+  row: 37
+  col: 62
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947087.5
+  - 6627688.5
+  - 947411.5
+  - 6628012.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0037_c0063.png
+  row: 37
+  col: 63
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947411.5
+  - 6627688.5
+  - 947735.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0037_c0064.png
+  row: 37
+  col: 64
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947735.5
+  - 6627688.5
+  - 948059.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0037_c0065.png
+  row: 37
+  col: 65
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948059.5
+  - 6627688.5
+  - 948383.5
+  - 6628012.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0066.png
+  row: 37
+  col: 66
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948383.5
+  - 6627688.5
+  - 948707.5
+  - 6628012.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0067.png
+  row: 37
+  col: 67
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948707.5
+  - 6627688.5
+  - 949031.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0037_c0071.png
+  row: 37
+  col: 71
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950003.5
+  - 6627688.5
+  - 950327.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0037_c0072.png
+  row: 37
+  col: 72
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950327.5
+  - 6627688.5
+  - 950651.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0073.png
+  row: 37
+  col: 73
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950651.5
+  - 6627688.5
+  - 950975.5
+  - 6628012.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0074.png
+  row: 37
+  col: 74
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950975.5
+  - 6627688.5
+  - 951299.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0076.png
+  row: 37
+  col: 76
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 951623.5
+  - 6627688.5
+  - 951947.5
+  - 6628012.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0078.png
+  row: 37
+  col: 78
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 952271.5
+  - 6627688.5
+  - 952595.5
+  - 6628012.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0080.png
+  row: 37
+  col: 80
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 952919.5
+  - 6627688.5
+  - 953243.5
+  - 6628012.5
+  n_annotations: 6
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0081.png
+  row: 37
+  col: 81
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 953243.5
+  - 6627688.5
+  - 953567.5
+  - 6628012.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0037_c0082.png
+  row: 37
+  col: 82
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 953567.5
+  - 6627688.5
+  - 953891.5
+  - 6628012.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0038_c0062.png
+  row: 38
+  col: 62
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947087.5
+  - 6627364.5
+  - 947411.5
+  - 6627688.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0038_c0063.png
+  row: 38
+  col: 63
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947411.5
+  - 6627364.5
+  - 947735.5
+  - 6627688.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0038_c0065.png
+  row: 38
+  col: 65
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948059.5
+  - 6627364.5
+  - 948383.5
+  - 6627688.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0038_c0066.png
+  row: 38
+  col: 66
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948383.5
+  - 6627364.5
+  - 948707.5
+  - 6627688.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0038_c0067.png
+  row: 38
+  col: 67
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948707.5
+  - 6627364.5
+  - 949031.5
+  - 6627688.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0038_c0074.png
+  row: 38
+  col: 74
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950975.5
+  - 6627364.5
+  - 951299.5
+  - 6627688.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0038_c0078.png
+  row: 38
+  col: 78
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 952271.5
+  - 6627364.5
+  - 952595.5
+  - 6627688.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0055.png
+  row: 39
+  col: 55
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 944819.5
+  - 6627040.5
+  - 945143.5
+  - 6627364.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0059.png
+  row: 39
+  col: 59
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946115.5
+  - 6627040.5
+  - 946439.5
+  - 6627364.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0062.png
+  row: 39
+  col: 62
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947087.5
+  - 6627040.5
+  - 947411.5
+  - 6627364.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0039_c0063.png
+  row: 39
+  col: 63
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947411.5
+  - 6627040.5
+  - 947735.5
+  - 6627364.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0064.png
+  row: 39
+  col: 64
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947735.5
+  - 6627040.5
+  - 948059.5
+  - 6627364.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0065.png
+  row: 39
+  col: 65
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948059.5
+  - 6627040.5
+  - 948383.5
+  - 6627364.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0039_c0070.png
+  row: 39
+  col: 70
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949679.5
+  - 6627040.5
+  - 950003.5
+  - 6627364.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0071.png
+  row: 39
+  col: 71
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950003.5
+  - 6627040.5
+  - 950327.5
+  - 6627364.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0075.png
+  row: 39
+  col: 75
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 951299.5
+  - 6627040.5
+  - 951623.5
+  - 6627364.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0039_c0077.png
+  row: 39
+  col: 77
+  bloc:
+  - 476
+  - 3313
+  split: train
+  bounds:
+  - 951947.5
+  - 6627040.5
+  - 952271.5
+  - 6627364.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0053.png
+  row: 40
+  col: 53
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 944171.5
+  - 6626716.5
+  - 944495.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0054.png
+  row: 40
+  col: 54
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 944495.5
+  - 6626716.5
+  - 944819.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0055.png
+  row: 40
+  col: 55
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 944819.5
+  - 6626716.5
+  - 945143.5
+  - 6627040.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0040_c0059.png
+  row: 40
+  col: 59
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946115.5
+  - 6626716.5
+  - 946439.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0060.png
+  row: 40
+  col: 60
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946439.5
+  - 6626716.5
+  - 946763.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0040_c0063.png
+  row: 40
+  col: 63
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947411.5
+  - 6626716.5
+  - 947735.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0064.png
+  row: 40
+  col: 64
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947735.5
+  - 6626716.5
+  - 948059.5
+  - 6627040.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0065.png
+  row: 40
+  col: 65
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948059.5
+  - 6626716.5
+  - 948383.5
+  - 6627040.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0068.png
+  row: 40
+  col: 68
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949031.5
+  - 6626716.5
+  - 949355.5
+  - 6627040.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0040_c0069.png
+  row: 40
+  col: 69
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949355.5
+  - 6626716.5
+  - 949679.5
+  - 6627040.5
+  n_annotations: 6
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0040_c0070.png
+  row: 40
+  col: 70
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949679.5
+  - 6626716.5
+  - 950003.5
+  - 6627040.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0040_c0071.png
+  row: 40
+  col: 71
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950003.5
+  - 6626716.5
+  - 950327.5
+  - 6627040.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0040_c0072.png
+  row: 40
+  col: 72
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950327.5
+  - 6626716.5
+  - 950651.5
+  - 6627040.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0056.png
+  row: 41
+  col: 56
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 945143.5
+  - 6626392.5
+  - 945467.5
+  - 6626716.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0057.png
+  row: 41
+  col: 57
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 945467.5
+  - 6626392.5
+  - 945791.5
+  - 6626716.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0059.png
+  row: 41
+  col: 59
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946115.5
+  - 6626392.5
+  - 946439.5
+  - 6626716.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0060.png
+  row: 41
+  col: 60
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946439.5
+  - 6626392.5
+  - 946763.5
+  - 6626716.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0041_c0061.png
+  row: 41
+  col: 61
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946763.5
+  - 6626392.5
+  - 947087.5
+  - 6626716.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0063.png
+  row: 41
+  col: 63
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947411.5
+  - 6626392.5
+  - 947735.5
+  - 6626716.5
+  n_annotations: 6
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0066.png
+  row: 41
+  col: 66
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948383.5
+  - 6626392.5
+  - 948707.5
+  - 6626716.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0067.png
+  row: 41
+  col: 67
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948707.5
+  - 6626392.5
+  - 949031.5
+  - 6626716.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0041_c0068.png
+  row: 41
+  col: 68
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949031.5
+  - 6626392.5
+  - 949355.5
+  - 6626716.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0041_c0069.png
+  row: 41
+  col: 69
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949355.5
+  - 6626392.5
+  - 949679.5
+  - 6626716.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0042_c0056.png
+  row: 42
+  col: 56
+  bloc:
+  - 472
+  - 3313
+  split: train
+  bounds:
+  - 945143.5
+  - 6626068.5
+  - 945467.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0042_c0059.png
+  row: 42
+  col: 59
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946115.5
+  - 6626068.5
+  - 946439.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0042_c0061.png
+  row: 42
+  col: 61
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 946763.5
+  - 6626068.5
+  - 947087.5
+  - 6626392.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0042_c0062.png
+  row: 42
+  col: 62
+  bloc:
+  - 473
+  - 3313
+  split: train
+  bounds:
+  - 947087.5
+  - 6626068.5
+  - 947411.5
+  - 6626392.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0042_c0065.png
+  row: 42
+  col: 65
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948059.5
+  - 6626068.5
+  - 948383.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0042_c0066.png
+  row: 42
+  col: 66
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948383.5
+  - 6626068.5
+  - 948707.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0042_c0067.png
+  row: 42
+  col: 67
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 948707.5
+  - 6626068.5
+  - 949031.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0042_c0068.png
+  row: 42
+  col: 68
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949031.5
+  - 6626068.5
+  - 949355.5
+  - 6626392.5
+  n_annotations: 6
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0042_c0070.png
+  row: 42
+  col: 70
+  bloc:
+  - 474
+  - 3313
+  split: train
+  bounds:
+  - 949679.5
+  - 6626068.5
+  - 950003.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0042_c0074.png
+  row: 42
+  col: 74
+  bloc:
+  - 475
+  - 3313
+  split: train
+  bounds:
+  - 950975.5
+  - 6626068.5
+  - 951299.5
+  - 6626392.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0055.png
+  row: 43
+  col: 55
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 944819.5
+  - 6625744.5
+  - 945143.5
+  - 6626068.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0043_c0058.png
+  row: 43
+  col: 58
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 945791.5
+  - 6625744.5
+  - 946115.5
+  - 6626068.5
+  n_annotations: 8
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0059.png
+  row: 43
+  col: 59
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946115.5
+  - 6625744.5
+  - 946439.5
+  - 6626068.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0060.png
+  row: 43
+  col: 60
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946439.5
+  - 6625744.5
+  - 946763.5
+  - 6626068.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0062.png
+  row: 43
+  col: 62
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947087.5
+  - 6625744.5
+  - 947411.5
+  - 6626068.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0071.png
+  row: 43
+  col: 71
+  bloc:
+  - 475
+  - 3312
+  split: valid
+  bounds:
+  - 950003.5
+  - 6625744.5
+  - 950327.5
+  - 6626068.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0043_c0072.png
+  row: 43
+  col: 72
+  bloc:
+  - 475
+  - 3312
+  split: valid
+  bounds:
+  - 950327.5
+  - 6625744.5
+  - 950651.5
+  - 6626068.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0044_c0044.png
+  row: 44
+  col: 44
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 941255.5
+  - 6625420.5
+  - 941579.5
+  - 6625744.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0044_c0048.png
+  row: 44
+  col: 48
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942551.5
+  - 6625420.5
+  - 942875.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0049.png
+  row: 44
+  col: 49
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942875.5
+  - 6625420.5
+  - 943199.5
+  - 6625744.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0052.png
+  row: 44
+  col: 52
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 943847.5
+  - 6625420.5
+  - 944171.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0053.png
+  row: 44
+  col: 53
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 944171.5
+  - 6625420.5
+  - 944495.5
+  - 6625744.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0059.png
+  row: 44
+  col: 59
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946115.5
+  - 6625420.5
+  - 946439.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0061.png
+  row: 44
+  col: 61
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946763.5
+  - 6625420.5
+  - 947087.5
+  - 6625744.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0063.png
+  row: 44
+  col: 63
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947411.5
+  - 6625420.5
+  - 947735.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0064.png
+  row: 44
+  col: 64
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947735.5
+  - 6625420.5
+  - 948059.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0065.png
+  row: 44
+  col: 65
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 948059.5
+  - 6625420.5
+  - 948383.5
+  - 6625744.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0044_c0066.png
+  row: 44
+  col: 66
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 948383.5
+  - 6625420.5
+  - 948707.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0069.png
+  row: 44
+  col: 69
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 949355.5
+  - 6625420.5
+  - 949679.5
+  - 6625744.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0044_c0071.png
+  row: 44
+  col: 71
+  bloc:
+  - 475
+  - 3312
+  split: valid
+  bounds:
+  - 950003.5
+  - 6625420.5
+  - 950327.5
+  - 6625744.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0044_c0072.png
+  row: 44
+  col: 72
+  bloc:
+  - 475
+  - 3312
+  split: valid
+  bounds:
+  - 950327.5
+  - 6625420.5
+  - 950651.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0044_c0073.png
+  row: 44
+  col: 73
+  bloc:
+  - 475
+  - 3312
+  split: valid
+  bounds:
+  - 950651.5
+  - 6625420.5
+  - 950975.5
+  - 6625744.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0045_c0047.png
+  row: 45
+  col: 47
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942227.5
+  - 6625096.5
+  - 942551.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0048.png
+  row: 45
+  col: 48
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942551.5
+  - 6625096.5
+  - 942875.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0049.png
+  row: 45
+  col: 49
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942875.5
+  - 6625096.5
+  - 943199.5
+  - 6625420.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0055.png
+  row: 45
+  col: 55
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 944819.5
+  - 6625096.5
+  - 945143.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0057.png
+  row: 45
+  col: 57
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 945467.5
+  - 6625096.5
+  - 945791.5
+  - 6625420.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0058.png
+  row: 45
+  col: 58
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 945791.5
+  - 6625096.5
+  - 946115.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0059.png
+  row: 45
+  col: 59
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946115.5
+  - 6625096.5
+  - 946439.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0063.png
+  row: 45
+  col: 63
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947411.5
+  - 6625096.5
+  - 947735.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0045_c0064.png
+  row: 45
+  col: 64
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947735.5
+  - 6625096.5
+  - 948059.5
+  - 6625420.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0044.png
+  row: 46
+  col: 44
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 941255.5
+  - 6624772.5
+  - 941579.5
+  - 6625096.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0046_c0045.png
+  row: 46
+  col: 45
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 941579.5
+  - 6624772.5
+  - 941903.5
+  - 6625096.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0047.png
+  row: 46
+  col: 47
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942227.5
+  - 6624772.5
+  - 942551.5
+  - 6625096.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0048.png
+  row: 46
+  col: 48
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942551.5
+  - 6624772.5
+  - 942875.5
+  - 6625096.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0049.png
+  row: 46
+  col: 49
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942875.5
+  - 6624772.5
+  - 943199.5
+  - 6625096.5
+  n_annotations: 10
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0050.png
+  row: 46
+  col: 50
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 943199.5
+  - 6624772.5
+  - 943523.5
+  - 6625096.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0063.png
+  row: 46
+  col: 63
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947411.5
+  - 6624772.5
+  - 947735.5
+  - 6625096.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0066.png
+  row: 46
+  col: 66
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 948383.5
+  - 6624772.5
+  - 948707.5
+  - 6625096.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0046_c0070.png
+  row: 46
+  col: 70
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 949679.5
+  - 6624772.5
+  - 950003.5
+  - 6625096.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0043.png
+  row: 47
+  col: 43
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 940931.5
+  - 6624448.5
+  - 941255.5
+  - 6624772.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0044.png
+  row: 47
+  col: 44
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 941255.5
+  - 6624448.5
+  - 941579.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0047.png
+  row: 47
+  col: 47
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942227.5
+  - 6624448.5
+  - 942551.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0048.png
+  row: 47
+  col: 48
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942551.5
+  - 6624448.5
+  - 942875.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0061.png
+  row: 47
+  col: 61
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946763.5
+  - 6624448.5
+  - 947087.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0047_c0063.png
+  row: 47
+  col: 63
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 947411.5
+  - 6624448.5
+  - 947735.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0065.png
+  row: 47
+  col: 65
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 948059.5
+  - 6624448.5
+  - 948383.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0068.png
+  row: 47
+  col: 68
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 949031.5
+  - 6624448.5
+  - 949355.5
+  - 6624772.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0047_c0070.png
+  row: 47
+  col: 70
+  bloc:
+  - 474
+  - 3312
+  split: train
+  bounds:
+  - 949679.5
+  - 6624448.5
+  - 950003.5
+  - 6624772.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0043.png
+  row: 48
+  col: 43
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 940931.5
+  - 6624124.5
+  - 941255.5
+  - 6624448.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0044.png
+  row: 48
+  col: 44
+  bloc:
+  - 470
+  - 3312
+  split: test
+  bounds:
+  - 941255.5
+  - 6624124.5
+  - 941579.5
+  - 6624448.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0047.png
+  row: 48
+  col: 47
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942227.5
+  - 6624124.5
+  - 942551.5
+  - 6624448.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0048.png
+  row: 48
+  col: 48
+  bloc:
+  - 471
+  - 3312
+  split: train
+  bounds:
+  - 942551.5
+  - 6624124.5
+  - 942875.5
+  - 6624448.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0052.png
+  row: 48
+  col: 52
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 943847.5
+  - 6624124.5
+  - 944171.5
+  - 6624448.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0054.png
+  row: 48
+  col: 54
+  bloc:
+  - 472
+  - 3312
+  split: train
+  bounds:
+  - 944495.5
+  - 6624124.5
+  - 944819.5
+  - 6624448.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0048_c0061.png
+  row: 48
+  col: 61
+  bloc:
+  - 473
+  - 3312
+  split: test
+  bounds:
+  - 946763.5
+  - 6624124.5
+  - 947087.5
+  - 6624448.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0042.png
+  row: 49
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6623800.5
+  - 940931.5
+  - 6624124.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0044.png
+  row: 49
+  col: 44
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941255.5
+  - 6623800.5
+  - 941579.5
+  - 6624124.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0045.png
+  row: 49
+  col: 45
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941579.5
+  - 6623800.5
+  - 941903.5
+  - 6624124.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0047.png
+  row: 49
+  col: 47
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942227.5
+  - 6623800.5
+  - 942551.5
+  - 6624124.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0049.png
+  row: 49
+  col: 49
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942875.5
+  - 6623800.5
+  - 943199.5
+  - 6624124.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0052.png
+  row: 49
+  col: 52
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 943847.5
+  - 6623800.5
+  - 944171.5
+  - 6624124.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0053.png
+  row: 49
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6623800.5
+  - 944495.5
+  - 6624124.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0058.png
+  row: 49
+  col: 58
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945791.5
+  - 6623800.5
+  - 946115.5
+  - 6624124.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0059.png
+  row: 49
+  col: 59
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946115.5
+  - 6623800.5
+  - 946439.5
+  - 6624124.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0049_c0063.png
+  row: 49
+  col: 63
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 947411.5
+  - 6623800.5
+  - 947735.5
+  - 6624124.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0049_c0066.png
+  row: 49
+  col: 66
+  bloc:
+  - 474
+  - 3311
+  split: train
+  bounds:
+  - 948383.5
+  - 6623800.5
+  - 948707.5
+  - 6624124.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0050_c0042.png
+  row: 50
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6623476.5
+  - 940931.5
+  - 6623800.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0050_c0043.png
+  row: 50
+  col: 43
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940931.5
+  - 6623476.5
+  - 941255.5
+  - 6623800.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0050_c0048.png
+  row: 50
+  col: 48
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942551.5
+  - 6623476.5
+  - 942875.5
+  - 6623800.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0050_c0051.png
+  row: 50
+  col: 51
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 943523.5
+  - 6623476.5
+  - 943847.5
+  - 6623800.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0050_c0055.png
+  row: 50
+  col: 55
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944819.5
+  - 6623476.5
+  - 945143.5
+  - 6623800.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0038.png
+  row: 51
+  col: 38
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 939311.5
+  - 6623152.5
+  - 939635.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0042.png
+  row: 51
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6623152.5
+  - 940931.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0043.png
+  row: 51
+  col: 43
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940931.5
+  - 6623152.5
+  - 941255.5
+  - 6623476.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0044.png
+  row: 51
+  col: 44
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941255.5
+  - 6623152.5
+  - 941579.5
+  - 6623476.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0046.png
+  row: 51
+  col: 46
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 941903.5
+  - 6623152.5
+  - 942227.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0047.png
+  row: 51
+  col: 47
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942227.5
+  - 6623152.5
+  - 942551.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0052.png
+  row: 51
+  col: 52
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 943847.5
+  - 6623152.5
+  - 944171.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0053.png
+  row: 51
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6623152.5
+  - 944495.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0056.png
+  row: 51
+  col: 56
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945143.5
+  - 6623152.5
+  - 945467.5
+  - 6623476.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0057.png
+  row: 51
+  col: 57
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945467.5
+  - 6623152.5
+  - 945791.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0060.png
+  row: 51
+  col: 60
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946439.5
+  - 6623152.5
+  - 946763.5
+  - 6623476.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0062.png
+  row: 51
+  col: 62
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 947087.5
+  - 6623152.5
+  - 947411.5
+  - 6623476.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0051_c0065.png
+  row: 51
+  col: 65
+  bloc:
+  - 474
+  - 3311
+  split: train
+  bounds:
+  - 948059.5
+  - 6623152.5
+  - 948383.5
+  - 6623476.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0052_c0029.png
+  row: 52
+  col: 29
+  bloc:
+  - 468
+  - 3311
+  split: train
+  bounds:
+  - 936395.5
+  - 6622828.5
+  - 936719.5
+  - 6623152.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0052_c0036.png
+  row: 52
+  col: 36
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938663.5
+  - 6622828.5
+  - 938987.5
+  - 6623152.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0052_c0037.png
+  row: 52
+  col: 37
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938987.5
+  - 6622828.5
+  - 939311.5
+  - 6623152.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0052_c0045.png
+  row: 52
+  col: 45
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941579.5
+  - 6622828.5
+  - 941903.5
+  - 6623152.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0052_c0053.png
+  row: 52
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6622828.5
+  - 944495.5
+  - 6623152.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0052_c0056.png
+  row: 52
+  col: 56
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945143.5
+  - 6622828.5
+  - 945467.5
+  - 6623152.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0052_c0057.png
+  row: 52
+  col: 57
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945467.5
+  - 6622828.5
+  - 945791.5
+  - 6623152.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0052_c0058.png
+  row: 52
+  col: 58
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945791.5
+  - 6622828.5
+  - 946115.5
+  - 6623152.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0035.png
+  row: 53
+  col: 35
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938339.5
+  - 6622504.5
+  - 938663.5
+  - 6622828.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0053_c0042.png
+  row: 53
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6622504.5
+  - 940931.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0043.png
+  row: 53
+  col: 43
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940931.5
+  - 6622504.5
+  - 941255.5
+  - 6622828.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0053_c0044.png
+  row: 53
+  col: 44
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941255.5
+  - 6622504.5
+  - 941579.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0048.png
+  row: 53
+  col: 48
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942551.5
+  - 6622504.5
+  - 942875.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0050.png
+  row: 53
+  col: 50
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 943199.5
+  - 6622504.5
+  - 943523.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0053.png
+  row: 53
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6622504.5
+  - 944495.5
+  - 6622828.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0055.png
+  row: 53
+  col: 55
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944819.5
+  - 6622504.5
+  - 945143.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0060.png
+  row: 53
+  col: 60
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946439.5
+  - 6622504.5
+  - 946763.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0053_c0061.png
+  row: 53
+  col: 61
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946763.5
+  - 6622504.5
+  - 947087.5
+  - 6622828.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0053_c0062.png
+  row: 53
+  col: 62
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 947087.5
+  - 6622504.5
+  - 947411.5
+  - 6622828.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0033.png
+  row: 54
+  col: 33
+  bloc:
+  - 468
+  - 3311
+  split: train
+  bounds:
+  - 937691.5
+  - 6622180.5
+  - 938015.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0034.png
+  row: 54
+  col: 34
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938015.5
+  - 6622180.5
+  - 938339.5
+  - 6622504.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0035.png
+  row: 54
+  col: 35
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938339.5
+  - 6622180.5
+  - 938663.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0036.png
+  row: 54
+  col: 36
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938663.5
+  - 6622180.5
+  - 938987.5
+  - 6622504.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0037.png
+  row: 54
+  col: 37
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938987.5
+  - 6622180.5
+  - 939311.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0040.png
+  row: 54
+  col: 40
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 939959.5
+  - 6622180.5
+  - 940283.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0042.png
+  row: 54
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6622180.5
+  - 940931.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0043.png
+  row: 54
+  col: 43
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940931.5
+  - 6622180.5
+  - 941255.5
+  - 6622504.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0044.png
+  row: 54
+  col: 44
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 941255.5
+  - 6622180.5
+  - 941579.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0046.png
+  row: 54
+  col: 46
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 941903.5
+  - 6622180.5
+  - 942227.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0047.png
+  row: 54
+  col: 47
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942227.5
+  - 6622180.5
+  - 942551.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0048.png
+  row: 54
+  col: 48
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942551.5
+  - 6622180.5
+  - 942875.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0050.png
+  row: 54
+  col: 50
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 943199.5
+  - 6622180.5
+  - 943523.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0053.png
+  row: 54
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6622180.5
+  - 944495.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0054.png
+  row: 54
+  col: 54
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944495.5
+  - 6622180.5
+  - 944819.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0057.png
+  row: 54
+  col: 57
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945467.5
+  - 6622180.5
+  - 945791.5
+  - 6622504.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0058.png
+  row: 54
+  col: 58
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 945791.5
+  - 6622180.5
+  - 946115.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0054_c0061.png
+  row: 54
+  col: 61
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946763.5
+  - 6622180.5
+  - 947087.5
+  - 6622504.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0054_c0062.png
+  row: 54
+  col: 62
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 947087.5
+  - 6622180.5
+  - 947411.5
+  - 6622504.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0034.png
+  row: 55
+  col: 34
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938015.5
+  - 6621856.5
+  - 938339.5
+  - 6622180.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0035.png
+  row: 55
+  col: 35
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938339.5
+  - 6621856.5
+  - 938663.5
+  - 6622180.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0036.png
+  row: 55
+  col: 36
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938663.5
+  - 6621856.5
+  - 938987.5
+  - 6622180.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0037.png
+  row: 55
+  col: 37
+  bloc:
+  - 469
+  - 3311
+  split: train
+  bounds:
+  - 938987.5
+  - 6621856.5
+  - 939311.5
+  - 6622180.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0042.png
+  row: 55
+  col: 42
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940607.5
+  - 6621856.5
+  - 940931.5
+  - 6622180.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0043.png
+  row: 55
+  col: 43
+  bloc:
+  - 470
+  - 3311
+  split: train
+  bounds:
+  - 940931.5
+  - 6621856.5
+  - 941255.5
+  - 6622180.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0047.png
+  row: 55
+  col: 47
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 942227.5
+  - 6621856.5
+  - 942551.5
+  - 6622180.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0050.png
+  row: 55
+  col: 50
+  bloc:
+  - 471
+  - 3311
+  split: train
+  bounds:
+  - 943199.5
+  - 6621856.5
+  - 943523.5
+  - 6622180.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0055_c0052.png
+  row: 55
+  col: 52
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 943847.5
+  - 6621856.5
+  - 944171.5
+  - 6622180.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0055_c0053.png
+  row: 55
+  col: 53
+  bloc:
+  - 472
+  - 3311
+  split: train
+  bounds:
+  - 944171.5
+  - 6621856.5
+  - 944495.5
+  - 6622180.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0055_c0060.png
+  row: 55
+  col: 60
+  bloc:
+  - 473
+  - 3311
+  split: train
+  bounds:
+  - 946439.5
+  - 6621856.5
+  - 946763.5
+  - 6622180.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0030.png
+  row: 56
+  col: 30
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936719.5
+  - 6621532.5
+  - 937043.5
+  - 6621856.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0035.png
+  row: 56
+  col: 35
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938339.5
+  - 6621532.5
+  - 938663.5
+  - 6621856.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0036.png
+  row: 56
+  col: 36
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938663.5
+  - 6621532.5
+  - 938987.5
+  - 6621856.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0037.png
+  row: 56
+  col: 37
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938987.5
+  - 6621532.5
+  - 939311.5
+  - 6621856.5
+  n_annotations: 8
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0038.png
+  row: 56
+  col: 38
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 939311.5
+  - 6621532.5
+  - 939635.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0039.png
+  row: 56
+  col: 39
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 939635.5
+  - 6621532.5
+  - 939959.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0040.png
+  row: 56
+  col: 40
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 939959.5
+  - 6621532.5
+  - 940283.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0044.png
+  row: 56
+  col: 44
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 941255.5
+  - 6621532.5
+  - 941579.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0047.png
+  row: 56
+  col: 47
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942227.5
+  - 6621532.5
+  - 942551.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0049.png
+  row: 56
+  col: 49
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942875.5
+  - 6621532.5
+  - 943199.5
+  - 6621856.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0050.png
+  row: 56
+  col: 50
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 943199.5
+  - 6621532.5
+  - 943523.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0051.png
+  row: 56
+  col: 51
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 943523.5
+  - 6621532.5
+  - 943847.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0052.png
+  row: 56
+  col: 52
+  bloc:
+  - 472
+  - 3310
+  split: valid
+  bounds:
+  - 943847.5
+  - 6621532.5
+  - 944171.5
+  - 6621856.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0061.png
+  row: 56
+  col: 61
+  bloc:
+  - 473
+  - 3310
+  split: valid
+  bounds:
+  - 946763.5
+  - 6621532.5
+  - 947087.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0056_c0062.png
+  row: 56
+  col: 62
+  bloc:
+  - 473
+  - 3310
+  split: valid
+  bounds:
+  - 947087.5
+  - 6621532.5
+  - 947411.5
+  - 6621856.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0032.png
+  row: 57
+  col: 32
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937367.5
+  - 6621208.5
+  - 937691.5
+  - 6621532.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0057_c0033.png
+  row: 57
+  col: 33
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937691.5
+  - 6621208.5
+  - 938015.5
+  - 6621532.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0034.png
+  row: 57
+  col: 34
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938015.5
+  - 6621208.5
+  - 938339.5
+  - 6621532.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0035.png
+  row: 57
+  col: 35
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938339.5
+  - 6621208.5
+  - 938663.5
+  - 6621532.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0036.png
+  row: 57
+  col: 36
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938663.5
+  - 6621208.5
+  - 938987.5
+  - 6621532.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0057_c0038.png
+  row: 57
+  col: 38
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 939311.5
+  - 6621208.5
+  - 939635.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0040.png
+  row: 57
+  col: 40
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 939959.5
+  - 6621208.5
+  - 940283.5
+  - 6621532.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0045.png
+  row: 57
+  col: 45
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 941579.5
+  - 6621208.5
+  - 941903.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0046.png
+  row: 57
+  col: 46
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 941903.5
+  - 6621208.5
+  - 942227.5
+  - 6621532.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0047.png
+  row: 57
+  col: 47
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942227.5
+  - 6621208.5
+  - 942551.5
+  - 6621532.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0048.png
+  row: 57
+  col: 48
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942551.5
+  - 6621208.5
+  - 942875.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0050.png
+  row: 57
+  col: 50
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 943199.5
+  - 6621208.5
+  - 943523.5
+  - 6621532.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0051.png
+  row: 57
+  col: 51
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 943523.5
+  - 6621208.5
+  - 943847.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0052.png
+  row: 57
+  col: 52
+  bloc:
+  - 472
+  - 3310
+  split: valid
+  bounds:
+  - 943847.5
+  - 6621208.5
+  - 944171.5
+  - 6621532.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0059.png
+  row: 57
+  col: 59
+  bloc:
+  - 473
+  - 3310
+  split: valid
+  bounds:
+  - 946115.5
+  - 6621208.5
+  - 946439.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0061.png
+  row: 57
+  col: 61
+  bloc:
+  - 473
+  - 3310
+  split: valid
+  bounds:
+  - 946763.5
+  - 6621208.5
+  - 947087.5
+  - 6621532.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0057_c0062.png
+  row: 57
+  col: 62
+  bloc:
+  - 473
+  - 3310
+  split: valid
+  bounds:
+  - 947087.5
+  - 6621208.5
+  - 947411.5
+  - 6621532.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0028.png
+  row: 58
+  col: 28
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936071.5
+  - 6620884.5
+  - 936395.5
+  - 6621208.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0029.png
+  row: 58
+  col: 29
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936395.5
+  - 6620884.5
+  - 936719.5
+  - 6621208.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0031.png
+  row: 58
+  col: 31
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937043.5
+  - 6620884.5
+  - 937367.5
+  - 6621208.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0033.png
+  row: 58
+  col: 33
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937691.5
+  - 6620884.5
+  - 938015.5
+  - 6621208.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0039.png
+  row: 58
+  col: 39
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 939635.5
+  - 6620884.5
+  - 939959.5
+  - 6621208.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0058_c0047.png
+  row: 58
+  col: 47
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942227.5
+  - 6620884.5
+  - 942551.5
+  - 6621208.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0029.png
+  row: 59
+  col: 29
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936395.5
+  - 6620560.5
+  - 936719.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0030.png
+  row: 59
+  col: 30
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936719.5
+  - 6620560.5
+  - 937043.5
+  - 6620884.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0031.png
+  row: 59
+  col: 31
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937043.5
+  - 6620560.5
+  - 937367.5
+  - 6620884.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0032.png
+  row: 59
+  col: 32
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937367.5
+  - 6620560.5
+  - 937691.5
+  - 6620884.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0034.png
+  row: 59
+  col: 34
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938015.5
+  - 6620560.5
+  - 938339.5
+  - 6620884.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0039.png
+  row: 59
+  col: 39
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 939635.5
+  - 6620560.5
+  - 939959.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0042.png
+  row: 59
+  col: 42
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 940607.5
+  - 6620560.5
+  - 940931.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0048.png
+  row: 59
+  col: 48
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942551.5
+  - 6620560.5
+  - 942875.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0051.png
+  row: 59
+  col: 51
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 943523.5
+  - 6620560.5
+  - 943847.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0057.png
+  row: 59
+  col: 57
+  bloc:
+  - 472
+  - 3310
+  split: valid
+  bounds:
+  - 945467.5
+  - 6620560.5
+  - 945791.5
+  - 6620884.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0059_c0058.png
+  row: 59
+  col: 58
+  bloc:
+  - 472
+  - 3310
+  split: valid
+  bounds:
+  - 945791.5
+  - 6620560.5
+  - 946115.5
+  - 6620884.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0060_c0027.png
+  row: 60
+  col: 27
+  bloc:
+  - 467
+  - 3310
+  split: train
+  bounds:
+  - 935747.5
+  - 6620236.5
+  - 936071.5
+  - 6620560.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0060_c0028.png
+  row: 60
+  col: 28
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936071.5
+  - 6620236.5
+  - 936395.5
+  - 6620560.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0060_c0030.png
+  row: 60
+  col: 30
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936719.5
+  - 6620236.5
+  - 937043.5
+  - 6620560.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0060_c0031.png
+  row: 60
+  col: 31
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937043.5
+  - 6620236.5
+  - 937367.5
+  - 6620560.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0060_c0035.png
+  row: 60
+  col: 35
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938339.5
+  - 6620236.5
+  - 938663.5
+  - 6620560.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0060_c0044.png
+  row: 60
+  col: 44
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 941255.5
+  - 6620236.5
+  - 941579.5
+  - 6620560.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0060_c0048.png
+  row: 60
+  col: 48
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 942551.5
+  - 6620236.5
+  - 942875.5
+  - 6620560.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0025.png
+  row: 61
+  col: 25
+  bloc:
+  - 467
+  - 3310
+  split: train
+  bounds:
+  - 935099.5
+  - 6619912.5
+  - 935423.5
+  - 6620236.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0028.png
+  row: 61
+  col: 28
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 936071.5
+  - 6619912.5
+  - 936395.5
+  - 6620236.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0061_c0031.png
+  row: 61
+  col: 31
+  bloc:
+  - 468
+  - 3310
+  split: train
+  bounds:
+  - 937043.5
+  - 6619912.5
+  - 937367.5
+  - 6620236.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0035.png
+  row: 61
+  col: 35
+  bloc:
+  - 469
+  - 3310
+  split: train
+  bounds:
+  - 938339.5
+  - 6619912.5
+  - 938663.5
+  - 6620236.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0041.png
+  row: 61
+  col: 41
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 940283.5
+  - 6619912.5
+  - 940607.5
+  - 6620236.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0043.png
+  row: 61
+  col: 43
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 940931.5
+  - 6619912.5
+  - 941255.5
+  - 6620236.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0061_c0044.png
+  row: 61
+  col: 44
+  bloc:
+  - 470
+  - 3310
+  split: valid
+  bounds:
+  - 941255.5
+  - 6619912.5
+  - 941579.5
+  - 6620236.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0061_c0046.png
+  row: 61
+  col: 46
+  bloc:
+  - 471
+  - 3310
+  split: train
+  bounds:
+  - 941903.5
+  - 6619912.5
+  - 942227.5
+  - 6620236.5
+  n_annotations: 6
+  classes:
+  - four
+- nom: 25_haut_doubs_r0061_c0057.png
+  row: 61
+  col: 57
+  bloc:
+  - 472
+  - 3310
+  split: valid
+  bounds:
+  - 945467.5
+  - 6619912.5
+  - 945791.5
+  - 6620236.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0022.png
+  row: 62
+  col: 22
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 934127.5
+  - 6619588.5
+  - 934451.5
+  - 6619912.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0025.png
+  row: 62
+  col: 25
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 935099.5
+  - 6619588.5
+  - 935423.5
+  - 6619912.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0026.png
+  row: 62
+  col: 26
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 935423.5
+  - 6619588.5
+  - 935747.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0030.png
+  row: 62
+  col: 30
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 936719.5
+  - 6619588.5
+  - 937043.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0031.png
+  row: 62
+  col: 31
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 937043.5
+  - 6619588.5
+  - 937367.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0035.png
+  row: 62
+  col: 35
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938339.5
+  - 6619588.5
+  - 938663.5
+  - 6619912.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0036.png
+  row: 62
+  col: 36
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938663.5
+  - 6619588.5
+  - 938987.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0037.png
+  row: 62
+  col: 37
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938987.5
+  - 6619588.5
+  - 939311.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0038.png
+  row: 62
+  col: 38
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 939311.5
+  - 6619588.5
+  - 939635.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0039.png
+  row: 62
+  col: 39
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 939635.5
+  - 6619588.5
+  - 939959.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0040.png
+  row: 62
+  col: 40
+  bloc:
+  - 470
+  - 3309
+  split: train
+  bounds:
+  - 939959.5
+  - 6619588.5
+  - 940283.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0041.png
+  row: 62
+  col: 41
+  bloc:
+  - 470
+  - 3309
+  split: train
+  bounds:
+  - 940283.5
+  - 6619588.5
+  - 940607.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0047.png
+  row: 62
+  col: 47
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942227.5
+  - 6619588.5
+  - 942551.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0048.png
+  row: 62
+  col: 48
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942551.5
+  - 6619588.5
+  - 942875.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0049.png
+  row: 62
+  col: 49
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942875.5
+  - 6619588.5
+  - 943199.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0062_c0050.png
+  row: 62
+  col: 50
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943199.5
+  - 6619588.5
+  - 943523.5
+  - 6619912.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0017.png
+  row: 63
+  col: 17
+  bloc:
+  - 466
+  - 3309
+  split: valid
+  bounds:
+  - 932507.5
+  - 6619264.5
+  - 932831.5
+  - 6619588.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0063_c0020.png
+  row: 63
+  col: 20
+  bloc:
+  - 466
+  - 3309
+  split: valid
+  bounds:
+  - 933479.5
+  - 6619264.5
+  - 933803.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0021.png
+  row: 63
+  col: 21
+  bloc:
+  - 466
+  - 3309
+  split: valid
+  bounds:
+  - 933803.5
+  - 6619264.5
+  - 934127.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0025.png
+  row: 63
+  col: 25
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 935099.5
+  - 6619264.5
+  - 935423.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0027.png
+  row: 63
+  col: 27
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 935747.5
+  - 6619264.5
+  - 936071.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0031.png
+  row: 63
+  col: 31
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 937043.5
+  - 6619264.5
+  - 937367.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0037.png
+  row: 63
+  col: 37
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938987.5
+  - 6619264.5
+  - 939311.5
+  - 6619588.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0063_c0038.png
+  row: 63
+  col: 38
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 939311.5
+  - 6619264.5
+  - 939635.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0063_c0049.png
+  row: 63
+  col: 49
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942875.5
+  - 6619264.5
+  - 943199.5
+  - 6619588.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0018.png
+  row: 64
+  col: 18
+  bloc:
+  - 466
+  - 3309
+  split: valid
+  bounds:
+  - 932831.5
+  - 6618940.5
+  - 933155.5
+  - 6619264.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0022.png
+  row: 64
+  col: 22
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 934127.5
+  - 6618940.5
+  - 934451.5
+  - 6619264.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0028.png
+  row: 64
+  col: 28
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 936071.5
+  - 6618940.5
+  - 936395.5
+  - 6619264.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0046.png
+  row: 64
+  col: 46
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 941903.5
+  - 6618940.5
+  - 942227.5
+  - 6619264.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0047.png
+  row: 64
+  col: 47
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942227.5
+  - 6618940.5
+  - 942551.5
+  - 6619264.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0064_c0050.png
+  row: 64
+  col: 50
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943199.5
+  - 6618940.5
+  - 943523.5
+  - 6619264.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0064_c0053.png
+  row: 64
+  col: 53
+  bloc:
+  - 472
+  - 3309
+  split: train
+  bounds:
+  - 944171.5
+  - 6618940.5
+  - 944495.5
+  - 6619264.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0065_c0033.png
+  row: 65
+  col: 33
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 937691.5
+  - 6618616.5
+  - 938015.5
+  - 6618940.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0065_c0034.png
+  row: 65
+  col: 34
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938015.5
+  - 6618616.5
+  - 938339.5
+  - 6618940.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0065_c0039.png
+  row: 65
+  col: 39
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 939635.5
+  - 6618616.5
+  - 939959.5
+  - 6618940.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0065_c0043.png
+  row: 65
+  col: 43
+  bloc:
+  - 470
+  - 3309
+  split: train
+  bounds:
+  - 940931.5
+  - 6618616.5
+  - 941255.5
+  - 6618940.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0065_c0049.png
+  row: 65
+  col: 49
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942875.5
+  - 6618616.5
+  - 943199.5
+  - 6618940.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0065_c0050.png
+  row: 65
+  col: 50
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943199.5
+  - 6618616.5
+  - 943523.5
+  - 6618940.5
+  n_annotations: 4
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0065_c0051.png
+  row: 65
+  col: 51
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943523.5
+  - 6618616.5
+  - 943847.5
+  - 6618940.5
+  n_annotations: 6
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0066_c0023.png
+  row: 66
+  col: 23
+  bloc:
+  - 467
+  - 3309
+  split: train
+  bounds:
+  - 934451.5
+  - 6618292.5
+  - 934775.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0029.png
+  row: 66
+  col: 29
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 936395.5
+  - 6618292.5
+  - 936719.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0031.png
+  row: 66
+  col: 31
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 937043.5
+  - 6618292.5
+  - 937367.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0032.png
+  row: 66
+  col: 32
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 937367.5
+  - 6618292.5
+  - 937691.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0034.png
+  row: 66
+  col: 34
+  bloc:
+  - 469
+  - 3309
+  split: train
+  bounds:
+  - 938015.5
+  - 6618292.5
+  - 938339.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0042.png
+  row: 66
+  col: 42
+  bloc:
+  - 470
+  - 3309
+  split: train
+  bounds:
+  - 940607.5
+  - 6618292.5
+  - 940931.5
+  - 6618616.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0047.png
+  row: 66
+  col: 47
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942227.5
+  - 6618292.5
+  - 942551.5
+  - 6618616.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0066_c0049.png
+  row: 66
+  col: 49
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942875.5
+  - 6618292.5
+  - 943199.5
+  - 6618616.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0066_c0050.png
+  row: 66
+  col: 50
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943199.5
+  - 6618292.5
+  - 943523.5
+  - 6618616.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0066_c0051.png
+  row: 66
+  col: 51
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943523.5
+  - 6618292.5
+  - 943847.5
+  - 6618616.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0067_c0029.png
+  row: 67
+  col: 29
+  bloc:
+  - 468
+  - 3309
+  split: train
+  bounds:
+  - 936395.5
+  - 6617968.5
+  - 936719.5
+  - 6618292.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0067_c0049.png
+  row: 67
+  col: 49
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 942875.5
+  - 6617968.5
+  - 943199.5
+  - 6618292.5
+  n_annotations: 3
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0067_c0050.png
+  row: 67
+  col: 50
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943199.5
+  - 6617968.5
+  - 943523.5
+  - 6618292.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0067_c0051.png
+  row: 67
+  col: 51
+  bloc:
+  - 471
+  - 3309
+  split: valid
+  bounds:
+  - 943523.5
+  - 6617968.5
+  - 943847.5
+  - 6618292.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0026.png
+  row: 68
+  col: 26
+  bloc:
+  - 467
+  - 3308
+  split: train
+  bounds:
+  - 935423.5
+  - 6617644.5
+  - 935747.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0028.png
+  row: 68
+  col: 28
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 936071.5
+  - 6617644.5
+  - 936395.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0029.png
+  row: 68
+  col: 29
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 936395.5
+  - 6617644.5
+  - 936719.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0032.png
+  row: 68
+  col: 32
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937367.5
+  - 6617644.5
+  - 937691.5
+  - 6617968.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0068_c0033.png
+  row: 68
+  col: 33
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937691.5
+  - 6617644.5
+  - 938015.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0034.png
+  row: 68
+  col: 34
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938015.5
+  - 6617644.5
+  - 938339.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0038.png
+  row: 68
+  col: 38
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 939311.5
+  - 6617644.5
+  - 939635.5
+  - 6617968.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0044.png
+  row: 68
+  col: 44
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 941255.5
+  - 6617644.5
+  - 941579.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0068_c0049.png
+  row: 68
+  col: 49
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942875.5
+  - 6617644.5
+  - 943199.5
+  - 6617968.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0009.png
+  row: 69
+  col: 9
+  bloc:
+  - 465
+  - 3308
+  split: test
+  bounds:
+  - 929915.5
+  - 6617320.5
+  - 930239.5
+  - 6617644.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0069_c0020.png
+  row: 69
+  col: 20
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 933479.5
+  - 6617320.5
+  - 933803.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0026.png
+  row: 69
+  col: 26
+  bloc:
+  - 467
+  - 3308
+  split: train
+  bounds:
+  - 935423.5
+  - 6617320.5
+  - 935747.5
+  - 6617644.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0069_c0031.png
+  row: 69
+  col: 31
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937043.5
+  - 6617320.5
+  - 937367.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0032.png
+  row: 69
+  col: 32
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937367.5
+  - 6617320.5
+  - 937691.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0034.png
+  row: 69
+  col: 34
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938015.5
+  - 6617320.5
+  - 938339.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0035.png
+  row: 69
+  col: 35
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938339.5
+  - 6617320.5
+  - 938663.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0044.png
+  row: 69
+  col: 44
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 941255.5
+  - 6617320.5
+  - 941579.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0047.png
+  row: 69
+  col: 47
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942227.5
+  - 6617320.5
+  - 942551.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0048.png
+  row: 69
+  col: 48
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942551.5
+  - 6617320.5
+  - 942875.5
+  - 6617644.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0049.png
+  row: 69
+  col: 49
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942875.5
+  - 6617320.5
+  - 943199.5
+  - 6617644.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0069_c0050.png
+  row: 69
+  col: 50
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 943199.5
+  - 6617320.5
+  - 943523.5
+  - 6617644.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0019.png
+  row: 70
+  col: 19
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 933155.5
+  - 6616996.5
+  - 933479.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0034.png
+  row: 70
+  col: 34
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938015.5
+  - 6616996.5
+  - 938339.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0035.png
+  row: 70
+  col: 35
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938339.5
+  - 6616996.5
+  - 938663.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0036.png
+  row: 70
+  col: 36
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938663.5
+  - 6616996.5
+  - 938987.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0043.png
+  row: 70
+  col: 43
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 940931.5
+  - 6616996.5
+  - 941255.5
+  - 6617320.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0070_c0046.png
+  row: 70
+  col: 46
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 941903.5
+  - 6616996.5
+  - 942227.5
+  - 6617320.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0047.png
+  row: 70
+  col: 47
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942227.5
+  - 6616996.5
+  - 942551.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0070_c0048.png
+  row: 70
+  col: 48
+  bloc:
+  - 471
+  - 3308
+  split: valid
+  bounds:
+  - 942551.5
+  - 6616996.5
+  - 942875.5
+  - 6617320.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0071_c0018.png
+  row: 71
+  col: 18
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 932831.5
+  - 6616672.5
+  - 933155.5
+  - 6616996.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0071_c0029.png
+  row: 71
+  col: 29
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 936395.5
+  - 6616672.5
+  - 936719.5
+  - 6616996.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0071_c0036.png
+  row: 71
+  col: 36
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938663.5
+  - 6616672.5
+  - 938987.5
+  - 6616996.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0071_c0043.png
+  row: 71
+  col: 43
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 940931.5
+  - 6616672.5
+  - 941255.5
+  - 6616996.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0072_c0013.png
+  row: 72
+  col: 13
+  bloc:
+  - 465
+  - 3308
+  split: test
+  bounds:
+  - 931211.5
+  - 6616348.5
+  - 931535.5
+  - 6616672.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0020.png
+  row: 72
+  col: 20
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 933479.5
+  - 6616348.5
+  - 933803.5
+  - 6616672.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0022.png
+  row: 72
+  col: 22
+  bloc:
+  - 467
+  - 3308
+  split: train
+  bounds:
+  - 934127.5
+  - 6616348.5
+  - 934451.5
+  - 6616672.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0028.png
+  row: 72
+  col: 28
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 936071.5
+  - 6616348.5
+  - 936395.5
+  - 6616672.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0032.png
+  row: 72
+  col: 32
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937367.5
+  - 6616348.5
+  - 937691.5
+  - 6616672.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0033.png
+  row: 72
+  col: 33
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937691.5
+  - 6616348.5
+  - 938015.5
+  - 6616672.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0034.png
+  row: 72
+  col: 34
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938015.5
+  - 6616348.5
+  - 938339.5
+  - 6616672.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0035.png
+  row: 72
+  col: 35
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938339.5
+  - 6616348.5
+  - 938663.5
+  - 6616672.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0072_c0036.png
+  row: 72
+  col: 36
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938663.5
+  - 6616348.5
+  - 938987.5
+  - 6616672.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0037.png
+  row: 72
+  col: 37
+  bloc:
+  - 469
+  - 3308
+  split: train
+  bounds:
+  - 938987.5
+  - 6616348.5
+  - 939311.5
+  - 6616672.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0044.png
+  row: 72
+  col: 44
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 941255.5
+  - 6616348.5
+  - 941579.5
+  - 6616672.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0072_c0045.png
+  row: 72
+  col: 45
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 941579.5
+  - 6616348.5
+  - 941903.5
+  - 6616672.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0014.png
+  row: 73
+  col: 14
+  bloc:
+  - 465
+  - 3308
+  split: test
+  bounds:
+  - 931535.5
+  - 6616024.5
+  - 931859.5
+  - 6616348.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0020.png
+  row: 73
+  col: 20
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 933479.5
+  - 6616024.5
+  - 933803.5
+  - 6616348.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0021.png
+  row: 73
+  col: 21
+  bloc:
+  - 466
+  - 3308
+  split: train
+  bounds:
+  - 933803.5
+  - 6616024.5
+  - 934127.5
+  - 6616348.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0026.png
+  row: 73
+  col: 26
+  bloc:
+  - 467
+  - 3308
+  split: train
+  bounds:
+  - 935423.5
+  - 6616024.5
+  - 935747.5
+  - 6616348.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0028.png
+  row: 73
+  col: 28
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 936071.5
+  - 6616024.5
+  - 936395.5
+  - 6616348.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0032.png
+  row: 73
+  col: 32
+  bloc:
+  - 468
+  - 3308
+  split: train
+  bounds:
+  - 937367.5
+  - 6616024.5
+  - 937691.5
+  - 6616348.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0041.png
+  row: 73
+  col: 41
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 940283.5
+  - 6616024.5
+  - 940607.5
+  - 6616348.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0073_c0043.png
+  row: 73
+  col: 43
+  bloc:
+  - 470
+  - 3308
+  split: train
+  bounds:
+  - 940931.5
+  - 6616024.5
+  - 941255.5
+  - 6616348.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0074_c0006.png
+  row: 74
+  col: 6
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 928943.5
+  - 6615700.5
+  - 929267.5
+  - 6616024.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0074_c0011.png
+  row: 74
+  col: 11
+  bloc:
+  - 465
+  - 3307
+  split: train
+  bounds:
+  - 930563.5
+  - 6615700.5
+  - 930887.5
+  - 6616024.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0021.png
+  row: 74
+  col: 21
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933803.5
+  - 6615700.5
+  - 934127.5
+  - 6616024.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0022.png
+  row: 74
+  col: 22
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934127.5
+  - 6615700.5
+  - 934451.5
+  - 6616024.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0026.png
+  row: 74
+  col: 26
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935423.5
+  - 6615700.5
+  - 935747.5
+  - 6616024.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0027.png
+  row: 74
+  col: 27
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935747.5
+  - 6615700.5
+  - 936071.5
+  - 6616024.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0028.png
+  row: 74
+  col: 28
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936071.5
+  - 6615700.5
+  - 936395.5
+  - 6616024.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0074_c0041.png
+  row: 74
+  col: 41
+  bloc:
+  - 470
+  - 3307
+  split: train
+  bounds:
+  - 940283.5
+  - 6615700.5
+  - 940607.5
+  - 6616024.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0075_c0011.png
+  row: 75
+  col: 11
+  bloc:
+  - 465
+  - 3307
+  split: train
+  bounds:
+  - 930563.5
+  - 6615376.5
+  - 930887.5
+  - 6615700.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0075_c0028.png
+  row: 75
+  col: 28
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936071.5
+  - 6615376.5
+  - 936395.5
+  - 6615700.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0075_c0041.png
+  row: 75
+  col: 41
+  bloc:
+  - 470
+  - 3307
+  split: train
+  bounds:
+  - 940283.5
+  - 6615376.5
+  - 940607.5
+  - 6615700.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0007.png
+  row: 76
+  col: 7
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 929267.5
+  - 6615052.5
+  - 929591.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0020.png
+  row: 76
+  col: 20
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933479.5
+  - 6615052.5
+  - 933803.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0021.png
+  row: 76
+  col: 21
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933803.5
+  - 6615052.5
+  - 934127.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0022.png
+  row: 76
+  col: 22
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934127.5
+  - 6615052.5
+  - 934451.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0028.png
+  row: 76
+  col: 28
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936071.5
+  - 6615052.5
+  - 936395.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0032.png
+  row: 76
+  col: 32
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 937367.5
+  - 6615052.5
+  - 937691.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0038.png
+  row: 76
+  col: 38
+  bloc:
+  - 469
+  - 3307
+  split: valid
+  bounds:
+  - 939311.5
+  - 6615052.5
+  - 939635.5
+  - 6615376.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0039.png
+  row: 76
+  col: 39
+  bloc:
+  - 469
+  - 3307
+  split: valid
+  bounds:
+  - 939635.5
+  - 6615052.5
+  - 939959.5
+  - 6615376.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0076_c0041.png
+  row: 76
+  col: 41
+  bloc:
+  - 470
+  - 3307
+  split: train
+  bounds:
+  - 940283.5
+  - 6615052.5
+  - 940607.5
+  - 6615376.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0006.png
+  row: 77
+  col: 6
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 928943.5
+  - 6614728.5
+  - 929267.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0007.png
+  row: 77
+  col: 7
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 929267.5
+  - 6614728.5
+  - 929591.5
+  - 6615052.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0016.png
+  row: 77
+  col: 16
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 932183.5
+  - 6614728.5
+  - 932507.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0017.png
+  row: 77
+  col: 17
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 932507.5
+  - 6614728.5
+  - 932831.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0020.png
+  row: 77
+  col: 20
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933479.5
+  - 6614728.5
+  - 933803.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0021.png
+  row: 77
+  col: 21
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933803.5
+  - 6614728.5
+  - 934127.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0022.png
+  row: 77
+  col: 22
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934127.5
+  - 6614728.5
+  - 934451.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0027.png
+  row: 77
+  col: 27
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935747.5
+  - 6614728.5
+  - 936071.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0030.png
+  row: 77
+  col: 30
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936719.5
+  - 6614728.5
+  - 937043.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0032.png
+  row: 77
+  col: 32
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 937367.5
+  - 6614728.5
+  - 937691.5
+  - 6615052.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0077_c0038.png
+  row: 77
+  col: 38
+  bloc:
+  - 469
+  - 3307
+  split: valid
+  bounds:
+  - 939311.5
+  - 6614728.5
+  - 939635.5
+  - 6615052.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0006.png
+  row: 78
+  col: 6
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 928943.5
+  - 6614404.5
+  - 929267.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0008.png
+  row: 78
+  col: 8
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 929591.5
+  - 6614404.5
+  - 929915.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0015.png
+  row: 78
+  col: 15
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 931859.5
+  - 6614404.5
+  - 932183.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0020.png
+  row: 78
+  col: 20
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933479.5
+  - 6614404.5
+  - 933803.5
+  - 6614728.5
+  n_annotations: 2
+  classes:
+  - circular_depression
+  - four
+- nom: 25_haut_doubs_r0078_c0021.png
+  row: 78
+  col: 21
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933803.5
+  - 6614404.5
+  - 934127.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0078_c0023.png
+  row: 78
+  col: 23
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934451.5
+  - 6614404.5
+  - 934775.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0028.png
+  row: 78
+  col: 28
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936071.5
+  - 6614404.5
+  - 936395.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0078_c0029.png
+  row: 78
+  col: 29
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936395.5
+  - 6614404.5
+  - 936719.5
+  - 6614728.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0006.png
+  row: 79
+  col: 6
+  bloc:
+  - 464
+  - 3307
+  split: train
+  bounds:
+  - 928943.5
+  - 6614080.5
+  - 929267.5
+  - 6614404.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0013.png
+  row: 79
+  col: 13
+  bloc:
+  - 465
+  - 3307
+  split: train
+  bounds:
+  - 931211.5
+  - 6614080.5
+  - 931535.5
+  - 6614404.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0079_c0015.png
+  row: 79
+  col: 15
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 931859.5
+  - 6614080.5
+  - 932183.5
+  - 6614404.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0016.png
+  row: 79
+  col: 16
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 932183.5
+  - 6614080.5
+  - 932507.5
+  - 6614404.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0019.png
+  row: 79
+  col: 19
+  bloc:
+  - 466
+  - 3307
+  split: valid
+  bounds:
+  - 933155.5
+  - 6614080.5
+  - 933479.5
+  - 6614404.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0023.png
+  row: 79
+  col: 23
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934451.5
+  - 6614080.5
+  - 934775.5
+  - 6614404.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0024.png
+  row: 79
+  col: 24
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 934775.5
+  - 6614080.5
+  - 935099.5
+  - 6614404.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0025.png
+  row: 79
+  col: 25
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935099.5
+  - 6614080.5
+  - 935423.5
+  - 6614404.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0026.png
+  row: 79
+  col: 26
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935423.5
+  - 6614080.5
+  - 935747.5
+  - 6614404.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0027.png
+  row: 79
+  col: 27
+  bloc:
+  - 467
+  - 3307
+  split: train
+  bounds:
+  - 935747.5
+  - 6614080.5
+  - 936071.5
+  - 6614404.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0028.png
+  row: 79
+  col: 28
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 936071.5
+  - 6614080.5
+  - 936395.5
+  - 6614404.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0079_c0032.png
+  row: 79
+  col: 32
+  bloc:
+  - 468
+  - 3307
+  split: train
+  bounds:
+  - 937367.5
+  - 6614080.5
+  - 937691.5
+  - 6614404.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0079_c0035.png
+  row: 79
+  col: 35
+  bloc:
+  - 469
+  - 3307
+  split: valid
+  bounds:
+  - 938339.5
+  - 6614080.5
+  - 938663.5
+  - 6614404.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0080_c0005.png
+  row: 80
+  col: 5
+  bloc:
+  - 464
+  - 3306
+  split: valid
+  bounds:
+  - 928619.5
+  - 6613756.5
+  - 928943.5
+  - 6614080.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0011.png
+  row: 80
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6613756.5
+  - 930887.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0080_c0012.png
+  row: 80
+  col: 12
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930887.5
+  - 6613756.5
+  - 931211.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0080_c0013.png
+  row: 80
+  col: 13
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931211.5
+  - 6613756.5
+  - 931535.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0014.png
+  row: 80
+  col: 14
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931535.5
+  - 6613756.5
+  - 931859.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0015.png
+  row: 80
+  col: 15
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 931859.5
+  - 6613756.5
+  - 932183.5
+  - 6614080.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0016.png
+  row: 80
+  col: 16
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 932183.5
+  - 6613756.5
+  - 932507.5
+  - 6614080.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0019.png
+  row: 80
+  col: 19
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 933155.5
+  - 6613756.5
+  - 933479.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0024.png
+  row: 80
+  col: 24
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934775.5
+  - 6613756.5
+  - 935099.5
+  - 6614080.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0026.png
+  row: 80
+  col: 26
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935423.5
+  - 6613756.5
+  - 935747.5
+  - 6614080.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0027.png
+  row: 80
+  col: 27
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935747.5
+  - 6613756.5
+  - 936071.5
+  - 6614080.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0028.png
+  row: 80
+  col: 28
+  bloc:
+  - 468
+  - 3306
+  split: train
+  bounds:
+  - 936071.5
+  - 6613756.5
+  - 936395.5
+  - 6614080.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0032.png
+  row: 80
+  col: 32
+  bloc:
+  - 468
+  - 3306
+  split: train
+  bounds:
+  - 937367.5
+  - 6613756.5
+  - 937691.5
+  - 6614080.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0080_c0033.png
+  row: 80
+  col: 33
+  bloc:
+  - 468
+  - 3306
+  split: train
+  bounds:
+  - 937691.5
+  - 6613756.5
+  - 938015.5
+  - 6614080.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0006.png
+  row: 81
+  col: 6
+  bloc:
+  - 464
+  - 3306
+  split: valid
+  bounds:
+  - 928943.5
+  - 6613432.5
+  - 929267.5
+  - 6613756.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0011.png
+  row: 81
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6613432.5
+  - 930887.5
+  - 6613756.5
+  n_annotations: 6
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0012.png
+  row: 81
+  col: 12
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930887.5
+  - 6613432.5
+  - 931211.5
+  - 6613756.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0014.png
+  row: 81
+  col: 14
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931535.5
+  - 6613432.5
+  - 931859.5
+  - 6613756.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0015.png
+  row: 81
+  col: 15
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 931859.5
+  - 6613432.5
+  - 932183.5
+  - 6613756.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0017.png
+  row: 81
+  col: 17
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 932507.5
+  - 6613432.5
+  - 932831.5
+  - 6613756.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0021.png
+  row: 81
+  col: 21
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 933803.5
+  - 6613432.5
+  - 934127.5
+  - 6613756.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0026.png
+  row: 81
+  col: 26
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935423.5
+  - 6613432.5
+  - 935747.5
+  - 6613756.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0081_c0027.png
+  row: 81
+  col: 27
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935747.5
+  - 6613432.5
+  - 936071.5
+  - 6613756.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0007.png
+  row: 82
+  col: 7
+  bloc:
+  - 464
+  - 3306
+  split: valid
+  bounds:
+  - 929267.5
+  - 6613108.5
+  - 929591.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0008.png
+  row: 82
+  col: 8
+  bloc:
+  - 464
+  - 3306
+  split: valid
+  bounds:
+  - 929591.5
+  - 6613108.5
+  - 929915.5
+  - 6613432.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0009.png
+  row: 82
+  col: 9
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 929915.5
+  - 6613108.5
+  - 930239.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0082_c0010.png
+  row: 82
+  col: 10
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930239.5
+  - 6613108.5
+  - 930563.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0011.png
+  row: 82
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6613108.5
+  - 930887.5
+  - 6613432.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0012.png
+  row: 82
+  col: 12
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930887.5
+  - 6613108.5
+  - 931211.5
+  - 6613432.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0013.png
+  row: 82
+  col: 13
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931211.5
+  - 6613108.5
+  - 931535.5
+  - 6613432.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0014.png
+  row: 82
+  col: 14
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931535.5
+  - 6613108.5
+  - 931859.5
+  - 6613432.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0015.png
+  row: 82
+  col: 15
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 931859.5
+  - 6613108.5
+  - 932183.5
+  - 6613432.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0016.png
+  row: 82
+  col: 16
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 932183.5
+  - 6613108.5
+  - 932507.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0082_c0019.png
+  row: 82
+  col: 19
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 933155.5
+  - 6613108.5
+  - 933479.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0022.png
+  row: 82
+  col: 22
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934127.5
+  - 6613108.5
+  - 934451.5
+  - 6613432.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0023.png
+  row: 82
+  col: 23
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934451.5
+  - 6613108.5
+  - 934775.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0024.png
+  row: 82
+  col: 24
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934775.5
+  - 6613108.5
+  - 935099.5
+  - 6613432.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0027.png
+  row: 82
+  col: 27
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935747.5
+  - 6613108.5
+  - 936071.5
+  - 6613432.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0082_c0035.png
+  row: 82
+  col: 35
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 938339.5
+  - 6613108.5
+  - 938663.5
+  - 6613432.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0011.png
+  row: 83
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6612784.5
+  - 930887.5
+  - 6613108.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0012.png
+  row: 83
+  col: 12
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930887.5
+  - 6612784.5
+  - 931211.5
+  - 6613108.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0013.png
+  row: 83
+  col: 13
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931211.5
+  - 6612784.5
+  - 931535.5
+  - 6613108.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0014.png
+  row: 83
+  col: 14
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931535.5
+  - 6612784.5
+  - 931859.5
+  - 6613108.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0015.png
+  row: 83
+  col: 15
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 931859.5
+  - 6612784.5
+  - 932183.5
+  - 6613108.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0022.png
+  row: 83
+  col: 22
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934127.5
+  - 6612784.5
+  - 934451.5
+  - 6613108.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0024.png
+  row: 83
+  col: 24
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934775.5
+  - 6612784.5
+  - 935099.5
+  - 6613108.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0026.png
+  row: 83
+  col: 26
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935423.5
+  - 6612784.5
+  - 935747.5
+  - 6613108.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0033.png
+  row: 83
+  col: 33
+  bloc:
+  - 468
+  - 3306
+  split: train
+  bounds:
+  - 937691.5
+  - 6612784.5
+  - 938015.5
+  - 6613108.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0083_c0034.png
+  row: 83
+  col: 34
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 938015.5
+  - 6612784.5
+  - 938339.5
+  - 6613108.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0011.png
+  row: 84
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6612460.5
+  - 930887.5
+  - 6612784.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0013.png
+  row: 84
+  col: 13
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931211.5
+  - 6612460.5
+  - 931535.5
+  - 6612784.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0014.png
+  row: 84
+  col: 14
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 931535.5
+  - 6612460.5
+  - 931859.5
+  - 6612784.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0015.png
+  row: 84
+  col: 15
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 931859.5
+  - 6612460.5
+  - 932183.5
+  - 6612784.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0020.png
+  row: 84
+  col: 20
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 933479.5
+  - 6612460.5
+  - 933803.5
+  - 6612784.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0084_c0021.png
+  row: 84
+  col: 21
+  bloc:
+  - 466
+  - 3306
+  split: train
+  bounds:
+  - 933803.5
+  - 6612460.5
+  - 934127.5
+  - 6612784.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0022.png
+  row: 84
+  col: 22
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934127.5
+  - 6612460.5
+  - 934451.5
+  - 6612784.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0084_c0023.png
+  row: 84
+  col: 23
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934451.5
+  - 6612460.5
+  - 934775.5
+  - 6612784.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0004.png
+  row: 85
+  col: 4
+  bloc:
+  - 464
+  - 3306
+  split: valid
+  bounds:
+  - 928295.5
+  - 6612136.5
+  - 928619.5
+  - 6612460.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0085_c0009.png
+  row: 85
+  col: 9
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 929915.5
+  - 6612136.5
+  - 930239.5
+  - 6612460.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0010.png
+  row: 85
+  col: 10
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930239.5
+  - 6612136.5
+  - 930563.5
+  - 6612460.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0011.png
+  row: 85
+  col: 11
+  bloc:
+  - 465
+  - 3306
+  split: test
+  bounds:
+  - 930563.5
+  - 6612136.5
+  - 930887.5
+  - 6612460.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0022.png
+  row: 85
+  col: 22
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934127.5
+  - 6612136.5
+  - 934451.5
+  - 6612460.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0023.png
+  row: 85
+  col: 23
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 934451.5
+  - 6612136.5
+  - 934775.5
+  - 6612460.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0025.png
+  row: 85
+  col: 25
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935099.5
+  - 6612136.5
+  - 935423.5
+  - 6612460.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0026.png
+  row: 85
+  col: 26
+  bloc:
+  - 467
+  - 3306
+  split: valid
+  bounds:
+  - 935423.5
+  - 6612136.5
+  - 935747.5
+  - 6612460.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0035.png
+  row: 85
+  col: 35
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 938339.5
+  - 6612136.5
+  - 938663.5
+  - 6612460.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0036.png
+  row: 85
+  col: 36
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 938663.5
+  - 6612136.5
+  - 938987.5
+  - 6612460.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0037.png
+  row: 85
+  col: 37
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 938987.5
+  - 6612136.5
+  - 939311.5
+  - 6612460.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0085_c0038.png
+  row: 85
+  col: 38
+  bloc:
+  - 469
+  - 3306
+  split: train
+  bounds:
+  - 939311.5
+  - 6612136.5
+  - 939635.5
+  - 6612460.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0086_c0008.png
+  row: 86
+  col: 8
+  bloc:
+  - 464
+  - 3305
+  split: train
+  bounds:
+  - 929591.5
+  - 6611812.5
+  - 929915.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0009.png
+  row: 86
+  col: 9
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 929915.5
+  - 6611812.5
+  - 930239.5
+  - 6612136.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0010.png
+  row: 86
+  col: 10
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 930239.5
+  - 6611812.5
+  - 930563.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0017.png
+  row: 86
+  col: 17
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932507.5
+  - 6611812.5
+  - 932831.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0018.png
+  row: 86
+  col: 18
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932831.5
+  - 6611812.5
+  - 933155.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0019.png
+  row: 86
+  col: 19
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933155.5
+  - 6611812.5
+  - 933479.5
+  - 6612136.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0020.png
+  row: 86
+  col: 20
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933479.5
+  - 6611812.5
+  - 933803.5
+  - 6612136.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0023.png
+  row: 86
+  col: 23
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 934451.5
+  - 6611812.5
+  - 934775.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0029.png
+  row: 86
+  col: 29
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936395.5
+  - 6611812.5
+  - 936719.5
+  - 6612136.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0086_c0030.png
+  row: 86
+  col: 30
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936719.5
+  - 6611812.5
+  - 937043.5
+  - 6612136.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0007.png
+  row: 87
+  col: 7
+  bloc:
+  - 464
+  - 3305
+  split: train
+  bounds:
+  - 929267.5
+  - 6611488.5
+  - 929591.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0008.png
+  row: 87
+  col: 8
+  bloc:
+  - 464
+  - 3305
+  split: train
+  bounds:
+  - 929591.5
+  - 6611488.5
+  - 929915.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0009.png
+  row: 87
+  col: 9
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 929915.5
+  - 6611488.5
+  - 930239.5
+  - 6611812.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0010.png
+  row: 87
+  col: 10
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 930239.5
+  - 6611488.5
+  - 930563.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0018.png
+  row: 87
+  col: 18
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932831.5
+  - 6611488.5
+  - 933155.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0019.png
+  row: 87
+  col: 19
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933155.5
+  - 6611488.5
+  - 933479.5
+  - 6611812.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0020.png
+  row: 87
+  col: 20
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933479.5
+  - 6611488.5
+  - 933803.5
+  - 6611812.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0021.png
+  row: 87
+  col: 21
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933803.5
+  - 6611488.5
+  - 934127.5
+  - 6611812.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0040.png
+  row: 87
+  col: 40
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 939959.5
+  - 6611488.5
+  - 940283.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0087_c0042.png
+  row: 87
+  col: 42
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 940607.5
+  - 6611488.5
+  - 940931.5
+  - 6611812.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0010.png
+  row: 88
+  col: 10
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 930239.5
+  - 6611164.5
+  - 930563.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0018.png
+  row: 88
+  col: 18
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932831.5
+  - 6611164.5
+  - 933155.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0019.png
+  row: 88
+  col: 19
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933155.5
+  - 6611164.5
+  - 933479.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0020.png
+  row: 88
+  col: 20
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933479.5
+  - 6611164.5
+  - 933803.5
+  - 6611488.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0028.png
+  row: 88
+  col: 28
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936071.5
+  - 6611164.5
+  - 936395.5
+  - 6611488.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0030.png
+  row: 88
+  col: 30
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936719.5
+  - 6611164.5
+  - 937043.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0037.png
+  row: 88
+  col: 37
+  bloc:
+  - 469
+  - 3305
+  split: test
+  bounds:
+  - 938987.5
+  - 6611164.5
+  - 939311.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0038.png
+  row: 88
+  col: 38
+  bloc:
+  - 469
+  - 3305
+  split: test
+  bounds:
+  - 939311.5
+  - 6611164.5
+  - 939635.5
+  - 6611488.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0039.png
+  row: 88
+  col: 39
+  bloc:
+  - 469
+  - 3305
+  split: test
+  bounds:
+  - 939635.5
+  - 6611164.5
+  - 939959.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0088_c0040.png
+  row: 88
+  col: 40
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 939959.5
+  - 6611164.5
+  - 940283.5
+  - 6611488.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0010.png
+  row: 89
+  col: 10
+  bloc:
+  - 465
+  - 3305
+  split: test
+  bounds:
+  - 930239.5
+  - 6610840.5
+  - 930563.5
+  - 6611164.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0018.png
+  row: 89
+  col: 18
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932831.5
+  - 6610840.5
+  - 933155.5
+  - 6611164.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0019.png
+  row: 89
+  col: 19
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933155.5
+  - 6610840.5
+  - 933479.5
+  - 6611164.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0027.png
+  row: 89
+  col: 27
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 935747.5
+  - 6610840.5
+  - 936071.5
+  - 6611164.5
+  n_annotations: 11
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0028.png
+  row: 89
+  col: 28
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936071.5
+  - 6610840.5
+  - 936395.5
+  - 6611164.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0089_c0041.png
+  row: 89
+  col: 41
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 940283.5
+  - 6610840.5
+  - 940607.5
+  - 6611164.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0016.png
+  row: 90
+  col: 16
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932183.5
+  - 6610516.5
+  - 932507.5
+  - 6610840.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0017.png
+  row: 90
+  col: 17
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932507.5
+  - 6610516.5
+  - 932831.5
+  - 6610840.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0019.png
+  row: 90
+  col: 19
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 933155.5
+  - 6610516.5
+  - 933479.5
+  - 6610840.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0027.png
+  row: 90
+  col: 27
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 935747.5
+  - 6610516.5
+  - 936071.5
+  - 6610840.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0042.png
+  row: 90
+  col: 42
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 940607.5
+  - 6610516.5
+  - 940931.5
+  - 6610840.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0090_c0043.png
+  row: 90
+  col: 43
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 940931.5
+  - 6610516.5
+  - 941255.5
+  - 6610840.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0091_c0022.png
+  row: 91
+  col: 22
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 934127.5
+  - 6610192.5
+  - 934451.5
+  - 6610516.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0091_c0027.png
+  row: 91
+  col: 27
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 935747.5
+  - 6610192.5
+  - 936071.5
+  - 6610516.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0091_c0029.png
+  row: 91
+  col: 29
+  bloc:
+  - 468
+  - 3305
+  split: train
+  bounds:
+  - 936395.5
+  - 6610192.5
+  - 936719.5
+  - 6610516.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0091_c0039.png
+  row: 91
+  col: 39
+  bloc:
+  - 469
+  - 3305
+  split: test
+  bounds:
+  - 939635.5
+  - 6610192.5
+  - 939959.5
+  - 6610516.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0091_c0041.png
+  row: 91
+  col: 41
+  bloc:
+  - 470
+  - 3305
+  split: train
+  bounds:
+  - 940283.5
+  - 6610192.5
+  - 940607.5
+  - 6610516.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0092_c0017.png
+  row: 92
+  col: 17
+  bloc:
+  - 466
+  - 3305
+  split: train
+  bounds:
+  - 932507.5
+  - 6609868.5
+  - 932831.5
+  - 6610192.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0092_c0025.png
+  row: 92
+  col: 25
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 935099.5
+  - 6609868.5
+  - 935423.5
+  - 6610192.5
+  n_annotations: 6
+  classes:
+  - four
+- nom: 25_haut_doubs_r0092_c0026.png
+  row: 92
+  col: 26
+  bloc:
+  - 467
+  - 3305
+  split: train
+  bounds:
+  - 935423.5
+  - 6609868.5
+  - 935747.5
+  - 6610192.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0023.png
+  row: 93
+  col: 23
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934451.5
+  - 6609544.5
+  - 934775.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0024.png
+  row: 93
+  col: 24
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934775.5
+  - 6609544.5
+  - 935099.5
+  - 6609868.5
+  n_annotations: 8
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0025.png
+  row: 93
+  col: 25
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 935099.5
+  - 6609544.5
+  - 935423.5
+  - 6609868.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0030.png
+  row: 93
+  col: 30
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 936719.5
+  - 6609544.5
+  - 937043.5
+  - 6609868.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0031.png
+  row: 93
+  col: 31
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 937043.5
+  - 6609544.5
+  - 937367.5
+  - 6609868.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0032.png
+  row: 93
+  col: 32
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 937367.5
+  - 6609544.5
+  - 937691.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0033.png
+  row: 93
+  col: 33
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 937691.5
+  - 6609544.5
+  - 938015.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0034.png
+  row: 93
+  col: 34
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938015.5
+  - 6609544.5
+  - 938339.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0037.png
+  row: 93
+  col: 37
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938987.5
+  - 6609544.5
+  - 939311.5
+  - 6609868.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0038.png
+  row: 93
+  col: 38
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 939311.5
+  - 6609544.5
+  - 939635.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0039.png
+  row: 93
+  col: 39
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 939635.5
+  - 6609544.5
+  - 939959.5
+  - 6609868.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0093_c0041.png
+  row: 93
+  col: 41
+  bloc:
+  - 470
+  - 3304
+  split: train
+  bounds:
+  - 940283.5
+  - 6609544.5
+  - 940607.5
+  - 6609868.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0024.png
+  row: 94
+  col: 24
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934775.5
+  - 6609220.5
+  - 935099.5
+  - 6609544.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0025.png
+  row: 94
+  col: 25
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 935099.5
+  - 6609220.5
+  - 935423.5
+  - 6609544.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0029.png
+  row: 94
+  col: 29
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 936395.5
+  - 6609220.5
+  - 936719.5
+  - 6609544.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0030.png
+  row: 94
+  col: 30
+  bloc:
+  - 468
+  - 3304
+  split: valid
+  bounds:
+  - 936719.5
+  - 6609220.5
+  - 937043.5
+  - 6609544.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0036.png
+  row: 94
+  col: 36
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938663.5
+  - 6609220.5
+  - 938987.5
+  - 6609544.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0094_c0037.png
+  row: 94
+  col: 37
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938987.5
+  - 6609220.5
+  - 939311.5
+  - 6609544.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0095_c0034.png
+  row: 95
+  col: 34
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938015.5
+  - 6608896.5
+  - 938339.5
+  - 6609220.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0095_c0043.png
+  row: 95
+  col: 43
+  bloc:
+  - 470
+  - 3304
+  split: train
+  bounds:
+  - 940931.5
+  - 6608896.5
+  - 941255.5
+  - 6609220.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0096_c0023.png
+  row: 96
+  col: 23
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934451.5
+  - 6608572.5
+  - 934775.5
+  - 6608896.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0096_c0024.png
+  row: 96
+  col: 24
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934775.5
+  - 6608572.5
+  - 935099.5
+  - 6608896.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0096_c0036.png
+  row: 96
+  col: 36
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938663.5
+  - 6608572.5
+  - 938987.5
+  - 6608896.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0097_c0020.png
+  row: 97
+  col: 20
+  bloc:
+  - 466
+  - 3304
+  split: valid
+  bounds:
+  - 933479.5
+  - 6608248.5
+  - 933803.5
+  - 6608572.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0097_c0021.png
+  row: 97
+  col: 21
+  bloc:
+  - 466
+  - 3304
+  split: valid
+  bounds:
+  - 933803.5
+  - 6608248.5
+  - 934127.5
+  - 6608572.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0097_c0022.png
+  row: 97
+  col: 22
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934127.5
+  - 6608248.5
+  - 934451.5
+  - 6608572.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0097_c0034.png
+  row: 97
+  col: 34
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938015.5
+  - 6608248.5
+  - 938339.5
+  - 6608572.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0097_c0036.png
+  row: 97
+  col: 36
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938663.5
+  - 6608248.5
+  - 938987.5
+  - 6608572.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0097_c0037.png
+  row: 97
+  col: 37
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 938987.5
+  - 6608248.5
+  - 939311.5
+  - 6608572.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0097_c0038.png
+  row: 97
+  col: 38
+  bloc:
+  - 469
+  - 3304
+  split: train
+  bounds:
+  - 939311.5
+  - 6608248.5
+  - 939635.5
+  - 6608572.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0098_c0021.png
+  row: 98
+  col: 21
+  bloc:
+  - 466
+  - 3304
+  split: valid
+  bounds:
+  - 933803.5
+  - 6607924.5
+  - 934127.5
+  - 6608248.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0098_c0022.png
+  row: 98
+  col: 22
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 934127.5
+  - 6607924.5
+  - 934451.5
+  - 6608248.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0098_c0025.png
+  row: 98
+  col: 25
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 935099.5
+  - 6607924.5
+  - 935423.5
+  - 6608248.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0098_c0026.png
+  row: 98
+  col: 26
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 935423.5
+  - 6607924.5
+  - 935747.5
+  - 6608248.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0098_c0027.png
+  row: 98
+  col: 27
+  bloc:
+  - 467
+  - 3304
+  split: valid
+  bounds:
+  - 935747.5
+  - 6607924.5
+  - 936071.5
+  - 6608248.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0099_c0024.png
+  row: 99
+  col: 24
+  bloc:
+  - 467
+  - 3303
+  split: train
+  bounds:
+  - 934775.5
+  - 6607600.5
+  - 935099.5
+  - 6607924.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0099_c0032.png
+  row: 99
+  col: 32
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937367.5
+  - 6607600.5
+  - 937691.5
+  - 6607924.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0099_c0041.png
+  row: 99
+  col: 41
+  bloc:
+  - 470
+  - 3303
+  split: test
+  bounds:
+  - 940283.5
+  - 6607600.5
+  - 940607.5
+  - 6607924.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0099_c0042.png
+  row: 99
+  col: 42
+  bloc:
+  - 470
+  - 3303
+  split: test
+  bounds:
+  - 940607.5
+  - 6607600.5
+  - 940931.5
+  - 6607924.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0099_c0044.png
+  row: 99
+  col: 44
+  bloc:
+  - 470
+  - 3303
+  split: test
+  bounds:
+  - 941255.5
+  - 6607600.5
+  - 941579.5
+  - 6607924.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0100_c0020.png
+  row: 100
+  col: 20
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933479.5
+  - 6607276.5
+  - 933803.5
+  - 6607600.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0100_c0021.png
+  row: 100
+  col: 21
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933803.5
+  - 6607276.5
+  - 934127.5
+  - 6607600.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0100_c0023.png
+  row: 100
+  col: 23
+  bloc:
+  - 467
+  - 3303
+  split: train
+  bounds:
+  - 934451.5
+  - 6607276.5
+  - 934775.5
+  - 6607600.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0017.png
+  row: 101
+  col: 17
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932507.5
+  - 6606952.5
+  - 932831.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0018.png
+  row: 101
+  col: 18
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932831.5
+  - 6606952.5
+  - 933155.5
+  - 6607276.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0019.png
+  row: 101
+  col: 19
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933155.5
+  - 6606952.5
+  - 933479.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0020.png
+  row: 101
+  col: 20
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933479.5
+  - 6606952.5
+  - 933803.5
+  - 6607276.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0021.png
+  row: 101
+  col: 21
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933803.5
+  - 6606952.5
+  - 934127.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0024.png
+  row: 101
+  col: 24
+  bloc:
+  - 467
+  - 3303
+  split: train
+  bounds:
+  - 934775.5
+  - 6606952.5
+  - 935099.5
+  - 6607276.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0026.png
+  row: 101
+  col: 26
+  bloc:
+  - 467
+  - 3303
+  split: train
+  bounds:
+  - 935423.5
+  - 6606952.5
+  - 935747.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0031.png
+  row: 101
+  col: 31
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937043.5
+  - 6606952.5
+  - 937367.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0032.png
+  row: 101
+  col: 32
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937367.5
+  - 6606952.5
+  - 937691.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0101_c0033.png
+  row: 101
+  col: 33
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937691.5
+  - 6606952.5
+  - 938015.5
+  - 6607276.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0017.png
+  row: 102
+  col: 17
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932507.5
+  - 6606628.5
+  - 932831.5
+  - 6606952.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0018.png
+  row: 102
+  col: 18
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932831.5
+  - 6606628.5
+  - 933155.5
+  - 6606952.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0019.png
+  row: 102
+  col: 19
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933155.5
+  - 6606628.5
+  - 933479.5
+  - 6606952.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0024.png
+  row: 102
+  col: 24
+  bloc:
+  - 467
+  - 3303
+  split: train
+  bounds:
+  - 934775.5
+  - 6606628.5
+  - 935099.5
+  - 6606952.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0030.png
+  row: 102
+  col: 30
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 936719.5
+  - 6606628.5
+  - 937043.5
+  - 6606952.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0031.png
+  row: 102
+  col: 31
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937043.5
+  - 6606628.5
+  - 937367.5
+  - 6606952.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0032.png
+  row: 102
+  col: 32
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937367.5
+  - 6606628.5
+  - 937691.5
+  - 6606952.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0102_c0033.png
+  row: 102
+  col: 33
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937691.5
+  - 6606628.5
+  - 938015.5
+  - 6606952.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0103_c0017.png
+  row: 103
+  col: 17
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932507.5
+  - 6606304.5
+  - 932831.5
+  - 6606628.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0103_c0028.png
+  row: 103
+  col: 28
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 936071.5
+  - 6606304.5
+  - 936395.5
+  - 6606628.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0103_c0029.png
+  row: 103
+  col: 29
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 936395.5
+  - 6606304.5
+  - 936719.5
+  - 6606628.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0103_c0030.png
+  row: 103
+  col: 30
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 936719.5
+  - 6606304.5
+  - 937043.5
+  - 6606628.5
+  n_annotations: 5
+  classes:
+  - four
+- nom: 25_haut_doubs_r0103_c0031.png
+  row: 103
+  col: 31
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 937043.5
+  - 6606304.5
+  - 937367.5
+  - 6606628.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0104_c0017.png
+  row: 104
+  col: 17
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 932507.5
+  - 6605980.5
+  - 932831.5
+  - 6606304.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0104_c0019.png
+  row: 104
+  col: 19
+  bloc:
+  - 466
+  - 3303
+  split: train
+  bounds:
+  - 933155.5
+  - 6605980.5
+  - 933479.5
+  - 6606304.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0104_c0030.png
+  row: 104
+  col: 30
+  bloc:
+  - 468
+  - 3303
+  split: train
+  bounds:
+  - 936719.5
+  - 6605980.5
+  - 937043.5
+  - 6606304.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0105_c0017.png
+  row: 105
+  col: 17
+  bloc:
+  - 466
+  - 3302
+  split: valid
+  bounds:
+  - 932507.5
+  - 6605656.5
+  - 932831.5
+  - 6605980.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0105_c0027.png
+  row: 105
+  col: 27
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 935747.5
+  - 6605656.5
+  - 936071.5
+  - 6605980.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0105_c0030.png
+  row: 105
+  col: 30
+  bloc:
+  - 468
+  - 3302
+  split: valid
+  bounds:
+  - 936719.5
+  - 6605656.5
+  - 937043.5
+  - 6605980.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0106_c0026.png
+  row: 106
+  col: 26
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 935423.5
+  - 6605332.5
+  - 935747.5
+  - 6605656.5
+  n_annotations: 1
+  classes:
+  - circular_depression
+- nom: 25_haut_doubs_r0106_c0031.png
+  row: 106
+  col: 31
+  bloc:
+  - 468
+  - 3302
+  split: valid
+  bounds:
+  - 937043.5
+  - 6605332.5
+  - 937367.5
+  - 6605656.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0106_c0036.png
+  row: 106
+  col: 36
+  bloc:
+  - 469
+  - 3302
+  split: valid
+  bounds:
+  - 938663.5
+  - 6605332.5
+  - 938987.5
+  - 6605656.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0107_c0015.png
+  row: 107
+  col: 15
+  bloc:
+  - 466
+  - 3302
+  split: valid
+  bounds:
+  - 931859.5
+  - 6605008.5
+  - 932183.5
+  - 6605332.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0107_c0019.png
+  row: 107
+  col: 19
+  bloc:
+  - 466
+  - 3302
+  split: valid
+  bounds:
+  - 933155.5
+  - 6605008.5
+  - 933479.5
+  - 6605332.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0107_c0025.png
+  row: 107
+  col: 25
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 935099.5
+  - 6605008.5
+  - 935423.5
+  - 6605332.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0107_c0028.png
+  row: 107
+  col: 28
+  bloc:
+  - 468
+  - 3302
+  split: valid
+  bounds:
+  - 936071.5
+  - 6605008.5
+  - 936395.5
+  - 6605332.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0107_c0036.png
+  row: 107
+  col: 36
+  bloc:
+  - 469
+  - 3302
+  split: valid
+  bounds:
+  - 938663.5
+  - 6605008.5
+  - 938987.5
+  - 6605332.5
+  n_annotations: 3
+  classes:
+  - four
+- nom: 25_haut_doubs_r0108_c0019.png
+  row: 108
+  col: 19
+  bloc:
+  - 466
+  - 3302
+  split: valid
+  bounds:
+  - 933155.5
+  - 6604684.5
+  - 933479.5
+  - 6605008.5
+  n_annotations: 4
+  classes:
+  - four
+- nom: 25_haut_doubs_r0108_c0028.png
+  row: 108
+  col: 28
+  bloc:
+  - 468
+  - 3302
+  split: valid
+  bounds:
+  - 936071.5
+  - 6604684.5
+  - 936395.5
+  - 6605008.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0108_c0035.png
+  row: 108
+  col: 35
+  bloc:
+  - 469
+  - 3302
+  split: valid
+  bounds:
+  - 938339.5
+  - 6604684.5
+  - 938663.5
+  - 6605008.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0109_c0023.png
+  row: 109
+  col: 23
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 934451.5
+  - 6604360.5
+  - 934775.5
+  - 6604684.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0109_c0025.png
+  row: 109
+  col: 25
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 935099.5
+  - 6604360.5
+  - 935423.5
+  - 6604684.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0109_c0027.png
+  row: 109
+  col: 27
+  bloc:
+  - 467
+  - 3302
+  split: train
+  bounds:
+  - 935747.5
+  - 6604360.5
+  - 936071.5
+  - 6604684.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0109_c0034.png
+  row: 109
+  col: 34
+  bloc:
+  - 469
+  - 3302
+  split: valid
+  bounds:
+  - 938015.5
+  - 6604360.5
+  - 938339.5
+  - 6604684.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0110_c0035.png
+  row: 110
+  col: 35
+  bloc:
+  - 469
+  - 3302
+  split: valid
+  bounds:
+  - 938339.5
+  - 6604036.5
+  - 938663.5
+  - 6604360.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0112_c0023.png
+  row: 112
+  col: 23
+  bloc:
+  - 467
+  - 3301
+  split: train
+  bounds:
+  - 934451.5
+  - 6603388.5
+  - 934775.5
+  - 6603712.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0117_c0023.png
+  row: 117
+  col: 23
+  bloc:
+  - 467
+  - 3300
+  split: train
+  bounds:
+  - 934451.5
+  - 6601768.5
+  - 934775.5
+  - 6602092.5
+  n_annotations: 0
+  classes: []
+- nom: 25_haut_doubs_r0118_c0026.png
+  row: 118
+  col: 26
+  bloc:
+  - 467
+  - 3300
+  split: train
+  bounds:
+  - 935423.5
+  - 6601444.5
+  - 935747.5
+  - 6601768.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0119_c0029.png
+  row: 119
+  col: 29
+  bloc:
+  - 468
+  - 3300
+  split: valid
+  bounds:
+  - 936395.5
+  - 6601120.5
+  - 936719.5
+  - 6601444.5
+  n_annotations: 1
+  classes:
+  - four
+- nom: 25_haut_doubs_r0119_c0030.png
+  row: 119
+  col: 30
+  bloc:
+  - 468
+  - 3300
+  split: valid
+  bounds:
+  - 936719.5
+  - 6601120.5
+  - 937043.5
+  - 6601444.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0120_c0029.png
+  row: 120
+  col: 29
+  bloc:
+  - 468
+  - 3300
+  split: valid
+  bounds:
+  - 936395.5
+  - 6600796.5
+  - 936719.5
+  - 6601120.5
+  n_annotations: 2
+  classes:
+  - four
+- nom: 25_haut_doubs_r0122_c0023.png
+  row: 122
+  col: 23
+  bloc:
+  - 467
+  - 3300
+  split: train
+  bounds:
+  - 934451.5
+  - 6600148.5
+  - 934775.5
+  - 6600472.5
+  n_annotations: 0
+  classes: []

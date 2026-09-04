@@ -1,0 +1,37 @@
+# Corpus d'entraînement ponctuelles (fours à chaux / charbonnières / dépressions) — v2
+# (chantier 2026-09-01..04, correctifs marges — cible DÉTECTION bbox). Décisions actées :
+#   - SANS Chailluz (décision utilisateur 2026-09-03 après visualisation QGIS :
+#     charbonnières = cercles synthétiques r=5 m, cause du rappel effondré du run
+#     seg_ld_v1 — le dataset ponctuelles_25_chailluz_ld648_v2 existe mais reste hors
+#     recette) ;
+#   - LD RÉGÉNÉRÉS MNT LiDAR HD IGN 0,5 m pour haut_doubs/ales/la_capelle (le LD
+#     livré était calculé dalle par dalle sans marge : 8-11x la baseline à chaque
+#     joint km ; audit final v2 : 0/120 joints fautifs) — gsd 0,5 UNIFORME ;
+#   - 34 composantes d'objets coupés aux joints km FUSIONNÉES dans les GPKG _v2
+#     (fenêtrange 27, vosges 4, rambouillet 3) ; auto-labels recouvrement (chailluz
+#     hors recette) ;
+#   - splits HÉRITÉS des manifests v1 (slice_zone --split-depuis, 0 bloc divergent) ;
+#   - Blois reste en dataset v1 (audité sain, aucun correctif).
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_ponctuelles_v2.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: ponctuelles_648_v2
+classes: [charbonniere, four, circular_depression]
+fusions: {}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml
+  - "DÉCISION 2026-09-03: Chailluz EXCLU (cercles synthétiques r=5 m — défaut de données
+    n°1 du run fours_charb_seg_ld_v1_ep41)"
+  - "ATTENTION: ~606 troncatures sèches aux lignes km subsistent (moitié d'objet jamais
+    annotée par la source, incorrigible sans revue humaine — audit_final_2026-09-04) ;
+    7 paires résiduelles non arbitrées (gt_paires_residuelles.gpkg, 14 annotations)"
+  - "Corpus destiné à l'entraînement DÉTECTION bbox (résolution 672) ; les masques
+    ellipses des sources bbox restent dans les COCO mais ne servent pas en détection"
+datasets:
+  - ponctuelles_57_fenetrange_ld648_v2
+  - ponctuelles_70_vosges_saonoises_ld648_v2
+  - ponctuelles_25_haut_doubs_ld648_v2
+  - ponctuelles_30_ales_garrigues_ne_ld648_v2
+  - ponctuelles_30_la_capelle_ld648_v2
+  - ponctuelles_78_rambouillet_ld648_v2
+  - fours_charb_41_blois_ld648_v1

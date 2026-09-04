@@ -1,0 +1,26 @@
+# Corpus fours/charbonnières v2 — Besançon Chailluz. Différence v1 -> v2 :
+# auto-labels circular_depression REFAITS avec --recouvrement (correctif marges
+# 2026-09-01 : 4 passes décalées 500 m + dédup — répare les 11 bboxes tronquées
+# aux joints km). Charbonnières inchangées (cercles r=5 m — défaut connu, hors
+# périmètre du correctif marges). LD inchangé (generer_ld, audité sain).
+# Split repris du manifest v1.
+dataset: ponctuelles_25_chailluz_ld648_v2
+zone: bourgogne_franche_comte/25_besancon_chailluz
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/25_besancon_chailluz/chailluz_entites_v2.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  circular_depression:
+    classe: circular_depression
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null
