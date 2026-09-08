@@ -1,0 +1,28 @@
+# Corpus dépressions circulaires grandes v1 (UNE classe, cible SEGMENTATION d'instances) — 57_fenetrange.
+# Annotations = polygones SAM 2.1 (depression_circulaire_grande_sam, boîtes revues par l'utilisateur, filtre >= 14 m
+# + 248 boîtes à la main ; 14 replis boîte) depuis le GPKG v4 déposé (v3 dédoublonné : 4 boîtes à la main en double
+# de leur originale, 7 masques SAM allongés passés en repli boîte). Les dépressions écartées (< 14 m, supprimées à la
+# main, doublons) restent en ignorer : pas de frontière de taille apprise comme du fond. charbonniere / four /
+# circular_depression hors périmètre (fond). LD livré en dalles 2 000 px : verif_alignement_ld vs MNT IGN CONFORME
+# le 2026-09-08 (médian 0,0 m, max 0,7 m, controle_zones/align_57_fenetrange).
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_57_fenetrange_ld648_v3.yaml (jamais re-tirer un split).
+dataset: depressions_57_fenetrange_ld648_v1
+zone: grand_est/57_fenetrange
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+gpkg: D:/entrainement_ponctuelles/staging/57_fenetrange/training/vecteurs/57_fenetrange_entites_l93_v4.gpkg  # = Drive training/vecteurs/57_fenetrange_entites_l93_v4.gpkg
+couches:
+  depression_circulaire_grande_sam:
+    classe: depression_circulaire_grande
+  depression_circulaire_grande_supprimees:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0  # VRT de dalles sans nodata : hors dalle = 0 (10 négatifs plats au 1er essai, contrôle inter-zones 2026-09-08)
+assign_crs: null

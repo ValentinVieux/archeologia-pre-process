@@ -1,0 +1,27 @@
+# Corpus dépressions circulaires grandes v1 (UNE classe, cible SEGMENTATION d'instances) — 25_besancon_chailluz.
+# Annotations = polygones SAM 2.1 (depression_circulaire_grande_sam, 1 005 sam / 7 replis) sur 1 012 boîtes
+# (détections det v1 nettoyées + 841 à la main, revue humaine close le 2026-09-06) depuis le GPKG v3 déposé le
+# 2026-09-08. Zone PARTIELLEMENT revue -> negatifs_pct 0 (tuiles annotées seulement, même règle que le corpus
+# 2 classes). Les 36 auto-labels non retrouvés restent en ignorer. charbonniere hors périmètre (fond).
+# LD régénéré par nous depuis le MNT LiDAR HD IGN (raw/MNT/chailluz_ld.tif) : aligné par construction.
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_25_chailluz_ld648_v3.yaml (jamais re-tirer un split).
+dataset: depressions_25_besancon_chailluz_ld648_v1
+zone: bourgogne_franche_comte/25_besancon_chailluz
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+gpkg: D:/entrainement_ponctuelles/staging/25_besancon_chailluz/training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg  # = Drive training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg
+couches:
+  depression_circulaire_grande_sam:
+    classe: depression_circulaire_grande
+  depression_circulaire_grande_supprimees:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 0
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

@@ -1,0 +1,120 @@
+corpus: depressions_grandes_648_v1
+genere_le: '2026-09-08'
+outil: tools/build_corpus.py
+outil_commit: e95ec6d
+config_sha1: c7844cfaf9ca07e1fd439fadee241562b40d78b4
+classes:
+- depression_circulaire_grande
+fusions: {}
+datasets:
+  depressions_57_fenetrange_ld648_v1:
+    zone: grand_est/57_fenetrange
+    splits:
+      train:
+        images: 710
+        annotations:
+          depression_circulaire_grande: 2096
+      valid:
+        images: 156
+        annotations:
+          depression_circulaire_grande: 503
+      test:
+        images: 124
+        annotations:
+          depression_circulaire_grande: 436
+    split_manifest_sha1: 3bafae4ae8fe47ef219d2e24b0088413e1b1ef16
+    raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/staging/57_fenetrange/training/vecteurs/57_fenetrange_entites_l93_v4.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-08'
+  depressions_70_vosges_saonoises_ld648_v1:
+    zone: bourgogne_franche_comte/70_vosges_saonoises
+    splits:
+      train:
+        images: 102
+        annotations:
+          depression_circulaire_grande: 247
+      valid:
+        images: 30
+        annotations:
+          depression_circulaire_grande: 47
+      test:
+        images: 19
+        annotations:
+          depression_circulaire_grande: 36
+    split_manifest_sha1: 882c7a1c4fc4214d0eb0b1a55261fa8f2edd5e85
+    raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/staging/70_vosges_saonoises/training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-08'
+  depressions_41_blois_ld648_v1:
+    zone: centre_val_de_loire/41_blois
+    splits:
+      train:
+        images: 312
+        annotations:
+          depression_circulaire_grande: 491
+      valid:
+        images: 81
+        annotations:
+          depression_circulaire_grande: 99
+      test:
+        images: 30
+        annotations:
+          depression_circulaire_grande: 38
+    split_manifest_sha1: 0634d04b8a921d6c66e35ce8af773c11ece1aa81
+    raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/41_blois/41_blois_entites_l93_v3.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-08'
+  depressions_25_besancon_chailluz_ld648_v1:
+    zone: bourgogne_franche_comte/25_besancon_chailluz
+    splits:
+      train:
+        images: 161
+        annotations:
+          depression_circulaire_grande: 743
+      valid:
+        images: 63
+        annotations:
+          depression_circulaire_grande: 299
+      test:
+        images: 46
+        annotations:
+          depression_circulaire_grande: 307
+    split_manifest_sha1: d355da5e7f59fbfeaa5ab72a64a0f99d36e65a3c
+    raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+    gpkg: D:/entrainement_ponctuelles/staging/25_besancon_chailluz/training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-08'
+splits:
+  train:
+    images: 1285
+    coco_sha1: 479b6375902ffd7ec32ec0792bb004200fab095b
+    annotations:
+      depression_circulaire_grande: 3577
+  valid:
+    images: 330
+    coco_sha1: e0c14cd3e642591484fe789b3d2c693c1323beaa
+    annotations:
+      depression_circulaire_grande: 948
+  test:
+    images: 219
+    coco_sha1: 7a47ac73f717e7077d770d722df83f8ccbefd3e1
+    annotations:
+      depression_circulaire_grande: 817
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'DÉCISION 2026-09-08: modèle mono-classe depression_circulaire_grande en SEGMENTATION
+  d''instances, poids de base RF-DETR seg ; masques = polygones SAM 2.1 sur boîtes
+  revues (Fénétrange, Blois, Chailluz) ou filtrées >= 14 m sans revue (Vosges)'
+- 'DÉCISION 2026-09-08: dépressions écartées (< 14 m, supprimées à la main, doublons)
+  en ignorer dans les découpes ; charbonnières / fours / linéaires laissés en fond'
+- 'ATTENTION: Fénétrange : 2 boîtes source allongées (7 x 24 m, uid valid:1274 et
+  test:417) gardées telles quelles ; 14 masques = boîte (replis) ; Chailluz : 7 replis
+  boîte'
+- 'ATTENTION: Vosges : boîtes filtrées par taille SANS revue humaine (306) ; Chailluz
+  : zone partiellement revue, tuiles annotées seulement'
+- Corpus destiné à l'entraînement SEGMENTATION d'instances (résolution 648, tuiles
+  648) ; éval gelée = split versionné
