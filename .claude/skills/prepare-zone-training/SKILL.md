@@ -33,6 +33,13 @@ mémoire persistante documente les pièges déjà rencontrés (données et plate
   ou run v1 gelé en lecture seule). Absent → le signaler (TODO manifest), c'est un
   préalable côté utilisateur. Toujours travailler sur COPIE LOCALE (les outils
   refusent G:) ; vérifier le nom réel du VRT (souvent `tif\index*.vrt`).
+- **Contrôle d'alignement OBLIGATOIRE du raster** (leçon 2026-09-06) : tout LD livré en
+  images (payload Roboflow, dalles JPEG/TIF d'un archéologue) ou régénéré passe
+  `tools\verif_alignement_ld.py <reference> <raster>` contre une référence indépendante
+  (LD régénéré depuis le MNT IGN, ou MNT IGN) → CONFORME requis. Un verdict ÉCHELLE =
+  couverture de dalle fausse (2 201 px = km + 50 m de marge, pas 1 000 m) : corriger le
+  géoréférencement (coco_a_gpkg `geo_dalle`, `corriger_georef_dalles.py` pour les
+  annotations existantes) AVANT toute découpe. Ne jamais faire confiance à `1000 / width`.
 
 ## Étape 2 — GPKG d'entités
 - Écrire `configs/vecteurs_<zone>.yaml` : valeurs brutes → entity_id STRICTEMENT
@@ -59,13 +66,39 @@ mémoire persistante documente les pièges déjà rencontrés (données et plate
   `nodata_supplementaire: 0` pour les mosaïques à fond implicite.
 
 ## Étape 4 — Découpe + boucle de vérification
+- **Revue automatique des couches AVANT découpe** : `tools\revue_auto_annotations.py
+  <gpkg> <raster>` → RAS exigé, sinon diagnostiquer chaque « À VOIR » (doublons →
+  `dedup_annotations.py` ; boîtes hors raster ; taille FIXE = boîtes synthétiques à
+  signaler à l'utilisateur, cf. Rambouillet 25 m / Chailluz r=5 m ; hors gabarit →
+  revue humaine). Obligatoire après toute correction géométrique (leçon 2026-09-07 :
+  doublons inter-dalles apparus une fois le géoréférencement juste).
+- Zone **partiellement revue** (seules les tuiles annotées sont fiables, ex. Chailluz
+  2026-09-07) : `negatifs_pct: 0` dans la config, noté dans la recette du corpus.
 - `slice_zone` (seed 42, sortie locale). Puis **`verif_dataset`** : toute divergence
   → corriger → régénérer INTÉGRALEMENT → re-vérifier. Ne jamais rafistoler la sortie
   à la main.
 
+## Étape 4bis — Corriger le géoréférencement d'une zone (procédure suivie 3 fois le 2026-09-07)
+1. Diagnostic : `verif_alignement_ld.py <ld_reference> <ld_livre>` (ÉCHELLE = dalles
+   à marge) ; `width × 0,5` des images vs couverture déclarée.
+2. Annotations : `corriger_georef_dalles.py <gpkg> <dossier_dalles> <gpkg_v3>` puis
+   vérification indépendante (formule recalculée, corrélation raster sous les boîtes
+   corrigées vs LD livré sous les boîtes d'origine ≈ 1,0) ; `dedup_annotations.py`.
+3. Rasters : dalles livrées reconverties par `coco_a_gpkg --rasters` (géoréf juste),
+   VRT, `verif_alignement_ld` vs LD régénéré = 0,0 m CONFORME.
+4. Dépôt : `raw/MNT/{mnt, ld, LD_livre_dalles/ + .vrt, LISEZ-MOI.md}`,
+   `training/vecteurs/<zone>_entites_l93_v3.gpkg`, notes ATTENTION/DÉCISION/TODO au
+   manifest, `LISEZ-MOI-georef.md` local dans `zones\<zone>\`, index régénéré.
+5. Preuve modèle si un diagnostic dépendait des anciennes données (ex. « MNT gomme
+   les fours ») : refaire la mesure avec les annotations corrigées avant de conclure.
+
 ## Étape 5 — Carte de contrôle (validation humaine obligatoire)
 - Publier `controle_blocs.html` (artifact) et attendre la validation de l'utilisateur
   avant tout dépôt. Signaler les classes rares mal réparties (granularité des blocs).
+- La carte de contrôle et la vérification QGIS des annotations se font sur un raster
+  **INDÉPENDANT des images livrées** (LD régénéré depuis le MNT IGN, ortho ou fond IGN) :
+  une annotation superposée à l'image dont elle provient est toujours « alignée », même
+  si l'image est mal géoréférencée (leçon 2026-09-06, ±50 m sur trois zones).
 
 ## Étape 6 — Dépôt et comptabilité
 - Dépôt vers `training/datasets/<dataset>/` (**robocopy /E** — jamais /MIR : il

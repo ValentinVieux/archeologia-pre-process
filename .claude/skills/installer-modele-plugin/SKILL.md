@@ -60,9 +60,22 @@ compléments 2026-08).
    spatiales jugées sur la DÉCISION : masques binarisés identiques / argmax
    identique — le contrôle manuel « IoU 1,0 binarisé » est désormais intégré).
    Échec réel → ne pas installer.
+4bis. **Parité de décision sur ≥ 100 tuiles de test** (obligatoire depuis 2026-09-08,
+   la porte ne teste que 2 images) : `tools\verif_parite_onnx.py <best.pth> <best.onnx>
+   <corpus>/test --resolution <res> --seuil <déployé>` (venv_onnx du plugin) →
+   CONFORME ; résultat consigné dans `entrainement/NOTE-export-onnx.md`. Détection
+   rfdetr : la porte juge la DÉCISION (permutation des requêtes = faux positif
+   d'allclose, `_parite_decision_detection`).
 5. Sidecar `best.json` : `class_offset` correct (rfdetr ≥1.8 → 0 ; vieux exports
    → 1 ; un offset faux SUPPRIME silencieusement des classes), `resolution`,
    `class_names` = classes.txt.
+5bis. Registre `data_regions_v2\modeles.yaml` : entrée du nouveau modèle (statut,
+   entités, zones, évaluation) ; le modèle remplacé passe en « retiré du plugin
+   (<date>) » — jamais supprimé du Drive. Retrait d'un modèle → entités devenues
+   orphelines retirées du catalogue (à recréer avec le modèle suivant), déplacer le
+   dossier hors du plugin (`D:\entrainement_ponctuelles\_retire_plugin\`), pas rm.
+   Piège : `validate_models_metadata.py data/models` traite le dossier parent comme
+   un modèle (0/1) — valider modèle par modèle.
 6. Entité(s) au catalogue `data/entities_catalog.json` (id snake_case, label,
    description, morphology, display_order) ; retirer/ne pas laisser d'entité
    orpheline sans modèle (elle s'affiche « Aucun modèle disponible » dans le

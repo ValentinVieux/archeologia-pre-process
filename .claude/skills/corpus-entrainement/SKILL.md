@@ -33,6 +33,10 @@ aucune recette — bras d'expérience irreproductible (audit 2026-08-31).
   présent, trace CONFORME (verif_dataset ou manifeste). Manquant → le régénérer
   (`/prepare-zone-training`) ou restaurer depuis `model-training/_datasets/`.
 - Classes canoniques + `fusions:` explicites, validées par l'utilisateur.
+- Chaque dataset source a passé `revue_auto_annotations.py` (RAS) ; la recette note
+  par zone la NATURE des boîtes (réelles / taille fixe synthétique — Rambouillet 25 m,
+  fours Alès/La Capelle 20 m : rappel plafonné quel que soit le modèle) et les zones
+  partiellement revues (`negatifs_pct: 0`).
 
 ## Étape 2 — Construction
 - `build_corpus` (cf. CLAUDE.md). **GARDE-FOU rmtree : `--out` désigne le dossier

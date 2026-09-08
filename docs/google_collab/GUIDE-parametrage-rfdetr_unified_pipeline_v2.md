@@ -266,3 +266,15 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
 [arXiv:2307.03512](https://arxiv.org/abs/2307.03512) (le transfert aide souvent, pas
 systématiquement — d'où les bras témoins),
 [Yu 2023 RS 15:827](https://www.mdpi.com/2072-4292/15/3/827) (augmentations télédétection).
+
+### Message « multi-scale training with square resize and scales: [832] » (mesuré 2026-09-07)
+
+Régime PAR DÉFAUT de rfdetr 1.8.3 (`config.py` : `multi_scale=True`, `expanded_scales=True`,
+`do_random_resize_via_padding=False` → `skip_random_resize=True`) : les images d'ENTRAÎNEMENT
+sont redimensionnées à la PLUS GRANDE échelle de la liste étendue calculée depuis RESOLUTION
+(patch 16 × 2 fenêtres : 672 → [512 … 832], donc 832 ; 648 → 800), tandis que valid/test et
+l'inférence restent à RESOLUTION exactement. C'est le comportement upstream de tous nos runs
+(seg v1, enclos, lineaires) — pas une anomalie du paramétrage ; la règle « résolution
+d'entraînement = export ONNX » porte sur RESOLUTION (le modèle), pas sur ce redimensionnement
+d'augmentation. Ne pas « corriger » sans mesure comparative (un run avec `multi_scale=False`
+serait un changement de régime à évaluer sur l'éval gelée).

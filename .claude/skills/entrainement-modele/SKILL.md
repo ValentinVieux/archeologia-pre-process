@@ -79,6 +79,22 @@ colle les sorties de cellules : les valider une à une.
   dépôt (jointure par CORPUS_DRIVE_DIR de params_run.yaml) : un run sans
   params_run.yaml ni manifeste de corpus affiche « non tracé » — le notebook
   doit donc écrire params_run.yaml et le corpus avoir son manifeste versionné.
+- **Section 11 non exécutée dans Colab** (cas 2026-09-08) : éval sur le poste, en
+  chaîne (venv_adaf, un seul job CUDA) : (1) éval canonique `runs/training/<run>/
+  evaluation/` = nouveau modèle + modèle DÉPLOYÉ de la même famille superposés (même
+  tâche) ; (2) concurrents d'une autre tâche (seg vs det) dans `comparaison_<vs>/`
+  séparé ; (3) planche 3 modèles depuis les caches (`planche_principale` /
+  `planche_classes` de courbes_eval) ; `verif_courbes_eval` après chaque ; puis dépôt
+  Drive et dashboard. Chaque `.pth` évalué a son sidecar `best.json` (`class_names`,
+  `class_offset` — un vieux export Roboflow prédit parfois la catégorie 0 « entites »).
+  Comparer sur les **zones non vues** par chaque modèle (fuite Roboflow).
+- « multi-scale training ... scales: [832] » à RESOLUTION 672 = régime upstream rfdetr
+  (train redimensionné à la plus grande échelle étendue, val/inférence à RESOLUTION) :
+  normal, ne pas arrêter un run pour ça (GUIDE § multi-scale).
+- Le `package/` du run doit sortir du notebook (cellule 43) ; s'il manque, l'assembler
+  depuis le run + l'évaluation (contrat racine, `entrainement/`, `weights/`) et le
+  valider avec `scripts/validate_models_metadata.py` du plugin — outil à écrire au
+  prochain cas (fait à la main le 2026-09-08).
 - Consigner (tracker de campagne + mémoire) : chiffres, époque best, artefacts.
 - Installation plugin : skill `/installer-modele-plugin`.
 
