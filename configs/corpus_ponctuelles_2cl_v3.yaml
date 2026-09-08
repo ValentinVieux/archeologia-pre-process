@@ -1,0 +1,46 @@
+# Corpus d'entraînement ponctuelles v3 — DEUX CLASSES (charbonniere + four), cible
+# DÉTECTION bbox (résolution 672). Décisions utilisateur 2026-09-07 :
+#   - dépressions circulaires HORS corpus (classe hétérogène : mardelles / dolines /
+#     indéterminées — modèle séparé plus tard avec circular_depression +
+#     depression_circulaire_grande) ; leurs tuiles restent des négatifs possibles ;
+#   - GÉORÉFÉRENCEMENT CORRIGÉ des 3 zones à fours (haut_doubs / ales / la_capelle :
+#     dalles 2 201 px = km + 50 m de marge, comprimées de 10 % — incident 2026-09-06,
+#     docs/incident_georef_dalles_2026-09-06.md) + DÉDOUBLONNAGE inter-dalles
+#     (objets de la marge annotés dans 2 dalles voisines : haut_doubs fours −231,
+#     ales charb −341 / fours −165, la_capelle −4 / −37 ; vosges −3, rambouillet −5) ;
+#   - CHAILLUZ RÉINTÉGRÉ : charbonnières revues à la main par l'utilisateur (trace LD
+#     visible, 200 boîtes), tuiles annotées seulement (negatifs_pct 0) ;
+#   - Rambouillet et Blois : GPKG revus par l'utilisateur (traité / revue_zones) ;
+#     Fenêtrange : four = 2 fausses annotations en ignorer ;
+#   - splits HÉRITÉS des manifests v2 (blois : v1) via slice_zone --split-depuis.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_ponctuelles_2cl_v3.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: ponctuelles_2cl_648_v3
+classes: [charbonniere, four]
+fusions: {}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml
+  - "DÉCISION 2026-09-07: modèle ponctuelles à DEUX classes (charbonniere, four) ; dépressions
+    circulaires = modèle séparé (circular_depression / depression_circulaire_grande, revue en cours)"
+  - "DÉCISION 2026-09-07: géoréférencement des dalles 2 201 px CORRIGÉ (haut_doubs, ales,
+    la_capelle) et annotations dédoublonnées inter-dalles ; le corpus ponctuelles_648_v2 et le
+    run ponctuelles_det_ld_v1 sont invalides sur ces zones"
+  - "DÉCISION 2026-09-07: Chailluz réintégré avec ses charbonnières revues à la main (200, trace LD
+    visible), tuiles annotées seulement (negatifs_pct 0, zone partiellement revue)"
+  - "ATTENTION: Rambouillet : 5 055 charbonnières toutes à 25 m de diamètre (taille synthétique
+    probable) dont 301 hors emprise du LD (non découpées) ; fours d'Alès / La Capelle à 20 m fixes
+    (outil d'annotation) — localisation apprise, pas la taille"
+  - "ATTENTION: Fenêtrange et Vosges : LD livré en dalles 2 000 px (géoréf saine, 0 joint fautif à
+    l'audit) mais sans référence indépendante disponible pour verif_alignement_ld"
+  - "Corpus destiné à l'entraînement DÉTECTION bbox (résolution 672, tuiles 648) ; éval gelée =
+    split versionné"
+datasets:
+  - ponctuelles_57_fenetrange_ld648_v3
+  - ponctuelles_70_vosges_saonoises_ld648_v3
+  - ponctuelles_25_haut_doubs_ld648_v3
+  - ponctuelles_30_ales_garrigues_ne_ld648_v3
+  - ponctuelles_30_la_capelle_ld648_v3
+  - ponctuelles_78_rambouillet_ld648_v3
+  - ponctuelles_41_blois_ld648_v3
+  - ponctuelles_25_chailluz_ld648_v3

@@ -1,0 +1,20 @@
+# Corpus ponctuelles v3 (2 classes : charbonniere + four) — 41_blois. charbonnières de blois_entites (rayons réels) via le GPKG de revue ; depression_circulaire_grande et détections enclos hors périmètre ; split repris du v1 (seul manifest de la zone).
+# Découpe : slice_zone --split-depuis manifests/split/fours_charb_41_blois_ld648_v1.yaml (jamais re-tirer un split).
+dataset: ponctuelles_41_blois_ld648_v3
+zone: centre_val_de_loire/41_blois
+raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+gpkg: D:/entrainement_ponctuelles/revue_zones/41_blois_annotations.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

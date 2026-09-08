@@ -1,0 +1,220 @@
+corpus: ponctuelles_2cl_648_v3
+genere_le: '2026-09-07'
+outil: tools/build_corpus.py
+outil_commit: ed75ee2
+config_sha1: 3b3e596cce72ca474d4555492b15cdf7b10367ee
+classes:
+- charbonniere
+- four
+fusions: {}
+datasets:
+  ponctuelles_57_fenetrange_ld648_v3:
+    zone: grand_est/57_fenetrange
+    splits:
+      train:
+        images: 119
+        annotations:
+          charbonniere: 214
+      valid:
+        images: 36
+        annotations:
+          charbonniere: 61
+      test:
+        images: 17
+        annotations:
+          charbonniere: 29
+    split_manifest_sha1: 45563f12aeacf6e86316b0c1fb19456586e9b70b
+    raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/revue_zones/57_fenetrange_annotations.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_70_vosges_saonoises_ld648_v3:
+    zone: bourgogne_franche_comte/70_vosges_saonoises
+    splits:
+      train:
+        images: 186
+        annotations:
+          charbonniere: 1840
+          four: 10
+      valid:
+        images: 69
+        annotations:
+          four: 3
+          charbonniere: 671
+      test:
+        images: 29
+        annotations:
+          charbonniere: 295
+          four: 1
+    split_manifest_sha1: aadb8600c621c2a614fd79f606e3f7b7fa568750
+    raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
+    gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_v3_dedup.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_25_haut_doubs_ld648_v3:
+    zone: bourgogne_franche_comte/25_haut_doubs
+    splits:
+      train:
+        images: 535
+        annotations:
+          four: 716
+          charbonniere: 5
+      valid:
+        images: 141
+        annotations:
+          four: 192
+          charbonniere: 5
+      test:
+        images: 87
+        annotations:
+          four: 127
+          charbonniere: 2
+    split_manifest_sha1: f6b0dcd6832bdf5b4e5e74c3be90944e4e6be34c
+    raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_v3_dedup.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_30_ales_garrigues_ne_ld648_v3:
+    zone: occitanie/30_ales_garrigues_ne
+    splits:
+      train:
+        images: 1391
+        annotations:
+          charbonniere: 1839
+          four: 661
+      valid:
+        images: 376
+        annotations:
+          four: 208
+          charbonniere: 529
+      test:
+        images: 191
+        annotations:
+          charbonniere: 277
+          four: 102
+    split_manifest_sha1: 34dbb72f82ebb80156800399752df93ec187f13e
+    raster: D:/entrainement_ponctuelles/ales/ales_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/30_ales_garrigues_ne/annotations_v3_dedup.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_30_la_capelle_ld648_v3:
+    zone: occitanie/30_la_capelle_et_masmolene
+    splits:
+      train:
+        images: 134
+        annotations:
+          four: 125
+          charbonniere: 37
+      valid:
+        images: 36
+        annotations:
+          four: 36
+          charbonniere: 9
+      test:
+        images: 21
+        annotations:
+          charbonniere: 6
+          four: 19
+    split_manifest_sha1: bee92faab15038d18a8271523710316628f345cc
+    raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif
+    gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_v3_dedup.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_78_rambouillet_ld648_v3:
+    zone: ile_de_france/78_rambouillet
+    splits:
+      train:
+        images: 935
+        annotations:
+          charbonniere: 3812
+      valid:
+        images: 304
+        annotations:
+          charbonniere: 1123
+      test:
+        images: 122
+        annotations:
+          charbonniere: 575
+    split_manifest_sha1: 56972c995ea05fad1a086befcbc8786bc6bceb7a
+    raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
+    gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/annotations_v3_dedup.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_41_blois_ld648_v3:
+    zone: centre_val_de_loire/41_blois
+    splits:
+      train:
+        images: 211
+        annotations:
+          charbonniere: 457
+      valid:
+        images: 62
+        annotations:
+          charbonniere: 140
+      test:
+        images: 33
+        annotations:
+          charbonniere: 84
+    split_manifest_sha1: 3984c57d1d70f06cebeab7ba122f2cc8f88b383f
+    raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+    gpkg: D:/entrainement_ponctuelles/revue_zones/41_blois_annotations.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+  ponctuelles_25_chailluz_ld648_v3:
+    zone: bourgogne_franche_comte/25_besancon_chailluz
+    splits:
+      train:
+        images: 41
+        annotations:
+          charbonniere: 127
+      valid:
+        images: 14
+        annotations:
+          charbonniere: 57
+      test:
+        images: 9
+        annotations:
+          charbonniere: 31
+    split_manifest_sha1: be0722f8535fab3eaa85beb1cd0942a512f41226
+    raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+    gpkg: D:/entrainement_ponctuelles/revue_zones/traité/25_besancon_chailluz_detections_det_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-07'
+splits:
+  train:
+    images: 3552
+    coco_sha1: 1d489440d1d9729c55da26876ec73bfa0575e516
+    annotations:
+      charbonniere: 8331
+      four: 1512
+  valid:
+    images: 1038
+    coco_sha1: 945c3dff692c8b8f4bf1f08f388d039aa1d4e5d4
+    annotations:
+      charbonniere: 2595
+      four: 439
+  test:
+    images: 509
+    coco_sha1: 5cb43f329703f791eca261851faf26c3d68304b4
+    annotations:
+      charbonniere: 1299
+      four: 249
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'DÉCISION 2026-09-07: modèle ponctuelles à DEUX classes (charbonniere, four) ; dépressions
+  circulaires = modèle séparé (circular_depression / depression_circulaire_grande,
+  revue en cours)'
+- 'DÉCISION 2026-09-07: géoréférencement des dalles 2 201 px CORRIGÉ (haut_doubs,
+  ales, la_capelle) et annotations dédoublonnées inter-dalles ; le corpus ponctuelles_648_v2
+  et le run ponctuelles_det_ld_v1 sont invalides sur ces zones'
+- 'DÉCISION 2026-09-07: Chailluz réintégré avec ses charbonnières revues à la main
+  (200, trace LD visible), tuiles annotées seulement (negatifs_pct 0, zone partiellement
+  revue)'
+- 'ATTENTION: Rambouillet : 5 055 charbonnières toutes à 25 m de diamètre (taille
+  synthétique probable) dont 301 hors emprise du LD (non découpées) ; fours d''Alès
+  / La Capelle à 20 m fixes (outil d''annotation) — localisation apprise, pas la taille'
+- 'ATTENTION: Fenêtrange et Vosges : LD livré en dalles 2 000 px (géoréf saine, 0
+  joint fautif à l''audit) mais sans référence indépendante disponible pour verif_alignement_ld'
+- Corpus destiné à l'entraînement DÉTECTION bbox (résolution 672, tuiles 648) ; éval
+  gelée = split versionné

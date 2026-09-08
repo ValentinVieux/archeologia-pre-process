@@ -1,0 +1,20 @@
+# Corpus ponctuelles v3 (2 classes : charbonniere + four) — 25_besancon_chailluz. charbonnières REVUES par l'utilisateur (détections det v1 gardées seulement si trace LD visible + ajouts à la main) ; zone partiellement revue -> negatifs_pct 0 (tuiles annotées seulement, décision utilisateur 2026-09-07) ; depression_circulaire_grande hors périmètre de ce corpus.
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_25_chailluz_ld648_v2.yaml (jamais re-tirer un split).
+dataset: ponctuelles_25_chailluz_ld648_v3
+zone: bourgogne_franche_comte/25_besancon_chailluz
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+gpkg: D:/entrainement_ponctuelles/revue_zones/traité/25_besancon_chailluz_detections_det_v1.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 0
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

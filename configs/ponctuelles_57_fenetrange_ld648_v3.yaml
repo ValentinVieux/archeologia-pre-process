@@ -1,0 +1,22 @@
+# Corpus ponctuelles v3 (2 classes : charbonniere + four) — 57_fenetrange. dalles livrées 2 000 px (géoréf saine) ; four = 2 fausses annotations -> ignorer (décision revue 2026-09-04) ; circular_depression hors périmètre.
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_57_fenetrange_ld648_v2.yaml (jamais re-tirer un split).
+dataset: ponctuelles_57_fenetrange_ld648_v3
+zone: grand_est/57_fenetrange
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+gpkg: D:/entrainement_ponctuelles/revue_zones/57_fenetrange_annotations.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+  four:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

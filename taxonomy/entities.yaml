@@ -239,6 +239,19 @@ entities:
     status: candidate
     plugin_entity_id: null
     roboflow_classes: []
+  # Décision utilisateur 2026-09-06 (revue Chailluz, puis Blois) : grandes dépressions
+  # circulaires, distinctes de circular_depression (Fenêtrange, Haye, Fontainebleau) ;
+  # annotations = boîtes revues à la main + polygones SAM 2.1 (invite = boîte nue).
+  # Pas de seuil de taille dans la définition (le filtre < 40 m appliqué à Chailluz le
+  # 2026-09-06 était un nettoyage ponctuel des détections, pas une règle — décision
+  # utilisateur 2026-09-07). Regroupe mardelles ET dolines (nom morphologique, pas
+  # d'interprétation) ; circular_depression des autres zones à reclasser (utilisateur).
+  - id: depression_circulaire_grande
+    label_fr: Dépressions circulaires grandes
+    morphology: circulaire
+    status: candidate
+    plugin_entity_id: null
+    roboflow_classes: []
   - id: chaos_rocheux
     label_fr: Chaos rocheux
     morphology: zone

@@ -1,0 +1,21 @@
+# Corpus ponctuelles v3 (2 classes : charbonniere + four) — 78_rambouillet. GPKG revu par l'utilisateur (traité, 2026-09-04) ; depression_pts_ignorer et circular_depression hors périmètre (tuiles = négatifs possibles).
+# Annotations DÉDOUBLONNÉES (tools/dedup_annotations.py, IoU 0,5 — objets dans la marge de 2 dalles voisines, visibles après correction du géoréf).
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_78_rambouillet_ld648_v2.yaml (jamais re-tirer un split).
+dataset: ponctuelles_78_rambouillet_ld648_v3
+zone: ile_de_france/78_rambouillet
+raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
+gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/annotations_v3_dedup.gpkg
+couches:
+  charbonniere:
+    classe: charbonniere
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

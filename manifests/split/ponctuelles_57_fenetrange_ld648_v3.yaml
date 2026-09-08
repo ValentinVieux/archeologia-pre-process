@@ -1,0 +1,2615 @@
+dataset: ponctuelles_57_fenetrange_ld648_v3
+zone: grand_est/57_fenetrange
+seed: 42
+split_depuis: manifests/split/ponctuelles_57_fenetrange_ld648_v2.yaml
+genere_le: '2026-09-07'
+config:
+  assign_crs: null
+  bloc_m: 2000
+  couches:
+    charbonniere:
+      classe: charbonniere
+      buffer_m: null
+      ignorer: false
+    four:
+      ignorer: true
+      buffer_m: null
+  dataset: ponctuelles_57_fenetrange_ld648_v3
+  gpkg: D:/entrainement_ponctuelles/revue_zones/57_fenetrange_annotations.gpkg
+  min_couverture_valide: 0.5
+  min_visibilite_annotation: 0.5
+  negatifs_pct: 10
+  nodata_supplementaire: null
+  raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
+  split:
+    train: 70
+    valid: 20
+    test: 10
+  tuile_px: 648
+  zone: grand_est/57_fenetrange
+grille:
+  origine:
+  - 986000.0
+  - 6878000.0
+  gsd_m_px:
+  - 0.5
+  - 0.5
+  tuile_px: 648
+  crs: EPSG:2154
+comptes:
+  train:
+    charbonniere: 214
+  valid:
+    charbonniere: 61
+  test:
+    charbonniere: 29
+hashes_sha1:
+  train: ea85249191ef96058a7957fd211b4f25a16759a6
+  valid: 74a4c7e6e38c6ce4f6244de259909dfe201b3ef1
+  test: db3894e4c3516b13ec9378ff51672d85f115d92a
+tuiles:
+- nom: 57_fenetrange_r0006_c0028.png
+  row: 6
+  col: 28
+  bloc:
+  - 497
+  - 3437
+  split: train
+  bounds:
+  - 995072.0
+  - 6875732.0
+  - 995396.0
+  - 6876056.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0007_c0007.png
+  row: 7
+  col: 7
+  bloc:
+  - 494
+  - 3437
+  split: valid
+  bounds:
+  - 988268.0
+  - 6875408.0
+  - 988592.0
+  - 6875732.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0007_c0021.png
+  row: 7
+  col: 21
+  bloc:
+  - 496
+  - 3437
+  split: train
+  bounds:
+  - 992804.0
+  - 6875408.0
+  - 993128.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0007_c0022.png
+  row: 7
+  col: 22
+  bloc:
+  - 496
+  - 3437
+  split: train
+  bounds:
+  - 993128.0
+  - 6875408.0
+  - 993452.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0007_c0029.png
+  row: 7
+  col: 29
+  bloc:
+  - 497
+  - 3437
+  split: train
+  bounds:
+  - 995396.0
+  - 6875408.0
+  - 995720.0
+  - 6875732.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0009_c0016.png
+  row: 9
+  col: 16
+  bloc:
+  - 495
+  - 3437
+  split: train
+  bounds:
+  - 991184.0
+  - 6874760.0
+  - 991508.0
+  - 6875084.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0009_c0025.png
+  row: 9
+  col: 25
+  bloc:
+  - 497
+  - 3437
+  split: train
+  bounds:
+  - 994100.0
+  - 6874760.0
+  - 994424.0
+  - 6875084.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0010_c0011.png
+  row: 10
+  col: 11
+  bloc:
+  - 494
+  - 3437
+  split: valid
+  bounds:
+  - 989564.0
+  - 6874436.0
+  - 989888.0
+  - 6874760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0010_c0016.png
+  row: 10
+  col: 16
+  bloc:
+  - 495
+  - 3437
+  split: train
+  bounds:
+  - 991184.0
+  - 6874436.0
+  - 991508.0
+  - 6874760.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0010_c0018.png
+  row: 10
+  col: 18
+  bloc:
+  - 495
+  - 3437
+  split: train
+  bounds:
+  - 991832.0
+  - 6874436.0
+  - 992156.0
+  - 6874760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0010_c0021.png
+  row: 10
+  col: 21
+  bloc:
+  - 496
+  - 3437
+  split: train
+  bounds:
+  - 992804.0
+  - 6874436.0
+  - 993128.0
+  - 6874760.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0010_c0028.png
+  row: 10
+  col: 28
+  bloc:
+  - 497
+  - 3437
+  split: train
+  bounds:
+  - 995072.0
+  - 6874436.0
+  - 995396.0
+  - 6874760.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0011_c0011.png
+  row: 11
+  col: 11
+  bloc:
+  - 494
+  - 3437
+  split: valid
+  bounds:
+  - 989564.0
+  - 6874112.0
+  - 989888.0
+  - 6874436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0011_c0014.png
+  row: 11
+  col: 14
+  bloc:
+  - 495
+  - 3437
+  split: train
+  bounds:
+  - 990536.0
+  - 6874112.0
+  - 990860.0
+  - 6874436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0011_c0017.png
+  row: 11
+  col: 17
+  bloc:
+  - 495
+  - 3437
+  split: train
+  bounds:
+  - 991508.0
+  - 6874112.0
+  - 991832.0
+  - 6874436.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0012_c0020.png
+  row: 12
+  col: 20
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992480.0
+  - 6873788.0
+  - 992804.0
+  - 6874112.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0013_c0024.png
+  row: 13
+  col: 24
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 993776.0
+  - 6873464.0
+  - 994100.0
+  - 6873788.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0009.png
+  row: 14
+  col: 9
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 988916.0
+  - 6873140.0
+  - 989240.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0010.png
+  row: 14
+  col: 10
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 989240.0
+  - 6873140.0
+  - 989564.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0012.png
+  row: 14
+  col: 12
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 989888.0
+  - 6873140.0
+  - 990212.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0013.png
+  row: 14
+  col: 13
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990212.0
+  - 6873140.0
+  - 990536.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0014.png
+  row: 14
+  col: 14
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990536.0
+  - 6873140.0
+  - 990860.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0019.png
+  row: 14
+  col: 19
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992156.0
+  - 6873140.0
+  - 992480.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0020.png
+  row: 14
+  col: 20
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992480.0
+  - 6873140.0
+  - 992804.0
+  - 6873464.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0014_c0021.png
+  row: 14
+  col: 21
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992804.0
+  - 6873140.0
+  - 993128.0
+  - 6873464.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0006.png
+  row: 15
+  col: 6
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 987944.0
+  - 6872816.0
+  - 988268.0
+  - 6873140.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0015_c0013.png
+  row: 15
+  col: 13
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990212.0
+  - 6872816.0
+  - 990536.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0014.png
+  row: 15
+  col: 14
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990536.0
+  - 6872816.0
+  - 990860.0
+  - 6873140.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0016.png
+  row: 15
+  col: 16
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 991184.0
+  - 6872816.0
+  - 991508.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0020.png
+  row: 15
+  col: 20
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992480.0
+  - 6872816.0
+  - 992804.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0021.png
+  row: 15
+  col: 21
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992804.0
+  - 6872816.0
+  - 993128.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0022.png
+  row: 15
+  col: 22
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 993128.0
+  - 6872816.0
+  - 993452.0
+  - 6873140.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0023.png
+  row: 15
+  col: 23
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 993452.0
+  - 6872816.0
+  - 993776.0
+  - 6873140.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0015_c0024.png
+  row: 15
+  col: 24
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 993776.0
+  - 6872816.0
+  - 994100.0
+  - 6873140.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0016_c0005.png
+  row: 16
+  col: 5
+  bloc:
+  - 493
+  - 3436
+  split: train
+  bounds:
+  - 987620.0
+  - 6872492.0
+  - 987944.0
+  - 6872816.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0016_c0013.png
+  row: 16
+  col: 13
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990212.0
+  - 6872492.0
+  - 990536.0
+  - 6872816.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0016_c0014.png
+  row: 16
+  col: 14
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990536.0
+  - 6872492.0
+  - 990860.0
+  - 6872816.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0016_c0021.png
+  row: 16
+  col: 21
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 992804.0
+  - 6872492.0
+  - 993128.0
+  - 6872816.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0016_c0022.png
+  row: 16
+  col: 22
+  bloc:
+  - 496
+  - 3436
+  split: valid
+  bounds:
+  - 993128.0
+  - 6872492.0
+  - 993452.0
+  - 6872816.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0017_c0009.png
+  row: 17
+  col: 9
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 988916.0
+  - 6872168.0
+  - 989240.0
+  - 6872492.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0017_c0013.png
+  row: 17
+  col: 13
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990212.0
+  - 6872168.0
+  - 990536.0
+  - 6872492.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0017_c0014.png
+  row: 17
+  col: 14
+  bloc:
+  - 495
+  - 3436
+  split: train
+  bounds:
+  - 990536.0
+  - 6872168.0
+  - 990860.0
+  - 6872492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0017_c0026.png
+  row: 17
+  col: 26
+  bloc:
+  - 497
+  - 3436
+  split: train
+  bounds:
+  - 994424.0
+  - 6872168.0
+  - 994748.0
+  - 6872492.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0018_c0003.png
+  row: 18
+  col: 3
+  bloc:
+  - 493
+  - 3436
+  split: train
+  bounds:
+  - 986972.0
+  - 6871844.0
+  - 987296.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0018_c0006.png
+  row: 18
+  col: 6
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 987944.0
+  - 6871844.0
+  - 988268.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0018_c0007.png
+  row: 18
+  col: 7
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 988268.0
+  - 6871844.0
+  - 988592.0
+  - 6872168.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0018_c0011.png
+  row: 18
+  col: 11
+  bloc:
+  - 494
+  - 3436
+  split: valid
+  bounds:
+  - 989564.0
+  - 6871844.0
+  - 989888.0
+  - 6872168.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0018_c0026.png
+  row: 18
+  col: 26
+  bloc:
+  - 497
+  - 3436
+  split: train
+  bounds:
+  - 994424.0
+  - 6871844.0
+  - 994748.0
+  - 6872168.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0019_c0006.png
+  row: 19
+  col: 6
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 987944.0
+  - 6871520.0
+  - 988268.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0019_c0011.png
+  row: 19
+  col: 11
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 989564.0
+  - 6871520.0
+  - 989888.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0019_c0018.png
+  row: 19
+  col: 18
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 991832.0
+  - 6871520.0
+  - 992156.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0019_c0023.png
+  row: 19
+  col: 23
+  bloc:
+  - 496
+  - 3435
+  split: train
+  bounds:
+  - 993452.0
+  - 6871520.0
+  - 993776.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0019_c0024.png
+  row: 19
+  col: 24
+  bloc:
+  - 496
+  - 3435
+  split: train
+  bounds:
+  - 993776.0
+  - 6871520.0
+  - 994100.0
+  - 6871844.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0020_c0006.png
+  row: 20
+  col: 6
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 987944.0
+  - 6871196.0
+  - 988268.0
+  - 6871520.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0020_c0007.png
+  row: 20
+  col: 7
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 988268.0
+  - 6871196.0
+  - 988592.0
+  - 6871520.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0020_c0009.png
+  row: 20
+  col: 9
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 988916.0
+  - 6871196.0
+  - 989240.0
+  - 6871520.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0020_c0010.png
+  row: 20
+  col: 10
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 989240.0
+  - 6871196.0
+  - 989564.0
+  - 6871520.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0020_c0014.png
+  row: 20
+  col: 14
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 990536.0
+  - 6871196.0
+  - 990860.0
+  - 6871520.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0005.png
+  row: 21
+  col: 5
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 987620.0
+  - 6870872.0
+  - 987944.0
+  - 6871196.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0006.png
+  row: 21
+  col: 6
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 987944.0
+  - 6870872.0
+  - 988268.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0008.png
+  row: 21
+  col: 8
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 988592.0
+  - 6870872.0
+  - 988916.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0009.png
+  row: 21
+  col: 9
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 988916.0
+  - 6870872.0
+  - 989240.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0010.png
+  row: 21
+  col: 10
+  bloc:
+  - 494
+  - 3435
+  split: train
+  bounds:
+  - 989240.0
+  - 6870872.0
+  - 989564.0
+  - 6871196.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0014.png
+  row: 21
+  col: 14
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 990536.0
+  - 6870872.0
+  - 990860.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0015.png
+  row: 21
+  col: 15
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 990860.0
+  - 6870872.0
+  - 991184.0
+  - 6871196.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0021_c0019.png
+  row: 21
+  col: 19
+  bloc:
+  - 496
+  - 3435
+  split: train
+  bounds:
+  - 992156.0
+  - 6870872.0
+  - 992480.0
+  - 6871196.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0004.png
+  row: 22
+  col: 4
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 987296.0
+  - 6870548.0
+  - 987620.0
+  - 6870872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0005.png
+  row: 22
+  col: 5
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 987620.0
+  - 6870548.0
+  - 987944.0
+  - 6870872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0014.png
+  row: 22
+  col: 14
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 990536.0
+  - 6870548.0
+  - 990860.0
+  - 6870872.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0015.png
+  row: 22
+  col: 15
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 990860.0
+  - 6870548.0
+  - 991184.0
+  - 6870872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0016.png
+  row: 22
+  col: 16
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 991184.0
+  - 6870548.0
+  - 991508.0
+  - 6870872.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0022_c0017.png
+  row: 22
+  col: 17
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 991508.0
+  - 6870548.0
+  - 991832.0
+  - 6870872.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0000.png
+  row: 23
+  col: 0
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 986000.0
+  - 6870224.0
+  - 986324.0
+  - 6870548.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0003.png
+  row: 23
+  col: 3
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 986972.0
+  - 6870224.0
+  - 987296.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0004.png
+  row: 23
+  col: 4
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 987296.0
+  - 6870224.0
+  - 987620.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0005.png
+  row: 23
+  col: 5
+  bloc:
+  - 493
+  - 3435
+  split: train
+  bounds:
+  - 987620.0
+  - 6870224.0
+  - 987944.0
+  - 6870548.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0024.png
+  row: 23
+  col: 24
+  bloc:
+  - 496
+  - 3435
+  split: train
+  bounds:
+  - 993776.0
+  - 6870224.0
+  - 994100.0
+  - 6870548.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0023_c0025.png
+  row: 23
+  col: 25
+  bloc:
+  - 497
+  - 3435
+  split: test
+  bounds:
+  - 994100.0
+  - 6870224.0
+  - 994424.0
+  - 6870548.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0024_c0016.png
+  row: 24
+  col: 16
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 991184.0
+  - 6869900.0
+  - 991508.0
+  - 6870224.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0024_c0017.png
+  row: 24
+  col: 17
+  bloc:
+  - 495
+  - 3435
+  split: valid
+  bounds:
+  - 991508.0
+  - 6869900.0
+  - 991832.0
+  - 6870224.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0024_c0019.png
+  row: 24
+  col: 19
+  bloc:
+  - 496
+  - 3435
+  split: train
+  bounds:
+  - 992156.0
+  - 6869900.0
+  - 992480.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0024_c0025.png
+  row: 24
+  col: 25
+  bloc:
+  - 497
+  - 3435
+  split: test
+  bounds:
+  - 994100.0
+  - 6869900.0
+  - 994424.0
+  - 6870224.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0025_c0016.png
+  row: 25
+  col: 16
+  bloc:
+  - 495
+  - 3434
+  split: train
+  bounds:
+  - 991184.0
+  - 6869576.0
+  - 991508.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0025_c0025.png
+  row: 25
+  col: 25
+  bloc:
+  - 497
+  - 3434
+  split: train
+  bounds:
+  - 994100.0
+  - 6869576.0
+  - 994424.0
+  - 6869900.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0026_c0014.png
+  row: 26
+  col: 14
+  bloc:
+  - 495
+  - 3434
+  split: train
+  bounds:
+  - 990536.0
+  - 6869252.0
+  - 990860.0
+  - 6869576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0026_c0015.png
+  row: 26
+  col: 15
+  bloc:
+  - 495
+  - 3434
+  split: train
+  bounds:
+  - 990860.0
+  - 6869252.0
+  - 991184.0
+  - 6869576.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0026_c0016.png
+  row: 26
+  col: 16
+  bloc:
+  - 495
+  - 3434
+  split: train
+  bounds:
+  - 991184.0
+  - 6869252.0
+  - 991508.0
+  - 6869576.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0029_c0001.png
+  row: 29
+  col: 1
+  bloc:
+  - 493
+  - 3434
+  split: train
+  bounds:
+  - 986324.0
+  - 6868280.0
+  - 986648.0
+  - 6868604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0029_c0002.png
+  row: 29
+  col: 2
+  bloc:
+  - 493
+  - 3434
+  split: train
+  bounds:
+  - 986648.0
+  - 6868280.0
+  - 986972.0
+  - 6868604.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0029_c0003.png
+  row: 29
+  col: 3
+  bloc:
+  - 493
+  - 3434
+  split: train
+  bounds:
+  - 986972.0
+  - 6868280.0
+  - 987296.0
+  - 6868604.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0029_c0018.png
+  row: 29
+  col: 18
+  bloc:
+  - 495
+  - 3434
+  split: train
+  bounds:
+  - 991832.0
+  - 6868280.0
+  - 992156.0
+  - 6868604.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0030_c0001.png
+  row: 30
+  col: 1
+  bloc:
+  - 493
+  - 3434
+  split: train
+  bounds:
+  - 986324.0
+  - 6867956.0
+  - 986648.0
+  - 6868280.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0001.png
+  row: 31
+  col: 1
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986324.0
+  - 6867632.0
+  - 986648.0
+  - 6867956.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0002.png
+  row: 31
+  col: 2
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986648.0
+  - 6867632.0
+  - 986972.0
+  - 6867956.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0004.png
+  row: 31
+  col: 4
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987296.0
+  - 6867632.0
+  - 987620.0
+  - 6867956.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0005.png
+  row: 31
+  col: 5
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987620.0
+  - 6867632.0
+  - 987944.0
+  - 6867956.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0006.png
+  row: 31
+  col: 6
+  bloc:
+  - 494
+  - 3433
+  split: train
+  bounds:
+  - 987944.0
+  - 6867632.0
+  - 988268.0
+  - 6867956.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0031_c0013.png
+  row: 31
+  col: 13
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990212.0
+  - 6867632.0
+  - 990536.0
+  - 6867956.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0002.png
+  row: 32
+  col: 2
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986648.0
+  - 6867308.0
+  - 986972.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0003.png
+  row: 32
+  col: 3
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986972.0
+  - 6867308.0
+  - 987296.0
+  - 6867632.0
+  n_annotations: 7
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0004.png
+  row: 32
+  col: 4
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987296.0
+  - 6867308.0
+  - 987620.0
+  - 6867632.0
+  n_annotations: 10
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0005.png
+  row: 32
+  col: 5
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987620.0
+  - 6867308.0
+  - 987944.0
+  - 6867632.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0012.png
+  row: 32
+  col: 12
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 989888.0
+  - 6867308.0
+  - 990212.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0013.png
+  row: 32
+  col: 13
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990212.0
+  - 6867308.0
+  - 990536.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0014.png
+  row: 32
+  col: 14
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990536.0
+  - 6867308.0
+  - 990860.0
+  - 6867632.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0032_c0015.png
+  row: 32
+  col: 15
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990860.0
+  - 6867308.0
+  - 991184.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0032_c0017.png
+  row: 32
+  col: 17
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 991508.0
+  - 6867308.0
+  - 991832.0
+  - 6867632.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0001.png
+  row: 33
+  col: 1
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986324.0
+  - 6866984.0
+  - 986648.0
+  - 6867308.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0002.png
+  row: 33
+  col: 2
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986648.0
+  - 6866984.0
+  - 986972.0
+  - 6867308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0004.png
+  row: 33
+  col: 4
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987296.0
+  - 6866984.0
+  - 987620.0
+  - 6867308.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0005.png
+  row: 33
+  col: 5
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 987620.0
+  - 6866984.0
+  - 987944.0
+  - 6867308.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0011.png
+  row: 33
+  col: 11
+  bloc:
+  - 494
+  - 3433
+  split: train
+  bounds:
+  - 989564.0
+  - 6866984.0
+  - 989888.0
+  - 6867308.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0012.png
+  row: 33
+  col: 12
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 989888.0
+  - 6866984.0
+  - 990212.0
+  - 6867308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0013.png
+  row: 33
+  col: 13
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990212.0
+  - 6866984.0
+  - 990536.0
+  - 6867308.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0033_c0014.png
+  row: 33
+  col: 14
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990536.0
+  - 6866984.0
+  - 990860.0
+  - 6867308.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0034_c0000.png
+  row: 34
+  col: 0
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986000.0
+  - 6866660.0
+  - 986324.0
+  - 6866984.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0034_c0001.png
+  row: 34
+  col: 1
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986324.0
+  - 6866660.0
+  - 986648.0
+  - 6866984.0
+  n_annotations: 6
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0034_c0002.png
+  row: 34
+  col: 2
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986648.0
+  - 6866660.0
+  - 986972.0
+  - 6866984.0
+  n_annotations: 8
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0034_c0013.png
+  row: 34
+  col: 13
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 990212.0
+  - 6866660.0
+  - 990536.0
+  - 6866984.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0035_c0018.png
+  row: 35
+  col: 18
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 991832.0
+  - 6866336.0
+  - 992156.0
+  - 6866660.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0036_c0003.png
+  row: 36
+  col: 3
+  bloc:
+  - 493
+  - 3433
+  split: train
+  bounds:
+  - 986972.0
+  - 6866012.0
+  - 987296.0
+  - 6866336.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0036_c0006.png
+  row: 36
+  col: 6
+  bloc:
+  - 494
+  - 3433
+  split: train
+  bounds:
+  - 987944.0
+  - 6866012.0
+  - 988268.0
+  - 6866336.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0036_c0007.png
+  row: 36
+  col: 7
+  bloc:
+  - 494
+  - 3433
+  split: train
+  bounds:
+  - 988268.0
+  - 6866012.0
+  - 988592.0
+  - 6866336.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0036_c0008.png
+  row: 36
+  col: 8
+  bloc:
+  - 494
+  - 3433
+  split: train
+  bounds:
+  - 988592.0
+  - 6866012.0
+  - 988916.0
+  - 6866336.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0036_c0016.png
+  row: 36
+  col: 16
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 991184.0
+  - 6866012.0
+  - 991508.0
+  - 6866336.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0036_c0017.png
+  row: 36
+  col: 17
+  bloc:
+  - 495
+  - 3433
+  split: test
+  bounds:
+  - 991508.0
+  - 6866012.0
+  - 991832.0
+  - 6866336.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0000.png
+  row: 37
+  col: 0
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986000.0
+  - 6865688.0
+  - 986324.0
+  - 6866012.0
+  n_annotations: 4
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0005.png
+  row: 37
+  col: 5
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 987620.0
+  - 6865688.0
+  - 987944.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0006.png
+  row: 37
+  col: 6
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 987944.0
+  - 6865688.0
+  - 988268.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0007.png
+  row: 37
+  col: 7
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988268.0
+  - 6865688.0
+  - 988592.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0008.png
+  row: 37
+  col: 8
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988592.0
+  - 6865688.0
+  - 988916.0
+  - 6866012.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0009.png
+  row: 37
+  col: 9
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988916.0
+  - 6865688.0
+  - 989240.0
+  - 6866012.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0011.png
+  row: 37
+  col: 11
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 989564.0
+  - 6865688.0
+  - 989888.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0037_c0015.png
+  row: 37
+  col: 15
+  bloc:
+  - 495
+  - 3432
+  split: test
+  bounds:
+  - 990860.0
+  - 6865688.0
+  - 991184.0
+  - 6866012.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0000.png
+  row: 38
+  col: 0
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986000.0
+  - 6865364.0
+  - 986324.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0006.png
+  row: 38
+  col: 6
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 987944.0
+  - 6865364.0
+  - 988268.0
+  - 6865688.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0007.png
+  row: 38
+  col: 7
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988268.0
+  - 6865364.0
+  - 988592.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0008.png
+  row: 38
+  col: 8
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988592.0
+  - 6865364.0
+  - 988916.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0009.png
+  row: 38
+  col: 9
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988916.0
+  - 6865364.0
+  - 989240.0
+  - 6865688.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0038_c0011.png
+  row: 38
+  col: 11
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 989564.0
+  - 6865364.0
+  - 989888.0
+  - 6865688.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0039_c0003.png
+  row: 39
+  col: 3
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986972.0
+  - 6865040.0
+  - 987296.0
+  - 6865364.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0039_c0005.png
+  row: 39
+  col: 5
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 987620.0
+  - 6865040.0
+  - 987944.0
+  - 6865364.0
+  n_annotations: 5
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0039_c0006.png
+  row: 39
+  col: 6
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 987944.0
+  - 6865040.0
+  - 988268.0
+  - 6865364.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0040_c0000.png
+  row: 40
+  col: 0
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986000.0
+  - 6864716.0
+  - 986324.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0040_c0001.png
+  row: 40
+  col: 1
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986324.0
+  - 6864716.0
+  - 986648.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0040_c0007.png
+  row: 40
+  col: 7
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988268.0
+  - 6864716.0
+  - 988592.0
+  - 6865040.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0040_c0008.png
+  row: 40
+  col: 8
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 988592.0
+  - 6864716.0
+  - 988916.0
+  - 6865040.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0040_c0010.png
+  row: 40
+  col: 10
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 989240.0
+  - 6864716.0
+  - 989564.0
+  - 6865040.0
+  n_annotations: 3
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0041_c0010.png
+  row: 41
+  col: 10
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 989240.0
+  - 6864392.0
+  - 989564.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0041_c0011.png
+  row: 41
+  col: 11
+  bloc:
+  - 494
+  - 3432
+  split: train
+  bounds:
+  - 989564.0
+  - 6864392.0
+  - 989888.0
+  - 6864716.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0042_c0000.png
+  row: 42
+  col: 0
+  bloc:
+  - 493
+  - 3432
+  split: train
+  bounds:
+  - 986000.0
+  - 6864068.0
+  - 986324.0
+  - 6864392.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0042_c0013.png
+  row: 42
+  col: 13
+  bloc:
+  - 495
+  - 3432
+  split: test
+  bounds:
+  - 990212.0
+  - 6864068.0
+  - 990536.0
+  - 6864392.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0043_c0006.png
+  row: 43
+  col: 6
+  bloc:
+  - 494
+  - 3431
+  split: train
+  bounds:
+  - 987944.0
+  - 6863744.0
+  - 988268.0
+  - 6864068.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0043_c0010.png
+  row: 43
+  col: 10
+  bloc:
+  - 494
+  - 3431
+  split: train
+  bounds:
+  - 989240.0
+  - 6863744.0
+  - 989564.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0043_c0011.png
+  row: 43
+  col: 11
+  bloc:
+  - 494
+  - 3431
+  split: train
+  bounds:
+  - 989564.0
+  - 6863744.0
+  - 989888.0
+  - 6864068.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0043_c0012.png
+  row: 43
+  col: 12
+  bloc:
+  - 495
+  - 3431
+  split: train
+  bounds:
+  - 989888.0
+  - 6863744.0
+  - 990212.0
+  - 6864068.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0043_c0013.png
+  row: 43
+  col: 13
+  bloc:
+  - 495
+  - 3431
+  split: train
+  bounds:
+  - 990212.0
+  - 6863744.0
+  - 990536.0
+  - 6864068.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0043_c0014.png
+  row: 43
+  col: 14
+  bloc:
+  - 495
+  - 3431
+  split: train
+  bounds:
+  - 990536.0
+  - 6863744.0
+  - 990860.0
+  - 6864068.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0043_c0015.png
+  row: 43
+  col: 15
+  bloc:
+  - 495
+  - 3431
+  split: train
+  bounds:
+  - 990860.0
+  - 6863744.0
+  - 991184.0
+  - 6864068.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0044_c0010.png
+  row: 44
+  col: 10
+  bloc:
+  - 494
+  - 3431
+  split: train
+  bounds:
+  - 989240.0
+  - 6863420.0
+  - 989564.0
+  - 6863744.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0048_c0006.png
+  row: 48
+  col: 6
+  bloc:
+  - 494
+  - 3431
+  split: train
+  bounds:
+  - 987944.0
+  - 6862124.0
+  - 988268.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0048_c0013.png
+  row: 48
+  col: 13
+  bloc:
+  - 495
+  - 3431
+  split: train
+  bounds:
+  - 990212.0
+  - 6862124.0
+  - 990536.0
+  - 6862448.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0049_c0010.png
+  row: 49
+  col: 10
+  bloc:
+  - 494
+  - 3430
+  split: train
+  bounds:
+  - 989240.0
+  - 6861800.0
+  - 989564.0
+  - 6862124.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0051_c0011.png
+  row: 51
+  col: 11
+  bloc:
+  - 494
+  - 3430
+  split: train
+  bounds:
+  - 989564.0
+  - 6861152.0
+  - 989888.0
+  - 6861476.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0051_c0012.png
+  row: 51
+  col: 12
+  bloc:
+  - 495
+  - 3430
+  split: valid
+  bounds:
+  - 989888.0
+  - 6861152.0
+  - 990212.0
+  - 6861476.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0052_c0012.png
+  row: 52
+  col: 12
+  bloc:
+  - 495
+  - 3430
+  split: valid
+  bounds:
+  - 989888.0
+  - 6860828.0
+  - 990212.0
+  - 6861152.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0054_c0012.png
+  row: 54
+  col: 12
+  bloc:
+  - 495
+  - 3430
+  split: valid
+  bounds:
+  - 989888.0
+  - 6860180.0
+  - 990212.0
+  - 6860504.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0054_c0013.png
+  row: 54
+  col: 13
+  bloc:
+  - 495
+  - 3430
+  split: valid
+  bounds:
+  - 990212.0
+  - 6860180.0
+  - 990536.0
+  - 6860504.0
+  n_annotations: 2
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0056_c0003.png
+  row: 56
+  col: 3
+  bloc:
+  - 493
+  - 3429
+  split: train
+  bounds:
+  - 986972.0
+  - 6859532.0
+  - 987296.0
+  - 6859856.0
+  n_annotations: 0
+  classes: []
+- nom: 57_fenetrange_r0057_c0004.png
+  row: 57
+  col: 4
+  bloc:
+  - 493
+  - 3429
+  split: train
+  bounds:
+  - 987296.0
+  - 6859208.0
+  - 987620.0
+  - 6859532.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0057_c0005.png
+  row: 57
+  col: 5
+  bloc:
+  - 493
+  - 3429
+  split: train
+  bounds:
+  - 987620.0
+  - 6859208.0
+  - 987944.0
+  - 6859532.0
+  n_annotations: 1
+  classes:
+  - charbonniere
+- nom: 57_fenetrange_r0057_c0012.png
+  row: 57
+  col: 12
+  bloc:
+  - 495
+  - 3429
+  split: train
+  bounds:
+  - 989888.0
+  - 6859208.0
+  - 990212.0
+  - 6859532.0
+  n_annotations: 1
+  classes:
+  - charbonniere
