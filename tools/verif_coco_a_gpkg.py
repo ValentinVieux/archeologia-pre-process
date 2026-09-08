@@ -61,8 +61,12 @@ def main() -> None:
             m = re.search(r"LHD_FXX_(\d{4})_(\d{4})", im["file_name"])
             if not m:
                 continue
-            x0, y1 = int(m.group(1)) * 1000, int(m.group(2)) * 1000
-            r = 1000.0 / im["width"]
+            # convention 2026-09-06 : image = width × 0,5 m CENTRÉE sur le km (marge = (w×0,5−1000)/2)
+            r = 0.5
+            marge = (im["width"] * r - 1000.0) / 2.0
+            if marge < -0.01 or marge > 100.0:
+                ko(f"image {im['file_name']} : {im['width']} px incompatibles avec une dalle km à 0,5 m")
+            x0, y1 = int(m.group(1)) * 1000 - marge, int(m.group(2)) * 1000 + marge
             bx, by, bw, bh = ann["bbox"]
             attendu[f"{split}:{ann['id']}"] = (
                 fusion.get(cats[ann["category_id"]], cats[ann["category_id"]]), split,
@@ -116,11 +120,12 @@ def main() -> None:
             m = re.match(r"LHD_FXX_(\d{4})_(\d{4})_LD", stem)
             with rasterio.open(p) as src:
                 t = src.transform
+                marge = (src.width * 0.5 - 1000.0) / 2.0
                 ok = (m and src.crs and src.crs.to_epsg() == 2154
-                      and abs(t.c - int(m.group(1)) * 1000) < 0.01
-                      and abs(t.f - int(m.group(2)) * 1000) < 0.01
-                      and abs(t.a * src.width - 1000) < 0.01
-                      and abs(-t.e * src.height - 1000) < 0.01)
+                      and abs(t.c - (int(m.group(1)) * 1000 - marge)) < 0.01
+                      and abs(t.f - (int(m.group(2)) * 1000 + marge)) < 0.01
+                      and abs(t.a - 0.5) < 1e-6 and abs(-t.e - 0.5) < 1e-6
+                      and src.width == src.height and 0 <= marge <= 100)
             if not ok:
                 ko(f"raster {p.name} : géoréférencement non conforme")
         if not manquantes:

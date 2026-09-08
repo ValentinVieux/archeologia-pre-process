@@ -33,6 +33,12 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\verif_application.py <gpkg_source> <gpkg_recale> <decisions.yaml> <gpkg_final> [<gpkg_reference>]  # boucle de vérification de l'application (référence = le --recale-depuis du producteur, sinon verdict faux)
 .venv\Scripts\python.exe tools\coco_a_gpkg.py <payload> <sortie> --classes <c1> ... [--forme bbox|ellipse] [--fusion SRC=DST ...] [--rasters]  # GPKG EPSG:2154 depuis un payload COCO dispatché — --forme ellipse OBLIGATOIRE pour le corpus fours ; uid=split:annotation_id, dalles LHD = coin NW (vérifié WFS IGN)
 .venv\Scripts\python.exe tools\verif_coco_a_gpkg.py <payload> <sortie> [--fusion SRC=DST ...]  # boucle de vérification (recompte + regéoréf indépendants) — RÉPÉTER les --fusion du producteur, sinon verdict faux
+.venv\Scripts\python.exe tools\corriger_georef_dalles.py <gpkg> <dossier_dalles> <gpkg_sortie> [--gsd 0.5] [--cote 1000]  # corrige les annotations issues de dalles LD « à marge » (2 201 px = km + 50 m géoréférencé comme 1 000 m : compression 10 % vers le NW, ±50 m aux bords — découverte 2026-09-06, haut_doubs/ales/la_capelle) ; refuse d'écraser ; vérifier par corrélation ANCIEN/NOUVEAU (cf. /revue-annotations)
+.venv\Scripts\python.exe tools\revue_auto_annotations.py <gpkg> <raster> [--couches c1 c2] [--diam-min 3] [--diam-max 60]  # revue AUTOMATIQUE avant découpe (tailles, allongement, invalides, doublons IoU≥0,5, hors raster, NoData, taille FIXE = boîtes synthétiques) ; verdict RAS / À VOIR (exit 2) ; ne modifie rien
+<venv_onnx du plugin>\python.exe tools\verif_parite_onnx.py <best.pth> <best.onnx> <dossier_tuiles> --resolution <res> --seuil <déployé> [--n 120]  # parité de DÉCISION PyTorch/ONNX d'un modèle de détection sur N tuiles de test (même prétraitement que la porte du plugin ; appariement classe + boîte + score) — CONFORME requis avant installation (la porte d'export ne teste que 2 images) ; PYTHONIOENCODING=utf-8
+.venv\Scripts\python.exe tools\temoin_couche.py <gpkg> <couche> [--comparer <temoin.txt>]  # témoin d'intégrité (effectif + sha256 WKB) avant/après tout run long sur une couche que l'utilisateur édite dans QGIS ; DIFFÉRENT = relancer (exit 1)
+.venv\Scripts\python.exe tools\dedup_annotations.py <gpkg> <gpkg_sortie> [--iou 0.5] [--couches c1 c2]  # supprime les annotations en double (IoU boîtes ≥ --iou, même couche), trace `doublon_de` dans <couche>_doublons ; distingue inter-dalles (objet dans la marge de 2 dalles voisines — apparaît APRÈS correction du géoréf) / intra-dalle ; refuse d'écraser
+.venv\Scripts\python.exe tools\verif_alignement_ld.py <raster_ref> <raster_test> [--dalles 6] [--tolerance 1.0]  # CONTRÔLE OBLIGATOIRE avant d'utiliser un raster livré ou régénéré : corrélation de phase par grille 3×3 DANS des dalles km, verdict ALIGNÉ / TRANSLATION / ÉCHELLE (le décalage qui change de signe N-S = couverture de dalle fausse, leçon 2026-09-06) ; sans GPU
 .venv\Scripts\python.exe tools\telecharger_dalles_ign.py <entites.gpkg> <sortie> [--anneau 1] [--mt 4]  # dalles MNT LiDAR HD IGN (GeoTIFF 1 km 0,5 m) via la grille WFS : cellules occupées + anneau, reprise idempotente, CRS estampillé
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\auto_label_depressions.py <ld.tif> <selection.gpkg> <sortie.gpkg> --poids <ckpt>  # auto-labels circular_depression par run_rf_detr_1 @0,395 (tuiles 1 km alignées grille, parité d'inférence) ; 0 détection = garde-fou, diagnostiquer au plancher avant d'accepter
 .venv\Scripts\python.exe tools\build_gpkg_ponctuelles.py <zone> <sortie.gpkg> [--source|--payload|--auto-labels]  # GPKG des zones spéciales du corpus fours/charbonnières (chailluz r=5 m, blois rayons réels, rambouillet COCO+GPKG+ignorer)
@@ -42,10 +48,13 @@ D:\veille_irlande\venv_adaf\Scripts\python.exe tools\auto_label_depressions.py <
 .venv\Scripts\python.exe tools\planche_indices.py <mnt> <sortie> --emprise xmin ymin xmax ymax [--nom d] [--gpkg gt.gpkg]  # planche de TOUS les indices RVT + variantes (choix des canaux multicanaux) — MNT 1 m exigé, recettes VAT/CVAT/e3MSTP vérifiées sur l'install rvt-qgis
 D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.py <points.gpkg> <ld.tif> <sortie.gpkg>  # propositions hybrides cercle+SAM (corpus Irlande, cf. /corpus-irlande) — venv_sam OBLIGATOIRE (torch)
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
+D:\veille_irlande\venv_sam\Scripts\python.exe tools\sam_polygones_bbox.py <gpkg> <couche> <ld.tif|vrt> <gpkg_sortie> [--couche-sortie X] [--marge 20] [--limite N]  # BOUNDING BOXES -> polygones SAM 2.1 par défaut (box prompt élargi de --marge m par côté, repli bbox si aucun masque plausible ; champs methode/sam_score/diam_eq_m/iou_bbox) — venv_sam OBLIGATOIRE ; cf. /revue-annotations
+.venv\Scripts\python.exe tools\verif_sam_polygones_bbox.py <gpkg> <couche> <gpkg_sortie> [--couche-sortie X] [--marge 20]  # contrôleur indépendant SANS GPU (effectif, attributs, centre dans le polygone, tenue dans la boîte élargie) — RÉPÉTER la --marge du producteur, sinon verdict faux
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques) — ATTENTION : --out est le dossier DU corpus (rmtree !), défaut corpus\<nom> ; ne JAMAIS passer --out corpus
 .venv\Scripts\python.exe tools\repeindre_dataset.py <dataset_ld_v1> datasets --mnt <tif|glob> [--ld <raster>]  # datasets multicanaux (csl+crim) aux pixels recalculés, splits/COCO INTACTS — jamais re-slicer pour changer de canaux
 .venv\Scripts\python.exe tools\generer_slrm_cvat.py <mnt.tif> <sortie_dir> [--prefixe p]  # SLRM r10 ADAF + « cvat » (VAT general mal nommé, cf. § multicanal) 8 bits auto-vérifiés
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_corpus.py <corpus> <poids.pth> <out> --metriques <metriques_eval.json>  # détections d'un modèle sur les tuiles d'un corpus (detections.json px + GPKG EPSG:2154 ; retenu = seuil F1-max par classe du metriques_eval canonique, plancher 0,15 pour les scores écrasés type Chailluz) — venv_adaf GPU ; reste : --help
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_raster.py <raster> <poids.pth> <gpkg> --couche <nom> --classes <c1> ... --seuil <F1-max> [--gsd 1.0] [--recouvrement 96] [--limite N]  # inférence d'un modèle sur un RASTER entier par fenêtres glissantes (rééchantillonné au --gsd du modèle, NMS IoU 0,5 sur les recouvrements) -> couches <nom> (polygones) + <nom>_bbox ajoutées au GPKG (refus si existantes) ; --seuil = seuil F1-max du metriques_eval canonique, champ retenu ; venv_adaf GPU ; ex. enclos_fr sur un LD 0,5 m : --gsd 1.0 --seuil 0.41
 .venv\Scripts\python.exe -m tools.review_detections <corpus> <detections.json> [--decisions <yaml>] [--port 5176]  # app locale de revue des détections par tuile, tout en BOUNDING BOXES (valider/invalider/redimensionner/reclasser/ajouter une boîte, GT du dataset marquée, masquage touche D ; décisions YAML immédiates, jamais le corpus — même contrat que review_recalage)
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--reprendre-de <eval_precedente> ...] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
 .venv\Scripts\python.exe tools\verif_courbes_eval.py <dossier_eval>  # contrôleur indépendant SANS GPU : recalcule P/R/F1/AP depuis appariements.json — CONFORME requis avant dépôt/seuils/dashboard
@@ -122,6 +131,28 @@ git log ; pas de fichier de log séparé.
   slice_zone/build_corpus.
   Tuiles **648 px sans chevauchement** (RF-DETR seg : résolution divisible par 24 ;
   pin `rfdetr>=1.8.3,<2.0` ; résolution d'entraînement = résolution d'export ONNX).
+- **Contrôle d'alignement OBLIGATOIRE** (leçon 2026-09-06, règle utilisateur) : tout raster
+  livré ou régénéré passe `tools/verif_alignement_ld.py` contre une référence géoréférencée
+  indépendante (LD régénéré depuis le MNT IGN, ou MNT IGN) AVANT découpe ; toute image de
+  dalle passe par `geo_dalle()` de coco_a_gpkg (largeur × 0,5 m = km + marge, sinon REFUS) ;
+  la carte de contrôle se dessine sur un raster INDÉPENDANT des images livrées. Cause : les
+  dalles LD de 2 201 px (km + 50 m de marge) ont été géoréférencées comme 1 000 m sur
+  haut_doubs/ales/la_capelle (compression 10 %, ±50 m aux bords, annotations comprimées,
+  corpus v2 et run det v1 invalides sur ces zones ; correctif `corriger_georef_dalles.py`).
+- **Un CONFORME ne vaut que pour ce que le contrôleur mesure** (règle utilisateur
+  2026-09-07 « contrôler tes résultats avant de les livrer ») : avant d'annoncer un
+  résultat calculé, lire ses distributions et ses cas extrêmes, annoncer chaque anomalie
+  avec sa cause ou corriger et relancer, et étendre le vérificateur à ce qui a manqué
+  (cas vécus : replis SAM injustifiés, offset de classes deviné par courbes_eval, porte
+  de parité ONNX aveugle à la permutation des requêtes).
+- **Après toute correction géométrique d'annotations** (géoréf, recalage, fusion) :
+  `dedup_annotations.py` puis `revue_auto_annotations.py` avant découpe — les doublons
+  inter-dalles n'apparaissent qu'une fois le géoréférencement juste (−433 fours, −345
+  charbonnières le 2026-09-07).
+- **Comparer les modèles sur les zones non vues** par chacun : un modèle entraîné sur
+  les mêmes dalles (export Roboflow, split aléatoire) n'est pas une baseline — run_rf_detr_1
+  faisait 0,57 de F1 global et 0,02 de rappel à Blois. Tout `.pth` évalué porte un sidecar
+  `best.json` (`class_names`, `class_offset`) : courbes_eval le lit en priorité.
 - **Boucle de vérification systématique** (règle utilisateur 2026-07-27) : produire →
   vérifier les FICHIERS produits par contrôleur indépendant → corriger → REproduire →
   re-vérifier. Aucune livraison (Drive/Roboflow) avant verdict conforme.
@@ -219,6 +250,21 @@ git log ; pas de fichier de log séparé.
   batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,
   search plafonné à 250 à l'ordre instable, compteur de classes en cache) sont parés dans
   `upload_roboflow_split.py` — lire la mémoire persistante avant d'y toucher.
+
+## Pièges de session (outil Bash, encodage, Drive) — mesurés 2026-09-06/08
+
+- L'outil Bash **halve les antislashs** dans les heredocs (`'\\'` arrive en `'\'`,
+  `b"a\\t"` devient une tabulation) : écrire les scripts avec Write, jamais de `\\`
+  dans un heredoc ; construire l'antislash hors littéral (`bytes([92])`) ; dans un YAML
+  entre guillemets doubles `\t` = tabulation → slashs avant partout.
+- Tout script qui imprime des accents : `PYTHONIOENCODING=utf-8` (sinon crash charmap).
+- `Get-PSDrive G` avant chaque accès Drive ; DriveFS mort = relancer
+  `C:\Program Files\Google\Drive File Stream\launch.bat` et attendre ; `robocopy` exit 1 =
+  succès ; grep sur G: = inventorier (`Get-ChildItem`) puis grep par liste de fichiers.
+- Un job GPU écrit tout à la fin : sortie dans un fichier séparé, jamais dans le GPKG
+  ouvert par QGIS ; témoin d'intégrité (effectif + sha256 WKB) avant/après tout run long.
+- Commit à chaque jalon vérifié (configs, manifests, outils, skills), pas en fin de
+  chantier (deux jours non commités le 2026-09-08).
 
 ## Rasters externes (GSI, IGN WMS, .asc…) — pièges mesurés
 

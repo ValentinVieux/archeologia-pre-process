@@ -27,6 +27,23 @@ from shapely.geometry import Point, box
 LHD_RE = re.compile(r"LHD_FXX_(\d{4})_(\d{4})")
 SPLITS = ("train", "valid", "test")
 COTE_M = 1000.0  # dalle LHD 1 km
+GSD_M = 0.5      # pixel natif des dalles LHD (LiDAR HD IGN)
+
+
+def geo_dalle(width: int, height: int) -> tuple[float, float]:
+    """(marge_m, px_m) d'une image de dalle LHD : l'image couvre width × GSD_M mètres,
+    CENTRÉE sur le km (marge = (width × 0,5 − 1000) / 2 de chaque côté).
+
+    Leçon 2026-09-06 : les dalles de 2 201 px (km + ~50 m de marge) étaient géoréférencées
+    comme 1 000 m depuis le coin NW (px = 1000/width) → compression de 10 %, ±50 m aux
+    bords, sur haut_doubs/ales/la_capelle. Toute largeur inattendue est REFUSÉE."""
+    if width != height:
+        sys.exit(f"ERREUR géoréf : image de dalle non carrée {width}x{height}")
+    marge = (width * GSD_M - COTE_M) / 2.0
+    if marge < -0.01 or marge > 100.0:
+        sys.exit(f"ERREUR géoréf : {width} px × {GSD_M} m = {width * GSD_M:.1f} m, incompatible avec une dalle de "
+                 f"{COTE_M:.0f} m (+ marge ≤ 100 m) — vérifier le GSD des images avant de continuer")
+    return max(marge, 0.0), GSD_M
 
 
 def emprise_dalle(file_name: str) -> tuple[float, float] | None:
@@ -64,8 +81,8 @@ def extraire(payload: Path, classes: list[str], forme: str = "bbox",
             if nw is None:
                 hors_grille += 1
                 continue
-            xmin_d, ymax_d = nw
-            px = COTE_M / im["width"]  # m/pixel
+            marge, px = geo_dalle(im["width"], im["height"])
+            xmin_d, ymax_d = nw[0] - marge, nw[1] + marge  # l'image couvre le km + sa marge
             x, y, w, h = a["bbox"]
             if forme == "ellipse":
                 # ellipse inscrite dans la bbox (objets quasi circulaires : masque approché)
@@ -80,7 +97,7 @@ def extraire(payload: Path, classes: list[str], forme: str = "bbox",
                 "annotation_id": a["id"],
                 "image_id": a["image_id"],
                 "file_name": im["file_name"],
-                "tuile": f"{int(xmin_d / 1000):04d}_{int(ymax_d / 1000):04d}",
+                "tuile": f"{int(nw[0] / 1000):04d}_{int(nw[1] / 1000):04d}",
                 "classe": classe,
                 "largeur_m": round(w * px, 2),
                 "hauteur_m": round(h * px, 2),
@@ -113,11 +130,12 @@ def georeferencer_rasters(payload: Path, sortie: Path) -> int:
             vus[dalle] = jpg.name
             with rasterio.open(jpg) as src:
                 data = src.read()
+                marge, px = geo_dalle(src.width, src.height)
                 profil = {
                     "driver": "GTiff", "count": src.count, "dtype": data.dtype,
                     "width": src.width, "height": src.height,
                     "crs": "EPSG:2154",
-                    "transform": from_origin(xmin_d, ymax_d, COTE_M / src.width, COTE_M / src.height),
+                    "transform": from_origin(xmin_d - marge, ymax_d + marge, px, px),
                     "compress": "lzw", "tiled": True,
                 }
             with rasterio.open(dossier / f"{dalle}.tif", "w", **profil) as dst:

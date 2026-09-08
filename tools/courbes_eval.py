@@ -111,7 +111,10 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee):
             sys.exit(f"ERREUR : {nom} est un modèle {tache_modele}, le run est {tache} "
                      "(--tache forcée ou autre modèle) — on ne mélange pas les tâches.")
         modele.optimize_for_inference()
-        decal = None
+        # class_offset du sidecar best.json = vérité (leçon 2026-09-08 : run_rf_detr_1 prédit
+        # parfois la catégorie 0 « entites » héritée de Roboflow -> l'heuristique sur la
+        # première image tombait à 0 et perdait la classe four) ; heuristique sinon.
+        decal = cfg.get("decal_sidecar")
         enregs = []
         for etiquette, dossier in splits:
             coco = COCO(os.path.join(dossier, "_annotations.coco.json"))
@@ -533,10 +536,12 @@ def main():
             sys.exit("ERREUR : nom de modèle '_meta' interdit (réservé au cache).")
         poids, resolution = reste.rsplit("@", 1)
         sidecar = os.path.join(os.path.dirname(poids), "best.json")
-        noms = None
+        noms, decal_sidecar = None, None
         if os.path.exists(sidecar):
-            noms = json.load(open(sidecar, encoding="utf-8")).get("class_names")
-        modeles[nom] = {"poids": poids, "resolution": int(resolution), "noms": noms}
+            sc = json.load(open(sidecar, encoding="utf-8"))
+            noms, decal_sidecar = sc.get("class_names"), sc.get("class_offset")
+        modeles[nom] = {"poids": poids, "resolution": int(resolution), "noms": noms,
+                        "decal_sidecar": decal_sidecar}
     fusion = dict(f.split("=", 1) for f in a.fusion)
 
     if os.path.exists(os.path.join(a.coco, "_annotations.coco.json")):

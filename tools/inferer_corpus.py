@@ -115,6 +115,8 @@ def main():
 
     modele = RFDETR.from_checkpoint(args.poids, resolution=args.resolution)
     seg = bool(getattr(modele.model_config, "segmentation_head", False))
+    # dataset brut de slice_zone (pas de champ `dataset` par image) : le nom du dossier fait foi
+    ds_defaut = os.path.basename(os.path.normpath(args.corpus))
     modele.optimize_for_inference()
     print(f"{nom_modele} : tâche {'segmentation' if seg else 'détection'}, "
           f"résolution {args.resolution}, plancher {args.plancher}, seuils {seuils}")
@@ -133,7 +135,7 @@ def main():
             if not m:
                 sys.exit(f"ERREUR : nom de tuile inattendu {info['file_name']}")
             row, col = int(m.group(1)), int(m.group(2))
-            grille = grille_dataset(args.manifests, info["dataset"])
+            grille = grille_dataset(args.manifests, info.get("dataset", ds_defaut))
             im = Image.open(os.path.join(dossier, info["file_name"])).convert("RGB")
             d = modele.predict(im, threshold=args.plancher)
             if seg and len(d) and d.mask is None:
@@ -180,7 +182,7 @@ def main():
                                        ("uid", "classe", "score", "retenu",
                                         "gt_apparie", "iou_gt")},
                                     "split": split, "zone": info.get("zone", ""),
-                                    "dataset": info["dataset"],
+                                    "dataset": info.get("dataset", ds_defaut),
                                     "tuile": info["file_name"],
                                     "coords": px_vers_l93(poly, grille, row, col)})
                 compte["detections"] += 1
@@ -188,7 +190,7 @@ def main():
             if dets:
                 tuiles[f"{split}/{info['file_name']}"] = {
                     "split": split, "zone": info.get("zone", ""),
-                    "dataset": info["dataset"], "n_gt": len(gt_boxes),
+                    "dataset": info.get("dataset", ds_defaut), "n_gt": len(gt_boxes),
                     "detections": dets}
             compte["images"] += 1
             if (n_fait + 1) % 200 == 0:
