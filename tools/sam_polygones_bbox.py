@@ -21,6 +21,7 @@ import numpy as np
 import rasterio
 import rasterio.features
 import rasterio.windows
+from scipy import ndimage
 from shapely.geometry import Polygon, box, shape
 
 MODELE = "facebook/sam2.1-hiera-large"
@@ -46,21 +47,29 @@ def nettoyer(geom, lissage_m=2.0):
 def choisir_masque(masks, scores, fenetre_px, tfm, boite, ratio_min, ratio_max):
     """Meilleur masque plausible parmi les candidats SAM : (polygone, score, motif).
 
-    Jugé sur le POLYGONE nettoyé (composante principale, trous comblés, découpé à la boîte
-    élargie), jamais sur les pixels bruts : dans les fonds plats le masque brut est moucheté
-    (dizaines à centaines de trous) et un test sur un pixel — le centre — rejetait des masques
+    Jugé sur la composante principale du masque après fermeture 3x3 x2 (mouchetage comblé, vrais
+    trous respectés), jamais sur un pixel brut : dans les fonds plats le masque brut est moucheté
+    (dizaines à centaines de vides connectés) et le test du pixel central rejetait des masques
     corrects (Blois 2026-09-08 : 5 replis « centre_absent », centre à 1 px du masque).
-    Plausible = contient le centre de la boîte, aire entre ratio_min et ratio_max de la boîte.
+    Plausible = contient le centre de la boîte, aire du polygone nettoyé entre ratio_min et
+    ratio_max de la boîte élargie.
     """
     px0, py0, px1, py1 = fenetre_px
     clip = np.zeros_like(masks[0], dtype=bool)
     clip[max(0, int(py0)):int(np.ceil(py1)), max(0, int(px0)):int(np.ceil(px1))] = True
     best, rejets = None, []
     for m, s in zip(masks, scores):
-        formes = [shape(g) for g, v in rasterio.features.shapes((m & clip).astype("uint8"), transform=tfm) if v == 1]
+        m = m & clip
+        # fermeture 3x3 x2 (~1 m) : comble le mouchetage des fonds plats (vides de 1-3 px connectés
+        # en labyrinthe) sans remplir un vrai anneau (trou de dizaines de px) — mesuré Blois 2026-09-08
+        m |= ndimage.binary_closing(m, structure=np.ones((3, 3), bool), iterations=2)
+        formes = [shape(g) for g, v in rasterio.features.shapes(m.astype("uint8"), transform=tfm) if v == 1]
         if not formes:
             rejets.append("masque_vide"); continue
-        poly = nettoyer(max(formes, key=lambda q: q.area).intersection(boite))
+        comp = max(formes, key=lambda q: q.area)
+        if not comp.contains(boite.centroid):  # trous restants respectés : un anneau ne contient pas son centre
+            rejets.append("centre_absent"); continue
+        poly = nettoyer(comp.intersection(boite))
         if poly is not None:
             poly = poly.intersection(boite)  # le lissage peut ressortir de la boîte
             if poly.geom_type == "MultiPolygon":
@@ -68,7 +77,7 @@ def choisir_masque(masks, scores, fenetre_px, tfm, boite, ratio_min, ratio_max):
         if poly is None or poly.is_empty:
             rejets.append("lissage_vide"); continue
         if not poly.contains(boite.centroid):
-            rejets.append("centre_absent"); continue
+            rejets.append("centre_absent_apres_lissage"); continue
         ratio = poly.area / boite.area
         if ratio < ratio_min:
             rejets.append(f"aire_{100 * ratio:.0f}pct"); continue
