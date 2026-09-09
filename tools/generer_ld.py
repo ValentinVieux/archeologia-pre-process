@@ -86,8 +86,9 @@ def main() -> None:
     print(f"MNT {src.width}x{src.height} px à {res:g} m/px -> LD Rmin{rmin}/Rmax{rmax} px "
           f"(anneau {rmin*res:g}-{rmax*res:g} m)")
 
-    profil = src.profile | {"dtype": "uint8", "nodata": NODATA_OUT, "count": 1,
-                            "compress": "deflate", "tiled": True, "BIGTIFF": "IF_SAFER"}
+    # blocs 256 imposés : un MNT en bandes (blockysize 1, ex. Verdun 2013) fait planter l'écriture tuilée
+    profil = src.profile | {"dtype": "uint8", "nodata": NODATA_OUT, "count": 1, "compress": "deflate",
+                            "tiled": True, "blockxsize": 256, "blockysize": 256, "BIGTIFF": "IF_SAFER"}
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
     marge = rmax + 1
     specs = []
