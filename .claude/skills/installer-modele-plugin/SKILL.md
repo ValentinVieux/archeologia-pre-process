@@ -96,8 +96,9 @@ compléments 2026-08).
 10. **Clôture du brouillon de chantier** (CLAUDE.md § Brouillons de chantier) : le
     modèle est déposé et installé, le dossier `D:\brouillons\<chantier>` n'a plus de
     raison d'exister. Lancer `tools\cloturer_chantier.py D:\brouillons\<chantier>` ;
-    déposer ou justifier chaque ligne SANS JUMEAU, puis **proposer la suppression à
-    l'utilisateur** (jamais supprimer de sa propre initiative). Exception : le
+    déposer ou justifier chaque ligne SANS JUMEAU (`cloture-ignore.txt`), archiver ce
+    fichier dans `docs/`, puis **proposer la suppression à l'utilisateur** (jamais
+    supprimer de sa propre initiative). Exception : le
     `_retire_plugin\` d'un modèle retiré n'est pas un brouillon tant qu'il est la
     seule copie du modèle sortant — l'archiver sur le Drive avant clôture.
 

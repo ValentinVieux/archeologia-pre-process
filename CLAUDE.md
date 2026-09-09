@@ -281,7 +281,10 @@ chantier à la racine du disque.
   SANS JUMEAU se traite : déposer, ou l'inscrire dans `cloture-ignore.txt` à la racine
   du brouillon (un motif glob par ligne, **justification obligatoire en commentaire** :
   dalles MNT IGN re-téléchargeables, mosaïques, journaux, intermédiaires périmés).
-  **La suppression reste une décision humaine** — l'outil ne supprime rien.
+  **Avant de supprimer, archiver le `cloture-ignore.txt` dans `docs/`** (gabarit :
+  `docs/cloture_brouillons_2026-09-09.md`) : c'est la seule trace de ce qui a été
+  sciemment détruit. **La suppression reste une décision humaine** — l'outil ne
+  supprime rien, il faut demander.
 - Les dossiers de travail du repo (`datasets\`, `corpus\`, `audits\`) suivent la même
   règle : jetables une fois déposés, régénérables depuis les configs commitées.
 
