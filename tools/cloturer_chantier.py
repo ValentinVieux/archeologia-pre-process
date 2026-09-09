@@ -41,6 +41,10 @@ import sys
 from collections import defaultdict
 
 IGNORE = "cloture-ignore.txt"
+RAPPORT = "cloture.json"
+# Les deux fichiers de l'outil lui-même ne sont jamais des orphelins : sinon un second
+# passage signale le rapport écrit par le premier, et le verdict ne converge jamais.
+SIENS = {IGNORE, RAPPORT}
 
 # Destinations pérennes standard (cf. CLAUDE.md § Stockage Drive, § Rangement model-training).
 CIBLES_DEFAUT = [
@@ -115,7 +119,7 @@ def auditer(brouillon: str, index: dict, motifs: list[str]) -> dict:
             if index.get((nom, taille)):
                 continue
             relatif = os.path.relpath(chemin, brouillon).replace("\\", "/")
-            if nom == IGNORE or any(fnmatch.fnmatch(relatif, m) for m in motifs):
+            if relatif in SIENS or any(fnmatch.fnmatch(relatif, m) for m in motifs):
                 etat["n_justifies"] += 1
                 etat["octets_justifies"] += taille
                 continue
@@ -181,7 +185,7 @@ def auditer_et_rapporter(brouillon: str, index: dict, cibles: list[str], json_fo
         if d["exemples"]:
             print(f"       ex. : {', '.join(d['exemples'][:6])}")
 
-    rapport = json_force or os.path.join(brouillon, "cloture.json")
+    rapport = json_force or os.path.join(brouillon, RAPPORT)
     with open(rapport, "w", encoding="utf-8") as f:
         json.dump({"brouillon": brouillon, "cibles": cibles, "motifs_ignores": motifs,
                    "total_fichiers": total, "total_octets": total_o,

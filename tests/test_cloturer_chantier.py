@@ -95,6 +95,12 @@ def main() -> int:
         r2 = json.loads((autre / "cloture.json").read_text(encoding="utf-8"))
         assert r1["sans_jumeau_fichiers"] == 0 and r2["sans_jumeau_fichiers"] == 1, (r1, r2)
 
+        # 8. Le verdict converge : le cloture.json écrit au 1er passage ne doit pas
+        #    devenir l'orphelin du 2e (le rapport de l'outil n'est jamais un orphelin).
+        code, rap = lancer(brouillon, cible, rapport)
+        assert code == 0, f"2e passage : {rap['sans_jumeau_fichiers']} orphelin(s) apparus"
+        assert rap["sans_jumeau_fichiers"] == 0, rap["par_dossier"]["."]
+
     print("test_cloturer_chantier : OK")
     return 0
 
