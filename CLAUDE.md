@@ -48,8 +48,10 @@ D:\veille_irlande\venv_adaf\Scripts\python.exe tools\auto_label_depressions.py <
 .venv\Scripts\python.exe tools\planche_indices.py <mnt> <sortie> --emprise xmin ymin xmax ymax [--nom d] [--gpkg gt.gpkg]  # planche de TOUS les indices RVT + variantes (choix des canaux multicanaux) — MNT 1 m exigé, recettes VAT/CVAT/e3MSTP vérifiées sur l'install rvt-qgis
 D:\veille_irlande\venv_sam\Scripts\python.exe tools\proposer_polygones_irlande.py <points.gpkg> <ld.tif> <sortie.gpkg>  # propositions hybrides cercle+SAM (corpus Irlande, cf. /corpus-irlande) — venv_sam OBLIGATOIRE (torch)
 .venv\Scripts\python.exe tools\verif_polygones_irlande.py <points.gpkg> <propositions.gpkg>  # boucle de vérification des propositions (CONFORME requis avant revue humaine)
-D:\veille_irlande\venv_sam\Scripts\python.exe tools\sam_polygones_bbox.py <gpkg> <couche> <ld.tif|vrt> <gpkg_sortie> [--couche-sortie X] [--marge 20] [--limite N]  # BOUNDING BOXES -> polygones SAM 2.1 par défaut (box prompt élargi de --marge m par côté, repli bbox si aucun masque plausible ; champs methode/sam_score/diam_eq_m/iou_bbox) — venv_sam OBLIGATOIRE ; cf. /revue-annotations
+D:\veille_irlande\venv_sam\Scripts\python.exe tools\sam_polygones_bbox.py <gpkg> <couche> <ld.tif|vrt> <gpkg_sortie> [--couche-sortie X] [--marge 20] [--limite N] [--increment <gpkg_sam_precedent>]  # BOUNDING BOXES -> polygones SAM 2.1 par défaut (--increment = ne recalcule que les boîtes nouvelles/modifiées, le reste repris tel quel) (box prompt élargi de --marge m par côté, repli bbox si aucun masque plausible ; champs methode/sam_score/diam_eq_m/iou_bbox) — venv_sam OBLIGATOIRE ; cf. /revue-annotations
 .venv\Scripts\python.exe tools\verif_sam_polygones_bbox.py <gpkg> <couche> <gpkg_sortie> [--couche-sortie X] [--marge 20]  # contrôleur indépendant SANS GPU (effectif, attributs, centre dans le polygone, tenue dans la boîte élargie) — RÉPÉTER la --marge du producteur, sinon verdict faux
+.venv\Scripts\python.exe tools\deposer_revue_zone.py <gpkg_revue> <sortie_v3.gpkg> --couches <c1> <c2>=<couche_ref> <c3>= ... [--reference <gpkg_v2>] [--sam <c_sam> ...] [--copier <gpkg>:<couche> ...]  # staging du GPKG d'entités v3 après revue humaine (cf. /revue-annotations § Dépôt) : decision_humaine inchangé/modifié/ajouté (uid partagé sinon BOÎTE contre boîte, ±0,01 m) vs la couche de même nom de la référence = dernière version déposée, geom_origine, <c>_supprimees (motif supprime_qgis/doublon, <c>_doublons rapatriée), fid du livrable réattribués 1..N et fid_source des couches SAM REMAPPÉS (polygones sans boîte écartés), couches v2 recopiées schéma préservé, EPSG:2154 ; refuse d'écraser et refuse G:
+.venv\Scripts\python.exe tools\verif_deposer_revue_zone.py <gpkg_revue> <sortie_v3.gpkg> --couches <c1> <c2>=<couche_ref> ... [--reference <gpkg_v2>] [--sam ...] [--copier ...] [--marge 0]  # contrôleur indépendant SANS GPU (mêmes arguments que le producteur ET la --marge du producteur SAM, sinon verdict faux ; c=couche_ref = couche renommée pendant la revue, c= = sans référence) — CONFORME requis avant robocopy vers G:
 .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> [--out <dossier>]  # corpus d'entraînement multi-zones (classes canoniques) — ATTENTION : --out est le dossier DU corpus (rmtree !), défaut corpus\<nom> ; ne JAMAIS passer --out corpus
 .venv\Scripts\python.exe tools\repeindre_dataset.py <dataset_ld_v1> datasets --mnt <tif|glob> [--ld <raster>]  # datasets multicanaux (csl+crim) aux pixels recalculés, splits/COCO INTACTS — jamais re-slicer pour changer de canaux
 .venv\Scripts\python.exe tools\generer_slrm_cvat.py <mnt.tif> <sortie_dir> [--prefixe p]  # SLRM r10 ADAF + « cvat » (VAT general mal nommé, cf. § multicanal) 8 bits auto-vérifiés
@@ -63,6 +65,7 @@ D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <par
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
 .venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
+.venv\Scripts\python.exe tools\cloturer_chantier.py D:\brouillons\<chantier> [--cible <racine>]  # contrôle de clôture d'un brouillon : quels fichiers n'ont AUCUN jumeau dans les destinations pérennes (Drive, repo, plugin) ; verdict CLÔTURABLE (0) / À DÉPOSER (2), ne supprime rien
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
 docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
 docker build -f tools\bench\Dockerfile.gpu -t archeologia-bench:gpu tools\bench   # CUDA par wheels pip
@@ -250,6 +253,36 @@ git log ; pas de fichier de log séparé.
   batch_name→file Annotate, annotation null = VOC vide, champ `labels` toujours vide,
   search plafonné à 250 à l'ordre instable, compteur de classes en cache) sont parés dans
   `upload_roboflow_split.py` — lire la mémoire persistante avant d'y toucher.
+
+## Brouillons de chantier — `D:\brouillons\<chantier>\` (règle 2026-09-09)
+
+Un chantier d'entraînement fabrique beaucoup de local jetable (rasters intermédiaires,
+GPKG de revue, poids rapatriés, diagnostics). **Racine unique** `D:\brouillons\` ;
+un dossier par chantier, nommé comme le corpus ou le modèle visé (`ponctuelles_2cl_v3`,
+`depressions_grandes_v1`, `lineaires_v3`) — plus jamais un `D:\entrainement_*` par
+chantier à la racine du disque.
+
+- **Rien de durable ne vit là** : tout ce qui compte a une destination pérenne — Drive
+  `data_regions_v2/<zone>/` (sources, GPKG d'entités, MNT/LD), Drive
+  `model-training/<famille>/` (datasets, corpus, runs, évaluations, package), repo
+  (configs, manifests, notebook `docs/google_collab/`), plugin `data/models/`.
+  Le brouillon est une copie de travail, jamais l'original.
+- **`CHANTIER.md` à la racine du brouillon** : quoi, où ça part, ce qui reste à faire.
+  (C'est la formalisation des `REMISE-*.md` / `REPRISE-*.md` déjà pratiqués.)
+- **Toute config commitée qui pointe sur un brouillon porte son équivalent pérenne en
+  commentaire** : `gpkg: D:/brouillons/<...>/x.gpkg  # = Drive training/vecteurs/<zone>_entites_l93_v3.gpkg`
+  (gabarit : les `depressions_*_ld648_v1.yaml`). Sans ça, supprimer le brouillon rend la
+  découpe irreproductible — au 2026-09-09, 27 configs pointaient sur `D:\entrainement_*`
+  et 49 de leurs 54 lignes `raster:`/`gpkg:` n'avaient pas leur équivalent Drive.
+- **Clôture** : quand les données travaillées sont déposées, les datasets créés et
+  l'entraînement fait, le brouillon **se supprime**. Avant de proposer la suppression :
+  `.venv\Scripts\python.exe tools\cloturer_chantier.py D:\brouillons\<chantier>` —
+  verdict CLÔTURABLE (exit 0) ou À DÉPOSER (exit 2, liste par dossier). Ce qui sort
+  SANS JUMEAU se traite : déposer, ou justifier explicitement comme régénérable
+  (dalles MNT IGN re-téléchargeables, mosaïques, logs). **La suppression reste une
+  décision humaine** — l'outil ne supprime rien.
+- Les dossiers de travail du repo (`datasets\`, `corpus\`, `audits\`) suivent la même
+  règle : jetables une fois déposés, régénérables depuis les configs commitées.
 
 ## Pièges de session (outil Bash, encodage, Drive) — mesurés 2026-09-06/08
 

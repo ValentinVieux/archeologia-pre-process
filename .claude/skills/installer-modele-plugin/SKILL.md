@@ -93,6 +93,13 @@ compléments 2026-08).
    `seuils_provenance`, sinon il est signalé « non justifié ») + resynchroniser le `package/` du run
    Drive avec le model_card final (la seule copie correcte ne doit pas être
    uniquement le data/models gitignoré du laptop).
+10. **Clôture du brouillon de chantier** (CLAUDE.md § Brouillons de chantier) : le
+    modèle est déposé et installé, le dossier `D:\brouillons\<chantier>` n'a plus de
+    raison d'exister. Lancer `tools\cloturer_chantier.py D:\brouillons\<chantier>` ;
+    déposer ou justifier chaque ligne SANS JUMEAU, puis **proposer la suppression à
+    l'utilisateur** (jamais supprimer de sa propre initiative). Exception : le
+    `_retire_plugin\` d'un modèle retiré n'est pas un brouillon tant qu'il est la
+    seule copie du modèle sortant — l'archiver sur le Drive avant clôture.
 
 ## Garde-fous
 - Résolution d'entraînement = résolution d'export = résolution d'inférence.

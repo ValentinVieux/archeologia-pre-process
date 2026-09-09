@@ -9,7 +9,7 @@ description: >
   les mardelles », « crée les polygones SAM sur les boîtes », « où seront rangés mes
   résultats », « c'est stabilisé, traite tout », ou après tout retour de validation
   d'un archéologue (docx + shapefiles de détections annotées).
-argument-hint: <zone_id, ex. 25_besancon_chailluz> [<dossier de revue, défaut D:\entrainement_ponctuelles\revue_zones>]
+argument-hint: <zone_id, ex. 25_besancon_chailluz> [<dossier de revue, défaut D:\brouillons\<chantier>\revue_zones>]
 entrees:
   - "revue_zones\\<zone>_annotations.gpkg (bounding boxes, attributs conservés) + <zone>_ld.vrt"
   - "éventuels GPKG de détections annotés par l'archéologue (champ validation oui/peut-être/non + OBS)"
@@ -99,11 +99,14 @@ chablis) ; ranger dans `raw/docs/` de la zone, pas dans le repo.
    `decision_humaine` ∈ {inchangé, modifié, ajouté} (par `uid` contre la v2, bbox
    contre bbox ; ajouts `revue:<fid>`) et `geom_origine` ; supprimés dans
    `<classe>_supprimees` (jamais dans une couche d'entraînement) ; `<classe>_sam`
-   telle quelle ; couches non traitées recopiées de la v2 ; couches IGNORER reportées
-   en `ignorer: true` dans la config v3. Script de staging + son `verif_` à écrire au
-   premier dépôt et à promouvoir dans `tools/` (schéma : `decision_humaine` texte,
-   `geom_origine` WKT texte, `motif` texte dans `_supprimees` ∈ {doublon, supprime_qgis} ;
-   couches non traitées comparées quand même par uid — l'utilisateur a pu les toucher).
+   avec `fid_source` REMAPPÉ sur les fid du livrable (réattribués 1..N ; polygones sans
+   boîte écartés) ; couches non traitées recopiées de la v2 ; couches IGNORER reportées
+   en `ignorer: true` dans la config v3. Outils : `tools/deposer_revue_zone.py` puis
+   `tools/verif_deposer_revue_zone.py` (mêmes arguments + `--marge` du producteur SAM ;
+   `c=couche_ref` si la couche a été renommée pendant la revue, `c=` sans référence ;
+   schéma : `decision_humaine` texte, `geom_origine` WKT texte, `motif` texte dans
+   `_supprimees` ∈ {doublon, supprime_qgis} ; auto-test `tests/test_deposer_revue_zone.py`,
+   premier dépôt Blois 2026-09-08 après deux rondes de panel adverse, cf. soucis.md).
 2. `Get-PSDrive G` (DriveFS meurt en session : relancer `launch.bat`) ; `robocopy
    <staging> <training\vecteurs> /E /MT:16` (exit 1 = succès) ; sha256 et effectifs
    relus sur G:.

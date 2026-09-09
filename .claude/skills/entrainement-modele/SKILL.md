@@ -96,6 +96,11 @@ colle les sorties de cellules : les valider une à une.
   valider avec `scripts/validate_models_metadata.py` du plugin — outil à écrire au
   prochain cas (fait à la main le 2026-09-08).
 - Consigner (tracker de campagne + mémoire) : chiffres, époque best, artefacts.
+- **Le local du chantier vit dans `D:\brouillons\<chantier>\`** (CLAUDE.md § Brouillons
+  de chantier), avec son `CHANTIER.md` tenu à jour : poids rapatriés, évaluations,
+  diagnostics. Rien d'original là-dedans — tout run/éval déposé sur
+  `model-training/<famille>/runs/training/<run>/` AVANT de le considérer acquis.
+  Clôture (contrôle + proposition de suppression) : `/installer-modele-plugin` § 10.
 - Installation plugin : skill `/installer-modele-plugin`.
 
 ## Garde-fous
