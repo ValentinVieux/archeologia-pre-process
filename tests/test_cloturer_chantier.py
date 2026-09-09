@@ -82,6 +82,19 @@ def main() -> int:
         # 6. L'outil ne supprime rien.
         assert (brouillon / "diag" / "jetable.log").exists(), "le brouillon doit rester intact"
 
+        # 7. Plusieurs brouillons en une passe : verdict = le pire, un rapport chacun.
+        autre = base / "brouillon2"
+        ecrire(autre / "orphelin.bin", b"q" * 77)
+        proc = subprocess.run(
+            [sys.executable, str(OUTIL), str(brouillon), str(autre), "--sans-defaut", "--cible", str(cible)],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+        )
+        assert proc.returncode == 2, f"un brouillon non clôturable doit donner 2 (reçu {proc.returncode})"
+        r1 = json.loads((brouillon / "cloture.json").read_text(encoding="utf-8"))
+        r2 = json.loads((autre / "cloture.json").read_text(encoding="utf-8"))
+        assert r1["sans_jumeau_fichiers"] == 0 and r2["sans_jumeau_fichiers"] == 1, (r1, r2)
+
     print("test_cloturer_chantier : OK")
     return 0
 

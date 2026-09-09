@@ -13,7 +13,10 @@ imprime un état, écrit `cloture.json` dans le brouillon, et sort 0 si tout est
 2 sinon.
 
     python tools\\cloturer_chantier.py D:\\brouillons\\ponctuelles_2cl_v3
-    python tools\\cloturer_chantier.py <brouillon> --cible <racine> [--cible ...] [--json <fichier>]
+    python tools\\cloturer_chantier.py <brouillon> [<brouillon> ...] --cible <racine> [--json <fichier>]
+
+Plusieurs brouillons se passent d'un coup : l'indexation des destinations pérennes est
+la partie coûteuse (~45 min sur un Drive qui synchronise) et n'est faite qu'une fois.
 
 Tout ce qui reste SANS JUMEAU doit être déposé OU justifié : un fichier
 `cloture-ignore.txt` à la racine du brouillon liste, un motif glob par ligne (style
@@ -125,17 +128,22 @@ def auditer(brouillon: str, index: dict, motifs: list[str]) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("brouillon", help="dossier de brouillon à clôturer")
+    ap.add_argument("brouillon", nargs="+", help="dossier(s) de brouillon à clôturer")
     ap.add_argument("--cible", action="append", default=[], metavar="RACINE",
                     help="destination pérenne supplémentaire (répétable)")
     ap.add_argument("--sans-defaut", action="store_true",
                     help="n'indexer QUE les --cible (sans les destinations standard)")
-    ap.add_argument("--json", metavar="FICHIER", help="rapport JSON (défaut : <brouillon>\\cloture.json)")
+    ap.add_argument("--json", metavar="FICHIER",
+                    help="rapport JSON d'un brouillon unique (défaut : <brouillon>\\cloture.json)")
     args = ap.parse_args()
 
-    brouillon = os.path.abspath(args.brouillon)
-    if not os.path.isdir(brouillon):
-        print(f"ERREUR : {brouillon} n'est pas un dossier", file=sys.stderr)
+    brouillons = [os.path.abspath(b) for b in args.brouillon]
+    for b in brouillons:
+        if not os.path.isdir(b):
+            print(f"ERREUR : {b} n'est pas un dossier", file=sys.stderr)
+            return 1
+    if args.json and len(brouillons) > 1:
+        print("ERREUR : --json ne vaut que pour un brouillon unique", file=sys.stderr)
         return 1
 
     print("Indexation des destinations pérennes...", file=sys.stderr)
@@ -146,6 +154,10 @@ def main() -> int:
               file=sys.stderr)
         return 1
 
+    return max(auditer_et_rapporter(b, index, cibles, args.json) for b in brouillons)
+
+
+def auditer_et_rapporter(brouillon: str, index: dict, cibles: list[str], json_force: str | None) -> int:
     motifs = motifs_ignores(brouillon)
     print(f"  {IGNORE} : {len(motifs)} motifs" if motifs else f"  {IGNORE} : absent", file=sys.stderr)
 
@@ -169,7 +181,7 @@ def main() -> int:
         if d["exemples"]:
             print(f"       ex. : {', '.join(d['exemples'][:6])}")
 
-    rapport = args.json or os.path.join(brouillon, "cloture.json")
+    rapport = json_force or os.path.join(brouillon, "cloture.json")
     with open(rapport, "w", encoding="utf-8") as f:
         json.dump({"brouillon": brouillon, "cibles": cibles, "motifs_ignores": motifs,
                    "total_fichiers": total, "total_octets": total_o,
