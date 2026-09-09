@@ -15,6 +15,12 @@ imprime un état, écrit `cloture.json` dans le brouillon, et sort 0 si tout est
     python tools\\cloturer_chantier.py D:\\brouillons\\ponctuelles_2cl_v3
     python tools\\cloturer_chantier.py <brouillon> --cible <racine> [--cible ...] [--json <fichier>]
 
+Tout ce qui reste SANS JUMEAU doit être déposé OU justifié : un fichier
+`cloture-ignore.txt` à la racine du brouillon liste, un motif glob par ligne (style
+.gitignore, `#` = commentaire), ce qui n'a délibérément pas de copie pérenne —
+régénérable, journal, intermédiaire périmé. Chaque motif DOIT porter sa justification
+en commentaire de fin de ligne : c'est elle qui rend le verdict CLÔTURABLE lisible.
+
 Angles morts assumés : un fichier renommé au dépôt (`annotations_v3_dedup.gpkg` ->
 `<zone>_entites_l93_v3.gpkg`) sort SANS JUMEAU alors qu'il est déposé — c'est voulu,
 au producteur de le justifier ligne à ligne. Inversement, un jumeau de même nom et
@@ -25,10 +31,13 @@ leurs propres contrôleurs (verif_dataset, verif_corpus, verif_courbes_eval) en 
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import sys
 from collections import defaultdict
+
+IGNORE = "cloture-ignore.txt"
 
 # Destinations pérennes standard (cf. CLAUDE.md § Stockage Drive, § Rangement model-training).
 CIBLES_DEFAUT = [
@@ -68,15 +77,29 @@ def indexer(racines: list[str]) -> dict[tuple[str, int], list[str]]:
     return index
 
 
-def auditer(brouillon: str, index: dict) -> dict:
-    """Verdict par dossier du brouillon : combien de fichiers sans jumeau, et lesquels."""
+def motifs_ignores(brouillon: str) -> list[str]:
+    """Motifs glob de <brouillon>/cloture-ignore.txt (chemins relatifs, slashs avant)."""
+    chemin = os.path.join(brouillon, IGNORE)
+    if not os.path.exists(chemin):
+        return []
+    motifs = []
+    for ligne in open(chemin, encoding="utf-8"):
+        motif = ligne.split("#")[0].strip().replace("\\", "/")
+        if motif:
+            motifs.append(motif)
+    return motifs
+
+
+def auditer(brouillon: str, index: dict, motifs: list[str]) -> dict:
+    """Verdict par dossier : fichiers sans jumeau, dont ceux couverts par cloture-ignore."""
     par_dossier: dict[str, dict] = {}
     for dossier, _, fichiers in os.walk(brouillon):
         rel = os.path.relpath(dossier, brouillon)
         if not fichiers:
             continue
         etat = par_dossier.setdefault(
-            rel, {"n": 0, "octets": 0, "n_sans_jumeau": 0, "octets_sans_jumeau": 0, "exemples": []}
+            rel, {"n": 0, "octets": 0, "n_sans_jumeau": 0, "octets_sans_jumeau": 0,
+                  "n_justifies": 0, "octets_justifies": 0, "exemples": []}
         )
         for nom in fichiers:
             chemin = os.path.join(dossier, nom)
@@ -86,11 +109,17 @@ def auditer(brouillon: str, index: dict) -> dict:
                 continue
             etat["n"] += 1
             etat["octets"] += taille
-            if not index.get((nom, taille)):
-                etat["n_sans_jumeau"] += 1
-                etat["octets_sans_jumeau"] += taille
-                if len(etat["exemples"]) < 12:
-                    etat["exemples"].append(nom)
+            if index.get((nom, taille)):
+                continue
+            relatif = os.path.relpath(chemin, brouillon).replace("\\", "/")
+            if nom == IGNORE or any(fnmatch.fnmatch(relatif, m) for m in motifs):
+                etat["n_justifies"] += 1
+                etat["octets_justifies"] += taille
+                continue
+            etat["n_sans_jumeau"] += 1
+            etat["octets_sans_jumeau"] += taille
+            if len(etat["exemples"]) < 12:
+                etat["exemples"].append(nom)
     return dict(sorted(par_dossier.items()))
 
 
@@ -117,32 +146,43 @@ def main() -> int:
               file=sys.stderr)
         return 1
 
-    par_dossier = auditer(brouillon, index)
+    motifs = motifs_ignores(brouillon)
+    print(f"  {IGNORE} : {len(motifs)} motifs" if motifs else f"  {IGNORE} : absent", file=sys.stderr)
+
+    par_dossier = auditer(brouillon, index, motifs)
     total = sum(d["n"] for d in par_dossier.values())
     total_o = sum(d["octets"] for d in par_dossier.values())
     reste = sum(d["n_sans_jumeau"] for d in par_dossier.values())
     reste_o = sum(d["octets_sans_jumeau"] for d in par_dossier.values())
+    just = sum(d["n_justifies"] for d in par_dossier.values())
+    just_o = sum(d["octets_justifies"] for d in par_dossier.values())
 
     print(f"\n=== {brouillon} — {total} fichiers, {total_o / GO:.2f} Go ===")
     for rel, d in par_dossier.items():
-        etat = "deposé" if d["n_sans_jumeau"] == 0 else f"{d['n_sans_jumeau']}/{d['n']} SANS JUMEAU"
-        print(f"  {rel:<58} {d['n']:>6} f {d['octets'] / GO:>7.2f} Go  {etat}"
-              + (f"  [{d['octets_sans_jumeau'] / GO:.2f} Go]" if d["n_sans_jumeau"] else ""))
+        if d["n_sans_jumeau"]:
+            etat = f"{d['n_sans_jumeau']}/{d['n']} SANS JUMEAU  [{d['octets_sans_jumeau'] / GO:.2f} Go]"
+        elif d["n_justifies"]:
+            etat = f"deposé ou justifié ({d['n_justifies']} justifiés)"
+        else:
+            etat = "deposé"
+        print(f"  {rel:<58} {d['n']:>6} f {d['octets'] / GO:>7.2f} Go  {etat}")
         if d["exemples"]:
             print(f"       ex. : {', '.join(d['exemples'][:6])}")
 
     rapport = args.json or os.path.join(brouillon, "cloture.json")
     with open(rapport, "w", encoding="utf-8") as f:
-        json.dump({"brouillon": brouillon, "cibles": cibles,
+        json.dump({"brouillon": brouillon, "cibles": cibles, "motifs_ignores": motifs,
                    "total_fichiers": total, "total_octets": total_o,
                    "sans_jumeau_fichiers": reste, "sans_jumeau_octets": reste_o,
+                   "justifies_fichiers": just, "justifies_octets": just_o,
                    "par_dossier": par_dossier}, f, ensure_ascii=False, indent=1)
 
+    print(f"\nJustifiés par {IGNORE} : {just} fichiers, {just_o / GO:.2f} Go")
     if reste:
-        print(f"\nÀ DÉPOSER (ou à justifier comme régénérable) : {reste} fichiers, {reste_o / GO:.2f} Go")
+        print(f"À DÉPOSER (ou à justifier dans {IGNORE}) : {reste} fichiers, {reste_o / GO:.2f} Go")
         print(f"Rapport : {rapport}")
         return 2
-    print(f"\nCLÔTURABLE : tout a un jumeau pérenne.\nRapport : {rapport}")
+    print(f"CLÔTURABLE : tout est déposé ou justifié.\nRapport : {rapport}")
     return 0
 
 

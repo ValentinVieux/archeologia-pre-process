@@ -55,13 +55,31 @@ def main() -> int:
         code, rap = lancer(brouillon, cible, rapport)
         assert code == 2 and rap["sans_jumeau_fichiers"] == 1, "taille différente = pas un jumeau"
 
-        # 3. Tout déposé -> CLÔTURABLE (exit 0).
+        # 3. cloture-ignore.txt : un motif glob justifie l'orphelin -> CLÔTURABLE.
+        ecrire(brouillon / "cloture-ignore.txt",
+               "# journaux, régénérables\ndiag/*.log  # sorties de diagnostic\n".encode("utf-8"))
+        code, rap = lancer(brouillon, cible, rapport)
+        assert code == 0, f"orphelin justifié doit donner exit 0 (reçu {code})"
+        assert rap["sans_jumeau_fichiers"] == 0, rap["sans_jumeau_fichiers"]
+        # 2 justifiés : l'orphelin couvert par le motif, et cloture-ignore.txt lui-même
+        assert rap["justifies_fichiers"] == 2, rap["justifies_fichiers"]
+        assert rap["motifs_ignores"] == ["diag/*.log"], rap["motifs_ignores"]
+        # le fichier d'ignore lui-même ne compte jamais comme orphelin
+        assert rap["par_dossier"]["."]["n_sans_jumeau"] == 0
+
+        # 4. Un motif qui ne couvre pas l'orphelin ne le justifie pas.
+        ecrire(brouillon / "cloture-ignore.txt", b"autre/*.log\n")
+        code, rap = lancer(brouillon, cible, rapport)
+        assert code == 2 and rap["sans_jumeau_fichiers"] == 1, "motif hors sujet = pas de justification"
+
+        # 5. Tout déposé -> CLÔTURABLE même sans motif.
+        ecrire(brouillon / "cloture-ignore.txt", b"")
         ecrire(cible / "region" / "logs" / "jetable.log", b"z" * 42)
         code, rap = lancer(brouillon, cible, rapport)
         assert code == 0, f"tout déposé doit donner exit 0 (reçu {code})"
         assert rap["sans_jumeau_fichiers"] == 0
 
-        # 4. L'outil ne supprime rien.
+        # 6. L'outil ne supprime rien.
         assert (brouillon / "diag" / "jetable.log").exists(), "le brouillon doit rester intact"
 
     print("test_cloturer_chantier : OK")

@@ -65,7 +65,7 @@ D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <par
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
 .venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
-.venv\Scripts\python.exe tools\cloturer_chantier.py D:\brouillons\<chantier> [--cible <racine>]  # contrôle de clôture d'un brouillon : quels fichiers n'ont AUCUN jumeau dans les destinations pérennes (Drive, repo, plugin) ; verdict CLÔTURABLE (0) / À DÉPOSER (2), ne supprime rien
+.venv\Scripts\python.exe tools\cloturer_chantier.py D:\brouillons\<chantier> [--cible <racine>] [--sans-defaut]  # contrôle de clôture d'un brouillon : quels fichiers n'ont AUCUN jumeau dans les destinations pérennes (Drive, repo, plugin) ; ce qui est délibérément non déposé va dans <brouillon>\cloture-ignore.txt (motifs glob + justification) ; verdict CLÔTURABLE (0) / À DÉPOSER (2), ne supprime rien
 # --- banc d'essai d'inférence (tools\bench\, sorties D:\pipeline_results\bench) ---
 docker build -t archeologia-bench:cpu --build-arg BASE=python:3.11-slim-bookworm --build-arg ORT_PKG=onnxruntime==1.24.1 tools\bench
 docker build -f tools\bench\Dockerfile.gpu -t archeologia-bench:gpu tools\bench   # CUDA par wheels pip
@@ -278,9 +278,10 @@ chantier à la racine du disque.
   l'entraînement fait, le brouillon **se supprime**. Avant de proposer la suppression :
   `.venv\Scripts\python.exe tools\cloturer_chantier.py D:\brouillons\<chantier>` —
   verdict CLÔTURABLE (exit 0) ou À DÉPOSER (exit 2, liste par dossier). Ce qui sort
-  SANS JUMEAU se traite : déposer, ou justifier explicitement comme régénérable
-  (dalles MNT IGN re-téléchargeables, mosaïques, logs). **La suppression reste une
-  décision humaine** — l'outil ne supprime rien.
+  SANS JUMEAU se traite : déposer, ou l'inscrire dans `cloture-ignore.txt` à la racine
+  du brouillon (un motif glob par ligne, **justification obligatoire en commentaire** :
+  dalles MNT IGN re-téléchargeables, mosaïques, journaux, intermédiaires périmés).
+  **La suppression reste une décision humaine** — l'outil ne supprime rien.
 - Les dossiers de travail du repo (`datasets\`, `corpus\`, `audits\`) suivent la même
   règle : jetables une fois déposés, régénérables depuis les configs commitées.
 
