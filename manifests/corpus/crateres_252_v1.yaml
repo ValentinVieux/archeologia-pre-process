@@ -1,0 +1,56 @@
+corpus: crateres_252_v1
+genere_le: '2026-09-09'
+outil: tools/build_corpus.py
+outil_commit: 4b00ec5
+config_sha1: 06969622c8c474bb74b47a4d460a8f3ebbb9b6a6
+classes:
+- cratere
+fusions: {}
+datasets:
+  crateres_55_verdun_ld252_v1:
+    zone: grand_est/55_verdun
+    splits:
+      train:
+        images: 5101
+        annotations:
+          cratere: 511475
+      valid:
+        images: 1455
+        annotations:
+          cratere: 158075
+      test:
+        images: 732
+        annotations:
+          cratere: 80319
+    split_manifest_sha1: b5685192d491982add8ce180bbde44a646ae2802
+    raster: D:/brouillons/crateres_tranchees_v2/55_verdun/LD/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif
+    gpkg: D:/brouillons/crateres_tranchees_v2/55_verdun/vecteurs/55_verdun_entites_l93_v1.gpkg
+    tuile_px: 252
+    genere_le_dataset: '2026-09-09'
+splits:
+  train:
+    images: 5101
+    coco_sha1: 996a36dc54d6c2fd6c51e7787ca216f72d856354
+    annotations:
+      cratere: 511475
+  valid:
+    images: 1455
+    coco_sha1: 8769d258481b645efe8ffe95370b8799c4357113
+    annotations:
+      cratere: 158075
+  test:
+    images: 732
+    coco_sha1: 1a7dc3cf61de02f2ec3197d4fc88d7b56804f3df
+    annotations:
+      cratere: 80319
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'DÉCISION 2026-09-09: modèle mono-classe cratere en SEGMENTATION d''instances, tuiles
+  252 px -> résolution 648 (zoom x2,57) ; inférence cible SAHI 252 (le déployé cratere_circulaire_2
+  tourne en SAHI 140 : 484 fenêtres par dalle, 13x le coût d''un modèle natif)'
+- 'DÉCISION 2026-09-09: mono-zone Verdun ; 62_vimy = référence gelée jamais en train
+  (baseline cratere_circulaire_2 sur Vimy : F1 0,646 @0,30 en point-dans-polygone)'
+- 'ATTENTION: 104 cratères < 1 m (esquilles de segmentation, min 0,0 m) laissés dans
+  la source ; 3 060 cratères allongés (> 3) = coalescents voulus ; 279 négatifs purs
+  seulement (les cratères couvrent toute la zone)'

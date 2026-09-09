@@ -1,0 +1,28 @@
+# Corpus d'entraînement CRATÈRES (WW1) — v1, chantier crateres_tranchees_v2 (2026-09-09).
+# UNE classe `cratere`, cible SEGMENTATION d'instances (RF-DETR-Seg-Large, résolution 648),
+# tuiles de 252 px à 0,5 m (126 m) agrandies ×2,57 à l'entraînement : plus petit zoom qui tient
+# sous les 200 requêtes du modèle (p50 103, p99 216 cratères par fenêtre de 126 m). Décisions :
+#   - source = training/vecteurs/couche_regroupee.gpkg de 55_verdun (couche VALIDÉE, 731 905 cratères,
+#     Ø éq. médian 2,29 m, cratères coalescents compris ; NON reproductible depuis raw/) ;
+#   - tranchées en `ignorer` dans la découpe (bloquent les négatifs, pas annotées) ;
+#   - LD régénéré le 2026-09-09 (l'ancien LD 2025 avait 20 % de pixels à 0) ;
+#   - MONO-ZONE : 62_vimy est la zone de RÉFÉRENCE GELÉE (jamais en train), le split test de
+#     Verdun ne sert qu'au suivi ; la mesure finale se fait sur Vimy (courbes_eval).
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_crateres_v1.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: crateres_252_v1
+classes: [cratere]
+fusions: {}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml
+  - "DÉCISION 2026-09-09: modèle mono-classe cratere en SEGMENTATION d'instances, tuiles 252 px ->
+    résolution 648 (zoom x2,57) ; inférence cible SAHI 252 (le déployé cratere_circulaire_2 tourne en
+    SAHI 140 : 484 fenêtres par dalle, 13x le coût d'un modèle natif)"
+  - "DÉCISION 2026-09-09: mono-zone Verdun ; 62_vimy = référence gelée jamais en train (baseline
+    cratere_circulaire_2 sur Vimy : F1 0,646 @0,30 en point-dans-polygone)"
+  - "ATTENTION: 104 cratères < 1 m (esquilles de segmentation, min 0,0 m) laissés dans la source ;
+    3 060 cratères allongés (> 3) = coalescents voulus ; 279 négatifs purs seulement (les cratères
+    couvrent toute la zone)"
+datasets:
+  - crateres_55_verdun_ld252_v1
