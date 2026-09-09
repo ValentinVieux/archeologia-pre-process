@@ -17,6 +17,9 @@ Format du YAML de mapping :
         exclure: ["<valeur ignorée>", ...]                # optionnel (ex. "Autre")
       <fichier2.shp>:
         entite: <entity_id>            # couche entière -> une entité (pas de champ)
+        exploser: true                 # optionnel : multipolygone dissous -> une entité par
+                                       # partie (les attributs décrivent le tout, pas les
+                                       # parties : écartés, seul type_source est posé)
 
 Usage :
     .venv\\Scripts\\python.exe tools\\build_zone_gpkg.py <mapping.yaml> <dossier_source> [--out <dossier>]
@@ -53,6 +56,10 @@ def main():
         gdf = gpd.read_file(source / fichier)
         if gdf.crs is None or gdf.crs.to_epsg() != cfg["crs"]:
             sys.exit(f"{fichier} : CRS {gdf.crs} inattendu (EPSG:{cfg['crs']} requis)")
+        if spec.get("exploser"):  # cas Verdun : couche_regroupee = 1 MultiPolygon de 731 905 cratères
+            n0 = len(gdf)
+            gdf = gdf[["geometry"]].explode(index_parts=False).reset_index(drop=True)
+            print(f"  éclaté : {fichier} — {n0} entité(s) -> {len(gdf)} parties")
         if "entite" in spec:  # couche entière -> une entité (pas de champ de classe)
             donnees[fichier] = (gdf, spec)
             est_point = gdf.geom_type.iloc[0] in ("Point", "MultiPoint") if len(gdf) else False

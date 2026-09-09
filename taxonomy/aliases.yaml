@@ -79,6 +79,16 @@ aliases:
   - { raw: "Axe de circulation", entity_id: voie, source_dataset: 62_vimy, context: "lignes_vimy.shp, champ 'interp'", decided: "2026-09-04" }
   # Chailluz — revue humaine 2026-09-06 : couche « mardelles » (détections det v1 revues, >= 40 m) -> nouvelle entité candidate
   - { raw: "mardelles", entity_id: depression_circulaire_grande, source_dataset: 25_besancon_chailluz, context: "25_besancon_chailluz_detections_det_v1.gpkg, couches mardelles / mardelles_sam (revue_zones/traité)", decided: "2026-09-06" }
+  - raw: "boyaux_zonal"
+    entity_id: tranchees_et_boyaux
+    source_dataset: 55_verdun
+    context: "tranchees_et_boyaux.shp, champ 'layer' (11 704 polygones, fond de tranchée segmenté ~1,3 m) — une seule classe tranchée avec tranchees_zonal (décision utilisateur, chantier crateres_tranchees_v2)"
+    decided: "2026-09-09"
+  - raw: "tranchees_zonal"
+    entity_id: tranchees_et_boyaux
+    source_dataset: 55_verdun
+    context: "tranchees_et_boyaux.shp, champ 'layer' (5 662 polygones)"
+    decided: "2026-09-09"
 ignored:
   # champ 'type' — fourre-tout et objets sans signature LiDAR
   - { raw: "dépôt", source_dataset: data_bretagne_1, decided: "2026-07-16" }
@@ -341,3 +351,14 @@ ignored:
   - { raw: "VIMY_00022", source_dataset: 62_vimy, decided: "2026-09-04" }
   - { raw: "vimy", source_dataset: 62_vimy, decided: "2026-09-04" }
   # Vimy — audit 2026-09-04 : autres attributs
+  # Verdun — audit 2026-09-09 : chemins d'origine (artefacts de fusion QGIS, champ 'path') et noms des 8 shapefiles de segmentation d1-d8 (catégories morphologiques, pas des entités ; la vérité terrain cratères = training/vecteurs/couche_regroupee.gpkg, déclarée dans configs/vecteurs_55_verdun.yaml)
+  - { raw: "C:/Users/rdema/Documents/dataset_verdun/shapefiles/Boyaux/boyaux_zonal.shp", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "C:/Users/rdema/Documents/dataset_verdun/shapefiles/Tranchées/tranchees_zonal.shp", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d1", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d2", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d3", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d4", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d5", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d6", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d7", source_dataset: 55_verdun, decided: "2026-09-09" }
+  - { raw: "d8", source_dataset: 55_verdun, decided: "2026-09-09" }
