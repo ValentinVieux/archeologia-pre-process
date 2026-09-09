@@ -2,8 +2,8 @@
 # ellipses, classe charbonnière UNIQUE actée 2026-08-21). LD 0,5 m (VRT des jpg).
 dataset: fours_charb_30_la_capelle_ld648_v1
 zone: occitanie/30_la_capelle_et_masmolene
-raster: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/ld.vrt  # LD livré à géoréf FAUSSE (incident 2026-09-06) : dataset PÉRIMÉ ; version corrigée = Drive <zone>/raw/MNT/LD_livre_dalles.vrt, LD de référence = raw/MNT/la_capelle_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg  # annotations v1 à géoréf FAUSSE, NON déposées (dataset PÉRIMÉ) ; état corrigé + dédoublonné = Drive <zone>/training/vecteurs/30_la_capelle_et_masmolene_entites_l93_v4.gpkg
 couches:
   charbonniere:
     classe: charbonniere

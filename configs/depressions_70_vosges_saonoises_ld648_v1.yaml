@@ -7,7 +7,7 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_70_vosges_saonoises_ld648_v3.yaml (jamais re-tirer un split).
 dataset: depressions_70_vosges_saonoises_ld648_v1
 zone: bourgogne_franche_comte/70_vosges_saonoises
-raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
+raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (57 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
 gpkg: D:/entrainement_ponctuelles/staging/70_vosges_saonoises/training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg  # = Drive training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg
 couches:
   depression_circulaire_grande_sam:

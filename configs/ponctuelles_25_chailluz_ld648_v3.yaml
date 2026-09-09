@@ -2,8 +2,8 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_25_chailluz_ld648_v2.yaml (jamais re-tirer un split).
 dataset: ponctuelles_25_chailluz_ld648_v3
 zone: bourgogne_franche_comte/25_besancon_chailluz
-raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
-gpkg: D:/entrainement_ponctuelles/revue_zones/traité/25_besancon_chailluz_detections_det_v1.gpkg
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif  # = Drive <zone>/raw/MNT/chailluz_ld.tif
+gpkg: D:/entrainement_ponctuelles/revue_zones/traité/25_besancon_chailluz_detections_det_v1.gpkg  # = Drive <zone>/training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg (couches renommées au dépôt : depression_circulaire_grande_bbox -> depression_circulaire_grande, polygones SAM -> _sam)
 couches:
   charbonniere:
     classe: charbonniere

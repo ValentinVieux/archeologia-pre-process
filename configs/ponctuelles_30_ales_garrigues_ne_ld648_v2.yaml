@@ -5,8 +5,8 @@
 # coupée). Split repris du manifest v1 (blocs 2 km géographiques).
 dataset: ponctuelles_30_ales_garrigues_ne_ld648_v2
 zone: occitanie/30_ales_garrigues_ne
-raster: D:/entrainement_ponctuelles/ales/ales_ld.tif
-gpkg: D:/entrainement_ponctuelles/zones/30_ales_garrigues_ne/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/ales/ales_ld.tif  # = Drive <zone>/raw/MNT/ales_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/30_ales_garrigues_ne/annotations_coco.gpkg  # annotations v1 à géoréf FAUSSE, NON déposées (dataset PÉRIMÉ) ; état corrigé + dédoublonné = Drive <zone>/training/vecteurs/30_ales_garrigues_ne_entites_l93_v4.gpkg
 couches:
   charbonniere:
     classe: charbonniere

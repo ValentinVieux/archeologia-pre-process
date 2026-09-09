@@ -3,8 +3,8 @@
 # LD inchangé (VRT continu, audité sain). Split repris du manifest v1.
 dataset: ponctuelles_70_vosges_saonoises_ld648_v2
 zone: bourgogne_franche_comte/70_vosges_saonoises
-raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_coco_v2.gpkg
+raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (57 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
+gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_coco_v2.gpkg  # annotations v2, NON déposées ; état revu = Drive <zone>/training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg
 couches:
   charbonniere:
     classe: charbonniere

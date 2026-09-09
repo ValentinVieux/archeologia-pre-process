@@ -7,7 +7,7 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_25_chailluz_ld648_v3.yaml (jamais re-tirer un split).
 dataset: depressions_25_besancon_chailluz_ld648_v1
 zone: bourgogne_franche_comte/25_besancon_chailluz
-raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif
+raster: D:/entrainement_ponctuelles/chailluz/chailluz_ld.tif  # = Drive <zone>/raw/MNT/chailluz_ld.tif
 gpkg: D:/entrainement_ponctuelles/staging/25_besancon_chailluz/training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg  # = Drive training/vecteurs/25_besancon_chailluz_entites_l93_v3.gpkg
 couches:
   depression_circulaire_grande_sam:

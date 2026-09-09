@@ -3,8 +3,8 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_70_vosges_saonoises_ld648_v2.yaml (jamais re-tirer un split).
 dataset: ponctuelles_70_vosges_saonoises_ld648_v3
 zone: bourgogne_franche_comte/70_vosges_saonoises
-raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_v3_dedup.gpkg
+raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (57 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
+gpkg: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/annotations_v3_dedup.gpkg  # = Drive <zone>/training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg (la couche charbonniere_doublons y est nommée charbonniere_supprimees)
 couches:
   charbonniere:
     classe: charbonniere

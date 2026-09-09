@@ -4,8 +4,8 @@
 # sain). Split repris du manifest v1 (--split-depuis, jamais re-tiré).
 dataset: ponctuelles_57_fenetrange_ld648_v2
 zone: grand_est/57_fenetrange
-raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/57_fenetrange/annotations_coco_v2.gpkg
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (139 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
+gpkg: D:/entrainement_ponctuelles/zones/57_fenetrange/annotations_coco_v2.gpkg  # annotations v2, NON déposées ; état revu = Drive <zone>/training/vecteurs/57_fenetrange_entites_l93_v3.gpkg
 couches:
   charbonniere:
     classe: charbonniere

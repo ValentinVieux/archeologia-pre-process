@@ -4,8 +4,8 @@
 # Split repris du manifest v1.
 dataset: ponctuelles_78_rambouillet_ld648_v2
 zone: ile_de_france/78_rambouillet
-raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites_v2.gpkg
+raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt  # = Drive <zone>/raw/Rambouillet_MNT_IGN/LD_A15_Rmin10_Rmax20_H1p7_V1/ (run v1 gelé)
+gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites_v2.gpkg  # état pré-revue, NON déposé ; état revu + dédoublonné = Drive <zone>/training/vecteurs/78_rambouillet_entites_l93_v3.gpkg
 couches:
   charbonniere:
     classe: charbonniere

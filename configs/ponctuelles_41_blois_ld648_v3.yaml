@@ -2,7 +2,7 @@
 # Découpe : slice_zone --split-depuis manifests/split/fours_charb_41_blois_ld648_v1.yaml (jamais re-tirer un split).
 dataset: ponctuelles_41_blois_ld648_v3
 zone: centre_val_de_loire/41_blois
-raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+raster: D:/entrainement_ponctuelles/blois/blois_ld.tif  # = Drive <zone>/raw/MNT/blois_ld.tif
 gpkg: D:/entrainement_ponctuelles/zones/41_blois/41_blois_entites_l93_v3.gpkg  # = Drive training/vecteurs/41_blois_entites_l93_v3.gpkg (revue humaine close le 2026-09-08)
 couches:
   charbonniere:

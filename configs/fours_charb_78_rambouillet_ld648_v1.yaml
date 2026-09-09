@@ -4,8 +4,8 @@
 # LD 0,5 m : VRT des 365 dalles LD_A15_Rmin10_Rmax20_H1p7 du raw.
 dataset: fours_charb_78_rambouillet_ld648_v1
 zone: ile_de_france/78_rambouillet
-raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites.gpkg
+raster: D:/entrainement_ponctuelles/zones/78_rambouillet/ld/rambouillet_ld.vrt  # = Drive <zone>/raw/Rambouillet_MNT_IGN/LD_A15_Rmin10_Rmax20_H1p7_V1/ (run v1 gelé)
+gpkg: D:/entrainement_ponctuelles/zones/78_rambouillet/rambouillet_entites.gpkg  # annotations v1, NON déposées ; état revu + dédoublonné = Drive <zone>/training/vecteurs/78_rambouillet_entites_l93_v3.gpkg
 couches:
   charbonniere:
     classe: charbonniere

@@ -3,8 +3,8 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_30_la_capelle_ld648_v2.yaml (jamais re-tirer un split).
 dataset: ponctuelles_30_la_capelle_ld648_v3
 zone: occitanie/30_la_capelle_et_masmolene
-raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif
-gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_v3_dedup.gpkg
+raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif  # = Drive <zone>/raw/MNT/la_capelle_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_v3_dedup.gpkg  # = Drive <zone>/training/vecteurs/30_la_capelle_et_masmolene_entites_l93_v4.gpkg (déposé le 2026-09-09 ; *_doublons = les 4+37 doublons retirés)
 couches:
   charbonniere:
     classe: charbonniere

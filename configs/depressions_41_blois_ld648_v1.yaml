@@ -6,7 +6,7 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_41_blois_ld648_v3.yaml (jamais re-tirer un split).
 dataset: depressions_41_blois_ld648_v1
 zone: centre_val_de_loire/41_blois
-raster: D:/entrainement_ponctuelles/blois/blois_ld.tif
+raster: D:/entrainement_ponctuelles/blois/blois_ld.tif  # = Drive <zone>/raw/MNT/blois_ld.tif
 gpkg: D:/entrainement_ponctuelles/zones/41_blois/41_blois_entites_l93_v3.gpkg  # = Drive training/vecteurs/41_blois_entites_l93_v3.gpkg
 couches:
   depression_circulaire_grande_sam:
