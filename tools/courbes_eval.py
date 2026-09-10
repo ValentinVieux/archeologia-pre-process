@@ -6,7 +6,14 @@ Pour 1 à N modèles évalués sur le MÊME jeu COCO, produit :
     par zone × classe, provenance (poids, résolution, dataset). C'est LA source
     des seuils du model_card (confidence_default + confidence_per_class) et du
     dashboard (tools/tableau_modeles.py). Par modèle : `global` et
-    `par_classe[c]` (seuil_f1max, F1, P, R, AP50, n_gt, iou_median) ;
+    `par_classe[c]` (seuil_f1max, F1, P, R, AP50, n_gt, iou_median, et depuis le
+    2026-09-09 le bloc `etude_seuil` : F2-max, plateaux F1 ≥ 98 %/95 %, R_max,
+    FP par image, seuil_propose = max(F2-max, bas du plateau 95 %), précision
+    marginale, tableau au pas 0,05 — de quoi CHOISIR le seuil de production sous
+    le F1-max, par lecture, cf. CLAUDE.md « Choix du seuil de production » ; et
+    `bandes` (tp/fp par tranche de 0,05 = table de calibrage) + `fiabilite_proposee`
+    (catégories douteux/possible/probable/quasi_certain définies par la part de
+    vrais objets, coupures par classe — proposition A+D du 2026-09-09) ;
     `par_zone[z]` (P, R, n_gt au seuil F1-max global) ; `par_zone_classe[z][c]`
     (2026-09-03, additif : n_gt, tp, fp, R, P au seuil F1-max GLOBAL,
     R_seuil_classe + fp_seuil_classe au seuil F1-max de LA classe, R_max =
@@ -68,6 +75,19 @@ SCHEMA_METRIQUES = "metriques_eval/1"
 SCHEMA_CACHE = "appariements/2"
 RAPPEL_MIN = 0.30
 
+# Critère de vérité d'une prédiction (2026-09-09, structures LINÉAIRES) :
+# - "iou" (défaut, doctrine) : appariement 1-1 glouton, IoU masque/boîte >= 0,5 ;
+# - "couverture" (segmentation seulement) : une prédiction est VRAIE si >= 50 % de sa
+#   surface tombe sur l'union des masques annotés de sa classe ; une annotation est
+#   RETROUVÉE dès que l'union des prédictions de sa classe (par confiance décroissante)
+#   couvre >= 50 % de sa surface — le score d'appariement est la confiance à laquelle
+#   c'est atteint. Tolère fragmentation et décalage latéral (tampon de 7 m des
+#   annotations), que l'IoU 1-1 compte à tort comme faux positifs sur du linéaire.
+#   Les enregistrements portent alors `tps_pred` (prédictions vraies, côté précision)
+#   en plus de `matches` (annotations retrouvées, côté rappel).
+CRITERES = ("iou", "couverture")
+SEUIL_COUVERTURE = 0.5
+
 
 def grille(plancher):
     """Grille de balayage unique du seuil de confiance (pas 0,005)."""
@@ -91,7 +111,57 @@ def iou_bbox(a, b):
     return inter / (aire_a + aire_b - inter)
 
 
-def inferer(modeles, splits, fusion, plancher, tache_forcee):
+def _bbox(mask):
+    ys, xs = np.nonzero(mask)
+    if not len(ys):
+        return None
+    return int(ys.min()), int(ys.max()), int(xs.min()), int(xs.max())
+
+
+def _bbox_chevauche(a, b):
+    return a is not None and b is not None and a[0] <= b[1] and b[0] <= a[1] and a[2] <= b[3] and b[2] <= a[3]
+
+
+def apparier_couverture(preds, objs, cls_gt):
+    """Critère « couverture » (segmentation) — fonction pure.
+
+    `preds` : [(conf, classe, masque bool)] par confiance DÉCROISSANTE ; `objs` :
+    masques annotés ; `cls_gt` : leurs classes. Retourne (matches, fps, tps_pred) :
+    matches = [[conf d'atteinte de 50 % de couverture, couverture finale, classe]] par
+    annotation retrouvée ; tps_pred = [[conf, couverture, classe]] par prédiction vraie ;
+    fps = [[conf, classe]] par prédiction fausse.
+    """
+    union, bb_gt = {}, [_bbox(g) for g in objs]
+    for g, c in zip(objs, cls_gt):
+        union[c] = g if c not in union else (union[c] | g)
+    tps_pred, fps, bb_pred = [], [], []
+    for conf, c, mask in preds:
+        aire = int(mask.sum())
+        cov = float((mask & union[c]).sum()) / aire if (c in union and aire) else 0.0
+        if cov >= SEUIL_COUVERTURE:
+            tps_pred.append([float(conf), round(cov, 4), c])
+        else:
+            fps.append([float(conf), c])
+        bb_pred.append(_bbox(mask))
+    matches = []
+    for j, (g, c) in enumerate(zip(objs, cls_gt)):
+        aire_g = int(g.sum())
+        if not aire_g:
+            continue
+        acc, trouve = np.zeros_like(g), None
+        for (conf, cp, mask), bb in zip(preds, bb_pred):
+            if cp != c or not _bbox_chevauche(bb, bb_gt[j]):
+                continue
+            acc |= (mask & g)
+            if acc.sum() / aire_g >= SEUIL_COUVERTURE:
+                trouve = float(conf)
+                break
+        if trouve is not None:
+            matches.append([trouve, round(float(acc.sum()) / aire_g, 4), c])
+    return matches, fps, tps_pred
+
+
+def inferer(modeles, splits, fusion, plancher, tache_forcee, critere="iou"):
     from PIL import Image
     from pycocotools.coco import COCO
     from rfdetr import RFDETR
@@ -110,6 +180,8 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee):
         if tache_modele != tache:
             sys.exit(f"ERREUR : {nom} est un modèle {tache_modele}, le run est {tache} "
                      "(--tache forcée ou autre modèle) — on ne mélange pas les tâches.")
+        if critere == "couverture" and not seg:
+            sys.exit(f"ERREUR : critère couverture = segmentation seulement ({nom} est en détection).")
         modele.optimize_for_inference()
         # class_offset du sidecar best.json = vérité (leçon 2026-09-08 : run_rf_detr_1 prédit
         # parfois la catégorie 0 « entites » héritée de Roboflow -> l'heuristique sur la
@@ -142,6 +214,19 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee):
                     cls_gt.append(c)
                 pris = [False] * len(objs)
                 matches, fps = [], []
+                if critere == "couverture":
+                    preds = []
+                    for i in (np.argsort(-d.confidence) if n_pred else []):
+                        idx = int(d.class_id[i]) - (decal or 0)
+                        if not (0 <= idx < len(cfg["noms"])):
+                            continue
+                        c = fusion.get(cfg["noms"][idx], cfg["noms"][idx])
+                        preds.append((float(d.confidence[i]), c, d.mask[i].astype(bool)))
+                    matches, fps, tps_pred = apparier_couverture(preds, objs, cls_gt)
+                    enregs.append({"split": etiquette, "zone": info.get("zone", ""),
+                                   "n_gt": len(objs), "gt_classes": cls_gt,
+                                   "matches": matches, "fps": fps, "tps_pred": tps_pred})
+                    continue
                 for i in (np.argsort(-d.confidence) if n_pred else []):
                     idx = int(d.class_id[i]) - (decal or 0)
                     if not (0 <= idx < len(cfg["noms"])):
@@ -177,23 +262,242 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee):
     return donnees, tache
 
 
-def prf(enregs, s, classe=None):
-    tp = sum(sum(1 for m in e["matches"] if m[0] >= s and (classe is None or m[2] == classe))
-             for e in enregs)
+def vrais_pred(e):
+    """Prédictions VRAIES d'un enregistrement (côté précision) : `tps_pred` au critère
+    couverture, sinon les appariements 1-1 (`matches`, critère IoU)."""
+    return e["tps_pred"] if "tps_pred" in e else e["matches"]
+
+
+def comptes(enregs, s, classe=None):
+    """(tp_precision, fp, n_gt, tp_rappel) au seuil s — recomptage brut du cache.
+    Critère IoU : tp_precision == tp_rappel (appariement 1-1)."""
+    tp_r = sum(sum(1 for m in e["matches"] if m[0] >= s and (classe is None or m[2] == classe))
+               for e in enregs)
+    tp_p = sum(sum(1 for t in vrais_pred(e) if t[0] >= s and (classe is None or t[2] == classe))
+               for e in enregs)
     fp = sum(sum(1 for f in e["fps"] if f[0] >= s and (classe is None or f[1] == classe))
              for e in enregs)
     ngt = sum((sum(1 for c in e["gt_classes"] if c == classe) if classe else e["n_gt"])
               for e in enregs)
-    p = tp / (tp + fp) if tp + fp else 1.0
-    r = tp / ngt if ngt else 0.0
+    return tp_p, fp, ngt, tp_r
+
+
+def prf(enregs, s, classe=None):
+    tp_p, fp, ngt, tp_r = comptes(enregs, s, classe)
+    p = tp_p / (tp_p + fp) if tp_p + fp else 1.0
+    r = tp_r / ngt if ngt else 0.0
     return p, r, (2 * p * r / (p + r) if p + r else 0.0)
 
 
+# Choix du seuil de production (règle utilisateur 2026-09-09) : le F1-max pèse un oubli
+# comme un faux positif ; en prospection l'oubli ne se rattrape pas, le faux positif se
+# rejette en quelques secondes sur le RVT. Le seuil déployé se choisit donc SOUS le
+# F1-max, en ÉTUDIANT la courbe — jamais par formule aveugle. L'outil publie de quoi
+# étudier : F2-max, plateaux F1 (≥ 98 % / 95 % du max), rappel max au plancher, FP par
+# image, précision marginale des détections ajoutées, tableau au pas 0,05 ; et un
+# `seuil_propose` = max(F2-max, bas du plateau 95 %) qui n'est qu'un POINT DE DÉPART.
+PLATEAUX_F1 = (0.98, 0.95)
+PAS_TABLEAU = 0.05
+
+# Fiabilité affichée dans QGIS (décision utilisateur 2026-09-09, propositions A + D) : les
+# catégories « douteux / possible / probable / très probable » sont définies par la part de
+# VRAIS objets mesurée dans la tranche de score (précision locale), pas par le score. Le
+# vocabulaire est donc stable entre modèles ; ce sont les COUPURES de score qui bougent,
+# par classe. Niveaux garantis (part de vrais sur le banc) et effectif minimal pour
+# publier une mesure.
+NIVEAUX_FIABILITE = {"possible": 0.35, "probable": 0.60, "quasi_certain": 0.85}
+CATEGORIES_FIABILITE = ("douteux", "possible", "probable", "quasi_certain")
+N_MIN_MESURE = 30
+PAS_BANDE = 0.01      # table de calibrage fine (un seuil déployé à 0,29 ou 0,245 tombe juste)
+PAS_COUPURE = 0.05    # les coupures se décident sur des fenêtres de 0,05 (lissées deux à deux)
+
+
+def f2(p, r):
+    return 5 * p * r / (4 * p + r) if p + r else 0.0
+
+
+def bandes_confiance(enregs, classe=None, pas=PAS_BANDE):
+    """Comptes (tp, fp) par tranche de score de `pas` (0,01) sur [0,05 ; 1] — la table
+    de calibrage d'un modèle (ou d'une classe). Dernière tranche inclusive de 1.
+    tp = prédictions VRAIES (côté précision : `tps_pred` au critère couverture)."""
+    tp_conf = [t[0] for e in enregs for t in vrais_pred(e) if classe is None or t[2] == classe]
+    fp_conf = [f[0] for e in enregs for f in e["fps"] if classe is None or f[1] == classe]
+    out = []
+    n = int(round(1.0 / pas))
+    for k in range(int(round(0.05 / pas)), n):
+        lo, hi = round(pas * k, 2), round(pas * (k + 1), 2)
+        if k == n - 1:
+            dans = lambda c: c >= lo - 1e-9  # noqa: E731
+        else:
+            dans = lambda c: lo - 1e-9 <= c < hi - 1e-9  # noqa: E731
+        out.append({"lo": lo, "hi": hi, "tp": sum(1 for c in tp_conf if dans(c)),
+                    "fp": sum(1 for c in fp_conf if dans(c))})
+    return out
+
+
+def agreger_bandes(bandes, pas=PAS_COUPURE, debut=None):
+    """Regroupe des tranches fines en fenêtres de `pas` alignées sur la grille
+    (lo multiple de `pas`) — des tranches déjà à ce pas restent inchangées.
+    `debut` (le seuil déployé, rarement sur la grille) : les tranches sous `debut`
+    sont ignorées et la première fenêtre est PARTIELLE [debut ; prochaine ligne de
+    grille[ — une coupure peut ainsi tomber AU seuil (les détections juste au-dessus
+    du seuil ne sont pas condamnées à « douteux » par la grille)."""
+    fen = {}
+    for b in bandes:
+        if debut is not None and b["lo"] < debut - 1e-9:
+            continue
+        lo = round(np.floor(b["lo"] / pas + 1e-9) * pas, 2)
+        hi = round(lo + pas, 2)  # prochaine ligne de grille
+        if debut is not None and lo < debut - 1e-9:
+            lo = float(debut)     # fenêtre partielle [debut ; ligne de grille[
+        f = fen.setdefault(lo, {"lo": lo, "hi": hi, "tp": 0, "fp": 0})
+        f["tp"] += b["tp"]; f["fp"] += b["fp"]
+        f["hi"] = max(f["hi"], b["hi"])
+    return [fen[k] for k in sorted(fen)]
+
+
+def coupures_fiabilite(bandes, seuil, niveaux=NIVEAUX_FIABILITE):
+    """Coupures de score des catégories de fiabilité au-dessus de `seuil` :
+    première fenêtre de 0,05 (la première partielle, dès le seuil) dont la précision
+    LISSÉE sur deux fenêtres consécutives atteint le niveau ; coupures monotones ;
+    None si jamais atteint."""
+    bandes = agreger_bandes(bandes, debut=seuil)
+    ub = [b for b in bandes if b["lo"] >= seuil - 1e-9 and b["tp"] + b["fp"] > 0]
+    lisse = []
+    for i, b in enumerate(ub):
+        n = ub[i + 1] if i + 1 < len(ub) else {"tp": 0, "fp": 0}
+        tp, fp = b["tp"] + n["tp"], b["fp"] + n["fp"]
+        lisse.append((b["lo"], tp / (tp + fp) if tp + fp else None))
+    out, dernier = {}, seuil
+    for cle in CATEGORIES_FIABILITE[1:]:
+        c = next((lo for lo, p in lisse
+                  if lo >= dernier - 1e-9 and p is not None and p >= niveaux[cle]), None)
+        out[cle] = c
+        if c is not None:
+            dernier = c
+    return out
+
+
+def fiabilite_par_classe(bandes, seuil, coupures, niveaux=NIVEAUX_FIABILITE, n_min=N_MIN_MESURE):
+    """Catégories de fiabilité d'une classe : [{categorie, seuil, garanti, mesure, n}]
+    du plus douteux au plus sûr. `mesure` = part de vrais objets dans les tranches
+    de la catégorie. C'est le bloc `thresholds.fiabilite.par_classe[c]` du
+    model_card du plugin.
+
+    Garde-fous (petits corpus) : une catégorie vide (coupure égale au seuil) est
+    omise ; une catégorie de moins de `n_min` détections, ou dont la part mesurée
+    n'atteint pas son niveau garanti, perd sa coupure et FUSIONNE dans la catégorie
+    du dessous (l'étiquette sous-estime, jamais l'inverse) — répété jusqu'à
+    stabilité. La catégorie basse (« douteux », rien de garanti) peut rester sous
+    `n_min` : sa mesure est alors None. Les effectifs se comptent sur les tranches
+    FINES (0,01) dont le bas est >= début de catégorie : un seuil à 0,29 compte dès
+    0,29, un seuil à 0,245 dès 0,25.
+    """
+    bornes = [("douteux", float(seuil))] + [
+        (cle, float(coupures[cle])) for cle in CATEGORIES_FIABILITE[1:]
+        if coupures.get(cle) is not None]
+    bornes = [(c, s) for i, (c, s) in enumerate(bornes)
+              if (bornes[i + 1][1] if i + 1 < len(bornes) else 1.01) - s >= 1e-9]
+
+    def construire(bornes):
+        cats = []
+        for i, (cle, debut) in enumerate(bornes):
+            fin = bornes[i + 1][1] if i + 1 < len(bornes) else 1.01
+            tp = sum(b["tp"] for b in bandes if debut - 1e-9 <= b["lo"] < fin - 1e-9)
+            fp = sum(b["fp"] for b in bandes if debut - 1e-9 <= b["lo"] < fin - 1e-9)
+            n = tp + fp
+            cats.append({"categorie": cle, "seuil": debut, "garanti": float(niveaux.get(cle, 0.0)),
+                         "mesure": round(tp / n, 3) if n >= n_min else None, "n": n})
+        return cats
+
+    while True:
+        cats = construire(bornes)
+        fusion = next((i for i in range(len(cats) - 1, 0, -1)
+                       if cats[i]["n"] < n_min
+                       or (cats[i]["mesure"] is not None and cats[i]["mesure"] < cats[i]["garanti"])),
+                      None)
+        if fusion is None:
+            break
+        bornes = bornes[:fusion] + bornes[fusion + 1:]
+    # catégorie basse sans AUCUNE détection au banc (sous la finesse des tranches, ex.
+    # seuil 0,245 et coupure 0,25) : la suivante démarre au seuil, pas de catégorie vide
+    if len(cats) > 1 and cats[0]["n"] == 0:
+        cats[1]["seuil"] = cats[0]["seuil"]
+        cats = cats[1:]
+    return cats
+
+
+def etude_seuil(enregs, plancher, classe=None):
+    """Indicateurs du choix du seuil (fonction pure, sans GPU) — cf. commentaire ci-dessus.
+
+    Toutes les valeurs découlent des comptes (tp, fp) par seuil de la grille ; arrondi
+    4 décimales. `plateau_f1_95`/`_98` = [min, max] des seuils où F1 ≥ 95 % / 98 % du
+    F1-max. `precision_marginale` = part de vrais objets parmi les détections AJOUTÉES
+    en descendant du F1-max au seuil proposé (null si rien n'est ajouté). `tableau` =
+    une ligne par seuil multiple de 0,05 (seuil, P, R, F1, F2, fp_img).
+    """
+    seuils = grille(plancher)
+    n_img = len(enregs)
+    cpt = [comptes(enregs, s, classe) for s in seuils]
+    ngt = cpt[0][2] if cpt else 0
+
+    P, R, F1, F2 = [], [], [], []
+    for tp, fp, _, tp_r in cpt:
+        p, r = (tp / (tp + fp) if tp + fp else 1.0), (tp_r / ngt if ngt else 0.0)
+        P.append(p); R.append(r)
+        F1.append(2 * p * r / (p + r) if p + r else 0.0)
+        F2.append(f2(p, r))
+    i1 = int(np.argmax(F1))
+    i2 = int(np.argmax(F2))
+    plateaux = {}
+    for frac in PLATEAUX_F1:
+        ok = [i for i, f in enumerate(F1) if f >= frac * F1[i1]]
+        plateaux[frac] = (int(ok[0]), int(ok[-1]))
+    lo95 = plateaux[0.95][0]
+    ip = max(i2, lo95)  # F2-max, remonté au bas du plateau 95 % s'il est dessous
+
+    def fp_img(i):
+        return round(cpt[i][1] / n_img, 4) if n_img else None
+
+    tp_add = cpt[ip][0] - cpt[i1][0]
+    fp_add = cpt[ip][1] - cpt[i1][1]
+    marg = round(tp_add / (tp_add + fp_add), 4) if tp_add + fp_add else None
+    tableau = []
+    for i, s in enumerate(seuils):
+        if abs(s / PAS_TABLEAU - round(s / PAS_TABLEAU)) > 1e-6:
+            continue
+        tableau.append({"seuil": float(s), "P": round(P[i], 4), "R": round(R[i], 4),
+                        "F1": round(F1[i], 4), "F2": round(F2[i], 4), "fp_img": fp_img(i)})
+    bandes = bandes_confiance(enregs, classe)
+    seuil_propose = float(seuils[ip])
+    return {
+        "seuil_f2max": float(seuils[i2]), "F2": round(F2[i2], 4),
+        "P_f2": round(P[i2], 4), "R_f2": round(R[i2], 4),
+        "plateau_f1_98": [float(seuils[plateaux[0.98][0]]), float(seuils[plateaux[0.98][1]])],
+        "plateau_f1_95": [float(seuils[lo95]), float(seuils[plateaux[0.95][1]])],
+        "R_max": round(R[0], 4),
+        "n_images": n_img,
+        "fp_par_image": {"f1max": fp_img(i1), "f2max": fp_img(i2), "propose": fp_img(ip)},
+        "seuil_propose": seuil_propose,
+        "P_propose": round(P[ip], 4), "R_propose": round(R[ip], 4),
+        "precision_marginale": marg,
+        "tableau": tableau,
+        # table de calibrage + catégories de fiabilité PROPOSÉES au seuil proposé
+        # (le model_card porte celles recalculées au seuil RETENU, cellule 11bis)
+        "bandes": bandes,
+        "fiabilite_proposee": fiabilite_par_classe(
+            bandes, seuil_propose, coupures_fiabilite(bandes, seuil_propose)),
+    }
+
+
 def ap50(enregs, classe=None):
-    """AP@0,5 toutes-points par rang de confiance. Retourne (ap, rappels, précisions)."""
+    """AP@0,5 toutes-points par rang de confiance. Retourne (ap, rappels, précisions).
+    Critère couverture : précision par rang sur les prédictions (`tps_pred` + fps),
+    rappel par rang = annotations retrouvées à une confiance >= celle du rang."""
+    couverture = any("tps_pred" in e for e in enregs)
     scores = []
     for e in enregs:
-        scores += [(m[0], 1) for m in e["matches"] if classe is None or m[2] == classe]
+        scores += [(t[0], 1) for t in vrais_pred(e) if classe is None or t[2] == classe]
         scores += [(f[0], 0) for f in e["fps"] if classe is None or f[1] == classe]
     ngt = sum((sum(1 for c in e["gt_classes"] if c == classe) if classe else e["n_gt"])
               for e in enregs)
@@ -202,7 +506,12 @@ def ap50(enregs, classe=None):
     scores.sort(key=lambda t: -t[0])
     tp = np.cumsum([s[1] for s in scores])
     fp = np.cumsum([1 - s[1] for s in scores])
-    rr = tp / ngt
+    if couverture:
+        mconf = np.sort(np.array([m[0] for e in enregs for m in e["matches"]
+                                  if classe is None or m[2] == classe]))
+        rr = np.array([len(mconf) - np.searchsorted(mconf, s[0], side="left") for s in scores]) / ngt
+    else:
+        rr = tp / ngt
     pp = tp / (tp + fp)
     for j in range(len(pp) - 2, -1, -1):  # enveloppe de précision monotone
         pp[j] = max(pp[j], pp[j + 1])
@@ -223,7 +532,28 @@ def bloc_metriques(enregs, plancher, classe=None):
             if m[0] >= s0 and (classe is None or m[2] == classe)]
     return {"seuil_f1max": s0, "F1": round(f0, 4), "P": round(p0, 4), "R": round(r0, 4),
             "AP50": round(ap50(enregs, classe)[0], 4), "n_gt": int(ngt),
-            "iou_median": round(float(np.median(ious)), 4) if ious else None}
+            "iou_median": round(float(np.median(ious)), 4) if ious else None,
+            "etude_seuil": etude_seuil(enregs, plancher, classe)}
+
+
+def imprimer_etude(nom, bloc, indent="  "):
+    """Tableau d'étude du seuil (stdout) — ce que l'analyste LIT avant de choisir."""
+    et = bloc["etude_seuil"]
+    print(f"{indent}{nom} : F1-max {bloc['F1']} @ {bloc['seuil_f1max']} | F2-max {et['F2']} @ "
+          f"{et['seuil_f2max']} | plateau F1>=95% [{et['plateau_f1_95'][0]} ; "
+          f"{et['plateau_f1_95'][1]}] | R_max {et['R_max']} | proposé {et['seuil_propose']} "
+          f"(P {et['P_propose']} / R {et['R_propose']}, FP/img {et['fp_par_image']['propose']} "
+          f"vs {et['fp_par_image']['f1max']} au F1-max, précision marginale "
+          f"{et['precision_marginale']})")
+    print(f"{indent}  seuil   P      R      F1     F2     FP/img")
+    for l in et["tableau"]:
+        print(f"{indent}  {l['seuil']:.2f}   {l['P']:.3f}  {l['R']:.3f}  {l['F1']:.3f}  "
+              f"{l['F2']:.3f}  {l['fp_img']}")
+    if et.get("fiabilite_proposee"):
+        print(f"{indent}  fiabilité proposée au seuil {et['seuil_propose']} : " + " · ".join(
+            f"{c['categorie']} dès {c['seuil']} (garanti >= {int(c['garanti'] * 100)} %, mesuré "
+            f"{'—' if c['mesure'] is None else int(round(c['mesure'] * 100))} % sur {c['n']})"
+            for c in et["fiabilite_proposee"]))
 
 
 def classes_presentes(donnees):
@@ -253,21 +583,27 @@ def par_zone_classe(enregs, seuil_global, seuils_classe, classes):
         for c in classes:
             sc = seuils_classe[c]
             ngt = sum(1 for e in sous for g in e["gt_classes"] if g == c)
-            confs_tp = [m[0] for e in sous for m in e["matches"] if m[2] == c]
+            confs_tp = [m[0] for e in sous for m in e["matches"] if m[2] == c]      # rappel
+            confs_tpp = [t[0] for e in sous for t in vrais_pred(e) if t[2] == c]   # précision
             confs_fp = [f[0] for e in sous for f in e["fps"] if f[1] == c]
-            tp = sum(1 for v in confs_tp if v >= seuil_global)
+            tp = sum(1 for v in confs_tpp if v >= seuil_global)
+            tp_r = sum(1 for v in confs_tp if v >= seuil_global)
             fp = sum(1 for v in confs_fp if v >= seuil_global)
             out[z][c] = {
                 "n_gt": ngt, "tp": tp, "fp": fp,
-                "R": ratio(tp, ngt), "P": ratio(tp, tp + fp),
+                "R": ratio(tp_r, ngt), "P": ratio(tp, tp + fp),
                 "R_seuil_classe": ratio(sum(1 for v in confs_tp if v >= sc), ngt),
                 "fp_seuil_classe": sum(1 for v in confs_fp if v >= sc),
                 "R_max": ratio(len(confs_tp), ngt),
+                # table de calibrage de la zone (2026-09-09) : permet de calibrer la
+                # fiabilité sur les seules zones à annotation exhaustive
+                "bandes": bandes_confiance(sous, c),
             }
     return out
 
 
-def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_cache):
+def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_cache,
+            critere="iou"):
     """Construit le dict metriques_eval/1 — LA sortie canonique de l'outil."""
     classes = classes_presentes(donnees)
     resume = {
@@ -275,8 +611,10 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
         "genere_le": datetime.now().isoformat(timespec="seconds"),
         "outil": "tools/courbes_eval.py",
         "tache": tache,
+        "critere": critere,
         "iou": {"type": "masque" if tache == "segmentation" else "bbox", "seuil": 0.5},
-        "appariement": "glouton conf decroissante, class-aware",
+        "appariement": ("couverture >= 0,5 de l'union des masques annotés, class-aware"
+                        if critere == "couverture" else "glouton conf decroissante, class-aware"),
         "plancher": plancher,
         "grille": {"min": plancher, "max": 0.95, "pas": 0.005},
         "p_sans_prediction": 1.0,
@@ -293,11 +631,9 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
         par_zone = {}
         for z in zones:
             sous = [e for e in enregs if e.get("zone") == z]
-            tp = sum(sum(1 for m in e["matches"] if m[0] >= s0) for e in sous)
-            fp = sum(sum(1 for f in e["fps"] if f[0] >= s0) for e in sous)
-            ngt = sum(e["n_gt"] for e in sous)
+            tp, fp, ngt, tp_r = comptes(sous, s0)
             par_zone[z] = {"P": round(tp / (tp + fp), 4) if tp + fp else 1.0,
-                           "R": round(tp / ngt, 4) if ngt else 0.0, "n_gt": int(ngt)}
+                           "R": round(tp_r / ngt, 4) if ngt else 0.0, "n_gt": int(ngt)}
         info = meta_modeles.get(nom, {})
         par_classe = {cl: bloc_metriques(enregs, plancher, cl) for cl in classes}
         resume["modeles"][nom] = {
@@ -340,13 +676,23 @@ def planche_principale(donnees, titre, plancher, sortie):
         axes[1][0].scatter([s0], [f0], color=c, zorder=5)
         axes[1][0].annotate(f"F1={f0:.3f}\n@ {s0:.2f}", (s0, f0), textcoords="offset points",
                             xytext=(8, 6), fontsize=8, color=c)
+        # étude du seuil : plateau F1 >= 95 % (bande) et seuil proposé (carré)
+        et = etude_seuil(enregs, plancher)
+        lo, hi = et["plateau_f1_95"]
+        axes[1][0].axvspan(lo, hi, color=c, alpha=0.07)
+        sp = et["seuil_propose"]
+        axes[1][0].scatter([sp], [F[int(np.abs(seuils - sp).argmin())]], color=c, marker="s",
+                           zorder=5, s=36)
+        axes[1][0].annotate(f"proposé {sp:.2f}\n(F2-max {et['seuil_f2max']:.2f})", (sp, 0.02 + 0.06 * k),
+                            fontsize=7, color=c)
         ap, rr, pp = ap50(enregs)
         axes[1][1].plot(rr, pp, color=c, label=f"{nom} — AP@0.5 {ap:.3f}")
         axes[1][1].scatter([r0], [p0], color=c, zorder=5, marker="*", s=120)
         axes[1][1].annotate(f"F1max: P={p0:.2f}, R={r0:.2f}", (r0, p0), textcoords="offset points",
                             xytext=(8, 6 + 12 * k), fontsize=8, color=c)
     for ax, t in ((axes[0][0], "Précision vs confiance"), (axes[0][1], "Rappel vs confiance"),
-                  (axes[1][0], "F1 vs confiance"), (axes[1][1], "Courbe Précision-Rappel (★ = F1-max)")):
+                  (axes[1][0], "F1 vs confiance (bande = plateau F1 ≥ 95 %, ■ = seuil proposé)"),
+                  (axes[1][1], "Courbe Précision-Rappel (★ = F1-max)")):
         ax.set_title(t); ax.grid(alpha=0.3); ax.set_ylim(0, 1.02); ax.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(sortie, dpi=150)
@@ -419,8 +765,8 @@ def planche_zones(donnees, tache, plancher, sortie):
 
 # --------------------------------------------------------- cache/empreinte ---
 
-def construire_meta(plancher, coco, fusion, modeles, tache=None):
-    meta = {"schema": SCHEMA_CACHE, "tache": tache, "plancher": plancher,
+def construire_meta(plancher, coco, fusion, modeles, tache=None, critere="iou"):
+    meta = {"schema": SCHEMA_CACHE, "tache": tache, "plancher": plancher, "critere": critere,
             "coco": chemin_norm(coco), "fusion": fusion, "modeles": {}}
     for nom, cfg in modeles.items():
         taille = os.path.getsize(cfg["poids"]) if os.path.exists(cfg["poids"]) else None
@@ -437,6 +783,8 @@ def divergence_run(attendu, cache):
         return f"coco {cache.get('coco')} != {attendu['coco']}"
     if cache.get("fusion") != attendu["fusion"]:
         return f"fusion {cache.get('fusion')} != {attendu['fusion']}"
+    if cache.get("critere", "iou") != attendu.get("critere", "iou"):
+        return f"critère {cache.get('critere', 'iou')} != {attendu.get('critere', 'iou')}"
     return None
 
 
@@ -517,6 +865,10 @@ def main():
     ap.add_argument("--fusion", action="append", default=[], help="classe_source=classe_cible")
     ap.add_argument("--titre", default=None)
     ap.add_argument("--plancher", type=float, default=0.05)
+    ap.add_argument("--critere", choices=list(CRITERES), default="iou",
+                    help="vérité d'une prédiction : iou (1-1 >= 0,5, défaut) ou couverture "
+                         "(>= 50 %% de la prédiction sur les masques annotés — structures "
+                         "LINÉAIRES, segmentation seulement)")
     ap.add_argument("--classe-controle", default=None,
                     help="autocontrôle du rappel plancher sur cette classe (défaut : global)")
     ap.add_argument("--sans-autocontrole", action="store_true")
@@ -555,7 +907,7 @@ def main():
 
     os.makedirs(a.out, exist_ok=True)
     cache = os.path.join(a.out, "appariements.json")
-    meta_attendu = construire_meta(a.plancher, a.coco, fusion, modeles)
+    meta_attendu = construire_meta(a.plancher, a.coco, fusion, modeles, critere=a.critere)
     provenance_cache = "calculee"
     donnees, tache, modifie = {}, a.tache, False
 
@@ -614,7 +966,7 @@ def main():
         for cfg in manquants.values():
             if cfg["noms"] is None:
                 cfg["noms"] = cats_coco
-        infere, tache = inferer(manquants, splits, fusion, a.plancher, tache)
+        infere, tache = inferer(manquants, splits, fusion, a.plancher, tache, critere=a.critere)
         if not a.sans_autocontrole:
             for nom, dd in infere.items():
                 _, r, _ = prf(dd["enregs"], a.plancher, a.classe_controle)
@@ -637,7 +989,7 @@ def main():
     dataset = {"chemin": chemin_norm(a.coco), "splits": [s for s, _ in splits],
                "n_images": n_img, "n_gt": int(n_gt)}
     resume = resumer(donnees, meta_attendu["modeles"], tache, dataset, fusion,
-                     a.plancher, provenance_cache)
+                     a.plancher, provenance_cache, critere=a.critere)
     chemin_metriques = os.path.join(a.out, "metriques_eval.json")
     with open(chemin_metriques, "w", encoding="utf-8") as f:
         json.dump(resume, f, ensure_ascii=False, indent=1)
@@ -650,11 +1002,19 @@ def main():
               f"AP50 {g['AP50']})")
         for cl, b in m["par_classe"].items():
             print(f"    {cl} : F1 {b['F1']} @ {b['seuil_f1max']} (n_gt {b['n_gt']})")
+    print("\nÉTUDE DU SEUIL DE PRODUCTION — à lire avant de fixer confidence_default /"
+          " confidence_per_class (le seuil proposé n'est qu'un point de départ) :")
+    for nom, m in resume["modeles"].items():
+        imprimer_etude(f"{nom} (global)", m["global"])
+        if len(m["par_classe"]) > 1:
+            for cl, b in m["par_classe"].items():
+                imprimer_etude(f"{nom} / {cl}", b, indent="    ")
 
     # ------------------------------------------------------------- planches ---
     base_coco = os.path.basename(a.coco.rstrip("/\\"))
     iou_lib = "masque" if tache == "segmentation" else "bbox"
-    titre = a.titre or f"Évaluation {base_coco} — IoU {iou_lib} ≥ 0,5"
+    titre = a.titre or (f"Évaluation {base_coco} — couverture ≥ 0,5 (linéaires)"
+                        if a.critere == "couverture" else f"Évaluation {base_coco} — IoU {iou_lib} ≥ 0,5")
     planche_principale(donnees, titre, a.plancher, os.path.join(a.out, "courbes_seuils_pr.png"))
     classes = classes_presentes(donnees)
     if len(classes) > 1:
