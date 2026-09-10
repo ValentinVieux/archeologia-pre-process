@@ -379,21 +379,37 @@ def badge_plugin(carte):
 
 
 def comparer_seuils(carte, l):
-    """[(classe|global, verdict)] : seuil déployé vs seuil F1-max mesuré."""
+    """[(classe|global, verdict)] : seuil déployé vs la FENÊTRE mesurée
+    [bas du plateau F1 ≥ 95 % ; F1-max] (règle 2026-09-09 : le seuil de production se
+    choisit sous le F1-max, par étude de la courbe ; « ∉ » = hors fenêtre, à justifier
+    dans seuils_provenance). Éval sans etude_seuil : verdict historique vs F1-max seul."""
     th = carte.get("thresholds") or {}
     prov = th.get("seuils_provenance")
+    just = f"justifié : {prov}" if prov else "non justifié"
 
-    def verdict(deploye, mesure):
+    def verdict(deploye, bloc):
+        bloc = bloc or {}
+        mesure = bloc.get("seuil_f1max")
         if deploye is None or mesure is None:
             return NT
-        if abs(float(deploye) - float(mesure)) < 1e-6:
-            return f"{fmt_f(deploye)} = F1-max"
-        just = f"justifié : {prov}" if prov else "non justifié"
-        return f"{fmt_f(deploye)} ≠ F1-max {fmt_f(mesure)} ({just})"
+        d, f1max = float(deploye), float(mesure)
+        et = bloc.get("etude_seuil")
+        if et is None:
+            if abs(d - f1max) < 1e-6:
+                return f"{fmt_f(deploye)} = F1-max"
+            return f"{fmt_f(deploye)} ≠ F1-max {fmt_f(mesure)} ({just})"
+        lo = float(et["plateau_f1_95"][0])
+        fen = f"[{fmt_f(lo)} ; {fmt_f(mesure)}]"
+        if lo - 1e-6 <= d <= f1max + 1e-6:
+            if abs(d - f1max) < 1e-6:
+                return (f"{fmt_f(deploye)} = F1-max, haut de la fenêtre {fen} — rappel non "
+                        f"privilégié ({just})")
+            return f"{fmt_f(deploye)} ∈ fenêtre {fen} (proposé {fmt_f(et['seuil_propose'])})"
+        return f"{fmt_f(deploye)} ∉ fenêtre {fen} ({just})"
 
-    lignes = [("global", verdict(th.get("confidence_default"), l["global"].get("seuil_f1max")))]
+    lignes = [("global", verdict(th.get("confidence_default"), l["global"]))]
     for c, s in (th.get("confidence_per_class") or {}).items():
-        lignes.append((c, verdict(s, (l["par_classe"].get(c) or {}).get("seuil_f1max"))))
+        lignes.append((c, verdict(s, l["par_classe"].get(c))))
     return lignes
 
 
@@ -549,9 +565,10 @@ def fiche(l, info, manifeste, labels, carte, seuil_fragile, min_train, racine):
         if carte is not None:
             seuils = comparer_seuils(carte, l)
             parts.append("<ul>" + "".join(f"<li>seuil {e(k)} : {e(v)}</li>" for k, v in seuils) + "</ul>")
-            if any("≠" in v for _, v in seuils):
+            hors = [(k, v) for k, v in seuils if "≠" in v or "∉" in v]
+            if hors:
                 alertes.append(("seuil", [f"{k} : {'non justifié' if 'non justifié' in v else 'justifié'}"
-                                          for k, v in seuils if "≠" in v]))
+                                          for k, v in hors]))
         parts.append(f"<p>lignée : {e(lignee(info, nom))}</p>")
     parts.append("</details>")
     return "\n".join(parts), alertes
@@ -633,7 +650,8 @@ def construire(racine, depot=None, plugin=None, seuil_fragile=30, min_train=100)
         f"tools/tableau_modeles.py — {len(evals)} évaluation(s), "
         f"{sum(len(v) for v in familles.values())} ligne(s) modèle, "
         f"{len(sans_mesure)} run(s) sans mesure. Source : metriques_eval.json "
-        "(seuils F1-max mesurés — jamais de seuil fixe). "
+        "(seuils mesurés par balayage — jamais de seuil fixe ; le seuil déployé se choisit "
+        "dans la fenêtre [bas du plateau F1 ≥ 95 % ; F1-max], cf. glossaire). "
         + (f"Manifestes de corpus : {len(manifestes)} (dépôt {e(Path(depot).name)}). " if depot else "")
         + (f"Plugin : {e(Path(plugin).name)}. " if plugin else "")
         + "<a href='../data/data_regions_v2/index.html'>→ index data_regions_v2</a></p>",
@@ -687,8 +705,8 @@ def construire(racine, depot=None, plugin=None, seuil_fragile=30, min_train=100)
                 elif genre == "decroche":
                     pass  # décision utilisateur 2026-09-03 : reste une étiquette de ligne, pas une alerte
                 elif genre == "seuil":
-                    surveiller.append(f"{e(nom)} — seuil déployé ≠ F1-max mesuré ({', '.join(e(x) for x in d)}), "
-                                      "cf. fiche")
+                    surveiller.append(f"{e(nom)} — seuil déployé hors fenêtre mesurée "
+                                      f"({', '.join(e(x) for x in d)}), cf. fiche")
             if manifeste:
                 manque = [k for k in ("genere_le", "gsd_m", "rvt") if not manifeste.get(k)]
                 if manque:
@@ -779,7 +797,13 @@ def construire(racine, depot=None, plugin=None, seuil_fragile=30, min_train=100)
                    "<li><b>n_gt</b> : objets de vérité terrain mesurés — splits valid + test de l'éval "
                    "(jamais train).</li>"
                    "<li><b>seuil F1-max</b> : balayage de confiance 0,05–0,95 par pas de 0,005, seuil qui "
-                   "maximise F1 ; source unique des seuils du model_card du plugin.</li>"
+                   "maximise F1 ; borne HAUTE de la fenêtre de choix du seuil déployé.</li>"
+                   "<li><b>fenêtre de seuil / seuil proposé</b> (2026-09-09) : le seuil de production se "
+                   "choisit SOUS le F1-max (un oubli coûte plus qu'un faux positif en prospection), "
+                   "dans [bas du plateau F1 ≥ 95 % ; F1-max], par lecture du bloc <code>etude_seuil</code> "
+                   "(F2-max, FP par image, précision marginale des ajouts, tableau) ; « proposé » = "
+                   "max(F2-max, bas du plateau), point de départ de l'étude, jamais appliqué à l'aveugle ; "
+                   "le choix et ses raisons vont dans <code>seuils_provenance</code> du model_card.</li>"
                    "<li><b>F1 / P / R</b> : au seuil F1-max ; P = précision, R = rappel ; appariement "
                    "IoU masque ou boîte ≥ 0,5.</li>"
                    "<li><b>AP50</b> : aire sous la courbe précision/rappel à IoU ≥ 0,5.</li>"
