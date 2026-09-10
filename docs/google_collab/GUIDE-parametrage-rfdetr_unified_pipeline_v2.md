@@ -90,7 +90,7 @@ Sources : config.py @ 1.8.3, CHANGELOG 1.7.0,
 | PRECISION | bf16-mixed | amp auto | bf16 = plage dynamique de fp32, zéro loss scaling, zéro retuning ([Kalamkar 2019](https://arxiv.org/abs/1905.12322)) ; T4/V100 : repasser à 16-mixed |
 | SEED | 42 | None | Comparabilité des bras — ne jamais changer entre bras d'une même expérience |
 | AUG_CONFIG_NAME | AUG_AERIAL | HFlip seul | Flips H/V p=0.5 + Rotate 90° p=0.5 + brightness/contrast p=0.4. En vue nadir il n'y a pas de « haut » : le groupe D4 est gratuit et c'est l'augmentation au meilleur rendement mesuré en archéo-DL — **+0,11 mAP@50** chez [Guyot 2021](https://journal.caa-international.org/articles/10.5334/jcaa.64) (150 img, Bretagne, avec MOINS que ça). ⚠️ Nuance multicanal : LD/SLRM/SVF/O± sont isotropes, mais le **CVAT embarque un ombrage 315°** — une rotation crée des vues « éclairées du sud ». Assumé (l'augmentation s'applique à l'identique dans tous les bras, la comparaison reste équitable) ; à réexaminer si le bras CSL sous-performe étrangement |
-| CONFIDENCE_THRESHOLD | 0.3 | — | Provisoire : écrasé en section 11 par le seuil F1-max mesuré par courbes_eval (règle projet) |
+| CONFIDENCE_THRESHOLD | 0.3 | — | Provisoire : écrasé en section 11bis par le seuil RETENU après étude de la courbe (fenêtre [bas du plateau F1 ≥ 95 % ; F1-max], règle 2026-09-09) |
 | EVAL_TOOLS_REPO / EVAL_TOOLS_REF | dépôt training-models / dev | — | Section 11 : dépôt d'outils cloné dans Colab. ÉPINGLER un commit POUSSÉ pour un run à reproduire (Colab ne voit pas le dépôt local) |
 | EVAL_CHECKPOINT | checkpoint_best_ema.pth | — | Le checkpoint LIVRÉ (= package/weights/best.pth) — l'éval mesure ce qui part, rien d'autre |
 | EVAL_BASELINES / EVAL_FUSIONS | [] / [] | — | Modèles à superposer sur la même éval (`nom=poids@res`) ; fusions de classes à l'éval. Jamais mélanger un cache Colab et un cache local |
@@ -165,16 +165,25 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
 | `checkpoint_best_total.pth` | écrit en fin de fit : le GAGNANT (brut vs EMA) | **inférence, packaging, FINETUNE_FROM des transferts** |
 | `last_ema.pth` | derniers poids EMA | — |
 
-## 7. Section 9 (cellules 24-28) — reprise : les 3 pièges 1.8.3
+## 7. Section 2bis — reprise : les 3 pièges 1.8.3
+
+**Le notebook se déroule de haut en bas, run neuf comme reprise** (restructuration du
+2026-09-10) : l'ancienne section 9, placée *après* l'entraînement alors qu'elle doit
+s'exécuter *avant*, imposait un ordre à trous (1 → 2 → 9 → 3 → 4 → 6 → 9bis → 9ter → 8)
+qui a causé deux erreurs d'exécution en une journée. Elle est devenue **2bis**, juste
+après les chemins et avant le dataset ; ses trois cellules s'ignorent d'elles-mêmes
+quand `RESUME_RUN_PATH` est vide. Le mode se décide au seul `RESUME_RUN_PATH` de la
+section 0 — plus aucune cellule à sauter.
 
 1. **Reprendre UNIQUEMENT depuis `last.ckpt`** (`train(resume=...)`) : un `.pth` léger
    remet les callbacks best/early-stopping à zéro (restauration d'état = 1.9.2+).
 2. **`metrics.csv` est TRONQUÉ à la reprise** (correctif 1.9.2 non rétroporté) —
-   sauvegarder `metrics.csv` AVANT toute reprise (convention projet : historiques +
-   NOTE-metriques.md dans entrainement/).
-3. `RESUME_RUN_PATH` (cellule 24) traîne souvent un placeholder périmé — le
-   re-renseigner ; exécuter la **sonde 9bis** avant d'armer ; la cellule 28 restaure la
-   patience depuis config.json (une édition en cellule 2 serait écrasée).
+   la 3e cellule de 2bis le sauvegarde AVANT toute reprise (convention projet :
+   historiques + NOTE-metriques.md dans entrainement/).
+3. `RESUME_RUN_PATH` se renseigne en **section 0** (remonté là le 2026-09-10 : il était
+   écrit en dur dans la cellule de reprise et traînait le run d'un autre chantier). La
+   2e cellule de 2bis sonde le checkpoint avant d'armer et refuse une reprise incohérente ;
+   elle restaure la patience depuis config.json (une édition en section 0 serait écrasée).
    Issues amont : [#1028](https://github.com/roboflow/rf-detr/issues/1028), #460, #998.
 
 ## 8. Sections 10-15 (cellules 30-40) — chargement, éval, visualisation
@@ -188,12 +197,27 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
   (`EVAL_TOOLS_REPO` @ `EVAL_TOOLS_REF`), `tools/courbes_eval.py` sur valid + test avec
   le checkpoint livré, baselines superposées, puis `tools/verif_courbes_eval.py`
   (CONFORME exigé, sinon arrêt). Sorties dans `evaluation/` du run (metriques_eval.json
-  canonique, planches, appariements.json, provenance_outils.txt). Les seuils F1-max
-  écrasent `CONFIDENCE_THRESHOLD` et remplissent `UI` (confidence_per_class,
-  seuils_provenance) pour le packaging. `evaluation_results.json` n'est plus produit
-  (l'ancienne éval mesurait à seuil fixe 0,3 et tronquait les mAP). Cellule 34 :
-  visualisation des logs d'entraînement seulement. Validation humaine des sorties de
-  cellules = le protocole `/entrainement-modele`.
+  canonique, planches, appariements.json, provenance_outils.txt). La cellule imprime
+  ensuite l'**étude du seuil** (bloc `etude_seuil` : F1-max, F2-max, plateau F1 ≥ 95 %,
+  R_max, FP par image, précision marginale, tableau au pas 0,05, global et par classe)
+  et un seuil PROPOSÉ = max(F2-max, bas du plateau) — point de départ, jamais appliqué
+  à l'aveugle.
+- **Cellule 11bis (2026-09-09) : choix des seuils.** L'analyste LIT le tableau (plateau
+  étroit ou FP/image déjà lourds → rester près du F1-max ; plateau large et FP/image
+  faibles → descendre vers le F2-max ; classes rares ou inutilisables → ne pas descendre)
+  puis renseigne `SEUIL_RETENU`, `SEUILS_PAR_CLASSE_RETENUS` et `JUSTIFICATION_SEUILS`
+  (texte libre : plateau, F2, FP/image, raison). La cellule refuse un seuil hors de la
+  fenêtre [bas du plateau 95 % ; F1-max] ou une justification vide, puis écrase
+  `CONFIDENCE_THRESHOLD` et remplit `UI` (confidence_default, confidence_per_class,
+  seuils_provenance = mesure + choix) pour le packaging. Elle calcule ensuite la
+  **fiabilité affichée** (`UI["fiabilite"]` → `thresholds.fiabilite`) : par classe, au
+  seuil retenu, les catégories douteux / possible / probable / très probable définies par
+  la part de vrais objets mesurée au banc (garantie 35 / 60 / 85 %, coupures lissées,
+  catégories < 30 détections fusionnées vers le bas) — lire les effectifs imprimés ;
+  `FIABILITE_RETENUE` + `JUSTIFICATION_FIABILITE` pour surcharger. `evaluation_results.json`
+  n'est plus produit (l'ancienne éval mesurait à seuil fixe 0,3 et tronquait les mAP).
+  Cellule 34 : visualisation des logs d'entraînement seulement. Validation humaine des
+  sorties de cellules = le protocole `/entrainement-modele`.
 - Cellules 36-40 : visualisations des prédictions (test) — l'inspection humaine des
   masques fait partie de la boucle.
 
@@ -212,10 +236,11 @@ Tout est écrit **à la racine du dossier de run** (piège connu — pas de vers
   Opset 17. Puis checklist `/installer-modele-plugin` (porte de parité binarisée,
   sidecar class_offset, entité catalogue) — et pour les modèles multicanaux : **ne pas
   installer avant le chantier de composition des canaux à l'inférence**.
-- Après tout run : l'éval outillée a tourné en section 11 (garde-fou : la cellule 43
-  refuse de packager sans `UI["seuils_provenance"]`) ; sur le poste, re-verdict
-  `tools/verif_courbes_eval.py` (sans GPU), dashboard `tools/tableau_modeles.py`,
-  traçabilité dans `entrainement/`.
+- Après tout run : l'éval outillée a tourné en section 11 et les seuils ont été CHOISIS
+  en 11bis (garde-fou : la cellule 43 refuse de packager sans `UI["seuils_provenance"]`,
+  que seule la 11bis écrit) ; sur le poste, re-verdict `tools/verif_courbes_eval.py`
+  (sans GPU), dashboard `tools/tableau_modeles.py` (la fiche du modèle situe le seuil
+  déployé dans la fenêtre mesurée), traçabilité dans `entrainement/`.
 
 ## 10. Reproductibilité (retouches 2026-08-31)
 
