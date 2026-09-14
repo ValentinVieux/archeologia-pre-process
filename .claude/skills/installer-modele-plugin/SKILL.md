@@ -41,12 +41,27 @@ compléments 2026-08).
 
 ## Étapes
 1. Copier `package/` du run Drive → `data/models/<id>/` + compléments ci-dessus.
+1bis. **LES POIDS LIVRÉS SONT-ILS CEUX QU'ON A MESURÉS ?** (bloquant depuis 2026-09-14,
+   après DEUX récidives : crateres_seg_ld_v1 et tranchees_seg_ld_v1 ont été installés sur
+   des poids jamais évalués) — `tools/verif_poids_evalues.py data/models/<id>`
+   (`--drive <racine model-training>` si le brouillon qui portait le checkpoint est purgé) :
+   CONFORME exigé. Le notebook mesure `checkpoint_best_ema.pth` et package
+   `checkpoint_best_total.pth` : rien d'autre ne compare les deux. SUSPECT → remesurer les
+   poids LIVRÉS par `courbes_eval` avant toute conclusion, et n'écrire dans le model_card
+   que des chiffres issus de cette remesure.
 2. Cohérence des métadonnées : lancer `tools/verif_courbes_eval.py` sur
    `entrainement/evaluation/` — CONFORME AVANT de recopier les seuils ;
    `classes.txt` = ids d'ENTITÉ du catalogue ;
-   `thresholds.confidence_default` + `confidence_per_class` = valeurs de
-   `entrainement/evaluation/metriques_eval.json` (jamais 0,3 par défaut),
-   champ `thresholds.seuils_provenance` renseigné (chemin + date) ; vérifier
+   `thresholds.confidence_default` + `confidence_per_class` = seuils CHOISIS
+   (cellule 11bis, règle 2026-09-09) dans la fenêtre [bas du plateau F1 ≥ 95 % ;
+   F1-max] du bloc `etude_seuil` de `entrainement/evaluation/metriques_eval.json`
+   (jamais 0,3 par défaut, jamais « = F1-max » sans étude ; éval sans le bloc →
+   `completer_metriques_eval.py` d'abord), champ `thresholds.seuils_provenance`
+   renseigné (chemin + date + mesure + raison du choix) ; `thresholds.fiabilite`
+   (catégories douteux/possible/probable/quasi_certain PAR CLASSE, cellule 11bis :
+   `{categorie, seuil, garanti, mesure, n}` + provenance, 1re catégorie AU seuil de
+   la classe, effectifs relus — sans ce bloc le plugin affiche les tranches de score
+   historiques) ; vérifier
    clés `par_classe` de metriques_eval.json == classes.txt (piège du mapping
    croisé enclos ie/fr) ; version/description/known_limitations remplis ;
    bloc RVT/MNT = GSD et rayons LD du corpus d'entraînement.
@@ -88,9 +103,10 @@ compléments 2026-08).
 9. **Régénérer le dashboard** : `tools/tableau_modeles.py` sur la racine
    model-training `--registre <data_regions_v2>\modeles.yaml` et
    `--plugin <data/models du plugin de référence, ou zip publié>` (règle CLAUDE.md
-   « après tout dépôt d'évaluation » ; la fiche du modèle compare le seuil déployé
-   du model_card au F1-max mesuré : un écart doit être justifié dans
-   `seuils_provenance`, sinon il est signalé « non justifié ») + resynchroniser le `package/` du run
+   « après tout dépôt d'évaluation » ; la fiche du modèle resitue le seuil déployé
+   du model_card dans la fenêtre mesurée [bas du plateau F1 ≥ 95 % ; F1-max] : hors
+   fenêtre = à justifier dans `seuils_provenance`, sinon signalé « non justifié » ;
+   posé AU F1-max = « rappel non privilégié ») + resynchroniser le `package/` du run
    Drive avec le model_card final (la seule copie correcte ne doit pas être
    uniquement le data/models gitignoré du laptop).
 10. **Clôture du brouillon de chantier** (CLAUDE.md § Brouillons de chantier) : le
@@ -103,6 +119,9 @@ compléments 2026-08).
     seule copie du modèle sortant — l'archiver sur le Drive avant clôture.
 
 ## Garde-fous
+- Seuil de production ≠ F1-max (règle 2026-09-09) : choisi SOUS le F1-max par étude
+  de la courbe (plateau, F2-max, FP/image, précision marginale, zones), justifié dans
+  `seuils_provenance` ; cf. CLAUDE.md « Choix du seuil de production ».
 - Résolution d'entraînement = résolution d'export = résolution d'inférence.
 - Ancien mécanisme remplacé : COMMENTER (model_card/args), jamais supprimer.
 - Tout chiffre affiché dans model_card provient d'une mesure tracée

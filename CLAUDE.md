@@ -36,6 +36,7 @@ les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
 .venv\Scripts\python.exe tools\corriger_georef_dalles.py <gpkg> <dossier_dalles> <gpkg_sortie> [--gsd 0.5] [--cote 1000]  # corrige les annotations issues de dalles LD « à marge » (2 201 px = km + 50 m géoréférencé comme 1 000 m : compression 10 % vers le NW, ±50 m aux bords — découverte 2026-09-06, haut_doubs/ales/la_capelle) ; refuse d'écraser ; vérifier par corrélation ANCIEN/NOUVEAU (cf. /revue-annotations)
 .venv\Scripts\python.exe tools\revue_auto_annotations.py <gpkg> <raster> [--couches c1 c2] [--diam-min 3] [--diam-max 60]  # revue AUTOMATIQUE avant découpe (tailles, allongement, invalides, doublons IoU≥0,5, hors raster, NoData, taille FIXE = boîtes synthétiques) ; verdict RAS / À VOIR (exit 2) ; ne modifie rien
 <venv_onnx du plugin>\python.exe tools\verif_parite_onnx.py <best.pth> <best.onnx> <dossier_tuiles> --resolution <res> --seuil <déployé> [--n 120]  # parité de DÉCISION PyTorch/ONNX d'un modèle de détection sur N tuiles de test (même prétraitement que la porte du plugin ; appariement classe + boîte + score) — CONFORME requis avant installation (la porte d'export ne teste que 2 images) ; PYTHONIOENCODING=utf-8
+.venv\Scripts\python.exe tools\verif_poids_evalues.py <data/models du plugin> [--drive <racine model-training>] [--strict]  # GARDE-FOU best_ema/best_total (2026-09-14) : les poids livrés (weights/best.pth) sont-ils CEUX qu'a mesurés chaque entrainement/evaluation*/metriques_eval.json (champ modeles.*.poids) ? CONFORME / SUSPECT (exit 2 : les chiffres publiés ne décrivent pas le modèle installé) / INDÉTERMINABLE ; --drive retrouve le checkpoint quand le brouillon local qui le portait a été purgé
 .venv\Scripts\python.exe tools\temoin_couche.py <gpkg> <couche> [--comparer <temoin.txt>]  # témoin d'intégrité (effectif + sha256 WKB) avant/après tout run long sur une couche que l'utilisateur édite dans QGIS ; DIFFÉRENT = relancer (exit 1)
 .venv\Scripts\python.exe tools\dedup_annotations.py <gpkg> <gpkg_sortie> [--iou 0.5] [--couches c1 c2]  # supprime les annotations en double (IoU boîtes ≥ --iou, même couche), trace `doublon_de` dans <couche>_doublons ; distingue inter-dalles (objet dans la marge de 2 dalles voisines — apparaît APRÈS correction du géoréf) / intra-dalle ; refuse d'écraser
 .venv\Scripts\python.exe tools\verif_alignement_ld.py <raster_ref> <raster_test> [--dalles 6] [--tolerance 1.0]  # CONTRÔLE OBLIGATOIRE avant d'utiliser un raster livré ou régénéré : corrélation de phase par grille 3×3 DANS des dalles km, verdict ALIGNÉ / TRANSLATION / ÉCHELLE (le décalage qui change de signe N-S = couverture de dalle fausse, leçon 2026-09-06) ; sans GPU
@@ -58,10 +59,10 @@ D:\veille_irlande\venv_sam\Scripts\python.exe tools\sam_polygones_bbox.py <gpkg>
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_corpus.py <corpus> <poids.pth> <out> --metriques <metriques_eval.json>  # détections d'un modèle sur les tuiles d'un corpus (detections.json px + GPKG EPSG:2154 ; retenu = seuil F1-max par classe du metriques_eval canonique, plancher 0,15 pour les scores écrasés type Chailluz) — venv_adaf GPU ; reste : --help
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_raster.py <raster> <poids.pth> <gpkg> --couche <nom> --classes <c1> ... --seuil <F1-max> [--gsd 1.0] [--recouvrement 96] [--limite N]  # inférence d'un modèle sur un RASTER entier par fenêtres glissantes (rééchantillonné au --gsd du modèle, NMS IoU 0,5 sur les recouvrements) -> couches <nom> (polygones) + <nom>_bbox ajoutées au GPKG (refus si existantes) ; --seuil = seuil F1-max du metriques_eval canonique, champ retenu ; venv_adaf GPU ; ex. enclos_fr sur un LD 0,5 m : --gsd 1.0 --seuil 0.41
 .venv\Scripts\python.exe -m tools.review_detections <corpus> <detections.json> [--decisions <yaml>] [--port 5176]  # app locale de revue des détections par tuile, tout en BOUNDING BOXES (valider/invalider/redimensionner/reclasser/ajouter une boîte, GT du dataset marquée, masquage touche D ; décisions YAML immédiates, jamais le corpus — même contrat que review_recalage)
-D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--reprendre-de <eval_precedente> ...] [--adopter-cache]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card) + planches P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
+D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--reprendre-de <eval_precedente> ...] [--adopter-cache] [--critere iou|couverture]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card : F1-max + bloc etude_seuil, tableau d'étude imprimé) + planches ; --critere couverture (seg seulement) = vérité par recouvrement >= 50 % des masques annotés, pour les LINÉAIRES (dossier evaluation_couverture/ séparé, cache à empreinte distincte) P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
 .venv\Scripts\python.exe tools\verif_courbes_eval.py <dossier_eval>  # contrôleur indépendant SANS GPU : recalcule P/R/F1/AP depuis appariements.json — CONFORME requis avant dépôt/seuils/dashboard
-.venv\Scripts\python.exe tools\completer_metriques_eval.py <dossier_eval> [--out <dossier>] [--forcer]  # ajoute le bloc par_zone_classe (zone × classe : n_gt/tp/fp/R/P au seuil global, R au seuil de classe, R_max) à un metriques_eval.json antérieur au 2026-09-03, depuis appariements.json SANS GPU ni réinférence ; reste byte-identique + champ complete_le ; refuse si déjà présent ; copie locale puis re-dépôt, re-vérifier par verif_courbes_eval
-.venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>] [--depot <repo>] [--plugin <data/models|plugin.zip>] [--seuil-fragile 30] [--min-train 100]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, lien vers les planches, runs sans mesure comptés + signalés s'ils ont un checkpoint) + FICHE repliée par modèle (données par classe/zone depuis manifests/corpus du --depot, run, époques FUSIONNÉES metrics.csv + historiques de reprise, badge et seuils déployés vs F1-max depuis les model_card du --plugin) ; régénérer après tout dépôt d'évaluation
+.venv\Scripts\python.exe tools\completer_metriques_eval.py <dossier_eval> [--out <dossier>] [--forcer]  # ajoute les blocs additifs manquants à un metriques_eval.json antérieur : par_zone_classe (2026-09-03 ; zone × classe : n_gt/tp/fp/R/P au seuil global, R au seuil de classe, R_max) et etude_seuil (2026-09-09 ; F2-max, plateaux F1, FP/image, seuil proposé, tableau — global + par classe), depuis appariements.json SANS GPU ni réinférence ; reste byte-identique + champ complete_le ; refuse si rien ne manque ; copie locale puis re-dépôt, re-vérifier par verif_courbes_eval
+.venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>] [--depot <repo>] [--plugin <data/models|plugin.zip>] [--seuil-fragile 30] [--min-train 100]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, lien vers les planches, runs sans mesure comptés + signalés s'ils ont un checkpoint) + FICHE repliée par modèle (données par classe/zone depuis manifests/corpus du --depot, run, époques FUSIONNÉES metrics.csv + historiques de reprise, badge et seuils déployés resitués dans la fenêtre mesurée [bas du plateau F1 ≥ 95 % ; F1-max] depuis les model_card du --plugin) ; régénérer après tout dépôt d'évaluation
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
 .venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
 .venv\Scripts\python.exe tools\verif_corpus.py configs\corpus_lineaires_v2.yaml <dossier_datasets> <corpus>  # boucle de vérification du corpus
@@ -164,8 +165,9 @@ git log ; pas de fichier de log séparé.
   superposé au modèle précédent/baseline sur la MÊME éval gelée (appariement IoU
   masque/bbox ≥ 0,5, balayage de seuil — jamais de seuil fixe). Sortie canonique
   `metriques_eval.json` = SOURCE UNIQUE des seuils du model_card
-  (`thresholds.confidence_default` + `confidence_per_class` = F1-max mesurés, champ
-  `seuils_provenance`). Rangement : Drive `runs/training/<run>/evaluation/`
+  (`thresholds.confidence_default` + `confidence_per_class` CHOISIS dans la fenêtre
+  mesurée — cf. « Choix du seuil de production » ci-dessous —, champ
+  `seuils_provenance` = mesure + choix). Rangement : Drive `runs/training/<run>/evaluation/`
   (metriques_eval.json + planches + appariements.json) ; plugin
   `data/models/<modele>/entrainement/evaluation/` (éval du modèle déployé) et
   `entrainement/comparaison_<vs>/` (superpositions). `evaluation_results.json` racine
@@ -183,6 +185,57 @@ git log ; pas de fichier de log séparé.
   NOTE-metriques.md), `hparams.yaml`, tfevents, `visualizations/` — le contrat reste
   à la racine. Cf. skill `/installer-modele-plugin` pour la checklist complète
   (ONNX, parité binarisée, sidecar class_offset, entité catalogue).
+- **Choix du seuil de production** (règle utilisateur 2026-09-09, remplace « seuil =
+  F1-max ») : le F1-max pèse un oubli comme un faux positif ; en prospection l'oubli ne
+  se rattrape jamais alors qu'un faux positif se rejette en secondes sur le RVT. Le seuil
+  déployé se choisit donc **SOUS le F1-max, par ÉTUDE de la courbe à chaque modèle**
+  — jamais par formule. `courbes_eval` publie pour ça le bloc `etude_seuil` (global +
+  par classe) : F2-max, plateaux F1 ≥ 98 %/95 %, R_max au plancher, FP par image,
+  précision marginale des détections ajoutées, tableau au pas 0,05, et
+  `seuil_propose` = max(F2-max, bas du plateau 95 %) qui n'est qu'un POINT DE DÉPART.
+  Lecture : plateau étroit ou FP/image déjà lourds (linéaires) → rester près du F1-max ;
+  plateau large et FP/image faibles (fours, dépressions, enclos IE) → descendre jusqu'au
+  F2-max ; classe rare/inutilisable (F1 < 0,2) → ne pas descendre ; précision marginale
+  < ~0,15 → on n'ajoute que du bruit ; regarder `par_zone_classe` (un seuil plus bas rend
+  du rappel aux zones faibles). Fenêtre admise : **[bas du plateau F1 ≥ 95 % ; F1-max]**
+  (par classe aussi) ; hors fenêtre ou AU F1-max = à justifier. Le choix et ses raisons
+  vont dans `seuils_provenance` du model_card (REQUIS dès que l'éval porte
+  `etude_seuil`) ; le notebook (cellule 11bis) refuse un seuil hors fenêtre ou sans
+  justification, le validateur du plugin et `tableau_modeles` resituent le seuil déployé
+  dans la fenêtre. Une éval antérieure se complète SANS GPU par
+  `completer_metriques_eval.py` (ajoute `etude_seuil`) puis re-verif. Les outils de revue
+  (`inferer_corpus`/`inferer_raster`, champ `retenu`) restent au F1-max = référence de
+  MESURE, pas le seuil déployé. Application du 2026-09-09 aux 5 modèles évalués :
+  dépressions 0,395→0,29, enclos IE 0,375→0,25, ponctuelles 0,40→0,29, enclos FR
+  0,37→0,30, linéaires v3 parcellaire 0,28→0,26 et talus_fosse 0,305→0,25 (plateau
+  étroit, FP/image lourds : on reste près du F1-max ; chemin_creux 0,245 inchangé).
+- **Fiabilité affichée dans QGIS** (décision utilisateur 2026-09-09, catégories de la
+  proposition A, rendu = dégradé de luminosité de la couleur de classe sans
+  remplissage, coupures PAR CLASSE) : la légende du plugin ne montre plus des tranches de score mais
+  « douteux / possible / probable / très probable », définis par la **part de vrais objets
+  mesurée au banc** dans la tranche (garantie 35 / 60 / 85 %) — le mot a le même sens pour
+  tous les modèles, seules les coupures de score changent. `courbes_eval` publie
+  `etude_seuil.bandes` (tp/fp par tranche de 0,05 = table de calibrage) et
+  `fiabilite_proposee` ; la cellule 11bis calcule les catégories au seuil RETENU de chaque
+  classe (`coupures_fiabilite` : première tranche dont la part de vrais, lissée sur deux
+  tranches, atteint le niveau, monotone ; `fiabilite_par_classe` : catégories < 30
+  détections ou sous leur niveau FUSIONNÉES vers le bas — enclos FR n'a que douteux /
+  probable, chemin_creux douteux / possible) → `UI["fiabilite"]` → `thresholds.fiabilite`
+  du model_card (`{categorie, seuil, garanti, mesure, n}` par classe + provenance). LIRE les
+  effectifs avant de figer ; `FIABILITE_RETENUE` + `JUSTIFICATION_FIABILITE` pour surcharger.
+  Le validateur du plugin re-dérive mesure/n des bandes et exige la 1re catégorie AU seuil
+  de la classe. Une éval antérieure se complète par `completer_metriques_eval.py` (ajoute
+  `bandes`, aussi par zone × classe). Ne jamais définir une catégorie par le score brut.
+  **Linéaires** (constat Fénétrange 2026-09-09 : des détections excellentes classées
+  « douteux ») : l'IoU 1-1 ≥ 0,5 compte fausse une détection correcte mais fragmentée ou
+  décalée de quelques mètres → `courbes_eval --critere couverture` (vrai = ≥ 50 % de la
+  détection sur les masques annotés ; annotation retrouvée = ≥ 50 % couverte par les
+  prédictions, score = confiance d'atteinte ; enregistrements avec `tps_pred`), éval
+  déposée à part dans `entrainement/evaluation_couverture/` (`fiabilite.source`) ; et
+  calibrer sur les seules zones à annotation EXHAUSTIVE (`fiabilite.zones`, tables
+  `par_zone_classe.bandes`) — une zone incomplètement annotée compte ses bonnes détections
+  en faux (Fontainebleau : P 0,23 contre 0,48 à Haye). Ce sera souvent le cas des corpus
+  linéaires : la mesure du banc y est un PLANCHER, à dire dans la provenance.
 - **Nommage des configs de découpe** (2026-08-31) : toute NOUVELLE config suit
   `<famille>_<zone_id>_ld648_v<N>.yaml` (zone_id = id data_regions_v2, ex.
   `ponctuelles_41_blois_ld648_v2`) ; l'existant n'est PAS renommé (référencé par les
@@ -225,7 +278,8 @@ git log ; pas de fichier de log séparé.
   paramètre à chaque entraînement (copie locale docs/google_collab/ → édition cellule 2
   → redépôt G:). Depuis le 2026-09-03 sa section 11 EST l'éval outillée (clone du
   dépôt d'outils épinglé `EVAL_TOOLS_REF` — un commit POUSSÉ, sinon Colab voit les anciens
-  outils —, courbes_eval + verif dans Colab, seuils F1-max → packaging) ;
+  outils —, courbes_eval + verif dans Colab, étude du seuil imprimée, puis cellule 11bis
+  = CHOIX justifié des seuils sous le F1-max → packaging) ;
   `evaluation_results.json` n'est plus produit. Guide complet section par section
   (défauts rfdetr 1.8.3, checkpoints, pièges de reprise, sources) :
   `docs/google_collab/GUIDE-parametrage-rfdetr_unified_pipeline_v2.md`.
@@ -361,9 +415,13 @@ Audit du workflow + consolidation (2026-08-31) : `docs/audit_workflow_2026-08.ht
 - Écritures massives vers G: : toujours staging local puis `robocopy /E /MT:16`.
 - Workflows : `/dispatch-roboflow` (ranger des exports), `/audit-dataset` (auditer
   une livraison vecteur).
-- Arbitrages pendants : aucun. Dept 44 (digitalisation jamais livrée) : relance envoyée par
-  mail le 2026-07-16, en attente de re-dépôt. Vosges saônoises : résolu 2026-07-16 —
-  Bourgogne-Franche-Comté confirmée par l'utilisateur (Mélisey 70270, Haute-Saône).
+- Arbitrages pendants : aucun. Dept 44 : digitalisation **livrée le 2026-09-09** (après
+  relance du 2026-07-16), rangée dans `D:\data_regions\Loire Atlantique\` — hors Drive
+  pour l'instant : `data/Digitalisation_dept_44/LiDAR_2024_2025_Digit_synthèse.gpkg`
+  (3 882 polygones EPSG:2154, campagnes 2024/2025) + 1 317 dalles MNT 1 km 0,5 m +
+  rapports ; reste à auditer (`/audit-dataset`) puis à créer en zone data_regions_v2.
+  Vosges saônoises : résolu 2026-07-16 — Bourgogne-Franche-Comté confirmée par
+  l'utilisateur (Mélisey 70270, Haute-Saône).
 - Décisions actées 2026-07-27 (54_foret_de_haye, fusion parcellaire v1/v2) : quand deux
   versions d'une même entité coexistent, **garder toujours le tracé le plus long** ; sortir
   de l'emprise de la version la plus récente n'est pas disqualifiant.

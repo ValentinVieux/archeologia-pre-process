@@ -57,21 +57,39 @@ colle les sorties de cellules : les valider une à une.
   checkpoint LIVRÉ `EVAL_CHECKPOINT`, valid + test du corpus, baselines à
   superposer dans `EVAL_BASELINES` (mêmes tuiles, même machine : jamais mélanger
   un cache Colab et un cache local), fusions dans `EVAL_FUSIONS` ; puis
-  `verif_courbes_eval.py` dans la même cellule, verdict CONFORME exigé, et les
-  seuils F1-max deviennent `CONFIDENCE_THRESHOLD` / `UI` pour le packaging.
-  Sur le poste (venv_adaf) seulement pour une éval a posteriori ou une
-  superposition hors Colab. Sorties dans
+  `verif_courbes_eval.py` dans la même cellule, verdict CONFORME exigé, puis la
+  cellule imprime l'**étude du seuil** (bloc `etude_seuil`). Sur le poste (venv_adaf)
+  seulement pour une éval a posteriori ou une superposition hors Colab. Sorties dans
   `runs/training/<run>/evaluation/` du Drive :
-  `metriques_eval.json` (CANONIQUE — seuils F1-max global + par classe, AP@50,
-  par zone, provenance) + planches + `appariements.json` (cache à empreinte).
-  Les seuils du model_card (`confidence_default` + `confidence_per_class`)
-  proviennent UNIQUEMENT de metriques_eval.json — plus jamais lus sur les PNG.
+  `metriques_eval.json` (CANONIQUE — seuils F1-max global + par classe, bloc
+  `etude_seuil`, AP@50, par zone, provenance) + planches + `appariements.json`
+  (cache à empreinte).
+- **Choix des seuils — cellule 11bis (règle utilisateur 2026-09-09)** : le seuil de
+  production se fixe SOUS le F1-max (qui pèse un oubli comme un faux positif), par
+  ÉTUDE de la courbe à chaque modèle, dans la fenêtre [bas du plateau F1 ≥ 95 % ;
+  F1-max], global ET par classe. Lire le tableau imprimé (F2-max, plateaux, R_max,
+  FP/image, précision marginale des ajouts, `par_zone_classe`) : plateau étroit ou
+  FP/image lourds → près du F1-max ; plateau large et FP/image faibles → jusqu'au
+  F2-max ; classe rare/inutilisable → ne pas descendre ; précision marginale < ~0,15
+  → bruit. Renseigner `SEUIL_RETENU`, `SEUILS_PAR_CLASSE_RETENUS`,
+  `JUSTIFICATION_SEUILS` (obligatoire) — la cellule refuse hors fenêtre / sans
+  justification et écrit `CONFIDENCE_THRESHOLD` + `UI` (`seuils_provenance` = mesure
+  + choix). Proposer le choix à l'utilisateur avec les chiffres, jamais appliquer
+  `seuil_propose` à l'aveugle. Les seuils du model_card (`confidence_default` +
+  `confidence_per_class`) proviennent UNIQUEMENT de cette étude sur
+  metriques_eval.json — plus jamais lus sur les PNG, plus jamais « = F1-max » par défaut.
+  La même cellule calcule ensuite la **fiabilité affichée** (catégories douteux / possible /
+  probable / très probable PAR CLASSE, part de vrais objets mesurée au banc, garantie
+  35 / 60 / 85 %, fusion des catégories < 30 détections) → `UI["fiabilite"]` →
+  `thresholds.fiabilite` du model_card. Lire les effectifs par catégorie imprimés ; ne
+  surcharger (`FIABILITE_RETENUE`) qu'avec `JUSTIFICATION_FIABILITE`.
   Puis, sur le poste, **`tools/verif_courbes_eval.py <dossier_eval>`** (.venv,
   sans GPU) : re-verdict CONFORME AVANT toute lecture de seuils ou dépôt (le
   cache n'a pas à être recalculé). Depuis le 2026-09-03
   courbes_eval publie aussi `par_zone_classe` (zone × classe : n_gt, R/P au seuil
-  global, R au seuil de classe, R_max au plancher) ; une éval antérieure se complète
-  SANS GPU par `tools/completer_metriques_eval.py <dossier_eval>` puis re-verif.
+  global, R au seuil de classe, R_max au plancher) et, depuis le 2026-09-09, le bloc
+  `etude_seuil` ; une éval antérieure se complète SANS GPU par
+  `tools/completer_metriques_eval.py <dossier_eval>` puis re-verif.
 - **Dashboard** : régénérer `tools/tableau_modeles.py` → `index.html` racine
   model-training après le dépôt, avec `--plugin <data/models ou zip publié>` pour
   la colonne « installé » ; les fiches par modèle (données par classe, zones,
