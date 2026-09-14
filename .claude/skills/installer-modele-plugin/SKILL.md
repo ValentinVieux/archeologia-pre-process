@@ -43,12 +43,17 @@ compléments 2026-08).
 1. Copier `package/` du run Drive → `data/models/<id>/` + compléments ci-dessus.
 1bis. **LES POIDS LIVRÉS SONT-ILS CEUX QU'ON A MESURÉS ?** (bloquant depuis 2026-09-14,
    après DEUX récidives : crateres_seg_ld_v1 et tranchees_seg_ld_v1 ont été installés sur
-   des poids jamais évalués) — `tools/verif_poids_evalues.py data/models/<id>`
-   (`--drive <racine model-training>` si le brouillon qui portait le checkpoint est purgé) :
-   CONFORME exigé. Le notebook mesure `checkpoint_best_ema.pth` et package
-   `checkpoint_best_total.pth` : rien d'autre ne compare les deux. SUSPECT → remesurer les
-   poids LIVRÉS par `courbes_eval` avant toute conclusion, et n'écrire dans le model_card
-   que des chiffres issus de cette remesure.
+   des poids jamais évalués) — `tools/verif_poids_evalues.py data/models/<id> --strict` :
+   **CONFORME** exigé. Le notebook mesure `checkpoint_best_ema.pth` et package
+   `checkpoint_best_total.pth` : rien d'autre ne compare les deux. Les autres verdicts ne
+   valent PAS un feu vert — `CONFORME_TAILLE` est une présomption (le checkpoint mesuré n'est
+   plus sur le poste), `AUTO_REFERENCE` signifie que l'éval a mesuré le fichier livré lui-même
+   (vrai par construction, aveugle à un remplacement ultérieur), `INDÉTERMINABLE` est
+   exactement ce que rendent les deux bugs historiques quand le checkpoint est hors de portée.
+   SUSPECT → remesurer les poids LIVRÉS par `courbes_eval` avant toute conclusion, et n'écrire
+   dans le model_card que des chiffres issus de cette remesure. Penser à donner à
+   `--modele <nom>=...` **l'id exact du modèle** : une clé différente dans `metriques_eval.json`
+   casse le badge plugin du dashboard et crée une entrée fantôme au registre.
 2. Cohérence des métadonnées : lancer `tools/verif_courbes_eval.py` sur
    `entrainement/evaluation/` — CONFORME AVANT de recopier les seuils ;
    `classes.txt` = ids d'ENTITÉ du catalogue ;
