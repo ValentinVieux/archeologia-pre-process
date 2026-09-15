@@ -125,7 +125,13 @@ Outils : `dev/fiches/` du plugin (`page_choix.py`, `appliquer_choix.py`,
    de la 4e catégorie de fiabilité est « très probable » (celui du plugin) ;
    toponymes et distances seulement s'ils sont sourcés (grille de tuiles,
    `candidats.json`, manifeste de zone) ; mono-zone → le dire, sans inventer de
-   mesure de généralisation.
+   mesure de généralisation ; sous la vignette l'interface n'affiche que le LIEU
+   (`vignettes[].zone`, ex. « Alès, garrigues nord-est (30) », décision 2026-09-15) —
+   `legende` reste une note interne de relecture, courte ; aucune référence au
+   dispositif interne (zone de référence gelée, checkpoints, commits, manifestes)
+   dans un texte affiché ; `hors_cible` se confronte à la COMPOSITION de la couche
+   source (classes fusionnées à l'audit : les abris de Verdun sont DANS la classe
+   cratère) ; à chaque leçon nouvelle, repasser sur TOUTES les fiches installées.
 5. **Vérification adverse OBLIGATOIRE** : trois relecteurs indépendants (corpus,
    évaluation, contenu/légendes contre les images) dont le mandat est de prendre
    chaque chiffre en défaut, puis une synthèse qui tranche les contradictions ;
