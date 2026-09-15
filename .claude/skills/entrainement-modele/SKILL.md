@@ -119,7 +119,9 @@ colle les sorties de cellules : les valider une à une.
   diagnostics. Rien d'original là-dedans — tout run/éval déposé sur
   `model-training/<famille>/runs/training/<run>/` AVANT de le considérer acquis.
   Clôture (contrôle + proposition de suppression) : `/installer-modele-plugin` § 10.
-- Installation plugin : skill `/installer-modele-plugin`.
+- Installation plugin : skill `/installer-modele-plugin`, puis fiche de chaque
+  classe et cible dérivée : `/fiche-classe-plugin` (obligatoire — le modèle n'est
+  pas livré tant que le validateur du plugin signale « pas de bloc 'fiche' »).
 
 ## Garde-fous
 - Éval gelée : listes d'images figées (yaml), JAMAIS re-tirée ; extensions de

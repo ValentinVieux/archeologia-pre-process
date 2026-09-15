@@ -12,7 +12,7 @@ entrees:
 sorties:
   - "data/models/<id>/ complet (contrat + entrainement/evaluation/ + weights ONNX+sidecar)"
   - "entities_catalog.json à jour (commit) + dashboards régénérés"
-suivant: []
+suivant: [fiche-classe-plugin]
 ---
 
 # Installation d'un modèle dans le plugin (checklist complète)
@@ -23,6 +23,18 @@ branche git propre à vérifier) — `data/models/**` y est gitignoré (déploie
 mais `data/entities_catalog.json` est SUIVI : le signaler pour le prochain commit.
 Gabarit de référence : un modèle déjà conforme (ex. `cratere_circulaire_2` +
 compléments 2026-08).
+
+## Deux dépôts, une seule procédure
+Ce skill est PARTAGÉ, octet pour octet, entre `training-models` et le plugin
+`archeologia-pipeline` (`.claude/skills/` des deux) : modifier l'un = reporter sur
+l'autre par `python <PLUGIN>/dev/sync_skills_training.py --check | --vers-training |
+--depuis-training` (les deux suites de tests échouent tant qu'ils divergent). Racines,
+quel que soit le dépôt courant :
+- TRAINING = `C:\projets\Archeologia\training-models` : `tools\…`, `configs\`,
+  `corpus\`, `tests\run_all.py` ;
+- PLUGIN = `%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\archeologia-pipeline` :
+  `data/models/`, `dev/`, `scripts/`, `docs/model_contract.md`, `run_tests.py`.
+Un chemin `tools\x.py` se lit sous TRAINING ; `dev/…`, `scripts/…`, `data/…` sous PLUGIN.
 
 ## Le dossier data/models/<id>/ DOIT contenir
 - Contrat (À LA RACINE) : `args.yaml`, `classes.txt`, `config.json`,
@@ -37,7 +49,9 @@ compléments 2026-08).
   2026-08-17 : toujours dans entrainement/). `evaluation_results.json` racine
   = legacy notebook, documentaire, ne JAMAIS l'écraser ni s'en servir comme
   source de seuils ;
-- `weights/` : `best.pth`, `best.onnx`, `best.json`.
+- `weights/` : `best.pth`, `best.onnx`, `best.json` ;
+- `vignettes/` : les cadres des fiches de classe (livrés dans le ZIP, à la
+  différence d'`entrainement/`) — produits par `/fiche-classe-plugin`.
 
 ## Étapes
 1. Copier `package/` du run Drive → `data/models/<id>/` + compléments ci-dessus.
@@ -103,6 +117,15 @@ compléments 2026-08).
 7. `scripts/validate_models_metadata.py data/models/<id>` → 1/1 OK exigé
    (validateur v2 : valeurs d'inference_choices, seuils adossés à
    metriques_eval.json, entités ⊆ catalogue, derived_targets ↔ clustering).
+7bis. **Fiche de classe** (obligatoire depuis 2026-09-14, skill
+   `/fiche-classe-plugin`) : chaque `classes[]` ET chaque `derived_targets[]` du
+   model_card doit porter son bloc `fiche` (vignettes du corpus choisies par
+   l'utilisateur, cadrage de l'icône, provenance et effectifs recomptés, usage au
+   seuil déployé, hors-cible) relu adversairement avant injection. Une cible
+   dérivée (règle `clustering` d'args.yaml) se CALIBRE d'abord sur un run de test
+   du plugin contre des cibles dessinées, un GeoPackage par variante, avant d'être
+   illustrée. Le validateur (étape 7) doit finir sans aucun WARNING de fiche ; le
+   report Drive du model_card final (étape 9) inclut ces blocs et `vignettes/`.
 8. Recharger le plugin dans QGIS (plugin reloader) ; rappeler le commit du
    catalogue à l'utilisateur.
 9. **Régénérer le dashboard** : `tools/tableau_modeles.py` sur la racine

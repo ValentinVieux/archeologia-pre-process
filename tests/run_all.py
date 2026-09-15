@@ -1,12 +1,11 @@
 """Lanceur de TOUS les auto-tests maison : .venv\\Scripts\\python.exe tests\\run_all.py
 
 Chaque tests/test_*.py est exécuté en sous-processus avec l'interpréteur courant
-(style maison assert+main, pas de pytest). Deux listes explicites :
-
-- SAUTES : tests qui exigent un autre interpréteur (lancés à part, cf. CLAUDE.md) ;
-- INFORMATIFS : doublures de code du plugin archeologia-pipeline recopié ici — leur
-  échec est AFFICHÉ mais n'invalide pas le run (la vérité vit côté plugin, où les
-  vrais tests tournent ; ces copies sont candidates au déménagement).
+(style maison assert+main, pas de pytest). SAUTES : tests qui exigent un autre
+interpréteur (lancés à part, cf. CLAUDE.md). Les anciennes doublures de code du plugin
+(reset des défauts UI, seuils par classe) sont rapatriées dans les tests du plugin le
+2026-09-15 : ici ne vit que ce qui teste ce dépôt (+ test_skills_partages, qui vérifie
+que les skills partagés sont identiques des deux côtés).
 """
 from __future__ import annotations
 
@@ -18,10 +17,6 @@ TESTS_DIR = Path(__file__).resolve().parent
 
 SAUTES = {
     "test_parity_bench.py": "PORTE de parité — exige le .venv_onnx du plugin (cf. CLAUDE.md, bloc bench)",
-}
-INFORMATIFS = {
-    "test_reset_defauts_ui.py",
-    "test_seuils_par_classe_plugin.py",
 }
 
 
@@ -35,15 +30,11 @@ def main() -> int:
         r = subprocess.run([sys.executable, str(test)], capture_output=True, text=True,
                            encoding="utf-8", errors="replace")
         if r.returncode == 0:
-            tag = "OK [informatif]" if test.name in INFORMATIFS else "OK"
-            resultats.append((test.name, tag))
+            resultats.append((test.name, "OK"))
         else:
             queue = "\n".join((r.stdout + r.stderr).splitlines()[-6:])
-            if test.name in INFORMATIFS:
-                resultats.append((test.name, f"ÉCHEC [informatif — doublure plugin]\n{queue}"))
-            else:
-                resultats.append((test.name, f"ÉCHEC\n{queue}"))
-                echec_bloquant = True
+            resultats.append((test.name, f"ÉCHEC\n{queue}"))
+            echec_bloquant = True
 
     largeur = max(len(n) for n, _ in resultats)
     for nom, statut in resultats:

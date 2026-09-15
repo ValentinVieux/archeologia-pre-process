@@ -117,6 +117,29 @@ mapping) → append aliases + entités candidates → relancer l'audit. Le tout 
 `/audit-dataset <chemin>`. Historique des décisions = provenance dans aliases.yaml +
 git log ; pas de fichier de log séparé.
 
+**Chaîne d'un modèle, sans étape facultative** (chaque skill nomme le suivant dans
+son frontmatter `suivant:`) : `/prepare-zone-training` → `/corpus-entrainement`
+(corpus CONFORME déposé) → `/entrainement-modele` (run Colab, éval outillée
+`courbes_eval` + `verif_courbes_eval` CONFORME, choix des seuils SOUS le F1-max et
+fiabilité en cellule 11bis, package) → `/installer-modele-plugin` (poids évalués =
+poids livrés, export ONNX + parité, contrat, catalogue, validateur 1/1, registre,
+dashboard) → `/fiche-classe-plugin` (fiche de CHAQUE classe et cible dérivée :
+candidats → choix humain → cadrage → rédaction sur sources primaires → relecture
+adverse → injection → report Drive ; les regroupements se calibrent d'abord sur un
+run de test avec des cibles dessinées) → clôture du brouillon de chantier. Un modèle
+dont le validateur du plugin signale encore « pas de bloc 'fiche' » n'est pas livré.
+
+**Deux dépôts synchronisés pour l'installation d'un modèle** (règle 2026-09-15) : les
+skills `installer-modele-plugin` et `fiche-classe-plugin` sont IDENTIQUES ici et dans
+`.claude/skills/` du plugin ; le contrat (`docs/model_contract.md`), le validateur
+(`scripts/validate_models_metadata.py`) et l'outillage des fiches (`dev/fiches/`) vivent
+dans le plugin, les outils d'évaluation/export (`tools/courbes_eval.py`,
+`verif_poids_evalues.py`, `verif_parite_onnx.py`, `tableau_modeles.py`) vivent ici — on ne
+duplique pas le code, seulement les skills. Après toute modification d'un skill partagé :
+`python <plugin>/dev/sync_skills_training.py --vers-training` (ou `--depuis-training`) ;
+`tests\test_skills_partages.py` (ici) et `tests/unit/test_skills_partages.py` (plugin)
+échouent tant que les copies divergent.
+
 ## Entraînement (datasets v2, modèles RF-DETR segmentation)
 
 - Chaîne par zone : audit (`/audit-dataset`) → GPKG entités (`build_zone_gpkg` +
