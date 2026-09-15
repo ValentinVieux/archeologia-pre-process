@@ -116,8 +116,8 @@ Outils : `dev/fiches/` du plugin (`page_choix.py`, `appliquer_choix.py`,
    de l'interface est « Seuil de confiance déployé », 2026-09-15), par zone, en disant
    quand la classe est faible, et si l'annotation de référence n'est pas exhaustive :
    précision et fiabilité mesurées sont alors des PLANCHERS (à dire aussi dans
-   `entrainement.annotation` et `known_limitations`) ; `entrainement.corpus` et
-   `entrainement.annotation` = LISTES de puces courtes en langage d'archéologue — pas
+   `entrainement.annotation` et `known_limitations`) ; `usage`, `entrainement.corpus` et
+   `entrainement.annotation` = LISTES de puces courtes (une idée par puce) en langage d'archéologue — pas
    de hash de commit, de chemin de config ni de nom d'outil (la traçabilité vit dans
    le run et `manifests/`) ; `hors_cible` = classes voisines du même modèle +
    exclusions volontaires du corpus — JAMAIS une cible du catalogue (les fosses
