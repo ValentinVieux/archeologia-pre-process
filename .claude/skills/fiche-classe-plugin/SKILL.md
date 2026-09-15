@@ -53,7 +53,7 @@ Outils : `dev/fiches/` du plugin (`page_choix.py`, `appliquer_choix.py`,
    brut (RVT seul) et l'annoté (mêmes pixels + polygones de vérité terrain, trait
    jaune 1 px), en variant zones et états de conservation (dense / clairsemé /
    arasé sous labour / sous plantation / au contact du bâti). Source : les tuiles
-   PNG + `_annotations.coco.json`, JAMAIS les planches `entrainement/visualizations/`
+   PNG + `_annotations.coco.json`, JAMAIS les planches `visualizations/` du run (sur le Drive, jamais dans le plugin)
    (montages 4 panneaux). Outil : `python dev/fiches/candidats_corpus.py <corpus>
    --categorie <cat COCO> --sortie D:rouillonsignettes_candidates\<classe>\<campagne>
    [--eviter-zone <zone de l'icône déjà installée>] [--gsd]` (fenêtre carrée à

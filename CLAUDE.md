@@ -205,8 +205,11 @@ duplique pas le code, seulement les skills. Après toute modification d'un skill
   seuils d'affichage fragile < 30 objets mesurés, rare < 100 annotations train).
   **La traçabilité
   du run vit dans `entrainement/`** : `metrics.csv` (+ historiques si reprises +
-  NOTE-metriques.md), `hparams.yaml`, tfevents, `visualizations/` — le contrat reste
-  à la racine. Cf. skill `/installer-modele-plugin` pour la checklist complète
+  NOTE-metriques.md), `hparams.yaml`, tfevents — le contrat reste à la racine.
+  **JAMAIS de `visualizations/`** dans `data/models/` du plugin ni dans ce dépôt (règle
+  utilisateur 2026-09-15 ; prédictions de test et planches d'inférence d'un run : Drive `runs/training/<run>/visualizations/`, ou `D:\brouillons\<chantier>\` le temps d'un test ; le validateur du plugin refuse le dossier ;
+  les 7 modèles installés ont été purgés le 2026-09-15 après vérification fichier par
+  fichier sur le Drive). Cf. skill `/installer-modele-plugin` pour la checklist complète
   (ONNX, parité binarisée, sidecar class_offset, entité catalogue).
 - **Choix du seuil de production** (règle utilisateur 2026-09-09, remplace « seuil =
   F1-max ») : le F1-max pèse un oubli comme un faux positif ; en prospection l'oubli ne

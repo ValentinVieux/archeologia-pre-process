@@ -41,8 +41,9 @@ Un chemin `tools\x.py` se lit sous TRAINING ; `dev/…`, `scripts/…`, `data/�
   `model_card.yaml`, `training_params.json`, `evaluation_results.json` ;
 - **Traçabilité entraînement (dans `entrainement/`)** : `metrics.csv`
   (+ historiques numérotés si reprises, avec NOTE-metriques.md disant quel CSV
-  = le checkpoint déployé), `hparams.yaml`, tfevents, `visualizations/`
-  (training_curves + dashboards du run Drive), **`evaluation/`**
+  = le checkpoint déployé), `hparams.yaml`, tfevents — mais **JAMAIS
+  `visualizations/`** (prédictions de test et planches d'inférence d'un run : Drive `runs/training/<run>/visualizations/`, ou `D:\brouillons\<chantier>\` le temps d'un test, règle utilisateur 2026-09-15 ; le
+  validateur refuse le dossier), **`evaluation/`**
   (metriques_eval.json + planches + appariements.json du modèle DÉPLOYÉ,
   copiés depuis `runs/training/<run>/evaluation/` du Drive) et les
   superpositions `comparaison_<vs>/` (tools/courbes_eval.py ; convention
