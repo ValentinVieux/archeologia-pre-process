@@ -104,10 +104,22 @@ Outils : `dev/fiches/` du plugin (`page_choix.py`, `appliquer_choix.py`,
      n'assemble que le corpus ; composition réelle des couches sources (ex. d1-d5
      et un tiers de d6, 83 047 parties hors fichiers) ;
    - cohérence avec `model_card` (`known_limitations`, `inference_choices`,
-     `recommended_use`) et `data/entities_catalog.json`.
+     `recommended_use`) et `data/entities_catalog.json` ;
+   - documents de la zone : `raw/docs/` de `data_regions_v2/<zone>/` sur le Drive
+     (rapports, thèses, articles) — c'est là que se lit la NATURE de l'annotation
+     (classes de la source, méthode, exhaustivité). Leçon cratère 2026-09-15 : la
+     fiche disait « abris non annotés » alors que l'article de la source
+     (de Matos-Machado et al., 2019, `interpretation_classes_ponctuelles.pdf`)
+     montre que les classes D4-D6 fusionnées dans la couche sont des abris.
    Règles de contenu : `reconnaitre` = fourchettes simples et arrondies, pas de
-   statistique ; `usage` = rendement franc au seuil déployé, par zone, en disant
-   quand la classe est faible ; `hors_cible` = classes voisines du même modèle +
+   statistique ; `usage` = rendement franc au seuil de confiance déployé (le libellé
+   de l'interface est « Seuil de confiance déployé », 2026-09-15), par zone, en disant
+   quand la classe est faible, et si l'annotation de référence n'est pas exhaustive :
+   précision et fiabilité mesurées sont alors des PLANCHERS (à dire aussi dans
+   `entrainement.annotation` et `known_limitations`) ; `entrainement.corpus` et
+   `entrainement.annotation` = LISTES de puces courtes en langage d'archéologue — pas
+   de hash de commit, de chemin de config ni de nom d'outil (la traçabilité vit dans
+   le run et `manifests/`) ; `hors_cible` = classes voisines du même modèle +
    exclusions volontaires du corpus — JAMAIS une cible du catalogue (les fosses
    d'extraction sont une cible du regroupement, pas un hors-cible) ; le libellé
    de la 4e catégorie de fiabilité est « très probable » (celui du plugin) ;
