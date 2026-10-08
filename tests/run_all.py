@@ -4,8 +4,8 @@ Chaque tests/test_*.py est exécuté en sous-processus avec l'interpréteur cour
 (style maison assert+main, pas de pytest). SAUTES : tests qui exigent un autre
 interpréteur (lancés à part, cf. CLAUDE.md). Les anciennes doublures de code du plugin
 (reset des défauts UI, seuils par classe) sont rapatriées dans les tests du plugin le
-2026-09-15 : ici ne vit que ce qui teste ce dépôt (+ test_skills_partages, qui vérifie
-que les skills partagés sont identiques des deux côtés).
+2026-09-15 : ici ne vit que ce qui teste ce dépôt. Les skills partagés avec le plugin ne
+sont plus comparés : ils n'existent qu'une fois, dans claude-plugin/ (2026-10-08).
 """
 from __future__ import annotations
 

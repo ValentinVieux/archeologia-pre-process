@@ -409,6 +409,14 @@ def main() -> None:
         assert complet["complete_le"]["par_zone_classe"][:4] == "2026"
         assert complet["complete_le"]["etude_seuil"][:4] == "2026"
         assert cm.sans_bloc(complet) == cm.sans_bloc(ancien)  # tout le reste identique
+        # critere (2026-10-08) : resumer() l'écrit ; une éval d'avant le champ le reçoit, déduit
+        assert complet["critere"] == "iou" and "critere" in ancien
+        sans_critere = json.loads(json.dumps(ancien)); sans_critere.pop("critere")
+        assert cm.critere_deduit(sans_critere) == "iou"
+        sans_critere["appariement"] = "couverture >= 0,5 de l'union des masques annotés, class-aware"
+        assert cm.critere_deduit(sans_critere) == "couverture"
+        assert cm.completer(sans_critere, {"m1": {"decal": 0, "enregs": ENREGS}}) == 1 \
+            and sans_critere["critere"] == "couverture" and "critere" in sans_critere["complete_le"]
         # éval qui n'a QUE etude_seuil à compléter (par_zone_classe déjà là) : complétée
         partiel = json.loads(json.dumps(resume))
         del partiel["modeles"]["m1"]["global"]["etude_seuil"]

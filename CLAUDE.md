@@ -5,6 +5,11 @@ modèles consommés par le plugin QGIS `archeologia-pipeline`). Des archéologue
 la France envoient des datasets vecteur hétérogènes ; ce repo les audite et uniformise
 les nommages vers une taxonomie maîtresse.
 
+Dépôts voisins : le plugin `archeologia-pipeline` (consommateur des modèles, cf. « Skills partagés » plus bas) et
+`C:/projets/Archeologia/archeologia-ovh` (calcul distant + publication Géoplateforme des indices) — un sujet de flux ou
+de publication ne se traite pas ici. La carte complète (rôles, routage, ce qui circule, secrets) est le skill partagé
+`/archeologia:depots` : l'invoquer dès qu'une demande touche un autre dépôt.
+
 Deux couches : un outil Python **déterministe** (audit.json + rapport HTML statique par
 livraison) et une couche sémantique pilotée par Claude (skill `/audit-dataset`) qui mappe
 les noms bruts sur la taxonomie, avec validation humaine de chaque décision.
@@ -61,7 +66,7 @@ D:\veille_irlande\venv_adaf\Scripts\python.exe tools\inferer_raster.py <raster> 
 .venv\Scripts\python.exe -m tools.review_detections <corpus> <detections.json> [--decisions <yaml>] [--port 5176]  # app locale de revue des détections par tuile, tout en BOUNDING BOXES (valider/invalider/redimensionner/reclasser/ajouter une boîte, GT du dataset marquée, masquage touche D ; décisions YAML immédiates, jamais le corpus — même contrat que review_recalage)
 D:\veille_irlande\venv_adaf\Scripts\python.exe tools\courbes_eval.py --coco <parent valid+test|split> --modele "nom=best.pth@res" [--modele ...] --out <dossier> [--tache detection|segmentation] [--fusion src=dst ...] [--reprendre-de <eval_precedente> ...] [--adopter-cache] [--critere iou|couverture]  # éval outillée DÉTECTION+SEG (remplace seuil_f1_detection.py) : metriques_eval.json CANONIQUE (source des seuils du model_card : F1-max + bloc etude_seuil, tableau d'étude imprimé) + planches ; --critere couverture (seg seulement) = vérité par recouvrement >= 50 % des masques annotés, pour les LINÉAIRES (dossier evaluation_couverture/ séparé, cache à empreinte distincte) P/R/F1/PR + cache appariements.json à empreinte (venv_adaf — GPU ; --fusion matériel : classes croisées enclos ; reste : --help)
 .venv\Scripts\python.exe tools\verif_courbes_eval.py <dossier_eval>  # contrôleur indépendant SANS GPU : recalcule P/R/F1/AP depuis appariements.json — CONFORME requis avant dépôt/seuils/dashboard
-.venv\Scripts\python.exe tools\completer_metriques_eval.py <dossier_eval> [--out <dossier>] [--forcer]  # ajoute les blocs additifs manquants à un metriques_eval.json antérieur : par_zone_classe (2026-09-03 ; zone × classe : n_gt/tp/fp/R/P au seuil global, R au seuil de classe, R_max) et etude_seuil (2026-09-09 ; F2-max, plateaux F1, FP/image, seuil proposé, tableau — global + par classe), depuis appariements.json SANS GPU ni réinférence ; reste byte-identique + champ complete_le ; refuse si rien ne manque ; copie locale puis re-dépôt, re-vérifier par verif_courbes_eval
+.venv\Scripts\python.exe tools\completer_metriques_eval.py <dossier_eval> [--out <dossier>] [--forcer]  # ajoute les blocs additifs manquants à un metriques_eval.json antérieur : par_zone_classe (2026-09-03 ; zone × classe : n_gt/tp/fp/R/P au seuil global, R au seuil de classe, R_max), etude_seuil (2026-09-09 ; F2-max, plateaux F1, FP/image, seuil proposé, tableau — global + par classe) et critere (2026-10-08 ; iou|couverture, déduit de la ligne appariement — lu par le profil des scores du plugin), depuis appariements.json SANS GPU ni réinférence ; reste byte-identique + champ complete_le ; refuse si rien ne manque ; copie locale puis re-dépôt, re-vérifier par verif_courbes_eval
 .venv\Scripts\python.exe tools\tableau_modeles.py "<racine model-training>" [--out <html>] [--depot <repo>] [--plugin <data/models|plugin.zip>] [--seuil-fragile 30] [--min-train 100]  # dashboard HTML famille/version/classe depuis les metriques_eval.json (sparklines d'évolution, lien vers les planches, runs sans mesure comptés + signalés s'ils ont un checkpoint) + FICHE repliée par modèle (données par classe/zone depuis manifests/corpus du --depot, run, époques FUSIONNÉES metrics.csv + historiques de reprise, badge et seuils déployés resitués dans la fenêtre mesurée [bas du plateau F1 ≥ 95 % ; F1-max] depuis les model_card du --plugin) ; régénérer après tout dépôt d'évaluation
 .venv\Scripts\python.exe tools\points_a_recaler.py <ld.tif> <sortie.gpkg> [--smr <points.gpkg>] [--couches ...]  # couche de recalage humain : points sur données valides, garde-fou bord 20 m, tri par contraste
 .venv\Scripts\python.exe tools\fermer_lignes_emprises.py <lignes.gpkg> <sortie.gpkg> --couches <c1> <c2> ... [--aire-min 50] [--aire-max 25000]  # lignes -> emprises pleines (chaînage+morpho, banc perforation IoU 0,998) ; 3 étages : auto / à vérifier / arbitrage humain (pilotés par --aire-*)
@@ -121,24 +126,42 @@ git log ; pas de fichier de log séparé.
 son frontmatter `suivant:`) : `/prepare-zone-training` → `/corpus-entrainement`
 (corpus CONFORME déposé) → `/entrainement-modele` (run Colab, éval outillée
 `courbes_eval` + `verif_courbes_eval` CONFORME, choix des seuils SOUS le F1-max et
-fiabilité en cellule 11bis, package) → `/installer-modele-plugin` (poids évalués =
+fiabilité en cellule 11bis, package) → `/archeologia:installer-modele-plugin` (poids évalués =
 poids livrés, export ONNX + parité, contrat, catalogue, validateur 1/1, registre,
-dashboard) → `/fiche-classe-plugin` (fiche de CHAQUE classe et cible dérivée :
+dashboard) → `/archeologia:fiche-classe-plugin` (fiche de CHAQUE classe et cible dérivée :
 candidats → choix humain → cadrage → rédaction sur sources primaires → relecture
-adverse → injection → report Drive ; les regroupements se calibrent d'abord sur un
-run de test avec des cibles dessinées) → clôture du brouillon de chantier. Un modèle
-dont le validateur du plugin signale encore « pas de bloc 'fiche' » n'est pas livré.
+adverse → injection → report Drive → zones situées (`zones_corpus.py` du plugin) ; les
+regroupements se calibrent d'abord sur un run de test avec des cibles dessinées) → clôture
+du brouillon de chantier. Un modèle dont le validateur du plugin signale encore « pas de
+bloc 'fiche' » n'est pas livré.
 
-**Deux dépôts synchronisés pour l'installation d'un modèle** (règle 2026-09-15) : les
-skills `installer-modele-plugin` et `fiche-classe-plugin` sont IDENTIQUES ici et dans
-`.claude/skills/` du plugin ; le contrat (`docs/model_contract.md`), le validateur
-(`scripts/validate_models_metadata.py`) et l'outillage des fiches (`dev/fiches/`) vivent
-dans le plugin, les outils d'évaluation/export (`tools/courbes_eval.py`,
-`verif_poids_evalues.py`, `verif_parite_onnx.py`, `tableau_modeles.py`) vivent ici — on ne
-duplique pas le code, seulement les skills. Après toute modification d'un skill partagé :
-`python <plugin>/dev/sync_skills_training.py --vers-training` (ou `--depuis-training`) ;
-`tests\test_skills_partages.py` (ici) et `tests/unit/test_skills_partages.py` (plugin)
-échouent tant que les copies divergent.
+**Skills partagés pour l'installation d'un modèle** (règle 2026-09-15, plugin Claude Code depuis
+le 2026-10-08) : `installer-modele-plugin` et `fiche-classe-plugin` n'existent qu'**une fois**, dans
+la marketplace locale `C:/projets/Archeologia/claude-plugins` (plugin `archeologia`, enregistré par
+`.claude/settings.json` de chaque dépôt ; `/archeologia:installer-modele-plugin`,
+`/archeologia:fiche-classe-plugin`, `/archeologia:depots`). Les invoquer dès que le sujet apparaît ;
+les modifier = éditer et commiter là-bas (lus en place, `/reload-plugins`) — plus de copie ni de
+script de synchronisation. Le contrat (`docs/model_contract.md`), le validateur
+(`scripts/validate_models_metadata.py`), l'outillage des fiches (`dev/fiches/`) et le fichier des
+zones (`dev/fiches/zones_corpus.py` → `data/zones_corpus.json`) vivent dans le plugin, les outils
+d'évaluation/export (`tools/courbes_eval.py`, `verif_poids_evalues.py`, `verif_parite_onnx.py`,
+`tableau_modeles.py`) vivent ici — on ne duplique jamais le code.
+
+**Ce que le plugin lit dans une évaluation** (profil des scores et fiches, 2026-10-07/08) — à ne
+pas défaire côté `courbes_eval` : `critere` en tête (« iou » = objets appariés un à un,
+« couverture » = fragments ; `completer_metriques_eval.py` l'ajoute aux évals anciennes) ;
+`etude_seuil.bandes` (tp/fp par pas de 0,05, re-agrégées par le plugin en coupant aux seuils de
+la classe) et `etude_seuil.tableau` (rappel interpolé entre deux pas) dans `global` et chaque
+`par_classe[c]` ; `par_zone_classe[zone][classe].{bandes, n_gt}` pour les petits multiples par
+zone (affichés à partir de deux zones ; rappel et F1 par zone recalculés sur les bandes, au
+critère objet seulement) ; le point d'équilibre P/R est lu dans l'évaluation **de référence** du
+modèle (celle où le seuil est choisi), pas dans `fiabilite.source` — un modèle garde donc son
+éval canonique même quand une éval de couverture existe, et celle-ci porte aussi
+`par_zone_classe`. Le bandeau « Appris sur » situe les zones citées par les fiches à partir
+des `split_manifest.yaml` de `datasets/*/` (union des tuiles) : ne pas renommer un dossier de
+dataset ni son `zone:`, et relancer `dev/fiches/zones_corpus.py` du plugin après tout modèle
+dont une fiche cite une zone nouvelle. `display_name` du model_card (« Modèle … ») est le nom
+affiché dans le journal de fin de run et le rapport de traitement du plugin.
 
 ## Entraînement (datasets v2, modèles RF-DETR segmentation)
 

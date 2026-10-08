@@ -6,7 +6,10 @@
   matches du cache) ;
 - `etude_seuil` (2026-09-09) dans `global` et chaque `par_classe[c]` : F2-max,
   plateaux F1 ≥ 98 %/95 %, R_max, FP par image, seuil proposé, précision marginale,
-  tableau au pas 0,05 — les indicateurs du CHOIX du seuil de production.
+  tableau au pas 0,05 — les indicateurs du CHOIX du seuil de production ;
+- `critere` en tête (2026-10-08) : « iou » ou « couverture », déduit de la ligne
+  `appariement` quand une éval antérieure ne l'écrit pas — le plugin le lit pour
+  savoir si les vraies du profil des scores sont des objets ou des fragments.
 
 Recalcul depuis appariements.json par les fonctions PARTAGÉES de courbes_eval
 (par_zone_classe, etude_seuil) — donc sans GPU ni réinférence, et à l'identique
@@ -50,11 +53,15 @@ def completer(metriques, cache, forcer=False):
     # etude_seuil absent, OU présent sans la table de calibrage (bandes, 2026-09-09 soir)
     manque_et = any("bandes" not in (b.get("etude_seuil") or {})
                     for m in modeles.values() for _, b in _blocs(m))
-    if not forcer and not (manque_zc or manque_et):
-        sys.exit("ERREUR : par_zone_classe et etude_seuil déjà présents — rien à compléter "
-                 "(--forcer pour recalculer).")
+    manque_cr = "critere" not in metriques
+    if not forcer and not (manque_zc or manque_et or manque_cr):
+        sys.exit("ERREUR : par_zone_classe, etude_seuil et critere déjà présents — rien à "
+                 "compléter (--forcer pour recalculer).")
     plancher = float(metriques.get("plancher", 0.05))
     n, fait = 0, set()
+    if manque_cr:
+        metriques["critere"] = critere_deduit(metriques)
+        fait.add("critere")
     for nom, m in modeles.items():
         if nom not in cache:
             sys.exit(f"ERREUR : modèle publié {nom} absent de appariements.json.")
@@ -81,10 +88,16 @@ def completer(metriques, cache, forcer=False):
     return n
 
 
+def critere_deduit(metriques):
+    """« couverture » si la ligne `appariement` le dit, sinon « iou » (appariement 1-1)."""
+    return "couverture" if "couverture" in str(metriques.get("appariement", "")).lower() else "iou"
+
+
 def sans_bloc(metriques):
     """Copie du dict sans les blocs additifs ni complete_le (pour la relecture)."""
     d = json.loads(json.dumps(metriques))
     d.pop("complete_le", None)
+    d.pop("critere", None)
     for m in d["modeles"].values():
         m.pop("par_zone_classe", None)
         for _, b in _blocs(m):
@@ -117,7 +130,8 @@ def main():
     assert sans_bloc(relu) == sans_bloc(original), "relecture : contenu hors bloc modifié"
     assert all(("par_zone_classe" in m) == ("par_zone" in m) for m in relu["modeles"].values())
     assert all("etude_seuil" in b for m in relu["modeles"].values() for _, b in _blocs(m))
-    print(f"{n} modèle(s) complété(s) -> {chemin}")
+    assert relu.get("critere") in ("iou", "couverture")
+    print(f"{n} modèle(s) complété(s) -> {chemin} (critère : {relu['critere']})")
     for nom, m in relu["modeles"].items():
         for z, par_cl in (m.get("par_zone_classe") or {}).items():
             print(f"  {nom} / {z} : " + ", ".join(

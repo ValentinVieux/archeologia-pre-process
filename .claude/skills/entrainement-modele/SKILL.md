@@ -119,9 +119,15 @@ colle les sorties de cellules : les valider une à une.
   diagnostics. Rien d'original là-dedans — tout run/éval déposé sur
   `model-training/<famille>/runs/training/<run>/` AVANT de le considérer acquis.
   Clôture (contrôle + proposition de suppression) : `/installer-modele-plugin` § 10.
-- Installation plugin : skill `/installer-modele-plugin`, puis fiche de chaque
-  classe et cible dérivée : `/fiche-classe-plugin` (obligatoire — le modèle n'est
-  pas livré tant que le validateur du plugin signale « pas de bloc 'fiche' »).
+- **Ce que le plugin lira dans cette éval** (profil des scores, fiches, rapport) :
+  `critere`, `etude_seuil.bandes` + `tableau`, `par_zone_classe[zone][classe].{bandes,n_gt}`
+  — une éval de couverture (linéaires) doit donc aussi porter `par_zone_classe`, et l'éval
+  canonique reste la référence du point d'équilibre P/R (CLAUDE.md § « Ce que le plugin
+  lit dans une évaluation »).
+- Installation plugin : skill `/archeologia:installer-modele-plugin`, puis fiche de chaque
+  classe et cible dérivée : `/archeologia:fiche-classe-plugin` (obligatoire — le modèle
+  n'est pas livré tant que le validateur du plugin signale « pas de bloc 'fiche' »).
+  Skills partagés du plugin Claude Code `archeologia` (marketplace `../claude-plugins`).
 
 ## Garde-fous
 - Éval gelée : listes d'images figées (yaml), JAMAIS re-tirée ; extensions de
