@@ -123,7 +123,9 @@ colle les sorties de cellules : les valider une à une.
   `critere`, `etude_seuil.bandes` + `tableau`, `par_zone_classe[zone][classe].{bandes,n_gt}`
   — une éval de couverture (linéaires) doit donc aussi porter `par_zone_classe`, et l'éval
   canonique reste la référence du point d'équilibre P/R (CLAUDE.md § « Ce que le plugin
-  lit dans une évaluation »).
+  lit dans une évaluation »). Linéaires depuis le 2026-10-22 : `--critere axe --tolerance 5
+  --unite polygone` (CLAUDE.md § Fiabilité, audit) ; le plugin y lit aussi
+  `etude_seuil.sous_seuil` ; le choix de la tolérance va dans `seuils_provenance`.
 - Installation plugin : skill `/archeologia:installer-modele-plugin`, puis fiche de chaque
   classe et cible dérivée : `/archeologia:fiche-classe-plugin` (obligatoire — le modèle
   n'est pas livré tant que le validateur du plugin signale « pas de bloc 'fiche' »).

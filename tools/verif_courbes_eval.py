@@ -16,6 +16,12 @@ arrondi à 4 décimales. Contrôles de cohérence : schémas, empreinte _meta vs
 champs publiés, seuil_f1max ∈ grille, IoU des matches ≥ 0,5, sommes n_gt (par
 classe = global ; par zone × classe = par zone).
 
+Critère axe / unité polygone (2026-10-22) : la vue matches/fps/tps_pred doit découler
+des `unites`/`annotations` du cache (sinon NON CONFORME) ; P_len/R_len du tableau,
+`bandes_fragments`, `sous_seuil` (exige `seuils_classe` en tête), `fausses_par_distance`
+et `sensibilite` sont recalculés par des jumelles. Un cache axe sans unités, ou une
+éval polygone sans seuils de classe, est refusé — jamais de CONFORME par défaut.
+
 L'inférence elle-même est couverte par l'autocontrôle de chargement de
 courbes_eval (rappel plancher >= 0,30) ; CE contrôleur garantit que les CHIFFRES
 publiés — dont les seuils de production du plugin — découlent bien des
@@ -40,13 +46,95 @@ def zone_classe_local(sous, classe, s0, s_classe):
     tp, fp, ngt, tpr = compte(sous, s0, classe)
     _, fp_cl, _, tpr_cl = compte(sous, s_classe, classe)
     tp_max = sum(1 for e in sous for m in e["matches"] if m[2] == classe)  # TOUS les matches
-    return {"n_gt": ngt, "tp": tp, "fp": fp,
-            "R": round(tpr / ngt, 4) if ngt else None,
-            "P": round(tp / (tp + fp), 4) if tp + fp else None,
-            "R_seuil_classe": round(tpr_cl / ngt, 4) if ngt else None,
-            "fp_seuil_classe": fp_cl,
-            "R_max": round(tp_max / ngt, 4) if ngt else None,
-            "bandes": bandes_local(sous, classe)}
+    out = {"n_gt": ngt, "tp": tp, "fp": fp,
+           "R": round(tpr / ngt, 4) if ngt else None,
+           "P": round(tp / (tp + fp), 4) if tp + fp else None,
+           "R_seuil_classe": round(tpr_cl / ngt, 4) if ngt else None,
+           "fp_seuil_classe": fp_cl,
+           "R_max": round(tp_max / ngt, 4) if ngt else None,
+           "bandes": bandes_local(sous, classe)}
+    if any("fragments" in e for e in sous):
+        out["bandes_fragments"] = bandes_local(fragments_vue(sous), classe)
+    return out
+
+
+# ----- critère axe / unité polygone (2026-10-22) : jumelles sans numpy ------------------
+# unité = [conf, classe, len_px, med_m, [part à <= t par tolérance (t-1,5 ; t ; t+1,5)],
+# conf_max, n_membres] ; annotation = [classe, len_px, [bp par tolérance]], bp = [[conf,
+# part cumulée]] ; fragment = [conf, classe, part à t]. Tolérance principale = index 1.
+
+def vue_locale(unites, annotations):
+    """(matches, fps, tps_pred) qui DOIVENT figurer dans l'enregistrement, recalculés."""
+    tps = [[u[0], u[4][1], u[1]] for u in unites if u[4][1] >= 0.5]
+    fps = [[u[0], u[1]] for u in unites if u[4][1] < 0.5]
+    matches = []
+    for a in annotations:
+        for conf, frac in a[2][1]:
+            if frac >= 0.5:
+                matches.append([conf, frac, a[0]])
+                break
+    return matches, fps, tps
+
+
+def longueurs_local(enregs, s, classe=None):
+    """(P_len, R_len) au seuil s par recomptage brut."""
+    num_p = den_p = num_r = den_r = 0.0
+    for e in enregs:
+        for u in e["unites"]:
+            if (classe is None or u[1] == classe) and u[0] >= s:
+                den_p += u[2]
+                num_p += u[2] * u[4][1]
+        for a in e["annotations"]:
+            if classe is None or a[0] == classe:
+                den_r += a[1]
+                f = 0.0
+                for conf, frac in a[2][1]:
+                    if conf < s:
+                        break
+                    f = frac
+                num_r += a[1] * f
+    return (round(num_p / den_p, 4) if den_p else None), (round(num_r / den_r, 4) if den_r else 0.0)
+
+
+def fragments_vue(enregs):
+    """Pseudo-enregistrements par fragment (tps_pred / fps) pour bandes_local."""
+    return [{"tps_pred": [[f[0], f[2], f[1]] for f in e.get("fragments", []) if f[2] >= 0.5],
+             "fps": [[f[0], f[1]] for f in e.get("fragments", []) if f[2] < 0.5]} for e in enregs]
+
+
+def tolerance_vue(enregs, k):
+    """Pseudo-enregistrements avec la vérité des unités à la tolérance d'index k."""
+    return [{"tps_pred": [[u[0], u[4][k], u[1]] for u in e["unites"] if u[4][k] >= 0.5],
+             "fps": [[u[0], u[1]] for u in e["unites"] if u[4][k] < 0.5]} for e in enregs]
+
+
+def fausses_local(enregs, classe, seuil):
+    """Histogramme des fausses (>= seuil) par distance médiane : <= 5 / <= 10 / <= 30 / au-delà ou inconnue."""
+    n = [0, 0, 0, 0]
+    for e in enregs:
+        for u in e["unites"]:
+            if u[1] != classe or u[0] < seuil or u[4][1] >= 0.5:
+                continue
+            d = u[3]
+            if d is None or d > 30:
+                n[3] += 1
+            elif d <= 5:
+                n[0] += 1
+            elif d <= 10:
+                n[1] += 1
+            else:
+                n[2] += 1
+    return [{"d_max": 5, "n": n[0]}, {"d_max": 10, "n": n[1]}, {"d_max": 30, "n": n[2]}, {"d_max": None, "n": n[3]}]
+
+
+def sensibilite_local(enregs, classe, seuil, tolerances):
+    """Coupures et catégories au seuil, par tolérance (clé = str(t))."""
+    out = {}
+    for k, t in enumerate(tolerances):
+        b = bandes_local(tolerance_vue(enregs, k), classe)
+        out[str(t)] = {"n_vrais": sum(x["tp"] for x in b), "coupures": coupures_local(b, seuil),
+                       "fiabilite": fiabilite_local(b, seuil)}
+    return out
 
 
 def grille_locale(plancher: float) -> list[float]:
@@ -139,10 +227,13 @@ def bloc_local(enregs, plancher, classe=None):
             "iou_median": round(median(ious), 4) if ious else None}
 
 
-def etude_local(enregs, plancher, classe=None):
-    """Bloc etude_seuil attendu (2026-09-09) — implémentation jumelle, boucles pures."""
+def etude_local(enregs, plancher, classe=None, seuil_classe=None):
+    """Bloc etude_seuil attendu (2026-09-09) — implémentation jumelle, boucles pures ;
+    + P_len/R_len (critère axe), bandes_fragments et sous_seuil (unité polygone)."""
     seuils = grille_locale(plancher)
     n_img = len(enregs)
+    avec_long = any("unites" in e for e in enregs)
+    avec_frag = any("fragments" in e for e in enregs)
     lignes = []  # (seuil, tp, fp, p, r, f1, f2)
     for s in seuils:
         tp, fp, ngt, tpr = compte(enregs, s, classe)
@@ -172,11 +263,22 @@ def etude_local(enregs, plancher, classe=None):
 
     tp_add = lignes[ip][1] - lignes[i1][1]
     fp_add = lignes[ip][2] - lignes[i1][2]
-    tableau = [{"seuil": l[0], "P": round(l[3], 4), "R": round(l[4], 4), "F1": round(l[5], 4),
-                "F2": round(l[6], 4), "fp_img": fp_img(i)}
-               for i, l in enumerate(lignes) if abs(l[0] * 20 - round(l[0] * 20)) < 1e-6]
+    tableau = []
+    for i, l in enumerate(lignes):
+        if abs(l[0] * 20 - round(l[0] * 20)) >= 1e-6:
+            continue
+        ligne = {"seuil": l[0], "P": round(l[3], 4), "R": round(l[4], 4), "F1": round(l[5], 4),
+                 "F2": round(l[6], 4), "fp_img": fp_img(i)}
+        if avec_long:
+            ligne["P_len"], ligne["R_len"] = longueurs_local(enregs, l[0], classe)
+        tableau.append(ligne)
     bandes = bandes_local(enregs, classe)
-    return {"seuil_f2max": lignes[i2][0], "F2": round(lignes[i2][6], 4),
+    extra = {}
+    if avec_frag:
+        extra["bandes_fragments"] = bandes_local(fragments_vue(enregs), classe)
+        if seuil_classe is not None:
+            extra["sous_seuil"] = fenetres_local([b for b in bandes if b["lo"] < seuil_classe - 1e-9])
+    return {**extra, "seuil_f2max": lignes[i2][0], "F2": round(lignes[i2][6], 4),
             "P_f2": round(lignes[i2][3], 4), "R_f2": round(lignes[i2][4], 4),
             "plateau_f1_98": [lignes[lo98][0], lignes[hi98][0]],
             "plateau_f1_95": [lignes[lo95][0], lignes[hi95][0]],
@@ -232,13 +334,12 @@ def fenetres_local(bandes, debut=None):
     return [fen[k] for k in sorted(fen)]
 
 
-def fiabilite_local(bandes, seuil):
-    """Catégories de fiabilité au seuil donné (implémentation jumelle de
-    courbes_eval.coupures_fiabilite + fiabilite_par_classe) : coupures sur les
-    fenêtres de 0,05, effectifs sur les tranches fines."""
-    fines = bandes
+def coupures_local(bandes, seuil):
+    """Coupures de score {possible, probable, quasi_certain} (None si jamais atteint) —
+    jumelle de courbes_eval.coupures_fiabilite : fenêtres de 0,05 dès le seuil, précision
+    lissée sur deux fenêtres, monotones."""
     utiles = [b for b in fenetres_local(bandes, seuil) if b["lo"] >= seuil - 1e-9 and b["tp"] + b["fp"] > 0]
-    coupures, dernier = [], seuil
+    out, dernier = {}, seuil
     for cle, niveau in NIVEAUX:
         trouve = None
         for i, b in enumerate(utiles):
@@ -249,9 +350,19 @@ def fiabilite_local(bandes, seuil):
             if tp + fp and tp / (tp + fp) >= niveau:
                 trouve = b["lo"]
                 break
+        out[cle] = trouve
         if trouve is not None:
-            coupures.append((cle, niveau, trouve))
             dernier = trouve
+    return out
+
+
+def fiabilite_local(bandes, seuil):
+    """Catégories de fiabilité au seuil donné (implémentation jumelle de
+    courbes_eval.coupures_fiabilite + fiabilite_par_classe) : coupures sur les
+    fenêtres de 0,05, effectifs sur les tranches fines."""
+    fines = bandes
+    cp = coupures_local(bandes, seuil)
+    coupures = [(cle, niveau, cp[cle]) for cle, niveau in NIVEAUX if cp[cle] is not None]
     bornes = [("douteux", 0.0, float(seuil))] + [(c, g, float(s)) for c, g, s in coupures]
     bornes = [b for i, b in enumerate(bornes)
               if (bornes[i + 1][2] if i + 1 < len(bornes) else 1.01) - b[2] >= 1e-9]
@@ -293,7 +404,7 @@ def comparer(nom, attendu, recalcule):
             probleme(f"{nom}.{cle} : clé publiée non recalculable")
 
 
-def comparer_bloc(nom, attendu, enregs, plancher, classe=None):
+def comparer_bloc(nom, attendu, enregs, plancher, classe=None, seuil_classe=None):
     """global / par_classe : métriques standard, puis etude_seuil (additif 2026-09-09 :
     absent = avertissement, présent = recalculé à l'identique)."""
     attendu = dict(attendu or {})
@@ -308,11 +419,11 @@ def comparer_bloc(nom, attendu, enregs, plancher, classe=None):
         # additif lui aussi — avertissement, complétable sans GPU.
         AVERTISSEMENTS.append(f"{nom} : etude_seuil sans bandes/fiabilite_proposee "
                               "(lancer completer_metriques_eval.py)")
-        attendu_et = etude_local(enregs, plancher, classe)
+        attendu_et = etude_local(enregs, plancher, classe, seuil_classe)
         attendu_et.pop("bandes"); attendu_et.pop("fiabilite_proposee")
         comparer(f"{nom}.etude_seuil", etude_pub, attendu_et)
         return 1
-    comparer(f"{nom}.etude_seuil", etude_pub, etude_local(enregs, plancher, classe))
+    comparer(f"{nom}.etude_seuil", etude_pub, etude_local(enregs, plancher, classe, seuil_classe))
     return 1
 
 
@@ -348,11 +459,33 @@ def main() -> None:
         if meta.get("critere", "iou") != metriques.get("critere", "iou"):
             probleme(f"_meta.critere {meta.get('critere', 'iou')} != metriques.critere "
                      f"{metriques.get('critere', 'iou')}")
+        if meta.get("tolerance") != metriques.get("tolerance_m"):
+            probleme(f"_meta.tolerance {meta.get('tolerance')} != metriques.tolerance_m {metriques.get('tolerance_m')}")
+        if meta.get("gsd") != metriques.get("gsd_m"):
+            probleme(f"_meta.gsd {meta.get('gsd')} != metriques.gsd_m {metriques.get('gsd_m')}")
+        if meta.get("unite", "fragment") != metriques.get("unite", "fragment"):
+            probleme(f"_meta.unite {meta.get('unite', 'fragment')} != metriques.unite {metriques.get('unite', 'fragment')}")
+        if meta.get("seuils_classe") != metriques.get("seuils_classe"):
+            probleme("_meta.seuils_classe != metriques.seuils_classe")
         if sorted(meta.get("modeles", {})) != sorted(metriques.get("modeles", {})):
             probleme("modèles de _meta != modèles publiés")
 
     if sorted(cache) != sorted(metriques.get("modeles", {})):
         probleme(f"modèles du cache {sorted(cache)} != publiés {sorted(metriques.get('modeles', {}))}")
+
+    # critère axe / unité polygone (2026-10-22)
+    critere = metriques.get("critere", "iou")
+    unite = metriques.get("unite", "fragment")
+    seuils_classe = metriques.get("seuils_classe") or {}
+    tolerances = None
+    if critere == "axe":
+        t = metriques.get("tolerance_m")
+        if t is None:
+            probleme("critère axe sans tolerance_m en tête")
+        else:
+            tolerances = [round(t - 1.5, 3), float(t), round(t + 1.5, 3)]
+    if unite == "polygone" and not seuils_classe:
+        probleme("unité polygone sans seuils_classe en tête : sous_seuil non recalculable")
 
     n_zone_classe = n_etude = 0
     for nom, dd in cache.items():
@@ -368,6 +501,19 @@ def main() -> None:
                     break
         if publie.get("class_offset") != dd.get("decal"):
             probleme(f"{nom}.class_offset publié {publie.get('class_offset')} != cache {dd.get('decal')}")
+        if critere == "axe":
+            if any("unites" not in e or "annotations" not in e for e in enregs):
+                probleme(f"{nom} : critère axe mais enregistrements sans unites/annotations (cache illisible)")
+                continue
+            if any(vue_locale(e["unites"], e["annotations"]) != (e["matches"], e["fps"], e["tps_pred"])
+                   for e in enregs):
+                probleme(f"{nom} : matches/fps/tps_pred ne découlent pas des unites/annotations du cache")
+            if unite == "polygone" and any("fragments" not in e for e in enregs):
+                probleme(f"{nom} : unité polygone mais enregistrements sans fragments (cache illisible)")
+                continue
+        elif unite == "polygone":
+            probleme(f"{nom} : unité polygone hors critère axe — non pris en charge")
+            continue
 
         # global
         g = bloc_local(enregs, plancher)
@@ -377,7 +523,24 @@ def main() -> None:
 
         # par_classe (l'univers des classes = celui de la publication)
         for cl, bloc_pub in (publie.get("par_classe") or {}).items():
-            n_etude += comparer_bloc(f"{nom}.par_classe.{cl}", bloc_pub, enregs, plancher, cl)
+            n_etude += comparer_bloc(f"{nom}.par_classe.{cl}", bloc_pub, enregs, plancher, cl,
+                                     seuils_classe.get(cl))
+
+        # fausses_par_distance + sensibilite (critère axe) : au seuil de classe publié
+        if critere == "axe" and tolerances is not None:
+            classes_pub = list(publie.get("par_classe") or {})
+            attendu_fd, attendu_se = {}, {}
+            for cl in classes_pub:
+                s_cl = seuils_classe.get(cl, (publie["par_classe"][cl] or {}).get("seuil_f1max"))
+                attendu_fd[cl] = {"seuil": s_cl, "histogramme": fausses_local(enregs, cl, s_cl)}
+                attendu_se[cl] = {"seuil": s_cl, "tolerances": sensibilite_local(enregs, cl, s_cl, tolerances)}
+            for cle, attendu_b in (("fausses_par_distance", attendu_fd), ("sensibilite", attendu_se)):
+                pub = publie.get(cle)
+                if pub is None:
+                    probleme(f"{nom}.{cle} absent (critère axe)")
+                    continue
+                for cl in sorted(set(pub) | set(attendu_b)):
+                    comparer(f"{nom}.{cle}.{cl}", pub.get(cl) or {}, attendu_b.get(cl) or {})
 
         # sommes n_gt : global == somme des classes publiées
         somme = sum(b.get("n_gt", 0) for b in (publie.get("par_classe") or {}).values())
@@ -438,7 +601,11 @@ def main() -> None:
     print(f"CONFORME — {n_modeles} modèle(s), grille {len(grille)} seuils, "
           "global + par_classe + par_zone recalculés à l'identique"
           + (f" + par_zone_classe ({n_zone_classe} modèle(s))" if n_zone_classe else "")
-          + (f" + etude_seuil ({n_etude} bloc(s))" if n_etude else ""))
+          + (f" + etude_seuil ({n_etude} bloc(s))" if n_etude else "")
+          + (f" + critère axe (tolérance {metriques.get('tolerance_m')} m, unité {unite} : vue principale, "
+             "P_len/R_len, fausses_par_distance, sensibilite"
+             + (", bandes_fragments, sous_seuil" if unite == "polygone" else "") + ")"
+             if critere == "axe" else ""))
 
 
 if __name__ == "__main__":

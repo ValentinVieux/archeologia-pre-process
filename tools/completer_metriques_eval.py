@@ -7,9 +7,14 @@
 - `etude_seuil` (2026-09-09) dans `global` et chaque `par_classe[c]` : F2-max,
   plateaux F1 ≥ 98 %/95 %, R_max, FP par image, seuil proposé, précision marginale,
   tableau au pas 0,05 — les indicateurs du CHOIX du seuil de production ;
-- `critere` en tête (2026-10-08) : « iou » ou « couverture », déduit de la ligne
+- `critere` en tête (2026-10-08) : « iou », « couverture » ou « axe », déduit de la ligne
   `appariement` quand une éval antérieure ne l'écrit pas — le plugin le lit pour
   savoir si les vraies du profil des scores sont des objets ou des fragments.
+
+Une éval au critère axe / en unité polygone (2026-10-22) se recalcule aussi depuis son
+cache (les enregistrements portent unités, annotations et fragments) ; le bloc
+`sous_seuil` exige les `seuils_classe` de l'en-tête — sans eux, refus. Une éval
+ANTÉRIEURE ne peut pas être convertie au critère axe (il faut les masques : réinférer).
 
 Recalcul depuis appariements.json par les fonctions PARTAGÉES de courbes_eval
 (par_zone_classe, etude_seuil) — donc sans GPU ni réinférence, et à l'identique
@@ -58,6 +63,9 @@ def completer(metriques, cache, forcer=False):
         sys.exit("ERREUR : par_zone_classe, etude_seuil et critere déjà présents — rien à "
                  "compléter (--forcer pour recalculer).")
     plancher = float(metriques.get("plancher", 0.05))
+    seuils = metriques.get("seuils_classe") or {}
+    if metriques.get("unite") == "polygone" and not seuils:
+        sys.exit("ERREUR : unité polygone sans seuils_classe en tête — sous_seuil non recalculable.")
     n, fait = 0, set()
     if manque_cr:
         metriques["critere"] = critere_deduit(metriques)
@@ -77,7 +85,7 @@ def completer(metriques, cache, forcer=False):
             fait.add("par_zone_classe"); touche = True
         for cl, b in _blocs(m):
             if forcer or "bandes" not in (b.get("etude_seuil") or {}):
-                b["etude_seuil"] = etude_seuil(enregs, plancher, cl)
+                b["etude_seuil"] = etude_seuil(enregs, plancher, cl, seuils.get(cl) if cl else None)
                 fait.add("etude_seuil"); touche = True
         n += touche
     horodatage = datetime.now().isoformat(timespec="seconds")
@@ -89,8 +97,11 @@ def completer(metriques, cache, forcer=False):
 
 
 def critere_deduit(metriques):
-    """« couverture » si la ligne `appariement` le dit, sinon « iou » (appariement 1-1)."""
-    return "couverture" if "couverture" in str(metriques.get("appariement", "")).lower() else "iou"
+    """« axe » ou « couverture » si la ligne `appariement` le dit, sinon « iou » (appariement 1-1)."""
+    ligne = str(metriques.get("appariement", "")).lower()
+    if ligne.startswith("axe"):
+        return "axe"
+    return "couverture" if "couverture" in ligne else "iou"
 
 
 def sans_bloc(metriques):
@@ -130,7 +141,7 @@ def main():
     assert sans_bloc(relu) == sans_bloc(original), "relecture : contenu hors bloc modifié"
     assert all(("par_zone_classe" in m) == ("par_zone" in m) for m in relu["modeles"].values())
     assert all("etude_seuil" in b for m in relu["modeles"].values() for _, b in _blocs(m))
-    assert relu.get("critere") in ("iou", "couverture")
+    assert relu.get("critere") in ("iou", "couverture", "axe")
     print(f"{n} modèle(s) complété(s) -> {chemin} (critère : {relu['critere']})")
     for nom, m in relu["modeles"].items():
         for z, par_cl in (m.get("par_zone_classe") or {}).items():

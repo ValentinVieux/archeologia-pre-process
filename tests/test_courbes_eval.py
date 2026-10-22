@@ -63,11 +63,231 @@ ENREGS_COUV = [
 ]
 
 
+# Critère AXE + unité POLYGONE (2026-10-22, audit des linéaires) : enregistrements à la
+# main. Unité = [conf, classe, len_px, med_m, [frac t-1,5 ; t ; t+1,5], conf_max, n_membres] ;
+# annotation = [classe, len_px, [bp-, bp, bp+]] avec bp = [[conf, part cumulée de l'axe]].
+# 3 unités de classe a : 0,9 vraie partout ; 0,7 vraie dès t ; 0,5 vraie seulement à t+1,5 ;
+# 0,45 fausse (classe absente : distance inconnue). 2 annotations : la 1re retrouvée à 0,7.
+ENREGS_AXE = [
+    {"split": "valid", "zone": "za", "n_gt": 2, "gt_classes": ["a", "a"],
+     "matches": [[0.7, 0.8, "a"]], "fps": [[0.5, "a"], [0.45, "a"]],
+     "tps_pred": [[0.9, 1.0, "a"], [0.7, 0.8, "a"]],
+     "unites": [[0.9, "a", 100, 0.5, [1.0, 1.0, 1.0], 0.9, 1],
+                [0.7, "a", 50, 2.0, [0.4, 0.8, 0.9], 0.7, 2],
+                [0.5, "a", 40, 12.0, [0.0, 0.4, 0.6], 0.5, 1],
+                [0.45, "a", 30, None, [0.0, 0.0, 0.0], 0.45, 1]],
+     "annotations": [["a", 120, [[[0.9, 0.3]], [[0.9, 0.4], [0.7, 0.8]], [[0.9, 0.5]]]],
+                     ["a", 80, [[], [], []]]],
+     "fragments": [[0.9, "a", 1.0], [0.3, "a", 0.2], [0.7, "a", 0.6], [0.5, "a", 0.4], [0.45, "a", 0.0]]},
+]
+
+
+def tester_axe_polygone():
+    import numpy as np
+    H = W = 80
+
+    def ruban(r0, r1, c0=10, c1=70):
+        m = np.zeros((H, W), bool)
+        m[r0:r1, c0:c1] = True
+        return m
+
+    assert ce.tolerances_m(5.0) == [3.5, 5.0, 6.5] and ce.px(5.0, 0.5) == 10 and ce.px(3.5, 0.5) == 7
+    gt = ruban(20, 34)        # 14 px = 7 m de large à 0,5 m/px, axe vers la ligne 26-27
+    pred = ruban(26, 40)      # même largeur, décalée de 6 px = 3 m
+    # --- apparier_axe : vraie à t = 5 m (10 px), fausse à t = 2 m (4 px) ------------------
+    matches, fps, tps, unites, annots = ce.apparier_axe([(0.9, "a", pred, {})], [gt], ["a"], [3.5, 5.0, 6.5], 0.5)
+    assert fps == [] and len(tps) == 1 and tps[0][0] == 0.9 and tps[0][1] >= 0.5 and tps[0][2] == "a", (tps, fps)
+    assert len(matches) == 1 and matches[0][0] == 0.9 and matches[0][1] >= 0.5 and matches[0][2] == "a", matches
+    u = unites[0]
+    assert u[0] == 0.9 and u[1] == "a" and u[2] > 40 and 2.5 <= u[3] <= 3.5, u      # médiane ≈ 3 m
+    assert u[4][0] <= u[4][1] <= u[4][2] and u[4][1] >= 0.5 and u[5] == 0.9 and u[6] == 1, u
+    assert annots[0][0] == "a" and annots[0][1] > 40, annots
+    bp = annots[0][2][1]
+    assert bp[0][0] == 0.9 and bp[-1][1] >= 0.5 and all(x[1] <= y[1] for x, y in zip(bp, bp[1:])), bp
+    m2, f2, t2, u2, _ = ce.apparier_axe([(0.9, "a", pred, {})], [gt], ["a"], [0.5, 2.0, 3.5], 0.5)
+    assert t2 == [] and f2 == [[0.9, "a"]] and m2 == [], (t2, f2, m2)
+    assert u2[0][4][1] < 0.5 <= u2[0][4][2], u2   # fausse à 2 m, vraie à 3,5 m
+    # class-aware : aucune annotation de la classe = fausse, distance inconnue
+    _, fb, tb, ub, _ = ce.apparier_axe([(0.9, "b", pred, {})], [gt], ["a"], [3.5, 5.0, 6.5], 0.5)
+    assert tb == [] and fb == [[0.9, "b"]] and ub[0][3] is None and ub[0][4] == [0.0, 0.0, 0.0], ub
+    # annotation retrouvée à la confiance qui fait franchir 50 % de son axe (deux fragments)
+    g_long = ruban(20, 34, 5, 75)
+    m3, _, t3, _, a3 = ce.apparier_axe([(0.9, "a", ruban(20, 34, 5, 20), {}), (0.6, "a", ruban(20, 34, 20, 75), {})],
+                                       [g_long], ["a"], [3.5, 5.0, 6.5], 0.5)
+    assert len(t3) == 2 and m3 == [[0.6, 1.0, "a"]], (t3, m3)
+    assert a3[0][2][1][0][0] == 0.9 and a3[0][2][1][0][1] < 0.5 and a3[0][2][1][-1] == [0.6, 1.0], a3
+    # extra du polygone recopié dans l'unité
+    _, _, _, up, _ = ce.apparier_axe([(0.7, "a", pred, {"conf_max": 0.9, "n_membres": 3})], [gt], ["a"], [3.5, 5.0, 6.5], 0.5)
+    assert up[0][5] == 0.9 and up[0][6] == 3, up
+    # image sans aucune prédiction ni annotation
+    assert ce.apparier_axe([], [], [], [3.5, 5.0, 6.5], 0.5) == ([], [], [], [], [])
+
+    # --- fusionner_polygones : deux passes, contact à <= 1 px, confiance moyenne pondérée ---
+    f1, f2 = ruban(20, 34, 10, 40), ruban(20, 34, 40, 70)      # se touchent (aires 420 et 420)
+    f3 = ruban(20, 34, 71, 78)                                  # une colonne vide : à 1 px de f2
+    f4, f5 = ruban(50, 60, 10, 30), ruban(50, 60, 30, 50)      # se touchent (aires 200 et 200)
+    f6 = ruban(50, 60, 52, 60)                                  # deux colonnes vides après f5
+    preds = sorted([(0.9, "a", f1), (0.5, "a", f2), (0.2, "a", f3), (0.1, "a", f4), (0.2, "a", f5), (0.4, "a", f6)],
+                   key=lambda t: -t[0])
+    polys = ce.fusionner_polygones(preds, {"a": 0.3})
+    # passe a (>= 0,3) : f1+f2 -> 0,7 ; f6 seul 0,4. Passe b (< 0,3) : f3 seul (jamais avec f1+f2
+    # malgré le contact) 0,2 ; f4+f5 -> 0,15
+    assert [(round(c, 4), cl, ex["n_membres"], ex["conf_max"]) for c, cl, _, ex in polys] == [
+        (0.7, "a", 2, 0.9), (0.4, "a", 1, 0.4), (0.2, "a", 1, 0.2), (0.15, "a", 2, 0.2)], polys
+    assert (polys[0][2] == (f1 | f2)).all() and (polys[3][2] == (f4 | f5)).all() and (polys[2][2] == f3).all()
+    polys2 = ce.fusionner_polygones([(0.9, "a", f1), (0.5, "a", f2), (0.35, "a", f3)], {"a": 0.3})
+    assert len(polys2) == 1 and polys2[0][3]["n_membres"] == 3 and round(polys2[0][0], 4) == round((0.9 * 420 + 0.5 * 420 + 0.35 * 98) / 938, 4), polys2
+    assert len(ce.fusionner_polygones([(0.5, "a", f5), (0.4, "a", f6)], {"a": 0.3})) == 2     # 2 px : séparés
+    assert len(ce.fusionner_polygones([(0.9, "a", f1), (0.5, "b", f2)], {"a": 0.3, "b": 0.3})) == 2  # classes
+    assert ce.fusionner_polygones([], {"a": 0.3}) == []
+    # diagonale : un pixel vide commun suffit
+    d1 = np.zeros((H, W), bool); d1[10:20, 10:20] = True
+    d2 = np.zeros((H, W), bool); d2[21:30, 21:30] = True
+    assert len(ce.fusionner_polygones([(0.9, "a", d1), (0.8, "a", d2)], {"a": 0.3})) == 1
+
+    # --- enregistrements : vue principale, longueurs, sous-seuil, fausses, sensibilité ---
+    assert ce.vue_principale(ENREGS_AXE[0]["unites"], ENREGS_AXE[0]["annotations"]) == (
+        ENREGS_AXE[0]["matches"], ENREGS_AXE[0]["fps"], ENREGS_AXE[0]["tps_pred"])
+    assert ce.comptes(ENREGS_AXE, 0.6, "a") == (2, 0, 2, 1)
+    et = ce.etude_seuil(ENREGS_AXE, 0.05, "a", seuil_classe=0.6)
+    ligne = {l["seuil"]: l for l in et["tableau"]}
+    assert ligne[0.6]["P_len"] == round((100 * 1.0 + 50 * 0.8) / 150, 4) and ligne[0.6]["R_len"] == round(120 * 0.8 / 200, 4), ligne[0.6]
+    assert ligne[0.5]["P_len"] == round((100 + 40 + 40 * 0.4) / 190, 4) and ligne[0.5]["R_len"] == 0.48, ligne[0.5]
+    assert ligne[0.8]["P_len"] == 1.0 and ligne[0.8]["R_len"] == 0.24 and ligne[0.95]["P_len"] is None and ligne[0.95]["R_len"] == 0.0
+    assert ligne[0.45]["P_len"] == round((100 + 40 + 16 + 0) / 220, 4)
+    # bandes_fragments : comptage par fragment (vrai = part >= 0,5) à côté des bandes de polygones
+    bf = ce.agreger_bandes(et["bandes_fragments"])
+    assert sum(b["tp"] for b in bf) == 2 and sum(b["fp"] for b in bf) == 3 and bf[5] == {"lo": 0.3, "hi": 0.35, "tp": 0, "fp": 1}, bf
+    assert sum(b["tp"] for b in et["bandes"]) == 2 and sum(b["fp"] for b in et["bandes"]) == 2   # polygones
+    # sous_seuil : fenêtres de 0,05 des bandes de polygones sous le seuil de la classe (passe b)
+    assert et["sous_seuil"] == ce.agreger_bandes([b for b in et["bandes"] if b["lo"] < 0.6 - 1e-9])
+    assert sum(b["fp"] for b in et["sous_seuil"]) == 2 and sum(b["tp"] for b in et["sous_seuil"]) == 0
+    assert all(b["lo"] < 0.6 for b in et["sous_seuil"])
+    assert "sous_seuil" not in ce.etude_seuil(ENREGS_AXE, 0.05, "a")                   # seuil inconnu
+    sans_frag = [dict(e) for e in ENREGS_AXE]; sans_frag[0].pop("fragments")
+    assert "sous_seuil" not in ce.etude_seuil(sans_frag, 0.05, "a", seuil_classe=0.6)  # unité fragment
+    assert "bandes_fragments" not in ce.etude_seuil(sans_frag, 0.05, "a")
+    assert "P_len" in ce.etude_seuil(sans_frag, 0.05, "a")["tableau"][0]
+    # les anciens enregistrements (couverture / iou) ne changent pas
+    anc = ce.etude_seuil(ENREGS_COUV, 0.05)
+    assert "P_len" not in anc["tableau"][0] and "sous_seuil" not in anc and "bandes_fragments" not in anc
+    assert "bandes_fragments" not in ce.par_zone_classe(ENREGS_COUV, 0.6, {"a": 0.4}, ["a"])["za"]["a"]
+    zc = ce.par_zone_classe(ENREGS_AXE, 0.6, {"a": 0.6}, ["a"])["za"]["a"]
+    assert zc["bandes_fragments"] == et["bandes_fragments"] and zc["bandes"] == et["bandes"]
+    # fausses par distance médiane, au seuil : 0,5 (12 m) et 0,45 (inconnue) ; 0,7 vraie
+    assert ce.fausses_par_distance(ENREGS_AXE, "a", 0.4) == [
+        {"d_max": 5, "n": 0}, {"d_max": 10, "n": 0}, {"d_max": 30, "n": 1}, {"d_max": None, "n": 1}]
+    assert ce.fausses_par_distance(ENREGS_AXE, "a", 0.48) == [
+        {"d_max": 5, "n": 0}, {"d_max": 10, "n": 0}, {"d_max": 30, "n": 1}, {"d_max": None, "n": 0}]
+    # sensibilité : vrais par tolérance (t-1,5 : 1 ; t : 2 ; t+1,5 : 3)
+    assert [sum(b["tp"] for b in ce.bandes_tolerance(ENREGS_AXE, k, "a")) for k in range(3)] == [1, 2, 3]
+    assert ce.bandes_tolerance(ENREGS_AXE, 1, "a") == et["bandes"]
+    sens = ce.sensibilite(ENREGS_AXE, "a", 0.4, [3.5, 5.0, 6.5])
+    assert list(sens) == ["3.5", "5.0", "6.5"] and sens["5.0"]["coupures"] == ce.coupures_fiabilite(et["bandes"], 0.4)
+    assert sens["5.0"]["fiabilite"] == ce.fiabilite_par_classe(et["bandes"], 0.4, sens["5.0"]["coupures"])
+    assert sens["6.5"]["n_vrais"] == 3 and sens["3.5"]["n_vrais"] == 1 and sens["5.0"]["n_vrais"] == 2
+
+    # --- resumer : en-tête et blocs nouveaux -------------------------------------------
+    donnees = {"m": {"decal": 0, "enregs": ENREGS_AXE}}
+    meta_m = {"m": {"poids": "D:/p/best.pth", "resolution": 648, "taille_octets": 1}}
+    dataset = {"chemin": "D:/corpus", "splits": ["valid"], "n_images": 1, "n_gt": 2}
+    r = ce.resumer(donnees, meta_m, "segmentation", dataset, {}, 0.05, "calculee", critere="axe",
+                   tolerance=5.0, unite="polygone", seuils_classe={"a": 0.6}, gsd=0.5)
+    assert r["critere"] == "axe" and r["tolerance_m"] == 5.0 and r["unite"] == "polygone" and r["gsd_m"] == 0.5
+    assert r["seuils_classe"] == {"a": 0.6} and "axe" in r["appariement"] and "5" in r["appariement"], r["appariement"]
+    m = r["modeles"]["m"]
+    assert m["par_classe"]["a"]["etude_seuil"]["sous_seuil"] == et["sous_seuil"]
+    assert "sous_seuil" not in m["global"]["etude_seuil"] and "P_len" in m["global"]["etude_seuil"]["tableau"][0]
+    assert m["fausses_par_distance"] == {"a": {"seuil": 0.6, "histogramme": ce.fausses_par_distance(ENREGS_AXE, "a", 0.6)}}
+    assert m["sensibilite"] == {"a": {"seuil": 0.6, "tolerances": ce.sensibilite(ENREGS_AXE, "a", 0.6, [3.5, 5.0, 6.5])}}
+    assert m["par_zone_classe"]["za"]["a"]["bandes_fragments"] == et["bandes_fragments"]
+    json.dumps(r)
+    # sans seuil de classe connu : F1-max de la classe
+    r2 = ce.resumer(donnees, meta_m, "segmentation", dataset, {}, 0.05, "calculee", critere="axe",
+                    tolerance=5.0, unite="fragment", gsd=0.5)
+    assert r2["unite"] == "fragment" and "seuils_classe" not in r2
+    assert r2["modeles"]["m"]["fausses_par_distance"]["a"]["seuil"] == r2["modeles"]["m"]["par_classe"]["a"]["seuil_f1max"]
+    r3 = ce.resumer({"m": {"decal": 0, "enregs": ENREGS_COUV}}, meta_m, "segmentation", dataset, {}, 0.05, "calculee",
+                    critere="couverture")
+    assert "tolerance_m" not in r3 and "sensibilite" not in r3["modeles"]["m"] and r3["unite"] == "fragment"
+    # empreinte : tolérance, unité, seuils de classe, gsd
+    ma = ce.construire_meta(0.05, "D:/corpus", {}, {}, critere="axe", tolerance=5.0, unite="polygone",
+                            seuils_classe={"a": 0.6}, gsd=0.5)
+    assert ce.divergence_run(ma, dict(ma)) is None
+    assert "tolérance" in ce.divergence_run(ma, dict(ma, tolerance=3.5))
+    assert "unité" in ce.divergence_run(ma, dict(ma, unite="fragment"))
+    assert "seuils" in ce.divergence_run(ma, dict(ma, seuils_classe={"a": 0.5}))
+    assert "gsd" in ce.divergence_run(ma, dict(ma, gsd=1.0))
+    meta_c = ce.construire_meta(0.05, "D:/corpus", {}, {}, critere="couverture")
+    assert ce.divergence_run(meta_c, dict(meta_c)) is None
+
+    # --- verif + completer sur une éval axe/polygone : CONFORME, jamais de faux CONFORME ---
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        ma["tache"] = "segmentation"
+        ma["modeles"] = {"m": {"poids": "D:/p/best.pth", "resolution": 648, "taille_octets": 1}}
+        tmp.joinpath("appariements.json").write_text(json.dumps({"_meta": ma, "m": donnees["m"]}), encoding="utf-8")
+        tmp.joinpath("metriques_eval.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
+        verif = [sys.executable, str(ROOT / "tools" / "verif_courbes_eval.py"), str(tmp)]
+        completer = [sys.executable, str(ROOT / "tools" / "completer_metriques_eval.py"), str(tmp)]
+
+        def run(cmd):
+            p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+            return p.returncode, p.stdout + p.stderr
+
+        rc, out = run(verif)
+        assert rc == 0 and "CONFORME" in out and "NON CONFORME" not in out and "axe" in out, out
+        # trafiqués -> NON CONFORME sur la bonne clé
+        for cle, modif in (("tableau", lambda d: d["modeles"]["m"]["global"]["etude_seuil"]["tableau"][0].__setitem__("P_len", 0.1)),
+                           ("sous_seuil", lambda d: d["modeles"]["m"]["par_classe"]["a"]["etude_seuil"]["sous_seuil"][0].__setitem__("fp", 9)),
+                           ("fausses_par_distance", lambda d: d["modeles"]["m"]["fausses_par_distance"]["a"]["histogramme"][2].__setitem__("n", 9)),
+                           ("sensibilite", lambda d: d["modeles"]["m"]["sensibilite"]["a"]["tolerances"]["6.5"].__setitem__("n_vrais", 9)),
+                           ("bandes_fragments", lambda d: d["modeles"]["m"]["par_zone_classe"]["za"]["a"]["bandes_fragments"][85].__setitem__("tp", 9))):
+            faux = json.loads(json.dumps(r)); modif(faux)
+            tmp.joinpath("metriques_eval.json").write_text(json.dumps(faux), encoding="utf-8")
+            rc, out = run(verif)
+            assert rc == 1 and "NON CONFORME" in out and cle in out, (cle, out)
+        tmp.joinpath("metriques_eval.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
+        # cache incohérent avec sa vue principale (tps_pred trafiqué) -> NON CONFORME
+        faux_cache = json.loads(json.dumps(donnees["m"])); faux_cache["enregs"][0]["tps_pred"][0][0] = 0.91
+        tmp.joinpath("appariements.json").write_text(json.dumps({"_meta": ma, "m": faux_cache}), encoding="utf-8")
+        rc, out = run(verif)
+        assert rc == 1 and "unites" in out, out
+        # cache axe sans unites (illisible) -> refus, pas de CONFORME
+        sans_u = json.loads(json.dumps(donnees["m"])); sans_u["enregs"][0].pop("unites")
+        tmp.joinpath("appariements.json").write_text(json.dumps({"_meta": ma, "m": sans_u}), encoding="utf-8")
+        rc, out = run(verif)
+        assert rc == 1 and "NON CONFORME" in out, out
+        tmp.joinpath("appariements.json").write_text(json.dumps({"_meta": ma, "m": donnees["m"]}), encoding="utf-8")
+        # completer : etude_seuil retiré puis recalculé à l'identique (sous_seuil compris)
+        ancien = json.loads(json.dumps(r)); del ancien["modeles"]["m"]["par_classe"]["a"]["etude_seuil"]
+        assert cm.completer(ancien, {"m": donnees["m"]}) == 1
+        assert ancien["modeles"]["m"]["par_classe"]["a"]["etude_seuil"] == m["par_classe"]["a"]["etude_seuil"]
+        assert cm.critere_deduit({"appariement": r["appariement"]}) == "axe"
+        # en-tête polygone sans seuils_classe : refus (impossible de recalculer sous_seuil)
+        tronque = json.loads(json.dumps(r)); tronque.pop("seuils_classe"); del tronque["modeles"]["m"]["global"]["etude_seuil"]
+        try:
+            cm.completer(tronque, {"m": donnees["m"]})
+            raise AssertionError("polygone sans seuils_classe accepté")
+        except SystemExit:
+            pass
+        tmp.joinpath("metriques_eval.json").write_text(json.dumps(tronque), encoding="utf-8")
+        rc, out = run(verif)
+        assert rc == 1 and "seuils_classe" in out, out
+        tmp.joinpath("metriques_eval.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
+        rc, out = run(completer + ["--forcer"])
+        assert rc == 0, out
+        rc, out = run(verif)
+        assert rc == 0 and "NON CONFORME" not in out, out
+
+
 def approx(x, y, tol=1e-9):
     return abs(x - y) <= tol
 
 
 def main() -> None:
+    tester_axe_polygone()
+
     # --- grille : bornes et pas uniques -----------------------------------
     g = ce.grille(0.05)
     assert approx(g[0], 0.05) and approx(g[-1], 0.95) and approx(g[1] - g[0], 0.005), g
@@ -670,7 +890,7 @@ def main() -> None:
         assert page.count("<li><b>") == 10  # glossaire : 10 entrées
         assert "<td>ile_de_france/78_rambouillet</td><td>●</td><td></td>" in page  # enclos oui, fours non
 
-    print("OK — courbes_eval (prf/ap50/etude_seuil/par_zone_classe/resumer/empreinte/reprendre-de) "
+    print("OK — courbes_eval (prf/ap50/etude_seuil/par_zone_classe/resumer/empreinte/reprendre-de/axe+polygone) "
           "+ completer_metriques_eval/verif + tableau_modeles")
 
 

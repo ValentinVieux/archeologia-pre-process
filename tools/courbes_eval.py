@@ -85,8 +85,41 @@ RAPPEL_MIN = 0.30
 #   annotations), que l'IoU 1-1 compte à tort comme faux positifs sur du linéaire.
 #   Les enregistrements portent alors `tps_pred` (prédictions vraies, côté précision)
 #   en plus de `matches` (annotations retrouvées, côté rappel).
-CRITERES = ("iou", "couverture")
+#
+# - "axe" (2026-10-22, audit des linéaires — segmentation seulement) : la vérité par la
+#   DISTANCE À L'AXE, en mètres, au lieu d'un rapport de surfaces (le masque annoté est un
+#   tampon de largeur conventionnelle, ses bords ne garantissent rien ; seul l'axe est
+#   fiable). Unité vraie si >= 50 % des pixels de son squelette sont à <= t du squelette de
+#   l'union des masques annotés de sa classe ; annotation retrouvée dès que >= 50 % de son
+#   squelette est à <= t d'une unité prédite (par confiance décroissante). À t = 3,5 m
+#   (demi-largeur du tampon de 7 m) il reproduit la couverture à 0,01 près ; t = 5 m par
+#   défaut. Les enregistrements portent `unites` et `annotations` (part de squelette à <= t
+#   pour t − 1,5 / t / t + 1,5 m, distance médiane, longueurs) d'où découle la vue
+#   principale matches/fps/tps_pred ; le fichier publie P_len/R_len (en longueur), les
+#   fausses par distance, la sensibilité des coupures à la tolérance.
+#
+# Unité (`--unite`) : « fragment » (historique : une prédiction = une unité) ou « polygone »
+# (2026-10-22) : les prédictions d'une image sont fusionnées comme le plugin les affiche
+# (même classe, contact à <= 1 px, en deux passes : >= seuil de la classe entre elles, puis
+# les autres entre elles), confiance = moyenne pondérée par l'aire. Précision, bandes et
+# fiabilité comptent alors des polygones ; `bandes_fragments` garde le comptage par fragment.
+CRITERES = ("iou", "couverture", "axe")
+UNITES = ("fragment", "polygone")
 SEUIL_COUVERTURE = 0.5
+TOLERANCE_DEFAUT = 5.0     # m
+ECART_SENSIBILITE = 1.5    # m : coupures recalculées à t ± 1,5 m
+I_T = 1                    # index de la tolérance principale dans tolerances_m(t)
+BORNES_DISTANCE = (5, 10, 30)   # fausses_par_distance : d_max en m, puis null (au-delà / inconnue)
+
+
+def tolerances_m(t):
+    """[t − 1,5 ; t ; t + 1,5] en mètres — la tolérance principale au milieu (I_T)."""
+    return [round(t - ECART_SENSIBILITE, 3), float(t), round(t + ECART_SENSIBILITE, 3)]
+
+
+def px(metres, gsd):
+    """Mètres → pixels entiers (arrondi), même convention que l'audit du 2026-10-22."""
+    return int(round(metres / gsd))
 
 
 def grille(plancher):
@@ -161,28 +194,313 @@ def apparier_couverture(preds, objs, cls_gt):
     return matches, fps, tps_pred
 
 
-def inferer(modeles, splits, fusion, plancher, tache_forcee, critere="iou"):
-    from PIL import Image
-    from pycocotools.coco import COCO
-    from rfdetr import RFDETR
+def _fenetre(bb, marge, forme):
+    """Tranches (lignes, colonnes) de la boîte `bb` (y0, y1, x0, x1 inclusifs) élargie de `marge`."""
+    return (slice(max(0, bb[0] - marge), min(forme[0], bb[1] + 1 + marge)),
+            slice(max(0, bb[2] - marge), min(forme[1], bb[3] + 1 + marge)))
 
+
+def _squelette(mask, bb, forme):
+    """Squelette (skimage) calculé sur la fenêtre de la boîte, replacé dans l'image."""
+    from skimage.morphology import skeletonize
+    sk = np.zeros(forme, bool)
+    w = _fenetre(bb, 1, forme)
+    sk[w] = skeletonize(mask[w])
+    return sk
+
+
+def _distance_vers(S):
+    """Distance (px) de chaque pixel au pixel True le plus proche de S (inf si S vide)."""
+    from scipy import ndimage as ndi
+    if not S.any():
+        return np.full(S.shape, np.inf, np.float32)
+    return ndi.distance_transform_edt(~S).astype(np.float32)
+
+
+def apparier_axe(unites, objs, cls_gt, tolerances, gsd, rappel=True):
+    """Critère « axe » (segmentation, linéaires) — fonction pure sur masques.
+
+    `unites` : [(conf, classe, masque bool, extra)] par confiance DÉCROISSANTE (fragments ou
+    polygones ; extra = {conf_max, n_membres} d'un polygone, {} sinon) ; `objs`/`cls_gt` :
+    masques annotés et leurs classes ; `tolerances` : liste en mètres, la principale à
+    l'index I_T ; `gsd` : mètres par pixel. Une unité est VRAIE si >= 50 % des pixels de
+    son squelette sont à <= t du squelette de l'union des masques annotés de sa classe ;
+    une annotation est RETROUVÉE dès que >= 50 % de son squelette est à <= t d'un squelette
+    prédit, les unités étant prises par confiance décroissante (score = confiance qui fait
+    franchir la barre). Retourne (matches, fps, tps_pred, unites_rec, annotations_rec) :
+    les trois premiers = vue principale à la tolérance I_T (même forme qu'au critère
+    couverture) ; unites_rec = [[conf, classe, len_px, med_m, [part à <= t par tolérance],
+    conf_max, n_membres]] (med_m None sans annotation de la classe dans l'image) ;
+    annotations_rec = [[classe, len_px, [bp par tolérance]]], bp = [[conf, part cumulée]]
+    à chaque hausse (vide, et matches vide, si `rappel` est faux).
+    """
+    forme = objs[0].shape if objs else (unites[0][2].shape if unites else None)
+    if forme is None:
+        return [], [], [], [], []
+    tols_px = [px(t, gsd) for t in tolerances]
+    marge = max(tols_px) + 1
+    bb_u = [_bbox(m) for _, _, m, _ in unites]
+    bb_g = [_bbox(g) for g in objs]
+    unites_rec, annotations_rec = [None] * len(unites), [None] * len(objs)
+    for c in sorted({cu for _, cu, _, _ in unites} | set(cls_gt)):
+        idx_u = [i for i, (_, cu, _, _) in enumerate(unites) if cu == c]
+        idx_g = [j for j, cg in enumerate(cls_gt) if cg == c]
+        U = np.zeros(forme, bool)
+        for j in idx_g:
+            U |= objs[j]
+        d_axe = _distance_vers(_squelette(U, _bbox(U), forme)) if U.any() else None
+        sk_u, d_u = {}, {}
+        for i in idx_u:
+            conf, _, m, extra = unites[i]
+            extra_rec = [float(extra.get("conf_max", conf)), int(extra.get("n_membres", 1))]
+            if bb_u[i] is None:
+                unites_rec[i] = [float(conf), c, 0, None, [0.0] * len(tols_px)] + extra_rec
+                continue
+            sk = _squelette(m, bb_u[i], forme)
+            sk_u[i] = sk
+            n = int(sk.sum())
+            if d_axe is None or not n:
+                fracs, med = [0.0] * len(tols_px), None
+            else:
+                da = d_axe[sk]
+                fracs = [round(float((da <= p).mean()), 4) for p in tols_px]
+                med = round(float(np.median(da)) * gsd, 2)
+            unites_rec[i] = [float(conf), c, n, med, fracs] + extra_rec
+        for j in idx_g:
+            if not rappel:
+                break
+            if bb_g[j] is None:
+                annotations_rec[j] = [c, 0, [[] for _ in tols_px]]
+                continue
+            ys, xs = np.nonzero(_squelette(objs[j], bb_g[j], forme))
+            n_g = len(ys)
+            bps = [[] for _ in tols_px]
+            couvert = [np.zeros(n_g, bool) for _ in tols_px]
+            for i in idx_u:
+                if i not in sk_u or not n_g:
+                    continue
+                bb = bb_u[i]
+                if not _bbox_chevauche((bb[0] - marge, bb[1] + marge, bb[2] - marge, bb[3] + marge), bb_g[j]):
+                    continue
+                if i not in d_u:
+                    w = _fenetre(bb, marge, forme)
+                    d_u[i] = (w, _distance_vers(sk_u[i][w]))
+                (wy, wx), di = d_u[i]
+                dedans = (ys >= wy.start) & (ys < wy.stop) & (xs >= wx.start) & (xs < wx.stop)
+                if not dedans.any():
+                    continue
+                d = np.full(n_g, np.inf, np.float32)
+                d[dedans] = di[ys[dedans] - wy.start, xs[dedans] - wx.start]
+                for k, p in enumerate(tols_px):
+                    nouveau = (d <= p) & ~couvert[k]
+                    if nouveau.any():
+                        couvert[k] |= nouveau
+                        bps[k].append([float(unites[i][0]), round(float(couvert[k].mean()), 4)])
+            annotations_rec[j] = [c, n_g, bps]
+    if not rappel:
+        annotations_rec = []
+    matches, fps, tps_pred = vue_principale(unites_rec, annotations_rec)
+    return matches, fps, tps_pred, unites_rec, annotations_rec
+
+
+def vue_principale(unites_rec, annotations_rec):
+    """(matches, fps, tps_pred) à la tolérance principale — la forme que lisent comptes,
+    prf, bandes_confiance, ap50 ; dérivée des unités et annotations (donc recalculable
+    par le contrôleur sans masque)."""
+    tps = [[u[0], u[4][I_T], u[1]] for u in unites_rec if u[4][I_T] >= SEUIL_COUVERTURE]
+    fps = [[u[0], u[1]] for u in unites_rec if u[4][I_T] < SEUIL_COUVERTURE]
+    matches = []
+    for a in annotations_rec:
+        trouve = next((x for x in a[2][I_T] if x[1] >= SEUIL_COUVERTURE), None)
+        if trouve is not None:
+            matches.append([trouve[0], trouve[1], a[0]])
+    return matches, fps, tps
+
+
+def _composantes(masques):
+    """Groupes d'indices de masques (même image) qui se touchent ou se chevauchent à
+    <= 1 px : composantes 8-connexes de l'union, puis pontage par les pixels vides
+    voisins de >= 2 composantes (un pixel vide commun = contact à 1 px, diagonales
+    comprises — un fragment lui-même non connexe relie ses propres composantes)."""
+    if not masques:
+        return []
+    if len(masques) == 1:
+        return [[0]]
+    from scipy import ndimage as ndi
+    union = np.zeros_like(masques[0])
+    for m in masques:
+        union |= m
+    lab, n = ndi.label(union, np.ones((3, 3), bool))
+    parent = list(range(n + 1))
+
+    def racine(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def unir(a, b):
+        ra, rb = racine(a), racine(b)
+        if ra != rb:
+            parent[max(ra, rb)] = min(ra, rb)
+
+    H, W = lab.shape
+    pad = np.pad(lab, 1)
+    vois = np.stack([pad[1 + dy:H + 1 + dy, 1 + dx:W + 1 + dx]
+                     for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dy or dx])
+    v = vois[:, lab == 0]                                   # (8, pixels vides)
+    vmin = np.where(v == 0, n + 1, v).min(axis=0)
+    for s in range(8):
+        ok = (vmin <= n) & (v[s] > vmin)
+        if ok.any():
+            for a, b in np.unique(np.stack([vmin[ok], v[s][ok]]), axis=1).T:
+                unir(int(a), int(b))
+    etiq = []
+    for m in masques:
+        labs = np.unique(lab[m])
+        labs = labs[labs > 0]
+        for l in labs[1:]:
+            unir(int(labs[0]), int(l))
+        etiq.append(int(labs[0]) if len(labs) else None)
+    groupes = {}
+    for k, l in enumerate(etiq):
+        groupes.setdefault(("vide", k) if l is None else racine(l), []).append(k)
+    return list(groupes.values())
+
+
+def fusionner_polygones(preds, seuils_classe):
+    """Unité « polygone » : fusion des prédictions d'une image comme le plugin (même
+    classe, contact ou chevauchement à <= 1 px), en DEUX passes : (a) les fragments
+    >= seuil de la classe entre eux, (b) ceux sous le seuil entre eux, jamais avec (a).
+    Confiance = moyenne pondérée par l'aire des membres ; extra = conf_max, n_membres.
+    `preds` : [(conf, classe, masque)] ; retourne [(conf, classe, masque, extra)] par
+    confiance décroissante."""
+    out = []
+    for c in sorted({cl for _, cl, _ in preds}):
+        if c not in seuils_classe:
+            sys.exit(f"ERREUR : unité polygone — pas de seuil de classe pour « {c} » "
+                     "(--seuil-classe, model_card ou F1-max).")
+        for passe in (True, False):
+            sel = [i for i, (conf, cl, _) in enumerate(preds)
+                   if cl == c and (conf >= seuils_classe[c]) == passe]
+            for groupe in _composantes([preds[i][2] for i in sel]):
+                membres = [sel[k] for k in groupe]
+                aires = np.array([preds[i][2].sum() for i in membres], float)
+                confs = np.array([preds[i][0] for i in membres], float)
+                masque = np.zeros_like(preds[membres[0]][2])
+                for i in membres:
+                    masque |= preds[i][2]
+                conf = float(np.average(confs, weights=aires)) if aires.sum() else float(confs.max())
+                out.append((conf, c, masque, {"conf_max": float(confs.max()), "n_membres": len(membres)}))
+    out.sort(key=lambda t: -t[0])
+    return out
+
+
+def apparier_unites(preds, objs, cls_gt, critere, params):
+    """Enregistrement d'une image aux critères couverture / axe (segmentation), en unité
+    fragment ou polygone. `preds` : [(conf, classe, masque)] par confiance décroissante ;
+    `params` : tolerances, gsd, unite, seuils_classe."""
+    unite = params.get("unite", "fragment")
+    if unite == "polygone":
+        unites = fusionner_polygones(preds, params["seuils_classe"])
+    else:
+        unites = [(conf, c, m, {}) for conf, c, m in preds]
+    if critere == "couverture":
+        matches, fps, tps = apparier_couverture([(conf, c, m) for conf, c, m, _ in unites], objs, cls_gt)
+        return {"matches": matches, "fps": fps, "tps_pred": tps}
+    tols, gsd = params["tolerances"], params["gsd"]
+    matches, fps, tps, urec, arec = apparier_axe(unites, objs, cls_gt, tols, gsd)
+    rec = {"matches": matches, "fps": fps, "tps_pred": tps, "unites": urec, "annotations": arec}
+    if unite == "polygone":
+        frec = apparier_axe([(conf, c, m, {}) for conf, c, m in preds], objs, cls_gt, tols, gsd, rappel=False)[3]
+        rec["fragments"] = [[u[0], u[1], u[4][I_T]] for u in frec]
+    return rec
+
+
+def apparier_iou(preds, objs, cls_gt, seg):
+    """Critère « iou » : appariement 1-1 glouton par confiance décroissante, class-aware,
+    IoU masque (seg) ou boîte >= 0,5. `preds` : [(conf, classe, masque | boîte xyxy)]."""
+    pris = [False] * len(objs)
+    matches, fps = [], []
+    for conf, c, obj in preds:
+        meilleur, mi = 0.0, -1
+        for j, g in enumerate(objs):
+            if pris[j] or cls_gt[j] != c:
+                continue
+            if seg:
+                inter = np.logical_and(obj, g).sum()
+                iou = inter / np.logical_or(obj, g).sum() if inter else 0.0
+            else:
+                iou = iou_bbox(obj, g)
+            if iou > meilleur:
+                meilleur, mi = iou, j
+        if meilleur >= 0.5:
+            pris[mi] = True
+            matches.append([float(conf), float(meilleur), c])
+        else:
+            fps.append([float(conf), c])
+    return {"matches": matches, "fps": fps}
+
+
+def _rle(mask):
+    from pycocotools import mask as cocomask
+    r = cocomask.encode(np.asfortranarray(mask.astype(np.uint8)))
+    return {"size": r["size"], "counts": r["counts"].decode("ascii")}
+
+
+def _masque(rle):
+    from pycocotools import mask as cocomask
+    return cocomask.decode({"size": rle["size"], "counts": rle["counts"].encode("ascii")}).astype(bool)
+
+
+def lire_masques(dossier, etiquette, coco):
+    """Masques prédits mis en cache (--masques-cache ; format de l'audit du 2026-10-22 :
+    preds_<split>.json, une entrée par image dans l'ordre coco.getImgIds(), prédictions
+    au plancher par confiance décroissante, RLE COCO, classe = nom du modèle avant
+    fusion) — ou None si le fichier n'existe pas."""
+    chemin = os.path.join(dossier, f"preds_{etiquette}.json")
+    if not os.path.exists(chemin):
+        return None
+    entrees = json.load(open(chemin, encoding="utf-8"))
+    attendu = [coco.loadImgs(i)[0]["file_name"] for i in coco.getImgIds()]
+    if [e["file_name"] for e in entrees] != attendu:
+        sys.exit(f"ERREUR : {chemin} ne suit pas les images de {etiquette} (ordre ou contenu).")
+    return entrees
+
+
+def charger_modele(nom, cfg, tache, critere):
+    """Charge un checkpoint RF-DETR ; retourne (modele, seg, tache) après les contrôles de tâche."""
+    from rfdetr import RFDETR
+    try:
+        modele = RFDETR.from_checkpoint(cfg["poids"], resolution=cfg["resolution"])
+    except ValueError as e:
+        sys.exit(f"ERREUR chargement {nom} : {e}\n(vieux checkpoint sans model_name : "
+                 "renommer le fichier au nom canonique rfdetr, cf. doc from_checkpoint)")
+    seg = bool(getattr(modele.model_config, "segmentation_head", False))
+    tache_modele = "segmentation" if seg else "detection"
+    if tache is None:
+        tache = tache_modele
+    if tache_modele != tache:
+        sys.exit(f"ERREUR : {nom} est un modèle {tache_modele}, le run est {tache} "
+                 "(--tache forcée ou autre modèle) — on ne mélange pas les tâches.")
+    if critere != "iou" and not seg:
+        sys.exit(f"ERREUR : critère {critere} = segmentation seulement ({nom} est en détection).")
+    modele.optimize_for_inference()
+    return modele, seg, tache
+
+
+def inferer(modeles, splits, fusion, plancher, tache_forcee, critere="iou", params=None,
+            masques_cache=None):
+    """Inférence (ou relecture du cache de masques) + appariement de chaque image, par
+    modèle. `params` (critères couverture/axe) : unite, seuils_classe, tolerances, gsd.
+    `masques_cache` : dossier des preds_<split>.json — lus s'ils existent (aucun GPU
+    nécessaire), écrits sinon."""
+    from pycocotools.coco import COCO
+
+    params = params or {}
     donnees, tache = {}, tache_forcee
     for nom, cfg in modeles.items():
-        try:
-            modele = RFDETR.from_checkpoint(cfg["poids"], resolution=cfg["resolution"])
-        except ValueError as e:
-            sys.exit(f"ERREUR chargement {nom} : {e}\n(vieux checkpoint sans model_name : "
-                     "renommer le fichier au nom canonique rfdetr, cf. doc from_checkpoint)")
-        seg = bool(getattr(modele.model_config, "segmentation_head", False))
-        tache_modele = "segmentation" if seg else "detection"
-        if tache is None:
-            tache = tache_modele
-        if tache_modele != tache:
-            sys.exit(f"ERREUR : {nom} est un modèle {tache_modele}, le run est {tache} "
-                     "(--tache forcée ou autre modèle) — on ne mélange pas les tâches.")
-        if critere == "couverture" and not seg:
-            sys.exit(f"ERREUR : critère couverture = segmentation seulement ({nom} est en détection).")
-        modele.optimize_for_inference()
+        modele, seg = None, None
         # class_offset du sidecar best.json = vérité (leçon 2026-09-08 : run_rf_detr_1 prédit
         # parfois la catégorie 0 « entites » héritée de Roboflow -> l'heuristique sur la
         # première image tombait à 0 et perdait la classe four) ; heuristique sinon.
@@ -191,20 +509,49 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee, critere="iou"):
         for etiquette, dossier in splits:
             coco = COCO(os.path.join(dossier, "_annotations.coco.json"))
             cats = {c["id"]: c["name"] for c in coco.loadCats(coco.getCatIds())}
-            for img_id in coco.getImgIds():
+            entrees = lire_masques(masques_cache, etiquette, coco) if masques_cache else None
+            a_ecrire = None
+            if entrees is None:
+                if modele is None:
+                    modele, seg, tache = charger_modele(nom, cfg, tache, critere)
+                if masques_cache:
+                    a_ecrire = []
+            else:
+                seg, tache = True, tache or "segmentation"
+                if tache != "segmentation":
+                    sys.exit(f"ERREUR : cache de masques ({etiquette}) = segmentation, run {tache}.")
+                print(f"{nom} : masques de {etiquette} lus dans {masques_cache} ({len(entrees)} images)")
+            for k, img_id in enumerate(coco.getImgIds()):
                 info = coco.loadImgs(img_id)[0]
-                im = Image.open(os.path.join(dossier, info["file_name"])).convert("RGB")
-                d = modele.predict(im, threshold=plancher)
-                n_pred = len(d)
-                if seg and n_pred and d.mask is None:
-                    sys.exit(f"ERREUR : {nom} (segmentation) prédit sans masques.")
-                if decal is None and n_pred:
-                    # vieux exports : background en colonne 0 -> ids 1..N
-                    decal = 1 if (int(d.class_id.min()) >= 1
-                                  and int(d.class_id.max()) >= len(cfg["noms"])) else 0
-                gts = coco.loadAnns(coco.getAnnIds(imgIds=img_id))
+                if entrees is not None:
+                    preds = [(float(p["conf"]), fusion.get(p["cls"], p["cls"]), _masque(p["rle"]))
+                             for p in entrees[k]["preds"]]
+                    preds.sort(key=lambda t: -t[0])
+                else:
+                    from PIL import Image
+                    im = Image.open(os.path.join(dossier, info["file_name"])).convert("RGB")
+                    d = modele.predict(im, threshold=plancher)
+                    n_pred = len(d)
+                    if seg and n_pred and d.mask is None:
+                        sys.exit(f"ERREUR : {nom} (segmentation) prédit sans masques.")
+                    if decal is None and n_pred:
+                        # vieux exports : background en colonne 0 -> ids 1..N
+                        decal = 1 if (int(d.class_id.min()) >= 1
+                                      and int(d.class_id.max()) >= len(cfg["noms"])) else 0
+                    preds, bruts = [], []
+                    for i in (np.argsort(-d.confidence) if n_pred else []):
+                        idx = int(d.class_id[i]) - (decal or 0)
+                        if not (0 <= idx < len(cfg["noms"])):
+                            continue
+                        obj = d.mask[i].astype(bool) if seg else tuple(map(float, d.xyxy[i]))
+                        preds.append((float(d.confidence[i]), fusion.get(cfg["noms"][idx], cfg["noms"][idx]), obj))
+                        if a_ecrire is not None:
+                            bruts.append({"conf": float(d.confidence[i]), "cls": cfg["noms"][idx], "rle": _rle(obj)})
+                    if a_ecrire is not None:
+                        a_ecrire.append({"split": etiquette, "zone": info.get("zone", ""), "image_id": img_id,
+                                         "file_name": info["file_name"], "preds": bruts})
                 objs, cls_gt = [], []
-                for a in gts:
+                for a in coco.loadAnns(coco.getAnnIds(imgIds=img_id)):
                     c = fusion.get(cats[a["category_id"]], cats[a["category_id"]])
                     if seg:
                         objs.append(coco.annToMask(a).astype(bool))
@@ -212,53 +559,27 @@ def inferer(modeles, splits, fusion, plancher, tache_forcee, critere="iou"):
                         x, y, w, h = a["bbox"]
                         objs.append((x, y, x + w, y + h))
                     cls_gt.append(c)
-                pris = [False] * len(objs)
-                matches, fps = [], []
-                if critere == "couverture":
-                    preds = []
-                    for i in (np.argsort(-d.confidence) if n_pred else []):
-                        idx = int(d.class_id[i]) - (decal or 0)
-                        if not (0 <= idx < len(cfg["noms"])):
-                            continue
-                        c = fusion.get(cfg["noms"][idx], cfg["noms"][idx])
-                        preds.append((float(d.confidence[i]), c, d.mask[i].astype(bool)))
-                    matches, fps, tps_pred = apparier_couverture(preds, objs, cls_gt)
-                    enregs.append({"split": etiquette, "zone": info.get("zone", ""),
-                                   "n_gt": len(objs), "gt_classes": cls_gt,
-                                   "matches": matches, "fps": fps, "tps_pred": tps_pred})
-                    continue
-                for i in (np.argsort(-d.confidence) if n_pred else []):
-                    idx = int(d.class_id[i]) - (decal or 0)
-                    if not (0 <= idx < len(cfg["noms"])):
-                        continue
-                    c = fusion.get(cfg["noms"][idx], cfg["noms"][idx])
-                    obj = d.mask[i].astype(bool) if seg else tuple(map(float, d.xyxy[i]))
-                    meilleur, mi = 0.0, -1
-                    for j, g in enumerate(objs):
-                        if pris[j] or cls_gt[j] != c:
-                            continue
-                        if seg:
-                            inter = np.logical_and(obj, g).sum()
-                            iou = inter / np.logical_or(obj, g).sum() if inter else 0.0
-                        else:
-                            iou = iou_bbox(obj, g)
-                        if iou > meilleur:
-                            meilleur, mi = iou, j
-                    if meilleur >= 0.5:
-                        pris[mi] = True
-                        matches.append([float(d.confidence[i]), float(meilleur), c])
-                    else:
-                        fps.append([float(d.confidence[i]), c])
+                if critere == "iou":
+                    rec = apparier_iou(preds, objs, cls_gt, seg)
+                else:
+                    rec = apparier_unites(preds, objs, cls_gt, critere, params)
                 enregs.append({"split": etiquette, "zone": info.get("zone", ""),
-                               "n_gt": len(objs), "gt_classes": cls_gt,
-                               "matches": matches, "fps": fps})
+                               "n_gt": len(objs), "gt_classes": cls_gt, **rec})
+                if k % 200 == 0 and k:
+                    print(f"  {nom} / {etiquette} : {k}/{len(coco.getImgIds())}", flush=True)
+            if a_ecrire is not None:
+                os.makedirs(masques_cache, exist_ok=True)
+                with open(os.path.join(masques_cache, f"preds_{etiquette}.json"), "w", encoding="utf-8") as f:
+                    json.dump(a_ecrire, f)
+                print(f"{nom} : masques de {etiquette} écrits dans {masques_cache}")
         donnees[nom] = {"decal": decal, "enregs": enregs}
         print(f"{nom} : {sum(len(e['matches']) for e in enregs)} TP potentiels, "
               f"offset {decal}, tâche {tache}")
-        del modele
-        import gc
-        import torch
-        gc.collect(); torch.cuda.empty_cache()
+        if modele is not None:
+            del modele
+            import gc
+            import torch
+            gc.collect(); torch.cuda.empty_cache()
     return donnees, tache
 
 
@@ -427,18 +748,87 @@ def fiabilite_par_classe(bandes, seuil, coupures, niveaux=NIVEAUX_FIABILITE, n_m
     return cats
 
 
-def etude_seuil(enregs, plancher, classe=None):
+def longueurs(enregs, s, classe=None):
+    """(P_len, R_len) au seuil s, critère axe : part de la longueur de squelette prédit
+    (unités >= s) à <= t d'un axe annoté ; part de la longueur d'axe annoté à <= t d'une
+    unité >= s. P_len None sans unité, R_len 0 sans annotation."""
+    num_p = den_p = num_r = den_r = 0.0
+    for e in enregs:
+        for u in e["unites"]:
+            if (classe is None or u[1] == classe) and u[0] >= s:
+                den_p += u[2]
+                num_p += u[2] * u[4][I_T]
+        for a in e["annotations"]:
+            if classe is None or a[0] == classe:
+                den_r += a[1]
+                f = 0.0
+                for conf, frac in a[2][I_T]:
+                    if conf < s:
+                        break
+                    f = frac
+                num_r += a[1] * f
+    return (round(num_p / den_p, 4) if den_p else None, round(num_r / den_r, 4) if den_r else 0.0)
+
+
+def vue_fragments(enregs):
+    """Enregistrements vus PAR FRAGMENT (unité polygone) : [{tps_pred, fps}] pour
+    bandes_confiance — vrai = part de squelette >= 0,5 à la tolérance principale."""
+    return [{"tps_pred": [[f[0], f[2], f[1]] for f in e.get("fragments", []) if f[2] >= SEUIL_COUVERTURE],
+             "fps": [[f[0], f[1]] for f in e.get("fragments", []) if f[2] < SEUIL_COUVERTURE]}
+            for e in enregs]
+
+
+def bandes_tolerance(enregs, k, classe=None):
+    """Bandes (tp/fp par 0,01) avec la vérité des unités prise à la tolérance d'index k."""
+    vue = [{"tps_pred": [[u[0], u[4][k], u[1]] for u in e["unites"] if u[4][k] >= SEUIL_COUVERTURE],
+            "fps": [[u[0], u[1]] for u in e["unites"] if u[4][k] < SEUIL_COUVERTURE]} for e in enregs]
+    return bandes_confiance(vue, classe)
+
+
+def sensibilite(enregs, classe, seuil, tolerances):
+    """Coupures et catégories de fiabilité de la classe au `seuil`, recalculées à chaque
+    tolérance (t − 1,5 / t / t + 1,5 m) : ce qui bouge quand la tolérance bouge.
+    {"<t>": {n_vrais, coupures, fiabilite}}."""
+    out = {}
+    for k, t in enumerate(tolerances):
+        b = bandes_tolerance(enregs, k, classe)
+        cp = coupures_fiabilite(b, seuil)
+        out[str(t)] = {"n_vrais": sum(x["tp"] for x in b), "coupures": cp,
+                       "fiabilite": fiabilite_par_classe(b, seuil, cp)}
+    return out
+
+
+def fausses_par_distance(enregs, classe, seuil, bornes=BORNES_DISTANCE):
+    """Histogramme des unités FAUSSES (>= seuil) de la classe par distance médiane à l'axe
+    annoté le plus proche : [{d_max: 5, n}, {d_max: 10, n}, {d_max: 30, n}, {d_max: null, n}]
+    — la dernière = au-delà de la dernière borne, ou aucune annotation de la classe dans
+    l'image (la part « loin de tout » est celle qui mérite une relecture d'annotation)."""
+    n = [0] * (len(bornes) + 1)
+    for e in enregs:
+        for u in e["unites"]:
+            if u[1] != classe or u[0] < seuil or u[4][I_T] >= SEUIL_COUVERTURE:
+                continue
+            n[next((i for i, b in enumerate(bornes) if u[3] is not None and u[3] <= b), len(bornes))] += 1
+    return [{"d_max": b, "n": c} for b, c in zip(list(bornes) + [None], n)]
+
+
+def etude_seuil(enregs, plancher, classe=None, seuil_classe=None):
     """Indicateurs du choix du seuil (fonction pure, sans GPU) — cf. commentaire ci-dessus.
 
     Toutes les valeurs découlent des comptes (tp, fp) par seuil de la grille ; arrondi
     4 décimales. `plateau_f1_95`/`_98` = [min, max] des seuils où F1 ≥ 95 % / 98 % du
     F1-max. `precision_marginale` = part de vrais objets parmi les détections AJOUTÉES
     en descendant du F1-max au seuil proposé (null si rien n'est ajouté). `tableau` =
-    une ligne par seuil multiple de 0,05 (seuil, P, R, F1, F2, fp_img).
+    une ligne par seuil multiple de 0,05 (seuil, P, R, F1, F2, fp_img ; + P_len, R_len au
+    critère axe). Unité polygone : `bandes_fragments` (comptage par fragment) à côté des
+    `bandes` (polygones), et `sous_seuil` = fenêtres de 0,05 des bandes de polygones sous
+    `seuil_classe` (ceux de la seconde passe de fusion) quand ce seuil est connu.
     """
     seuils = grille(plancher)
     n_img = len(enregs)
     cpt = [comptes(enregs, s, classe) for s in seuils]
+    avec_long = any("unites" in e for e in enregs)
+    avec_frag = any("fragments" in e for e in enregs)
     ngt = cpt[0][2] if cpt else 0
 
     P, R, F1, F2 = [], [], [], []
@@ -466,10 +856,18 @@ def etude_seuil(enregs, plancher, classe=None):
     for i, s in enumerate(seuils):
         if abs(s / PAS_TABLEAU - round(s / PAS_TABLEAU)) > 1e-6:
             continue
-        tableau.append({"seuil": float(s), "P": round(P[i], 4), "R": round(R[i], 4),
-                        "F1": round(F1[i], 4), "F2": round(F2[i], 4), "fp_img": fp_img(i)})
+        ligne = {"seuil": float(s), "P": round(P[i], 4), "R": round(R[i], 4),
+                 "F1": round(F1[i], 4), "F2": round(F2[i], 4), "fp_img": fp_img(i)}
+        if avec_long:
+            ligne["P_len"], ligne["R_len"] = longueurs(enregs, s, classe)
+        tableau.append(ligne)
     bandes = bandes_confiance(enregs, classe)
     seuil_propose = float(seuils[ip])
+    extra = {}
+    if avec_frag:
+        extra["bandes_fragments"] = bandes_confiance(vue_fragments(enregs), classe)
+        if seuil_classe is not None:
+            extra["sous_seuil"] = agreger_bandes([b for b in bandes if b["lo"] < seuil_classe - 1e-9])
     return {
         "seuil_f2max": float(seuils[i2]), "F2": round(F2[i2], 4),
         "P_f2": round(P[i2], 4), "R_f2": round(R[i2], 4),
@@ -487,6 +885,7 @@ def etude_seuil(enregs, plancher, classe=None):
         "bandes": bandes,
         "fiabilite_proposee": fiabilite_par_classe(
             bandes, seuil_propose, coupures_fiabilite(bandes, seuil_propose)),
+        **extra,
     }
 
 
@@ -519,8 +918,9 @@ def ap50(enregs, classe=None):
     return ap, rr, pp
 
 
-def bloc_metriques(enregs, plancher, classe=None):
-    """Métriques standard d'un modèle (ou d'une classe) : point F1-max + AP50."""
+def bloc_metriques(enregs, plancher, classe=None, seuil_classe=None):
+    """Métriques standard d'un modèle (ou d'une classe) : point F1-max + AP50 ;
+    `seuil_classe` (unité polygone) ne sert qu'au bloc sous_seuil de l'étude."""
     seuils = grille(plancher)
     vals = [prf(enregs, s, classe) for s in seuils]
     i = int(np.argmax([v[2] for v in vals]))
@@ -533,7 +933,7 @@ def bloc_metriques(enregs, plancher, classe=None):
     return {"seuil_f1max": s0, "F1": round(f0, 4), "P": round(p0, 4), "R": round(r0, 4),
             "AP50": round(ap50(enregs, classe)[0], 4), "n_gt": int(ngt),
             "iou_median": round(float(np.median(ious)), 4) if ious else None,
-            "etude_seuil": etude_seuil(enregs, plancher, classe)}
+            "etude_seuil": etude_seuil(enregs, plancher, classe, seuil_classe)}
 
 
 def imprimer_etude(nom, bloc, indent="  "):
@@ -545,10 +945,15 @@ def imprimer_etude(nom, bloc, indent="  "):
           f"(P {et['P_propose']} / R {et['R_propose']}, FP/img {et['fp_par_image']['propose']} "
           f"vs {et['fp_par_image']['f1max']} au F1-max, précision marginale "
           f"{et['precision_marginale']})")
-    print(f"{indent}  seuil   P      R      F1     F2     FP/img")
+    long_ = "P_len" in (et["tableau"][0] if et["tableau"] else {})
+    print(f"{indent}  seuil   P      R      F1     F2     FP/img" + ("   P_len  R_len" if long_ else ""))
     for l in et["tableau"]:
+        suite = ""
+        if long_:
+            p_len = "—    " if l["P_len"] is None else f"{l['P_len']:.3f}"
+            suite = f"   {p_len}  {l['R_len']:.3f}"
         print(f"{indent}  {l['seuil']:.2f}   {l['P']:.3f}  {l['R']:.3f}  {l['F1']:.3f}  "
-              f"{l['F2']:.3f}  {l['fp_img']}")
+              f"{l['F2']:.3f}  {l['fp_img']}" + suite)
     if et.get("fiabilite_proposee"):
         print(f"{indent}  fiabilité proposée au seuil {et['seuil_propose']} : " + " · ".join(
             f"{c['categorie']} dès {c['seuil']} (garanti >= {int(c['garanti'] * 100)} %, mesuré "
@@ -599,12 +1004,30 @@ def par_zone_classe(enregs, seuil_global, seuils_classe, classes):
                 # fiabilité sur les seules zones à annotation exhaustive
                 "bandes": bandes_confiance(sous, c),
             }
+            if any("fragments" in e for e in sous):   # unité polygone : comptage par fragment
+                out[z][c]["bandes_fragments"] = bandes_confiance(vue_fragments(sous), c)
     return out
 
 
+def appariement_texte(critere, tolerance=None):
+    """Ligne `appariement` de l'en-tête, en clair (lue par completer_metriques_eval)."""
+    if critere == "axe":
+        return (f"axe : >= 50 % du squelette de l'unité à <= {tolerance} m du squelette des masques "
+                f"annotés de sa classe ; annotation retrouvée dès que >= 50 % de son squelette est "
+                f"à <= {tolerance} m d'une unité prédite, class-aware")
+    if critere == "couverture":
+        return "couverture >= 0,5 de l'union des masques annotés, class-aware"
+    return "glouton conf decroissante, class-aware"
+
+
 def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_cache,
-            critere="iou"):
-    """Construit le dict metriques_eval/1 — LA sortie canonique de l'outil."""
+            critere="iou", tolerance=None, unite="fragment", seuils_classe=None, gsd=None):
+    """Construit le dict metriques_eval/1 — LA sortie canonique de l'outil.
+    Critère axe : `tolerance` (m) et `gsd` (m/px) en tête, blocs `fausses_par_distance` et
+    `sensibilite` par modèle (au seuil de classe connu, sinon au F1-max de la classe) ;
+    unité polygone : `seuils_classe` (ceux des deux passes de fusion) en tête."""
+    if critere == "axe" and tolerance is None:
+        raise ValueError("critère axe : tolérance requise")
     classes = classes_presentes(donnees)
     resume = {
         "schema": SCHEMA_METRIQUES,
@@ -612,9 +1035,9 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
         "outil": "tools/courbes_eval.py",
         "tache": tache,
         "critere": critere,
+        "unite": unite,
         "iou": {"type": "masque" if tache == "segmentation" else "bbox", "seuil": 0.5},
-        "appariement": ("couverture >= 0,5 de l'union des masques annotés, class-aware"
-                        if critere == "couverture" else "glouton conf decroissante, class-aware"),
+        "appariement": appariement_texte(critere, tolerance),
         "plancher": plancher,
         "grille": {"min": plancher, "max": 0.95, "pas": 0.005},
         "p_sans_prediction": 1.0,
@@ -623,6 +1046,11 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
         "provenance_cache": provenance_cache,
         "modeles": {},
     }
+    if critere == "axe":
+        resume["tolerance_m"] = float(tolerance)
+        resume["gsd_m"] = gsd
+    if seuils_classe:
+        resume["seuils_classe"] = seuils_classe
     for nom, dd in donnees.items():
         enregs = dd["enregs"]
         bloc_global = bloc_metriques(enregs, plancher)
@@ -635,7 +1063,8 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
             par_zone[z] = {"P": round(tp / (tp + fp), 4) if tp + fp else 1.0,
                            "R": round(tp_r / ngt, 4) if ngt else 0.0, "n_gt": int(ngt)}
         info = meta_modeles.get(nom, {})
-        par_classe = {cl: bloc_metriques(enregs, plancher, cl) for cl in classes}
+        par_classe = {cl: bloc_metriques(enregs, plancher, cl, (seuils_classe or {}).get(cl))
+                      for cl in classes}
         resume["modeles"][nom] = {
             "poids": info.get("poids"),
             "resolution": info.get("resolution"),
@@ -643,6 +1072,15 @@ def resumer(donnees, meta_modeles, tache, dataset, fusion, plancher, provenance_
             "global": bloc_global,
             "par_classe": par_classe,
         }
+        if critere == "axe":
+            seuils = {cl: (seuils_classe or {}).get(cl, par_classe[cl]["seuil_f1max"]) for cl in classes}
+            tols = tolerances_m(tolerance)
+            resume["modeles"][nom]["fausses_par_distance"] = {
+                cl: {"seuil": seuils[cl], "histogramme": fausses_par_distance(enregs, cl, seuils[cl])}
+                for cl in classes}
+            resume["modeles"][nom]["sensibilite"] = {
+                cl: {"seuil": seuils[cl], "tolerances": sensibilite(enregs, cl, seuils[cl], tols)}
+                for cl in classes}
         if par_zone:
             resume["modeles"][nom]["par_zone"] = par_zone
             resume["modeles"][nom]["par_zone_classe"] = par_zone_classe(
@@ -765,9 +1203,18 @@ def planche_zones(donnees, tache, plancher, sortie):
 
 # --------------------------------------------------------- cache/empreinte ---
 
-def construire_meta(plancher, coco, fusion, modeles, tache=None, critere="iou"):
+def construire_meta(plancher, coco, fusion, modeles, tache=None, critere="iou", tolerance=None,
+                    unite="fragment", seuils_classe=None, gsd=None):
+    """Empreinte de provenance du cache ; tolérance + gsd au critère axe, unité + seuils de
+    classe en unité polygone (absents sinon : les caches antérieurs restent lisibles)."""
     meta = {"schema": SCHEMA_CACHE, "tache": tache, "plancher": plancher, "critere": critere,
             "coco": chemin_norm(coco), "fusion": fusion, "modeles": {}}
+    if critere == "axe":
+        meta["tolerance"] = float(tolerance)
+        meta["gsd"] = gsd
+    if unite != "fragment":
+        meta["unite"] = unite
+        meta["seuils_classe"] = seuils_classe
     for nom, cfg in modeles.items():
         taille = os.path.getsize(cfg["poids"]) if os.path.exists(cfg["poids"]) else None
         meta["modeles"][nom] = {"poids": chemin_norm(cfg["poids"]),
@@ -785,6 +1232,14 @@ def divergence_run(attendu, cache):
         return f"fusion {cache.get('fusion')} != {attendu['fusion']}"
     if cache.get("critere", "iou") != attendu.get("critere", "iou"):
         return f"critère {cache.get('critere', 'iou')} != {attendu.get('critere', 'iou')}"
+    if cache.get("tolerance") != attendu.get("tolerance"):
+        return f"tolérance {cache.get('tolerance')} != {attendu.get('tolerance')}"
+    if cache.get("gsd") != attendu.get("gsd"):
+        return f"gsd {cache.get('gsd')} != {attendu.get('gsd')}"
+    if cache.get("unite", "fragment") != attendu.get("unite", "fragment"):
+        return f"unité {cache.get('unite', 'fragment')} != {attendu.get('unite', 'fragment')}"
+    if cache.get("seuils_classe") != attendu.get("seuils_classe"):
+        return f"seuils de classe {cache.get('seuils_classe')} != {attendu.get('seuils_classe')}"
     return None
 
 
@@ -852,6 +1307,43 @@ def reprendre_modeles(sources, meta_attendu, modeles, donnees, tache):
     return tache
 
 
+def lire_gsd(coco):
+    """gsd_m du corpus_manifest.yaml du corpus (dossier donné ou son parent), sinon None."""
+    import yaml
+    for d in (coco, os.path.dirname(os.path.abspath(coco.rstrip("/\\")))):
+        chemin = os.path.join(d, "corpus_manifest.yaml")
+        if os.path.exists(chemin):
+            v = (yaml.safe_load(open(chemin, encoding="utf-8")) or {}).get("gsd_m")
+            return float(v) if v is not None else None
+    return None
+
+
+def resoudre_seuils(cli, poids, classes):
+    """Seuils de classe des deux passes de fusion (unité polygone) : --seuil-classe (doit
+    couvrir toutes les classes), sinon thresholds.confidence_per_class (+ confidence_default)
+    du model_card.yaml voisin des poids, sinon None = F1-max (première passe en fragments).
+    Retourne (dict | None, source)."""
+    if cli:
+        seuils = {}
+        for spec in cli:
+            c, v = spec.split("=", 1)
+            seuils[c] = float(v)
+        manquent = [c for c in classes if c not in seuils]
+        if manquent:
+            sys.exit(f"ERREUR : --seuil-classe manquant pour {manquent}.")
+        return seuils, "cli"
+    carte = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(poids))), "model_card.yaml")
+    if os.path.exists(carte):
+        import yaml
+        th = (yaml.safe_load(open(carte, encoding="utf-8")) or {}).get("thresholds") or {}
+        par, defaut = th.get("confidence_per_class") or {}, th.get("confidence_default")
+        seuils = {c: float(par.get(c, defaut)) for c in classes if par.get(c, defaut) is not None}
+        if len(seuils) == len(classes):
+            return seuils, "model_card"
+        print(f"AVERTISSEMENT : {carte} ne couvre pas toutes les classes — seuils au F1-max")
+    return None, "f1max"
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__)
@@ -866,9 +1358,23 @@ def main():
     ap.add_argument("--titre", default=None)
     ap.add_argument("--plancher", type=float, default=0.05)
     ap.add_argument("--critere", choices=list(CRITERES), default="iou",
-                    help="vérité d'une prédiction : iou (1-1 >= 0,5, défaut) ou couverture "
-                         "(>= 50 %% de la prédiction sur les masques annotés — structures "
-                         "LINÉAIRES, segmentation seulement)")
+                    help="vérité d'une prédiction : iou (1-1 >= 0,5, défaut), couverture "
+                         "(>= 50 %% de la prédiction sur les masques annotés) ou axe (>= 50 %% du "
+                         "squelette à <= --tolerance m de l'axe annoté) — structures LINÉAIRES, "
+                         "segmentation seulement")
+    ap.add_argument("--tolerance", type=float, default=TOLERANCE_DEFAUT,
+                    help="critère axe : distance admise à l'axe annoté, en mètres (défaut 5,0)")
+    ap.add_argument("--unite", choices=list(UNITES), default="fragment",
+                    help="unité jugée : fragment (une prédiction, défaut) ou polygone (prédictions "
+                         "fusionnées comme le plugin, critère axe seulement)")
+    ap.add_argument("--seuil-classe", action="append", default=[], metavar="CLASSE=SEUIL",
+                    help="unité polygone : seuil qui sépare les deux passes de fusion (répétable ; "
+                         "défaut : confidence_per_class du model_card.yaml voisin des poids, sinon F1-max)")
+    ap.add_argument("--gsd", type=float, default=None,
+                    help="mètres par pixel (défaut : gsd_m du corpus_manifest.yaml du corpus)")
+    ap.add_argument("--masques-cache", default=None, metavar="DOSSIER",
+                    help="cache des masques prédits (preds_<split>.json, format de l'audit du "
+                         "2026-10-22) : lus s'ils existent (sans GPU), écrits sinon — un seul modèle")
     ap.add_argument("--classe-controle", default=None,
                     help="autocontrôle du rappel plancher sur cette classe (défaut : global)")
     ap.add_argument("--sans-autocontrole", action="store_true")
@@ -895,6 +1401,10 @@ def main():
         modeles[nom] = {"poids": poids, "resolution": int(resolution), "noms": noms,
                         "decal_sidecar": decal_sidecar}
     fusion = dict(f.split("=", 1) for f in a.fusion)
+    if a.unite == "polygone" and a.critere != "axe":
+        sys.exit("ERREUR : --unite polygone exige --critere axe.")
+    if (a.unite == "polygone" or a.masques_cache) and len(modeles) != 1:
+        sys.exit("ERREUR : --unite polygone et --masques-cache = un seul --modele.")
 
     if os.path.exists(os.path.join(a.coco, "_annotations.coco.json")):
         splits = [(os.path.basename(a.coco.rstrip("/\\")), a.coco)]
@@ -904,10 +1414,48 @@ def main():
     if not splits:
         sys.exit(f"ERREUR : aucun _annotations.coco.json trouvé sous {a.coco} "
                  "(ni directement, ni dans valid/ ou test/).")
+    # classes par défaut = catégories du premier split
+    coco0 = json.load(open(os.path.join(splits[0][1], "_annotations.coco.json"), encoding="utf-8"))
+    cats_coco = [c["name"] for c in coco0["categories"]]
+    for cfg in modeles.values():
+        if cfg["noms"] is None:
+            cfg["noms"] = cats_coco
+
+    gsd = None
+    if a.critere == "axe":
+        gsd = a.gsd if a.gsd is not None else lire_gsd(a.coco)
+        if gsd is None:
+            sys.exit("ERREUR : critère axe — gsd_m introuvable dans corpus_manifest.yaml (donner --gsd).")
+    tolerance = a.tolerance if a.critere == "axe" else None
+    seuils_classe, source_seuils = None, None
+    if a.unite == "polygone":
+        classes_modele = sorted({fusion.get(n, n) for cfg in modeles.values() for n in cfg["noms"]})
+        seuils_classe, source_seuils = resoudre_seuils(
+            a.seuil_classe, next(iter(modeles.values()))["poids"], classes_modele)
 
     os.makedirs(a.out, exist_ok=True)
     cache = os.path.join(a.out, "appariements.json")
-    meta_attendu = construire_meta(a.plancher, a.coco, fusion, modeles, critere=a.critere)
+    if a.unite == "polygone" and seuils_classe is None:
+        # F1-max : adopté d'un cache déjà calculé à cette provenance, sinon première passe
+        # en unité fragment (les masques sont relus du cache s'il est donné)
+        if os.path.exists(cache):
+            m0 = json.load(open(cache, encoding="utf-8")).get("_meta") or {}
+            if m0.get("seuils_classe_source") == "f1max" and m0.get("seuils_classe"):
+                seuils_classe = m0["seuils_classe"]
+        if seuils_classe is None:
+            print("unité polygone sans seuil connu : première passe en fragments pour le F1-max par classe")
+            frag, _ = inferer(modeles, splits, fusion, a.plancher, a.tache, critere=a.critere,
+                              params={"unite": "fragment", "tolerances": tolerances_m(tolerance), "gsd": gsd},
+                              masques_cache=a.masques_cache)
+            enr = next(iter(frag.values()))["enregs"]
+            seuils_classe = {c: bloc_metriques(enr, a.plancher, c)["seuil_f1max"] for c in classes_presentes(frag)}
+            print("seuils F1-max (fragments) :", seuils_classe)
+    meta_attendu = construire_meta(a.plancher, a.coco, fusion, modeles, critere=a.critere,
+                                   tolerance=tolerance, unite=a.unite, seuils_classe=seuils_classe, gsd=gsd)
+    if seuils_classe:
+        meta_attendu["seuils_classe_source"] = source_seuils
+    params = {"unite": a.unite, "seuils_classe": seuils_classe, "tolerances": tolerances_m(tolerance or 0.0),
+              "gsd": gsd}
     provenance_cache = "calculee"
     donnees, tache, modifie = {}, a.tache, False
 
@@ -959,14 +1507,8 @@ def main():
 
     manquants = {nom: cfg for nom, cfg in modeles.items() if nom not in donnees}
     if manquants:
-        # classes par défaut = catégories du premier split
-        coco0 = json.load(open(os.path.join(splits[0][1], "_annotations.coco.json"),
-                               encoding="utf-8"))
-        cats_coco = [c["name"] for c in coco0["categories"]]
-        for cfg in manquants.values():
-            if cfg["noms"] is None:
-                cfg["noms"] = cats_coco
-        infere, tache = inferer(manquants, splits, fusion, a.plancher, tache, critere=a.critere)
+        infere, tache = inferer(manquants, splits, fusion, a.plancher, tache, critere=a.critere,
+                                params=params, masques_cache=a.masques_cache)
         if not a.sans_autocontrole:
             for nom, dd in infere.items():
                 _, r, _ = prf(dd["enregs"], a.plancher, a.classe_controle)
@@ -989,7 +1531,10 @@ def main():
     dataset = {"chemin": chemin_norm(a.coco), "splits": [s for s, _ in splits],
                "n_images": n_img, "n_gt": int(n_gt)}
     resume = resumer(donnees, meta_attendu["modeles"], tache, dataset, fusion,
-                     a.plancher, provenance_cache, critere=a.critere)
+                     a.plancher, provenance_cache, critere=a.critere, tolerance=tolerance,
+                     unite=a.unite, seuils_classe=seuils_classe, gsd=gsd)
+    if seuils_classe:
+        resume["seuils_classe_source"] = source_seuils
     chemin_metriques = os.path.join(a.out, "metriques_eval.json")
     with open(chemin_metriques, "w", encoding="utf-8") as f:
         json.dump(resume, f, ensure_ascii=False, indent=1)
@@ -1009,11 +1554,22 @@ def main():
         if len(m["par_classe"]) > 1:
             for cl, b in m["par_classe"].items():
                 imprimer_etude(f"{nom} / {cl}", b, indent="    ")
+    for nom, m in resume["modeles"].items():
+        for cl, fd in (m.get("fausses_par_distance") or {}).items():
+            print(f"  {nom} / {cl} : fausses au seuil {fd['seuil']}, par distance médiane à l'axe : "
+                  + ", ".join((f"au-delà de {BORNES_DISTANCE[-1]} m ou sans annotation" if h["d_max"] is None
+                               else f"<= {h['d_max']} m") + f" {h['n']}" for h in fd["histogramme"]))
+        for cl, se in (m.get("sensibilite") or {}).items():
+            print(f"  {nom} / {cl} : fiabilité au seuil {se['seuil']} selon la tolérance : " + " | ".join(
+                f"{t} m -> " + (", ".join(f"{c['categorie']} dès {c['seuil']} ({c['n']})" for c in v["fiabilite"]) or "—")
+                for t, v in se["tolerances"].items()))
 
     # ------------------------------------------------------------- planches ---
     base_coco = os.path.basename(a.coco.rstrip("/\\"))
     iou_lib = "masque" if tache == "segmentation" else "bbox"
-    titre = a.titre or (f"Évaluation {base_coco} — couverture ≥ 0,5 (linéaires)"
+    titre = a.titre or (f"Évaluation {base_coco} — axe à {a.tolerance} m, unité {a.unite} (linéaires)"
+                        if a.critere == "axe" else
+                        f"Évaluation {base_coco} — couverture ≥ 0,5 (linéaires)"
                         if a.critere == "couverture" else f"Évaluation {base_coco} — IoU {iou_lib} ≥ 0,5")
     planche_principale(donnees, titre, a.plancher, os.path.join(a.out, "courbes_seuils_pr.png"))
     classes = classes_presentes(donnees)
