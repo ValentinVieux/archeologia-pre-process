@@ -45,7 +45,9 @@ def main() -> int:
     for dossier, noms in ATTENDU.items():
         onnx = PLUGIN / "data" / "models" / dossier / "weights" / "best.onnx"
         if not onnx.exists():
-            echecs.append(f"{dossier} : best.onnx absent ({onnx})")
+            # Modèle retiré du plugin (remplacé, dossier déplacé hors de data/models) :
+            # les tables canoniques restent vérifiées plus bas, la lecture de l'ONNX non.
+            print(f"SAUTÉ {dossier:<48} retiré du plugin ({onnx.name} absent)")
             continue
 
         lus = noms_classes_modele(str(onnx))

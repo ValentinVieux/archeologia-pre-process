@@ -1,0 +1,57 @@
+corpus: tranchees_648_v1
+genere_le: '2026-09-09'
+outil: tools/build_corpus.py
+outil_commit: 4b00ec5
+config_sha1: e3ecca90877034c610dd2953213461d475dd00ef
+classes:
+- tranchees_et_boyaux
+fusions: {}
+datasets:
+  tranchees_55_verdun_ld648_v1:
+    zone: grand_est/55_verdun
+    splits:
+      train:
+        images: 657
+        annotations:
+          tranchees_et_boyaux: 13671
+      valid:
+        images: 190
+        annotations:
+          tranchees_et_boyaux: 3184
+      test:
+        images: 104
+        annotations:
+          tranchees_et_boyaux: 2087
+    split_manifest_sha1: 0113e080daa312be6f2ac3988971bb54625882e9
+    raster: D:/brouillons/crateres_tranchees_v2/55_verdun/LD/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif
+    gpkg: D:/brouillons/crateres_tranchees_v2/55_verdun/vecteurs/55_verdun_entites_l93_v1.gpkg
+    tuile_px: 648
+    genere_le_dataset: '2026-09-09'
+splits:
+  train:
+    images: 657
+    coco_sha1: 99c0b5325f4e584888e9e656d8c1ea234d585c87
+    annotations:
+      tranchees_et_boyaux: 13671
+  valid:
+    images: 190
+    coco_sha1: ca617b7987bbe88b4a5bd30477f4ba4ee658fa97
+    annotations:
+      tranchees_et_boyaux: 3184
+  test:
+    images: 104
+    coco_sha1: 92af18843ed6c8399fba8a984cd114bb5df09b20
+    annotations:
+      tranchees_et_boyaux: 2087
+gsd_m: 0.5
+rvt: LD
+notes:
+- 'DÉCISION 2026-09-09: modèle mono-classe tranchees_et_boyaux en SEGMENTATION d''instances,
+  tuiles 648 px natives 0,5 m ; vérité terrain = rubans bruts ~1,3 m (fond de tranchée),
+  pas de buffer'
+- 'DÉCISION 2026-09-09: mono-zone Verdun, split imposé depuis crateres_55_verdun_ld252_v1
+  ; 62_vimy = référence gelée jamais en train (baseline verdun_3_classes_1 sur Vimy
+  : 19 % de la longueur)'
+- 'ATTENTION: 3 paires boyau/tranchée en recouvrement aux jonctions des deux shapefiles
+  sources (<= 17 m², fids 3251/13371, 9747/16632, 10139/16989) laissées telles quelles
+  ; 0 négatif pur'

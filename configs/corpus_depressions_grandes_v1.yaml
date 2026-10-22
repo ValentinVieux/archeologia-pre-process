@@ -1,0 +1,42 @@
+# Corpus d'entraînement DÉPRESSIONS CIRCULAIRES GRANDES — v1 (chantier 2026-09-08), UNE classe,
+# cible SEGMENTATION D'INSTANCES (RF-DETR-Seg, résolution 648, poids de base seg — décision
+# utilisateur 2026-09-08). Décisions actées :
+#   - classe `depression_circulaire_grande` (entité candidate, alias « mardelles ») : masques =
+#     polygones SAM 2.1 (invite = boîte nue, marge 0, plafond d'aire 0,95) sur des BOÎTES revues
+#     par l'utilisateur (Fénétrange, Blois, Chailluz) ou filtrées >= 14 m de diamètre sans revue
+#     (Vosges) ; replis boîte = 14 Fénétrange (7 centre absent + 7 masques allongés), 7 Chailluz,
+#     0 Vosges, 0 Blois ;
+#   - dépressions ÉCARTÉES (< 14 m, supprimées à la main, doublons, auto-labels non retrouvés) en
+#     `ignorer:` dans chaque config de découpe : pas de frontière de taille apprise comme du fond ;
+#   - charbonnières, fours, linéaires = fond (structures différentes, négatifs voulus) ;
+#   - Chailluz PARTIELLEMENT revu -> negatifs_pct 0 (tuiles annotées seulement) ;
+#   - LD livré en images (Fénétrange, Vosges) : verif_alignement_ld vs MNT IGN CONFORME le
+#     2026-09-08 (max 0,7 m) ; Blois et Chailluz : LD régénéré par nous depuis un MNT géoréférencé ;
+#   - splits HÉRITÉS des manifests ponctuelles v3 de chaque zone (slice_zone --split-depuis),
+#     jamais re-tirés ; blocs nouveaux (sans charbonnière au v3) affectés par le glouton et tracés ;
+#   - zones d'Île-de-France / Haye (circular_depression >= 14 m, contours dessinés) : NON incluses,
+#     réservées à un incrément v2 après décision utilisateur.
+# Usage : .venv\Scripts\python.exe tools\build_corpus.py configs\corpus_depressions_grandes_v1.yaml
+#         datasets [--out <dossier>]   # JAMAIS --out corpus (rmtree !)
+corpus: depressions_grandes_648_v1
+classes: [depression_circulaire_grande]
+fusions: {}
+gsd_m: 0.5
+rvt: LD
+notes:  # repris tel quel dans corpus_manifest.yaml
+  - "DÉCISION 2026-09-08: modèle mono-classe depression_circulaire_grande en SEGMENTATION d'instances,
+    poids de base RF-DETR seg ; masques = polygones SAM 2.1 sur boîtes revues (Fénétrange, Blois,
+    Chailluz) ou filtrées >= 14 m sans revue (Vosges)"
+  - "DÉCISION 2026-09-08: dépressions écartées (< 14 m, supprimées à la main, doublons) en ignorer
+    dans les découpes ; charbonnières / fours / linéaires laissés en fond"
+  - "ATTENTION: Fénétrange : 2 boîtes source allongées (7 x 24 m, uid valid:1274 et test:417)
+    gardées telles quelles ; 14 masques = boîte (replis) ; Chailluz : 7 replis boîte"
+  - "ATTENTION: Vosges : boîtes filtrées par taille SANS revue humaine (306) ; Chailluz : zone
+    partiellement revue, tuiles annotées seulement"
+  - "Corpus destiné à l'entraînement SEGMENTATION d'instances (résolution 648, tuiles 648) ; éval
+    gelée = split versionné"
+datasets:
+  - depressions_57_fenetrange_ld648_v1
+  - depressions_70_vosges_saonoises_ld648_v1
+  - depressions_41_blois_ld648_v1
+  - depressions_25_besancon_chailluz_ld648_v1

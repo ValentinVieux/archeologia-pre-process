@@ -3,8 +3,8 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_25_haut_doubs_ld648_v2.yaml (jamais re-tirer un split).
 dataset: ponctuelles_25_haut_doubs_ld648_v3
 zone: bourgogne_franche_comte/25_haut_doubs
-raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif
-gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_v3_dedup.gpkg
+raster: D:/entrainement_ponctuelles/haut_doubs/haut_doubs_ld.tif  # = Drive <zone>/raw/MNT/haut_doubs_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_v3_dedup.gpkg  # = Drive <zone>/training/vecteurs/25_haut_doubs_entites_l93_v4.gpkg (déposé le 2026-09-09 ; four_doublons = les 231 doublons retirés)
 couches:
   charbonniere:
     classe: charbonniere

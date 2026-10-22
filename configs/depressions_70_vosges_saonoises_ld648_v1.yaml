@@ -1,0 +1,27 @@
+# Corpus dépressions circulaires grandes v1 (UNE classe, cible SEGMENTATION d'instances) — 70_vosges_saonoises.
+# Annotations = polygones SAM 2.1 (depression_circulaire_grande_sam, 306 sam / 0 repli) sur les boîtes
+# circular_depression >= 14 m de diamètre (filtre de taille SANS revue humaine, décision utilisateur 2026-09-08)
+# depuis le GPKG v3 déposé. Les 481 dépressions < 14 m restent en ignorer (pas de frontière de taille apprise comme
+# du fond). charbonniere / four hors périmètre (fond). LD livré en dalles 2 000 px : verif_alignement_ld vs MNT IGN
+# CONFORME le 2026-09-08 (médian 0,5 m, max 0,7 m, controle_zones/align_70_vosges_saonoises).
+# Découpe : slice_zone --split-depuis manifests/split/ponctuelles_70_vosges_saonoises_ld648_v3.yaml (jamais re-tirer un split).
+dataset: depressions_70_vosges_saonoises_ld648_v1
+zone: bourgogne_franche_comte/70_vosges_saonoises
+raster: D:/entrainement_ponctuelles/zones/70_vosges_saonoises/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (57 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
+gpkg: D:/entrainement_ponctuelles/staging/70_vosges_saonoises/training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg  # = Drive training/vecteurs/70_vosges_saonoises_entites_l93_v3.gpkg
+couches:
+  depression_circulaire_grande_sam:
+    classe: depression_circulaire_grande
+  depression_circulaire_grande_supprimees:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: 0  # VRT de dalles sans nodata : hors dalle = 0 (10 négatifs plats au 1er essai, contrôle inter-zones 2026-09-08)
+assign_crs: null

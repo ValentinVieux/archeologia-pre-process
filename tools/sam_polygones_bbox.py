@@ -144,9 +144,12 @@ def main():
     ap.add_argument("--couche-sortie", default=None, help="défaut : <couche>_sam")
     ap.add_argument("--marge", type=float, default=20.0, help="élargissement de la boîte, en m de chaque côté (défaut 20)")
     ap.add_argument("--aire-min-ratio", type=float, default=0.10, help="aire mini du masque / aire de la boîte élargie")
-    ap.add_argument("--aire-max-ratio", type=float, default=1.00, help="aire maxi du masque / aire de la boîte élargie")
+    ap.add_argument("--aire-max-ratio", type=float, default=0.95, help="aire maxi du masque découpé / aire de la boîte élargie (0,95 = plafond du contrôleur : au-delà le polygone est un quasi-rectangle, Fénétrange 2026-09-08)")
     ap.add_argument("--fenetre-min", type=int, default=128, help="demi-côté mini de l'imagette en px (défaut 128 -> 256 px)")
     ap.add_argument("--limite", type=int, default=0, help="ne traiter que les N premières boîtes (test)")
+    ap.add_argument("--increment", metavar="GPKG_SAM_PRECEDENT", default=None,
+                    help="reprend tels quels les polygones d'un run précédent (même couche de sortie) pour les boîtes "
+                         "inchangées (fid_source présent, polygone dans la boîte) ; ne calcule que les boîtes nouvelles ou modifiées")
     a = ap.parse_args()
 
     import pyogrio
@@ -159,15 +162,27 @@ def main():
     if gdf.crs is not None and seg.src.crs is not None and gdf.crs.to_epsg() != seg.src.crs.to_epsg():
         sys.exit(f"CRS discordants : GPKG {gdf.crs} vs raster {seg.src.crs}")
     print(f"{len(gdf)} boîtes, raster {seg.res} m/px, device {seg.device}, marge {a.marge} m", flush=True)
+    couche = a.couche_sortie or f"{a.couche}_sam"
+    repris = {}
+    if a.increment:
+        prec = pyogrio.read_dataframe(a.increment, layer=couche)
+        prec = prec[prec["fid_source"].notna()]
+        repris = {int(f): r for f, r in zip(prec["fid_source"], prec.itertuples(index=False))}
+        print(f"incrément : {len(repris)} polygones du run précédent {a.increment}", flush=True)
 
-    geoms, meth, sscore, ious, motifs = [], [], [], [], []
-    for i, (geom) in enumerate(gdf.geometry):
+    geoms, meth, sscore, ious, motifs, n_repris = [], [], [], [], [], 0
+    for i, (fid, geom) in enumerate(zip(gdf["fid_source"], gdf.geometry)):
         bb = geom.bounds
-        poly, s, motif = seg.segmenter(bb, a.marge, a.aire_min_ratio, a.aire_max_ratio, a.fenetre_min)
-        if poly is None or poly.is_empty:
-            poly, m = box(*bb), "bbox_repli"
+        r = repris.get(int(fid))
+        if r is not None and box(*bb).buffer(0.5).contains(r.geometry):  # boîte inchangée : polygone repris
+            poly, m, s, motif = r.geometry, r.methode, float(r.sam_score), r.motif
+            n_repris += 1
         else:
-            m = "sam"
+            poly, s, motif = seg.segmenter(bb, a.marge, a.aire_min_ratio, a.aire_max_ratio, a.fenetre_min)
+            if poly is None or poly.is_empty:
+                poly, m = box(*bb), "bbox_repli"
+            else:
+                m = "sam"
         geoms.append(poly); meth.append(m); sscore.append(round(s, 3)); motifs.append(motif)
         b = box(*bb)
         ious.append(round(poly.intersection(b).area / poly.union(b).area, 3))
@@ -182,10 +197,10 @@ def main():
     out["aire_m2"] = out.geometry.area.round(1)
     out["diam_eq_m"] = (2 * np.sqrt(out.geometry.area / np.pi)).round(1)
     out["iou_bbox"] = ious
-    couche = a.couche_sortie or f"{a.couche}_sam"
     out.to_file(a.gpkg_sortie, layer=couche, driver="GPKG")
     n_sam = meth.count("sam")
     print(f"écrit {len(out)} polygones -> {a.gpkg_sortie} [{couche}] : sam {n_sam} ({100 * n_sam / len(out):.1f} %), "
+          f"repris {n_repris} / calculés {len(out) - n_repris} ; "
           f"repli bbox {len(out) - n_sam} ; diam_eq médian {out['diam_eq_m'].median():.1f} m ; "
           f"iou_bbox médian {np.median(ious):.2f}", flush=True)
 

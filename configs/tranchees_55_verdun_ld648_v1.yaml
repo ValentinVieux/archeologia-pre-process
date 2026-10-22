@@ -1,0 +1,30 @@
+# Chantier crateres_tranchees_v2 — dataset TRANCHÉES de 55_verdun (grand_est), UNE classe, cible
+# SEGMENTATION d'instances (RF-DETR-Seg-Large, résolution 648).
+# Tuiles de 648 px NATIVES à 0,5 m (324 m) : une tranchée y est vue entière (le modèle déployé
+# verdun_3_classes_1 travaillait en fenêtres de 70 m qui tronquent une tranchée médiane de 62 m — 19 % de
+# la longueur retrouvée sur Vimy). Coût d'inférence ÷13 par rapport au zoom des cratères.
+# Vérité terrain = tranchees_et_boyaux (boyaux_zonal + tranchees_zonal) : fond de tranchée segmenté,
+# rubans ~1,3 m gardés TELS QUELS (décision utilisateur 2026-09-09, buffer 7 m et fermeture rejetés) ;
+# à Vimy la référence gelée bufferisera les lignes ONF à la même largeur. Cratères en ignorer.
+# Découpe : slice_zone seed 42 --split-depuis manifests/split/crateres_55_verdun_ld252_v1.yaml (mêmes
+# blocs 2 km que le dataset cratères ; jamais re-tirer un split). LD régénéré 2026-09-09 (cf. config cratères).
+dataset: tranchees_55_verdun_ld648_v1
+zone: grand_est/55_verdun
+raster: D:/brouillons/crateres_tranchees_v2/55_verdun/LD/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif  # = Drive <zone>/raw/MNT/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif
+gpkg: D:/brouillons/crateres_tranchees_v2/55_verdun/vecteurs/55_verdun_entites_l93_v1.gpkg  # = Drive training/vecteurs/55_verdun_entites_l93_v1.gpkg
+couches:
+  tranchees_et_boyaux:
+    classe: tranchees_et_boyaux
+  cratere:
+    ignorer: true
+tuile_px: 648
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null

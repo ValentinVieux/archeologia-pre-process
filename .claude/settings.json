@@ -1,4 +1,12 @@
 {
+  "extraKnownMarketplaces": {
+    "archeologia": {
+      "source": { "source": "directory", "path": "../claude-plugins" }
+    }
+  },
+  "enabledPlugins": {
+    "archeologia@archeologia": true
+  },
   "permissions": {
     "allow": [
       "Bash(.venv/Scripts/python.exe *)",

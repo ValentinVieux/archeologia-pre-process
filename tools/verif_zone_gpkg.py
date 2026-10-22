@@ -22,6 +22,8 @@ sources = {}
 geoms_par_entite = {}
 for fichier, spec in cfg["sources"].items():
     gdf = gpd.read_file(source / fichier)
+    if spec.get("exploser"):  # recompte indépendant des parties (multipolygone dissous)
+        gdf = gdf[["geometry"]].explode(index_parts=False).reset_index(drop=True)
     sources[fichier] = gdf
     est_point = gdf.geom_type.dropna().iloc[0] in ("Point", "MultiPoint")
     entites = ([spec["entite"]] if "entite" in spec else spec["valeurs"].values())

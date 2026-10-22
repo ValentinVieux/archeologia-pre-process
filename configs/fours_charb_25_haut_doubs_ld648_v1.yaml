@@ -3,8 +3,8 @@
 # n'est PAS utilisé : le COCO dispatché fait foi). LD 0,5 m (VRT des jpg).
 dataset: fours_charb_25_haut_doubs_ld648_v1
 zone: bourgogne_franche_comte/25_haut_doubs
-raster: D:/entrainement_ponctuelles/zones/25_haut_doubs/ld.vrt
-gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/zones/25_haut_doubs/ld.vrt  # LD livré à géoréf FAUSSE (incident 2026-09-06) : dataset PÉRIMÉ ; version corrigée = Drive <zone>/raw/MNT/LD_livre_dalles.vrt, LD de référence = raw/MNT/haut_doubs_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/25_haut_doubs/annotations_coco.gpkg  # annotations v1 à géoréf FAUSSE, NON déposées (dataset PÉRIMÉ) ; état corrigé + dédoublonné = Drive <zone>/training/vecteurs/25_haut_doubs_entites_l93_v4.gpkg
 couches:
   charbonniere:
     classe: charbonniere

@@ -2,8 +2,8 @@
 # Découpe : slice_zone --split-depuis manifests/split/ponctuelles_57_fenetrange_ld648_v2.yaml (jamais re-tirer un split).
 dataset: ponctuelles_57_fenetrange_ld648_v3
 zone: grand_est/57_fenetrange
-raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt
-gpkg: D:/entrainement_ponctuelles/revue_zones/57_fenetrange_annotations.gpkg
+raster: D:/entrainement_ponctuelles/zones/57_fenetrange/ld.vrt  # = Drive <zone>/raw/MNT/LD_livre_dalles.vrt (139 dalles livrées, déposées le 2026-09-09 ; géoréf JUSTE, alignement CONFORME 2026-09-08)
+gpkg: D:/entrainement_ponctuelles/revue_zones/57_fenetrange_annotations.gpkg  # chemin d'époque (le fichier a été déplacé en revue_zones/traite/ puis retouché le 2026-09-08) ; état déposé = Drive <zone>/training/vecteurs/57_fenetrange_entites_l93_v3.gpkg
 couches:
   charbonniere:
     classe: charbonniere

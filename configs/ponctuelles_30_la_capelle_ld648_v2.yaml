@@ -5,8 +5,8 @@
 # GPKG inchangé (0 paire coupée). Split repris du manifest v1 (blocs 2 km).
 dataset: ponctuelles_30_la_capelle_ld648_v2
 zone: occitanie/30_la_capelle_et_masmolene
-raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif
-gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg
+raster: D:/entrainement_ponctuelles/la_capelle/la_capelle_ld.tif  # = Drive <zone>/raw/MNT/la_capelle_ld.tif
+gpkg: D:/entrainement_ponctuelles/zones/30_la_capelle_et_masmolene/annotations_coco.gpkg  # annotations v1 à géoréf FAUSSE, NON déposées (dataset PÉRIMÉ) ; état corrigé + dédoublonné = Drive <zone>/training/vecteurs/30_la_capelle_et_masmolene_entites_l93_v4.gpkg
 couches:
   charbonniere:
     classe: charbonniere

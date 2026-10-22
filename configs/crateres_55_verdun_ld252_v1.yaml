@@ -1,0 +1,32 @@
+# Chantier crateres_tranchees_v2 — dataset CRATÈRES de 55_verdun (grand_est), UNE classe, cible
+# SEGMENTATION d'instances (RF-DETR-Seg-Large, résolution d'entraînement 648).
+# Tuiles de 252 px à 0,5 m = 126 m, agrandies ×2,57 à l'entraînement : le plus petit zoom qui tient
+# sous les 200 requêtes du modèle (mesuré 2026-09-09 sur 731 905 cratères : p50 103, p99 216 objets par
+# fenêtre de 126 m, 2,8 % > 200 ; à 162 m 37 % > 200 ; à 324 m p50 649) tout en donnant 11,8 px au
+# cratère médian (Ø 2,29 m). Inférence cible : SAHI 252 (le déployé cratere_circulaire_2 tourne en
+# SAHI 140 -> 484 fenêtres/dalle, 13× le coût d'un modèle natif — cf. mémoire chantier).
+# Tranchées en ignorer (bloquent les négatifs sans annoter). LD RÉGÉNÉRÉ le 2026-09-09 par generer_ld
+# (l'ancien LD 2025 avait 20 % de pixels à 0 dans l'emprise valide), alignement MNT CONFORME max 0,0 m.
+# Découpe : slice_zone seed 42, PREMIER dataset de la zone (son split_manifest est ensuite imposé au
+# dataset tranchées par --split-depuis : mêmes blocs train/valid/test pour les deux modèles).
+# 62_vimy = zone de référence gelée, jamais en train (cf. configs/eval_vimy_gelee_v1.yaml à venir).
+dataset: crateres_55_verdun_ld252_v1
+zone: grand_est/55_verdun
+raster: D:/brouillons/crateres_tranchees_v2/55_verdun/LD/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif  # = Drive <zone>/raw/MNT/mnt_2013_LD_A15_Rmin10_Rmax20_H1p7_V1.tif
+gpkg: D:/brouillons/crateres_tranchees_v2/55_verdun/vecteurs/55_verdun_entites_l93_v1.gpkg  # = Drive training/vecteurs/55_verdun_entites_l93_v1.gpkg
+couches:
+  cratere:
+    classe: cratere
+  tranchees_et_boyaux:
+    ignorer: true
+tuile_px: 252
+bloc_m: 2000
+split:
+  train: 70
+  valid: 20
+  test: 10
+negatifs_pct: 10
+min_couverture_valide: 0.5
+min_visibilite_annotation: 0.5
+nodata_supplementaire: null
+assign_crs: null
